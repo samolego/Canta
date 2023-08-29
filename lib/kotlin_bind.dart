@@ -45,4 +45,11 @@ class KotlinBind {
       return Future.value([]);
     }
   }
+
+  void reinstallApp(String packageName) {
+    // Call relevant Kotlin method
+    try {
+      platform.invokeMethod('reinstallApp', {'packageName': packageName});
+    } on PlatformException {}
+  }
 }

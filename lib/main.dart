@@ -125,20 +125,20 @@ class _HomePageState extends State<HomePage> {
     return ListView(children: appStructure);
   }
 
-  Future<ListView> _buildUninstalledAppList() async {
+  Future<Scaffold> _buildUninstalledAppList() async {
     final List<Row> appStructure = [];
     final List<String> allApps = await nativeService.getUninstalledApps();
 
     if (allApps.isEmpty) {
-      return ListView(children: const [
-        Center(
+      return const Scaffold(
+        body: Center(
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Text("No recoverable uninstalled apps found.",
                 style: TextStyle(fontSize: 18)),
           ),
         ),
-      ]);
+      );
     }
 
     for (var packageName in allApps) {
@@ -181,7 +181,18 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
-    return ListView(children: appStructure);
+    return Scaffold(
+      body: ListView(children: appStructure),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.lightGreen,
+        onPressed: _reinstallApps,
+        tooltip: 'Reinstall apps.',
+        child: const Icon(
+          Icons.install_mobile,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 
   @override
@@ -201,27 +212,38 @@ class _HomePageState extends State<HomePage> {
           ),
           body: TabBarView(
             children: [
-              Center(
-                // Center is a layout widget. It takes a single child and positions it
-                // in the middle of the parent.
-                child: FutureBuilder(
-                  future: _buildAppList(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return snapshot.data as Widget;
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
+              Scaffold(
+                body: Center(
+                  // Center is a layout widget. It takes a single child and positions it
+                  // in the middle of the parent.
+                  child: FutureBuilder(
+                    future: _buildAppList(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return snapshot.data as Widget;
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
 
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("Loading apps... "),
-                        SizedBox(height: 16.0),
-                        CircularProgressIndicator(),
-                      ],
-                    );
-                  },
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text("Loading apps ..."),
+                          SizedBox(height: 16.0),
+                          CircularProgressIndicator(),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                floatingActionButton: FloatingActionButton(
+                  backgroundColor: Colors.redAccent,
+                  onPressed: _uninstallApps,
+                  tooltip: 'Uninstall',
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Center(
@@ -249,15 +271,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.redAccent,
-            onPressed: _uninstallApps,
-            tooltip: 'Uninstall',
-            child: const Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-          ),
         ),
       ),
     );
@@ -275,6 +288,12 @@ class _HomePageState extends State<HomePage> {
   void _uninstallApps() {
     for (var packageName in appList.selectedApps) {
       nativeService.uninstallApp(packageName);
+    }
+  }
+
+  void _reinstallApps() {
+    for (var packageName in appList.selectedApps) {
+      nativeService.reinstallApp(packageName);
     }
   }
 
