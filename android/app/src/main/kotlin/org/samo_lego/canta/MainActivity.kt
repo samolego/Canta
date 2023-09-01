@@ -10,6 +10,7 @@ import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import android.os.Process
 import android.permission.IPermissionManager
+import android.util.Log
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -163,9 +164,13 @@ class MainActivity : FlutterActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        //val packageInstaller = getPackageInstaller()
-        val packageInstaller = packageManager.packageInstaller
+        val packageInstaller = getPackageInstaller()
+        Log.d("Canta", "Uninstalling '$packageName'")
+
         packageInstaller.uninstall(packageName, intent.intentSender)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            packageInstaller.uninstallExistingPackage(packageName, intent.intentSender)
+        }
     }
 
     private fun getPackageInstaller(): PackageInstaller {
