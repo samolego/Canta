@@ -5,9 +5,11 @@
     <queries>
         <package android:name="rikka.shizuku" />
     </queries>
+
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"

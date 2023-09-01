@@ -4,6 +4,7 @@ import 'package:installed_apps/app_info.dart';
 import 'package:installed_apps/installed_apps.dart';
 import 'package:mobx/mobx.dart';
 
+import 'bootloop_removals.dart';
 import 'pair.dart';
 
 class AppList {
@@ -22,7 +23,7 @@ class AppList {
     var allApps = await InstalledApps.getInstalledApps(false, true, "");
 
     for (var app in allApps) {
-      if (app.packageName == null) {
+      if (app.packageName == null || BOOTLOOPABLE_PACKAGES.contains(app.packageName)) {
         continue;
       }
 
