@@ -8,6 +8,7 @@ import android.content.pm.IPackageInstaller
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
+import android.os.Build
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -119,18 +120,26 @@ class MainActivity : FlutterActivity() {
 
     private fun getUninstalledPackages(): List<String> {
         val pm = packageManager
-        val unp =
+        val unp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             pm.getInstalledPackages(PackageInfoFlags.of(PackageManager.MATCH_UNINSTALLED_PACKAGES.toLong()))
-                .map { app -> app.packageName }.toSet()
+                .map { app -> app.packageName }
+        } else {
+            pm.getInstalledApplications(PackageManager.MATCH_UNINSTALLED_PACKAGES)
+                .map { app -> app.packageName }
+        }.toSet()
         val inp = getInstalledPackages().toSet()
 
         return (unp - inp).toList().sorted()
     }
 
     private fun getInstalledPackages(): List<String> {
-        return packageManager.getInstalledPackages(
-            PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
-        ).map { app -> app.packageName }
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getInstalledPackages(
+                PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
+            )
+        } else {
+            packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
+        }.map { app -> app.packageName }
     }
 
     @SuppressLint("MissingPermission")
@@ -153,6 +162,11 @@ class MainActivity : FlutterActivity() {
 
         val packageInstaller = getPackageInstaller(installer)
         packageInstaller.uninstall(packageName, intent.intentSender)
+        packageInstaller.installExistingPackage(
+            packageName,
+            PackageManager.INSTALL_REASON_USER,
+            null
+        )
     }
 
     private fun getPackageInstaller(iPackageInstaller: IPackageInstaller): PackageInstaller {
@@ -165,7 +179,20 @@ class MainActivity : FlutterActivity() {
         )
     }
 
+    @SuppressLint("MissingPermission")
     private fun reinstallApp(packageName: String) {
-        TODO("Not yet implemented")
+        if (!checkShizukuPermission()) {
+            // Shizuku is not available, handle accordingly
+            return
+        }
+
+        val installer = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
+
+        val packageInstaller = getPackageInstaller(installer)
+        packageInstaller.installExistingPackage(
+            packageName,
+            PackageManager.INSTALL_REASON_USER,
+            null
+        )
     }
 }
