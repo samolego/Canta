@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
   /// Builds the list of apps with checkboxes.
   Future<ListView> _buildAppList() async {
     final List<Row> appStructure = [];
-    final List<Pair<AppInfo, bool>> allApps = await appList.apps;
+    final allApps = await appList.apps;
 
     List<Pair<AppInfo, bool>> filteredApps = allApps.where((appInfo) {
       return filters.every((filter) => filter(appInfo));

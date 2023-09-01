@@ -67,6 +67,11 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation "dev.rikka.shizuku:api:$shizuku_version"
     implementation "dev.rikka.shizuku:provider:$shizuku_version"
+
+    implementation 'org.lsposed.hiddenapibypass:hiddenapibypass:4.3'
+
+    //implementation "moe.shizuku:manager:$shizuku_version"
 }

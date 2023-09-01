@@ -6,6 +6,7 @@
         <package android:name="rikka.shizuku" />
     </queries>
 
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />

@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:installed_apps/app_info.dart';
@@ -8,8 +9,8 @@ import 'bootloop_removals.dart';
 import 'pair.dart';
 
 class AppList {
-  Future<List<Pair<AppInfo, bool>>> apps =
-      Future<List<Pair<AppInfo, bool>>>.value([]);
+  Future<SplayTreeSet<Pair<AppInfo, bool>>> apps =
+      Future<SplayTreeSet<Pair<AppInfo, bool>>>.value(SplayTreeSet((a, b) => a.left.name!.compareTo(b.left.name!)));
 
   @observable
   ObservableSet<String> selectedApps = ObservableSet();
@@ -18,8 +19,8 @@ class AppList {
     apps = _getAppList();
   }
 
-  Future<List<Pair<AppInfo, bool>>> _getAppList() async {
-    List<Pair<AppInfo, bool>> apps = [];
+  Future<SplayTreeSet<Pair<AppInfo, bool>>> _getAppList() async {
+    SplayTreeSet<Pair<AppInfo, bool>> apps = SplayTreeSet((a, b) => a.left.name!.compareTo(b.left.name!));
     var allApps = await InstalledApps.getInstalledApps(false, true, "");
 
     for (var app in allApps) {

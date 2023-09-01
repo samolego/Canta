@@ -4,17 +4,21 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
-import android.content.pm.IPackageInstaller
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
+import android.os.Process
+import android.permission.IPermissionManager
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
+import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.ShizukuProvider
+import rikka.shizuku.SystemServiceHelper
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "org.samo_lego.canta/native"
@@ -51,14 +55,12 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun checkShizukuPermission(): Boolean {
-        println("Checking permission.")
         return if (!Shizuku.pingBinder()) {
             false
         } else if (Shizuku.isPreV11()) {
             Toast.makeText(this, "Shizuku < 11 is not supported!", Toast.LENGTH_LONG).show()
             false
         } else if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Using shizuku!", Toast.LENGTH_SHORT).show()
             true
         } else if (Shizuku.shouldShowRequestPermissionRationale()) {
             Toast.makeText(
@@ -74,32 +76,33 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun requestDeletePermissions() {
-        val canDelete =
-            Shizuku.checkRemotePermission(Manifest.permission.DELETE_PACKAGES) == PackageManager.PERMISSION_GRANTED
-
-        /*val iPmClass = Class.forName("android.content.pm.IPackageManager")
-        val iPmStub = Class.forName("android.content.pm.IPackageManager\$Stub")
-        val asInterfaceMethod = iPmStub.getMethod("asInterface", IBinder::class.java)
-
-        val grantRuntimePermissionMethod = iPmClass.getMethod(
-            "grantRuntimePermission",
-            String::class.java, /* package name */
-            String::class.java, /* permission name */
-            Int::class.java, /* user id */
+    private val permissionManager by lazy {
+        // If HiddenApiBypass is not active, we get NoSuchMethodException later
+        HiddenApiBypass.addHiddenApiExemptions(
+            "Landroid/permission"
         )
-
-        val iPmInstance = asInterfaceMethod.invoke(
-            null, ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package"))
-        )
-        grantRuntimePermissionMethod.invoke(
-            iPmInstance, "org.samo_lego.canta", Manifest.permission.DELETE_PACKAGES, 0
-        )
-        val manager = IPackageManager.Stub.asInterface(
+        IPermissionManager.Stub.asInterface(
             ShizukuBinderWrapper(
-                SystemServiceHelper.getSystemService("package")
+                SystemServiceHelper.getSystemService(
+                    "permissionmgr"
+                )
             )
+        )
+    }
+
+    private fun requestDeletePermissions() {
+        /*val ipm = IPermissionManager.Stub.asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("permissionmgr")))
+        ipm.grantRuntimePermission(
+            "org.samo_lego.canta",
+            Manifest.permission.DELETE_PACKAGES,
+            UserHandle.getUserHandleForUid(0)
         )*/
+
+        permissionManager.grantRuntimePermission(
+            "org.samo_lego.canta",
+            Manifest.permission.DELETE_PACKAGES,
+            0
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -108,6 +111,7 @@ class MainActivity : FlutterActivity() {
         permissions.forEachIndexed { index, permission ->
             if (permission == ShizukuProvider.PERMISSION) {
                 onRequestPermissionResult(requestCode, grantResults[index])
+                println("Permission $permission granted: ${grantResults[index]}")
             }
         }
     }
@@ -149,9 +153,8 @@ class MainActivity : FlutterActivity() {
             return
         }
 
-        requestDeletePermissions()
+        //requestDeletePermissions()
 
-        val installer = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
         val broadcastIntent = Intent("org.samo_lego.canta.ACTION_UNINSTALL")
         val intent = PendingIntent.getBroadcast(
             context,
@@ -160,22 +163,22 @@ class MainActivity : FlutterActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val packageInstaller = getPackageInstaller(installer)
+        //val packageInstaller = getPackageInstaller()
+        val packageInstaller = packageManager.packageInstaller
         packageInstaller.uninstall(packageName, intent.intentSender)
-        packageInstaller.installExistingPackage(
-            packageName,
-            PackageManager.INSTALL_REASON_USER,
-            null
-        )
     }
 
-    private fun getPackageInstaller(iPackageInstaller: IPackageInstaller): PackageInstaller {
-        val userId = 0
+    private fun getPackageInstaller(): PackageInstaller {
+        val iPackageInstaller = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
+        val root = Shizuku.getUid() == 0
+        val userId = if (root) Process.myUserHandle().hashCode() else 0
 
         // The reason for use "com.android.shell" as installer package under adb is that
         // getMySessions will check installer package's owner
+        val installerName = "com.android.shell"
+
         return ShizukuPackageInstallerUtils.createPackageInstaller(
-            iPackageInstaller, "com.android.shell", userId
+            iPackageInstaller, installerName, userId
         )
     }
 
@@ -186,9 +189,7 @@ class MainActivity : FlutterActivity() {
             return
         }
 
-        val installer = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
-
-        val packageInstaller = getPackageInstaller(installer)
+        val packageInstaller = getPackageInstaller()
         packageInstaller.installExistingPackage(
             packageName,
             PackageManager.INSTALL_REASON_USER,
