@@ -1,15 +1,14 @@
 package org.samo_lego.canta
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import android.os.Process
-import android.permission.IPermissionManager
 import android.util.Log
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
@@ -17,9 +16,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
-import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.ShizukuProvider
-import rikka.shizuku.SystemServiceHelper
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "org.samo_lego.canta/native"
@@ -77,35 +74,6 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private val permissionManager by lazy {
-        // If HiddenApiBypass is not active, we get NoSuchMethodException later
-        HiddenApiBypass.addHiddenApiExemptions(
-            "Landroid/permission"
-        )
-        IPermissionManager.Stub.asInterface(
-            ShizukuBinderWrapper(
-                SystemServiceHelper.getSystemService(
-                    "permissionmgr"
-                )
-            )
-        )
-    }
-
-    private fun requestDeletePermissions() {
-        /*val ipm = IPermissionManager.Stub.asInterface(ShizukuBinderWrapper(SystemServiceHelper.getSystemService("permissionmgr")))
-        ipm.grantRuntimePermission(
-            "org.samo_lego.canta",
-            Manifest.permission.DELETE_PACKAGES,
-            UserHandle.getUserHandleForUid(0)
-        )*/
-
-        permissionManager.grantRuntimePermission(
-            "org.samo_lego.canta",
-            Manifest.permission.DELETE_PACKAGES,
-            0
-        )
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
@@ -147,16 +115,13 @@ class MainActivity : FlutterActivity() {
         }.map { app -> app.packageName }
     }
 
-    @SuppressLint("MissingPermission")
     private fun uninstallApp(packageName: String) {
         if (!checkShizukuPermission()) {
             // Shizuku is not available, handle accordingly
             return
         }
 
-        //requestDeletePermissions()
-
-        val broadcastIntent = Intent("org.samo_lego.canta.ACTION_UNINSTALL")
+        val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
         val intent = PendingIntent.getBroadcast(
             context,
             0,
@@ -165,12 +130,41 @@ class MainActivity : FlutterActivity() {
         )
 
         val packageInstaller = getPackageInstaller()
-        Log.d("Canta", "Uninstalling '$packageName'")
 
-        packageInstaller.uninstall(packageName, intent.intentSender)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            packageInstaller.uninstallExistingPackage(packageName, intent.intentSender)
+
+        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getPackageInfo(
+                packageName,
+                PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
+            )
+        } else {
+            packageManager.getPackageInfo(
+                packageName,
+                PackageManager.GET_META_DATA
+            )
         }
+
+        val isSystem = (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+
+        Log.d("Canta", "Uninstalling '$packageName' [system: $isSystem]")
+
+        // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
+        // 0x00000002 = PackageManager.DELETE_ALL_USERS
+        val flags = if (isSystem) 0x00000004 else 0x00000002
+
+        try {
+            HiddenApiBypass.invoke(
+                PackageInstaller::class.java,
+                packageInstaller,
+                "uninstall",
+                packageName,
+                flags,
+                intent.intentSender
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun getPackageInstaller(): PackageInstaller {
@@ -180,10 +174,8 @@ class MainActivity : FlutterActivity() {
 
         // The reason for use "com.android.shell" as installer package under adb is that
         // getMySessions will check installer package's owner
-        val installerName = "com.android.shell"
-
         return ShizukuPackageInstallerUtils.createPackageInstaller(
-            iPackageInstaller, installerName, userId
+            iPackageInstaller, "com.android.shell", userId
         )
     }
 
