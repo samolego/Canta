@@ -3,6 +3,7 @@ package org.samo_lego.canta
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.content.pm.IPackageInstaller
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
@@ -114,6 +115,12 @@ class MainActivity : FlutterActivity() {
         }.map { app -> app.packageName }
     }
 
+
+    /**
+     * Uninstalls app using Shizuku.
+     * See <a href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=2144">PackageManagerShellCommand.java</a>
+     * @param packageName package name of the app to uninstall
+     */
     private fun uninstallApp(packageName: String) {
         if (!checkShizukuPermission()) {
             // Shizuku is not available, handle accordingly
@@ -129,8 +136,6 @@ class MainActivity : FlutterActivity() {
         )
 
         val packageInstaller = getPackageInstaller()
-
-
         val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getPackageInfo(
                 packageName,
@@ -166,20 +171,44 @@ class MainActivity : FlutterActivity() {
 
     }
 
-
-
+    /**
+     * Reinstalls app using Shizuku.
+     * See <a href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=1408>PackageManagerShellCommand.java</a>
+     * @param packageName package name of the app to reinstall (must preinstalled on the phone)
+     */
     private fun reinstallApp(packageName: String) {
         if (!checkShizukuPermission()) {
             // Shizuku is not available, handle accordingly
             return
         }
 
-        val packageInstaller = getPackageInstaller()
-        /*packageInstaller.installExistingPackage(
-            packageName,
-            PackageManager.INSTALL_REASON_USER,
-            null
-        )*/
+        val installReason = PackageManager.INSTALL_REASON_UNKNOWN
+        val broadcastIntent = Intent("org.samo_lego.canta.INSTALL_RESULT_ACTION")
+        val intent = PendingIntent.getBroadcast(
+            context,
+            0,
+            broadcastIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        // PackageManager.INSTALL_ALL_WHITELIST_RESTRICTED_PERMISSIONS
+        val installFlags = 0x00400000
+
+        try {
+            HiddenApiBypass.invoke(
+                IPackageInstaller::class.java,
+                ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller(),
+                "installExistingPackage",
+                packageName,
+                installFlags,
+                installReason,
+                intent.intentSender,
+                0,
+                null
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getPackageInstaller(): PackageInstaller {
