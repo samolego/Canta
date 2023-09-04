@@ -1,6 +1,5 @@
 package org.samo_lego.canta
 
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -167,6 +166,22 @@ class MainActivity : FlutterActivity() {
 
     }
 
+
+
+    private fun reinstallApp(packageName: String) {
+        if (!checkShizukuPermission()) {
+            // Shizuku is not available, handle accordingly
+            return
+        }
+
+        val packageInstaller = getPackageInstaller()
+        /*packageInstaller.installExistingPackage(
+            packageName,
+            PackageManager.INSTALL_REASON_USER,
+            null
+        )*/
+    }
+
     private fun getPackageInstaller(): PackageInstaller {
         val iPackageInstaller = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
         val root = Shizuku.getUid() == 0
@@ -176,21 +191,6 @@ class MainActivity : FlutterActivity() {
         // getMySessions will check installer package's owner
         return ShizukuPackageInstallerUtils.createPackageInstaller(
             iPackageInstaller, "com.android.shell", userId
-        )
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun reinstallApp(packageName: String) {
-        if (!checkShizukuPermission()) {
-            // Shizuku is not available, handle accordingly
-            return
-        }
-
-        val packageInstaller = getPackageInstaller()
-        packageInstaller.installExistingPackage(
-            packageName,
-            PackageManager.INSTALL_REASON_USER,
-            null
         )
     }
 }
