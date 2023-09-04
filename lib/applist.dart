@@ -1,44 +1,73 @@
-import 'dart:collection';
-import 'dart:typed_data';
 
-import 'package:installed_apps/app_info.dart';
-import 'package:installed_apps/installed_apps.dart';
+import 'package:canta/app_info.dart';
 import 'package:mobx/mobx.dart';
 
-import 'bootloop_removals.dart';
-import 'pair.dart';
+import 'kotlin_bind.dart';
 
 class AppList {
-  Future<SplayTreeSet<Pair<AppInfo, bool>>> apps =
-      Future<SplayTreeSet<Pair<AppInfo, bool>>>.value(SplayTreeSet((a, b) => a.left.name!.compareTo(b.left.name!)));
+  static _createObservableSortedSet<T extends Comparable>() {
+    return ObservableSet<T>.splayTreeSetFrom([],
+        compare: (a, b) => a.compareTo(b));
+  }
 
   @observable
-  ObservableSet<String> selectedApps = ObservableSet();
+  ObservableSet<String> selectedApps = _createObservableSortedSet<String>();
+
+  @observable
+  ObservableSet<AppInfo> installedApps = _createObservableSortedSet<AppInfo>();
+  @observable
+  bool installedAppsLoaded = false;
+
+  @observable
+  ObservableSet<String> uninstalledApps = _createObservableSortedSet<String>();
+  @observable
+  bool uninstalledAppsLoaded = false;
+
+  KotlinBind kotlinBind = KotlinBind();
 
   AppList() {
-    apps = _getAppList();
+    getInstalledApps();
+    getUninstalledApps();
   }
 
-  Future<SplayTreeSet<Pair<AppInfo, bool>>> _getAppList() async {
-    SplayTreeSet<Pair<AppInfo, bool>> apps = SplayTreeSet((a, b) => a.left.name!.compareTo(b.left.name!));
-    var allApps = await InstalledApps.getInstalledApps(false, true, "");
+  @action
+  void getInstalledApps() async {
+    var apps = await kotlinBind.getInstalledApps();
+    print("Loaded ${apps.length} apps!");
+    installedApps.addAll(apps);
+    installedAppsLoaded = true;
+  }
 
-    for (var app in allApps) {
-      if (app.packageName == null || BOOTLOOPABLE_PACKAGES.contains(app.packageName)) {
-        continue;
-      }
+  @action
+  void getUninstalledApps() async {
+    List<String> apps = await kotlinBind.getUninstalledApps();
+    uninstalledApps.addAll(apps);
+    uninstalledAppsLoaded = true;
+  }
 
-      app.icon ??= Uint8List(0);
-      app.name ??= app.packageName!;
+  @action
+  void uninstallApp(String packageName) {
+    kotlinBind.uninstallApp(packageName);
 
-      var systemApp = await InstalledApps.isSystemApp(app.packageName!);
-      apps.add(Pair(app, systemApp!));
+    if (installedAppsLoaded) {
+      installedApps.removeWhere((app) => packageName == app.packageName);
     }
 
-    return apps;
+    if (uninstalledAppsLoaded) {
+      uninstalledApps.add(packageName);
+    }
   }
 
-  static bool isSystemApp(Pair<AppInfo, bool> appInfo) {
-    return appInfo.right;
+  @action
+  void reinstallApp(String packageName) {
+    kotlinBind.reinstallApp(packageName);
+
+    // Todo: improve this
+    installedAppsLoaded = false;
+    getInstalledApps();
+
+    if (uninstalledAppsLoaded) {
+      uninstalledApps.remove(packageName);
+    }
   }
 }

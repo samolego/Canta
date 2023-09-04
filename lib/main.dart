@@ -1,10 +1,9 @@
 import 'package:canta/applist.dart';
-import 'package:canta/kotlin_bind.dart';
-import 'package:canta/pair.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:installed_apps/app_info.dart';
 import 'package:mobx/mobx.dart';
+
+import 'app_info.dart';
 
 void main() {
   runApp(const CantaApp());
@@ -55,24 +54,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AppList appList = AppList();
-  final KotlinBind nativeService = KotlinBind();
-  List<Function(Pair<AppInfo, bool>)> filters = [];
+
+  List<Function(AppInfo)> filters = [];
 
   _HomePageState();
 
-  /// Builds the list of apps with checkboxes.
-  Future<ListView> _buildAppList() async {
+  Widget _getAppList() {
     final List<Row> appStructure = [];
-    final allApps = await appList.apps;
+    final allApps = appList.installedApps;
 
-    List<Pair<AppInfo, bool>> filteredApps = allApps.where((appInfo) {
+    List<AppInfo> filteredApps = allApps.where((appInfo) {
       return filters.every((filter) => filter(appInfo));
     }).toList();
 
-    for (var element in filteredApps) {
-      var app = element.left;
-      var systemApp = element.right;
-
+    for (var app in filteredApps) {
       appStructure.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.memory(
-                          app.icon!,
+                          app.icon,
                           width: 48,
                           height: 48,
                         ),
@@ -98,11 +93,11 @@ class _HomePageState extends State<HomePage> {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Text(app.name!,
+                              child: Text(app.name,
                                   style: const TextStyle(fontSize: 22)),
                             ),
-                            Text(app.packageName!),
-                            getBadgeElement(systemApp),
+                            Text(app.packageName),
+                            getBadgeElement(app.isSystemApp),
                           ],
                         ),
                       ),
@@ -113,8 +108,8 @@ class _HomePageState extends State<HomePage> {
             ),
             Observer(
               builder: (_) => Checkbox(
-                value: appList.selectedApps.contains(app.packageName!),
-                onChanged: (value) => _toggleApp(value, app.packageName!),
+                value: appList.selectedApps.contains(app.packageName),
+                onChanged: (value) => _toggleApp(value, app.packageName),
               ),
             ),
           ],
@@ -125,21 +120,9 @@ class _HomePageState extends State<HomePage> {
     return ListView(children: appStructure);
   }
 
-  Future<Scaffold> _buildUninstalledAppList() async {
+  Scaffold _getUninstalledAppList() {
     final List<Row> appStructure = [];
-    final List<String> allApps = await nativeService.getUninstalledApps();
-
-    if (allApps.isEmpty) {
-      return const Scaffold(
-        body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text("No recoverable uninstalled apps found.",
-                style: TextStyle(fontSize: 18)),
-          ),
-        ),
-      );
-    }
+    final ObservableSet<String> allApps = appList.uninstalledApps;
 
     for (var packageName in allApps) {
       appStructure.add(
@@ -214,28 +197,11 @@ class _HomePageState extends State<HomePage> {
             children: [
               Scaffold(
                 body: Center(
-                  // Center is a layout widget. It takes a single child and positions it
-                  // in the middle of the parent.
-                  child: FutureBuilder(
-                    future: _buildAppList(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return snapshot.data as Widget;
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      }
-
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text("Loading apps ..."),
-                          SizedBox(height: 16.0),
-                          CircularProgressIndicator(),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+                    // Center is a layout widget. It takes a single child and positions it
+                    // in the middle of the parent.
+                    child: Observer(
+                  builder: (_) => _getAppList(),
+                )),
                 floatingActionButton: FloatingActionButton(
                   backgroundColor: Colors.redAccent,
                   onPressed: _uninstallApps,
@@ -247,28 +213,24 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Center(
-                // Center is a layout widget. It takes a single child and positions it
-                // in the middle of the parent.
-                child: FutureBuilder(
-                  future: _buildUninstalledAppList(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return snapshot.data as Widget;
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
-
+                  // Center is a layout widget. It takes a single child and positions it
+                  // in the middle of the parent.
+                  child: Observer(
+                builder: (_) {
+                  if (!appList.uninstalledAppsLoaded) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Text("Loading uninstalled apps... "),
+                        Text("Loading uninstalled apps ... "),
                         SizedBox(height: 16.0),
                         CircularProgressIndicator(),
                       ],
                     );
-                  },
-                ),
-              ),
+                  } else {
+                    return _getUninstalledAppList();
+                  }
+                },
+              )),
             ],
           ),
         ),
@@ -287,13 +249,15 @@ class _HomePageState extends State<HomePage> {
 
   void _uninstallApps() {
     for (var packageName in appList.selectedApps) {
-      nativeService.uninstallApp(packageName);
+      appList.uninstallApp(packageName);
+      appList.selectedApps.remove(packageName);
     }
   }
 
   void _reinstallApps() {
     for (var packageName in appList.selectedApps) {
-      nativeService.reinstallApp(packageName);
+      appList.reinstallApp(packageName);
+      appList.selectedApps.remove(packageName);
     }
   }
 

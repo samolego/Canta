@@ -4,11 +4,11 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.IPackageInstaller
+import android.content.pm.PackageInfo
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
-import android.os.Process
 import android.util.Log
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
@@ -46,7 +46,7 @@ class MainActivity : FlutterActivity() {
                 }
 
                 "getUninstalledApps" -> result.success(getUninstalledPackages())
-                "getInstalledApps" -> result.success(getInstalledPackages())
+                "getInstalledAppsInfo" -> result.success(getInstalledAppsInfo())
                 else -> result.notImplemented()
             }
         }
@@ -100,19 +100,25 @@ class MainActivity : FlutterActivity() {
             pm.getInstalledApplications(PackageManager.MATCH_UNINSTALLED_PACKAGES)
                 .map { app -> app.packageName }
         }.toSet()
-        val inp = getInstalledPackages().toSet()
+        val inp = getInstalledPackages().map { app -> app.packageName }.toSet()
 
         return (unp - inp).toList().sorted()
     }
 
-    private fun getInstalledPackages(): List<String> {
+    private fun getInstalledPackages(): List<PackageInfo> {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getInstalledPackages(
                 PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
             )
         } else {
             packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
-        }.map { app -> app.packageName }
+        }
+    }
+
+    private fun getInstalledAppsInfo(): List<Map<String, Any?>> {
+        val packageManager = packageManager
+        val installedApps = getInstalledPackages()
+        return installedApps.map { app -> AppInfo.fromPackageInfo(app, packageManager).toMap() }
     }
 
 
