@@ -1,3 +1,4 @@
+import 'dart:collection';
 
 import 'package:canta/app_info.dart';
 import 'package:mobx/mobx.dart';
@@ -5,69 +6,61 @@ import 'package:mobx/mobx.dart';
 import 'kotlin_bind.dart';
 
 class AppList {
-  static _createObservableSortedSet<T extends Comparable>() {
-    return ObservableSet<T>.splayTreeSetFrom([],
-        compare: (a, b) => a.compareTo(b));
+  static SplayTreeSet<T> _createSortedSet<T extends Comparable>() {
+    return SplayTreeSet<T>((a, b) => a.compareTo(b));
   }
 
   @observable
-  ObservableSet<String> selectedApps = _createObservableSortedSet<String>();
+  ObservableSet<String> selectedApps = ObservableSet<String>.splayTreeSetFrom(
+      [],
+      compare: (a, b) => a.compareTo(b));
 
-  @observable
-  ObservableSet<AppInfo> installedApps = _createObservableSortedSet<AppInfo>();
-  @observable
+  Set<AppInfo> installedApps = _createSortedSet<AppInfo>();
   bool installedAppsLoaded = false;
 
-  @observable
-  ObservableSet<String> uninstalledApps = _createObservableSortedSet<String>();
-  @observable
+  Set<String> uninstalledApps = _createSortedSet<String>();
   bool uninstalledAppsLoaded = false;
 
   KotlinBind kotlinBind = KotlinBind();
 
-  AppList() {
-    getInstalledApps();
-    getUninstalledApps();
-  }
+  AppList();
 
-  @action
-  void getInstalledApps() async {
+  Future<Set<AppInfo>> getInstalledApps() async {
     var apps = await kotlinBind.getInstalledApps();
     print("Loaded ${apps.length} apps!");
+    installedApps.clear();
     installedApps.addAll(apps);
     installedAppsLoaded = true;
+
+    return installedApps;
   }
 
-  @action
-  void getUninstalledApps() async {
+  Future<Set<String>> getUninstalledApps() async {
     List<String> apps = await kotlinBind.getUninstalledApps();
+    uninstalledApps.clear();
     uninstalledApps.addAll(apps);
     uninstalledAppsLoaded = true;
+
+    return uninstalledApps;
   }
 
-  @action
   void uninstallApp(String packageName) {
+    installedApps.removeWhere((app) => packageName == app.packageName);
     kotlinBind.uninstallApp(packageName);
 
-    if (installedAppsLoaded) {
-      installedApps.removeWhere((app) => packageName == app.packageName);
-    }
-
-    if (uninstalledAppsLoaded) {
-      uninstalledApps.add(packageName);
-    }
+    uninstalledApps.add(packageName);
   }
 
-  @action
-  void reinstallApp(String packageName) {
-    kotlinBind.reinstallApp(packageName);
+  Future<void> reinstallApp(String packageName) async {
+    await kotlinBind.reinstallApp(packageName);
 
+    uninstalledApps.remove(packageName);
     // Todo: improve this
     installedAppsLoaded = false;
     getInstalledApps();
+  }
 
-    if (uninstalledAppsLoaded) {
-      uninstalledApps.remove(packageName);
-    }
+  Future<AppInfo> getAppInfo(String packageName) async {
+    return kotlinBind.getAppInfo(packageName);
   }
 }

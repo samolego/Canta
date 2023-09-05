@@ -32,4 +32,4 @@ class AppInfo extends Comparable<AppInfo> {
 }
 
 /// See <a href="https://github.com/0x192/universal-android-debloater/wiki/FAQ#how-are-the-recommendations-chosen>recommendations</a>
-enum AppType { RECOMMENDED, ADVANCED, EXPERT, UNSAFE }
+enum AppType { RECOMMENDED, ADVANCED, EXPERT, UNSAFE, UNKNOWN }

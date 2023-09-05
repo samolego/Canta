@@ -54,6 +54,7 @@ class MainActivity : FlutterActivity() {
 
     private fun checkShizukuPermission(): Boolean {
         return if (!Shizuku.pingBinder()) {
+            Toast.makeText(this, "Shizuku is not available", Toast.LENGTH_LONG).show()
             false
         } else if (Shizuku.isPreV11()) {
             Toast.makeText(this, "Shizuku < 11 is not supported!", Toast.LENGTH_LONG).show()
@@ -127,10 +128,10 @@ class MainActivity : FlutterActivity() {
      * See <a href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=2144">PackageManagerShellCommand.java</a>
      * @param packageName package name of the app to uninstall
      */
-    private fun uninstallApp(packageName: String) {
+    private fun uninstallApp(packageName: String): Boolean {
         if (!checkShizukuPermission()) {
             // Shizuku is not available, handle accordingly
-            return
+            return false
         }
 
         val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
@@ -162,7 +163,7 @@ class MainActivity : FlutterActivity() {
         // 0x00000002 = PackageManager.DELETE_ALL_USERS
         val flags = if (isSystem) 0x00000004 else 0x00000002
 
-        try {
+        return try {
             HiddenApiBypass.invoke(
                 PackageInstaller::class.java,
                 packageInstaller,
@@ -171,10 +172,11 @@ class MainActivity : FlutterActivity() {
                 flags,
                 intent.intentSender
             )
+            true
         } catch (e: Exception) {
             e.printStackTrace()
+            false
         }
-
     }
 
     /**
@@ -182,10 +184,10 @@ class MainActivity : FlutterActivity() {
      * See <a href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=1408>PackageManagerShellCommand.java</a>
      * @param packageName package name of the app to reinstall (must preinstalled on the phone)
      */
-    private fun reinstallApp(packageName: String) {
+    private fun reinstallApp(packageName: String): Boolean {
         if (!checkShizukuPermission()) {
             // Shizuku is not available, handle accordingly
-            return
+            return false
         }
 
         val installReason = PackageManager.INSTALL_REASON_UNKNOWN
@@ -200,7 +202,7 @@ class MainActivity : FlutterActivity() {
         // PackageManager.INSTALL_ALL_WHITELIST_RESTRICTED_PERMISSIONS
         val installFlags = 0x00400000
 
-        try {
+        return try {
             HiddenApiBypass.invoke(
                 IPackageInstaller::class.java,
                 ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller(),
@@ -212,15 +214,17 @@ class MainActivity : FlutterActivity() {
                 0,
                 null
             )
+            true
         } catch (e: Exception) {
             e.printStackTrace()
+            false
         }
     }
 
     private fun getPackageInstaller(): PackageInstaller {
         val iPackageInstaller = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
         val root = Shizuku.getUid() == 0
-        val userId = if (root) Process.myUserHandle().hashCode() else 0
+        val userId = if (root) android.os.Process.myUserHandle().hashCode() else 0
 
         // The reason for use "com.android.shell" as installer package under adb is that
         // getMySessions will check installer package's owner

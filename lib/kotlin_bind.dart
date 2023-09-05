@@ -34,10 +34,24 @@ class KotlinBind {
     }
   }
 
-  void reinstallApp(String packageName) {
+  Future<void> reinstallApp(String packageName) async {
     // Call relevant Kotlin method
     try {
-      platform.invokeMethod('reinstallApp', {'packageName': packageName});
+      await platform.invokeMethod('reinstallApp', {'packageName': packageName});
     } on PlatformException {}
+  }
+
+  AppInfo getAppInfo(String packageName) {
+    try {
+      return AppInfo.create(
+          platform.invokeMethod('getAppInfo', {'packageName': packageName}));
+    } on PlatformException {
+      return AppInfo(
+          packageName.split(".").last,
+          Uint8List.fromList(List.generate(48 * 48 * 3, (index) => 0)),
+          packageName,
+          true,
+          AppType.UNKNOWN);
+    }
   }
 }

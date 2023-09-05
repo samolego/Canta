@@ -12,21 +12,11 @@ void main() {
 class CantaApp extends StatelessWidget {
   const CantaApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Canta',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.orange,
       ),
       home: const HomePage(title: 'Canta'),
@@ -36,15 +26,6 @@ class CantaApp extends StatelessWidget {
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -59,17 +40,47 @@ class _HomePageState extends State<HomePage> {
 
   _HomePageState();
 
-  Widget _getAppList() {
-    final List<Row> appStructure = [];
-    final allApps = appList.installedApps;
+  @observable
+  final ObservableList<Row> installedAppRows = ObservableList<Row>();
 
-    List<AppInfo> filteredApps = allApps.where((appInfo) {
+  @override
+  void initState() {
+    super.initState();
+    _buildInstalledAppList();
+    _buildUninstalledAppList();
+  }
+
+  Observer _getInstalledAppList() {
+    return Observer(
+      builder: (_) => installedAppRows.isEmpty
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text("Loading apps ..."),
+                SizedBox(height: 16.0),
+                CircularProgressIndicator(),
+              ],
+            )
+          : ListView.builder(
+              itemCount: installedAppRows.length,
+              itemBuilder: (_, index) => installedAppRows[index],
+            ),
+    );
+  }
+
+  @action
+  Future<void> _buildInstalledAppList() async {
+    installedAppRows.clear();
+    final Set<AppInfo> allApps = await appList.getInstalledApps();
+
+    Set<AppInfo> filteredApps = allApps.where((appInfo) {
       return filters.every((filter) => filter(appInfo));
-    }).toList();
+    }).toSet();
 
     for (var app in filteredApps) {
-      appStructure.add(
+      installedAppRows.add(
         Row(
+          key: Key(app.packageName),
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
@@ -92,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(app.name,
                                   style: const TextStyle(fontSize: 22)),
                             ),
@@ -116,65 +127,89 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
+  }
 
-    return ListView(children: appStructure);
+  @observable
+  final ObservableList<Row> uninstalledAppRows = ObservableList<Row>();
+
+  @action
+  Future<void> _buildUninstalledAppList() async {
+    uninstalledAppRows.clear();
+    final Set<String> allApps = await appList.getUninstalledApps();
+
+    for (var packageName in allApps) {
+      uninstalledAppRows.add(_constructUninstallRow(packageName));
+    }
   }
 
   Scaffold _getUninstalledAppList() {
-    final List<Row> appStructure = [];
-    final ObservableSet<String> allApps = appList.uninstalledApps;
+    return Scaffold(
+      body: Observer(
+        builder: (_) => uninstalledAppRows.isEmpty
+            ? const Scaffold(
+                body: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text("No recoverable uninstalled apps found.",
+                        style: TextStyle(fontSize: 18)),
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemCount: uninstalledAppRows.length,
+                itemBuilder: (_, index) => uninstalledAppRows[index]),
+      ),
+      floatingActionButton: Observer(
+          builder: (_) => appList.selectedApps.isEmpty
+              ? const SizedBox()
+              : FloatingActionButton(
+                  backgroundColor: Colors.green,
+                  onPressed: _reinstallApps,
+                  tooltip: 'Reinstall apps.',
+                  child: const Icon(
+                    Icons.install_mobile,
+                    color: Colors.white,
+                  ),
+                )),
+    );
+  }
 
-    for (var packageName in allApps) {
-      appStructure.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Row _constructUninstallRow(String packageName) {
+    return Row(
+      key: Key(packageName),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      const SizedBox(width: 10),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(packageName,
-                                  style: const TextStyle(fontSize: 18)),
-                            ),
-                          ],
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: Text(packageName,
+                              style: const TextStyle(fontSize: 18)),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-            Observer(
-              builder: (_) => Checkbox(
-                value: appList.selectedApps.contains(packageName),
-                onChanged: (value) => _toggleApp(value, packageName),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      );
-    }
-    return Scaffold(
-      body: ListView(children: appStructure),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.lightGreen,
-        onPressed: _reinstallApps,
-        tooltip: 'Reinstall apps.',
-        child: const Icon(
-          Icons.install_mobile,
-          color: Colors.white,
+        Observer(
+          builder: (_) => Checkbox(
+            value: appList.selectedApps.contains(packageName),
+            onChanged: (value) => _toggleApp(value, packageName),
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -197,13 +232,12 @@ class _HomePageState extends State<HomePage> {
             children: [
               Scaffold(
                 body: Center(
-                    // Center is a layout widget. It takes a single child and positions it
-                    // in the middle of the parent.
-                    child: Observer(
-                  builder: (_) => _getAppList(),
-                )),
+                  // Center is a layout widget. It takes a single child and positions it
+                  // in the middle of the parent.
+                  child: _getInstalledAppList(),
+                ),
                 floatingActionButton: FloatingActionButton(
-                  backgroundColor: Colors.redAccent,
+                  backgroundColor: Colors.red,
                   onPressed: _uninstallApps,
                   tooltip: 'Uninstall',
                   child: const Icon(
@@ -213,24 +247,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Center(
-                  // Center is a layout widget. It takes a single child and positions it
-                  // in the middle of the parent.
-                  child: Observer(
-                builder: (_) {
-                  if (!appList.uninstalledAppsLoaded) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("Loading uninstalled apps ... "),
-                        SizedBox(height: 16.0),
-                        CircularProgressIndicator(),
-                      ],
-                    );
-                  } else {
-                    return _getUninstalledAppList();
-                  }
-                },
-              )),
+                // Center is a layout widget. It takes a single child and positions it
+                // in the middle of the parent.
+                child: _getUninstalledAppList(),
+              ),
             ],
           ),
         ),
@@ -247,18 +267,30 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  @action
   void _uninstallApps() {
-    for (var packageName in appList.selectedApps) {
+    // Create a copy of selectedApps to avoid modifying it while iterating
+    final List<String> appsToRemove = List.from(appList.selectedApps);
+    for (var packageName in appsToRemove) {
+      installedAppRows
+          .removeWhere((element) => element.key == Key(packageName));
+      uninstalledAppRows.add(_constructUninstallRow(packageName));
+
       appList.uninstallApp(packageName);
-      appList.selectedApps.remove(packageName);
     }
+    appList.selectedApps.clear();
   }
 
-  void _reinstallApps() {
+  @action
+  Future<void> _reinstallApps() async {
     for (var packageName in appList.selectedApps) {
-      appList.reinstallApp(packageName);
-      appList.selectedApps.remove(packageName);
+      uninstalledAppRows
+          .removeWhere((element) => element.key == Key(packageName));
+      await appList.reinstallApp(packageName);
+
+      // Todo: add to installed section
     }
+    appList.selectedApps.clear();
   }
 
   getBadgeElement(bool systemApp) {
