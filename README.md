@@ -1,16 +1,19 @@
 # Canta
+![](https://github.com/samolego/Canta/blob/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
 
 Uninstall any app without root!
+Powered by [Shizuku](https://shizuku.rikka.app/).
 
-## Getting Started
+## How-to
+* install [Shizuku](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) & [activate it](https://shizuku.rikka.app/guide/setup/)
+* install Canta
+* select an app and click the trash button
 
-This project is a starting point for a Flutter application.
+## Features
+* auto detect previously uninstalled apps
+if you've already removed any using adb
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Thanks
+* Icon created on [icon kitchen](icon.kitchen)
+* @RikkaApps for Shizuku
