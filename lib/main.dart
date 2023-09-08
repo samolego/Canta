@@ -1,4 +1,6 @@
 import 'package:canta/applist.dart';
+import 'package:canta/filters.dart';
+import 'package:canta/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -10,22 +12,24 @@ void main() {
 }
 
 class CantaApp extends StatelessWidget {
+  static const String title = 'Canta';
+
   const CantaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Canta',
+      title: title,
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: const HomePage(title: 'Canta'),
+      home: const HomePage(title: title),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -36,9 +40,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final AppList appList = AppList();
 
-  List<Function(AppInfo)> filters = [];
-
-  _HomePageState();
+  @observable
+  ObservableList<Function(AppInfo)> filters = ObservableList();
 
   @observable
   final ObservableList<Row> installedAppRows = ObservableList<Row>();
@@ -103,12 +106,12 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Padding(
                               padding:
-                              const EdgeInsets.symmetric(vertical: 8.0),
+                                  const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(app.name,
                                   style: const TextStyle(fontSize: 22)),
                             ),
                             Text(app.packageName),
-                            getBadgeElement(app.isSystemApp),
+                            if (app.isSystemApp) getBadgeElement(),
                           ],
                         ),
                       ),
@@ -215,44 +218,76 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.auto_delete_outlined)),
-                Tab(icon: Icon(Icons.delete_forever)),
-              ],
-            ),
-            title: Text(widget.title, style: const TextStyle(fontSize: 24)),
-          ),
-          body: TabBarView(
-            children: [
-              Scaffold(
-                body: Center(
-                  // Center is a layout widget. It takes a single child and positions it
-                  // in the middle of the parent.
-                  child: _getInstalledAppList(),
-                ),
-                floatingActionButton: FloatingActionButton(
-                  backgroundColor: Colors.red,
-                  onPressed: _uninstallApps,
-                  tooltip: 'Uninstall',
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Center(
-                // Center is a layout widget. It takes a single child and positions it
-                // in the middle of the parent.
-                child: _getUninstalledAppList(),
-              ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.auto_delete_outlined)),
+              Tab(icon: Icon(Icons.delete_forever)),
             ],
           ),
+          title: Text(widget.title, style: const TextStyle(fontSize: 24)),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: AppSearch(appList: appList),
+                );
+              },
+              icon: const Icon(Icons.search),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: PopupMenuButton<String>(
+                child: const Icon(Icons.more_vert),
+                itemBuilder: (BuildContext context) => Filter.available
+                    .map((fltr) => PopupMenuItem<String>(
+                        value: fltr.name,
+                        child: Observer(
+                          builder: (_) => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(fltr.name),
+                              Checkbox(
+                                value: filters.contains(fltr.filterFn),
+                                onChanged: (value) =>
+                                    _toggleFilter(value, fltr),
+                              ),
+                            ],
+                          ),
+                        )))
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
+        body: TabBarView(
+          children: [
+            Scaffold(
+              body: Center(
+                // Center is a layout widget. It takes a single child and positions it
+                // in the middle of the parent.
+                child: _getInstalledAppList(),
+              ),
+              floatingActionButton: FloatingActionButton(
+                backgroundColor: Colors.red,
+                onPressed: _uninstallApps,
+                tooltip: 'Uninstall',
+                child: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Center(
+              // Center is a layout widget. It takes a single child and positions it
+              // in the middle of the parent.
+              child: _getUninstalledAppList(),
+            ),
+          ],
         ),
       ),
     );
@@ -264,6 +299,15 @@ class _HomePageState extends State<HomePage> {
       appList.selectedApps.add(packageName);
     } else {
       appList.selectedApps.remove(packageName);
+    }
+  }
+
+  @action
+  void _toggleFilter(bool? value, Filter filter) async {
+    if (value!) {
+      filters.add(filter.filterFn);
+    } else {
+      filters.remove(filter.filterFn);
     }
   }
 
@@ -293,20 +337,16 @@ class _HomePageState extends State<HomePage> {
     appList.selectedApps.clear();
   }
 
-  getBadgeElement(bool systemApp) {
-    if (systemApp) {
-      return Badge(
-        label: Row(
-          children: const [
-            Icon(Icons.android),
-            SizedBox(width: 8.0),
-            Text("System App"),
-          ],
-        ),
-        backgroundColor: Colors.redAccent,
-      );
-    } else {
-      return const SizedBox();
-    }
+  Badge getBadgeElement() {
+    return Badge(
+      label: Row(
+        children: const [
+          Icon(Icons.android),
+          SizedBox(width: 8.0),
+          Text("System App"),
+        ],
+      ),
+      backgroundColor: Colors.redAccent,
+    );
   }
 }
