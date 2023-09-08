@@ -1,6 +1,7 @@
 import 'package:canta/applist.dart';
 import 'package:canta/filters.dart';
 import 'package:canta/search.dart';
+import 'package:canta/tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -133,7 +134,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   @observable
-  final ObservableList<Row> uninstalledAppRows = ObservableList<Row>();
+  final ObservableList<Row> uninstalledAppRows =
+      ObservableList<InstallableAppTile>();
 
   @action
   Future<void> _buildUninstalledAppList() async {
@@ -141,7 +143,11 @@ class _HomePageState extends State<HomePage> {
     final Set<String> allApps = await appList.getUninstalledApps();
 
     for (var packageName in allApps) {
-      uninstalledAppRows.add(_constructUninstallRow(packageName));
+      uninstalledAppRows.add(InstallableAppTile(
+        packageName: packageName,
+        isSelected: () => appList.selectedApps.contains(packageName),
+        onCheck: _toggleApp,
+      ));
     }
   }
 
@@ -177,45 +183,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Row _constructUninstallRow(String packageName) {
-    return Row(
-      key: Key(packageName),
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const SizedBox(width: 10),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Text(packageName,
-                              style: const TextStyle(fontSize: 18)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Observer(
-          builder: (_) => Checkbox(
-            value: appList.selectedApps.contains(packageName),
-            onChanged: (value) => _toggleApp(value, packageName),
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -241,25 +208,31 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               onPressed: () {},
-              icon: PopupMenuButton<String>(
+              icon: PopupMenuButton<void>(
                 child: const Icon(Icons.more_vert),
-                itemBuilder: (BuildContext context) => Filter.available
-                    .map((fltr) => PopupMenuItem<String>(
-                        value: fltr.name,
-                        child: Observer(
-                          builder: (_) => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(fltr.name),
-                              Checkbox(
-                                value: filters.contains(fltr.filterFn),
-                                onChanged: (value) =>
-                                    _toggleFilter(value, fltr),
-                              ),
-                            ],
-                          ),
-                        )))
-                    .toList(),
+                itemBuilder: (BuildContext context) {
+                  final List<PopupMenuItem<void>> items = Filter.available
+                      .map((fltr) => PopupMenuItem<void>(
+                              child: Observer(
+                            builder: (_) => Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(fltr.name),
+                                Checkbox(
+                                  value: filters.contains(fltr.filterFn),
+                                  onChanged: (value) =>
+                                      _toggleFilter(value, fltr),
+                                ),
+                              ],
+                            ),
+                          )))
+                      .toList();
+                  items.add(PopupMenuItem<String>(
+                    child: const Text("Deselect all"),
+                    onTap: () => clearSelectedApps(),
+                  ));
+                  return items;
+                },
               ),
             ),
           ],
@@ -268,8 +241,6 @@ class _HomePageState extends State<HomePage> {
           children: [
             Scaffold(
               body: Center(
-                // Center is a layout widget. It takes a single child and positions it
-                // in the middle of the parent.
                 child: _getInstalledAppList(),
               ),
               floatingActionButton: FloatingActionButton(
@@ -283,8 +254,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Center(
-              // Center is a layout widget. It takes a single child and positions it
-              // in the middle of the parent.
               child: _getUninstalledAppList(),
             ),
           ],
@@ -315,10 +284,15 @@ class _HomePageState extends State<HomePage> {
   void _uninstallApps() {
     // Create a copy of selectedApps to avoid modifying it while iterating
     final List<String> appsToRemove = List.from(appList.selectedApps);
+
     for (var packageName in appsToRemove) {
       installedAppRows
           .removeWhere((element) => element.key == Key(packageName));
-      uninstalledAppRows.add(_constructUninstallRow(packageName));
+      uninstalledAppRows.add(InstallableAppTile(
+        packageName: packageName,
+        isSelected: () => appList.selectedApps.contains(packageName),
+        onCheck: _toggleApp,
+      ));
 
       appList.uninstallApp(packageName);
     }
@@ -348,5 +322,10 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.redAccent,
     );
+  }
+
+  @action
+  void clearSelectedApps() {
+    appList.selectedApps.clear();
   }
 }
