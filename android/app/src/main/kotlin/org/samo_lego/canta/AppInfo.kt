@@ -32,7 +32,7 @@ class AppInfo(
         map["version_name"] = versionName
         map["version_code"] = versionCode
         map["is_system_app"] = isSystemApp
-        map["app_type"] = 0
+        map["app_type"] = AppType.UNKNOWN.ordinal
 
         return map
     }

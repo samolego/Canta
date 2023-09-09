@@ -5,11 +5,13 @@ import 'app_info.dart';
 class KotlinBind {
   static const platform = MethodChannel('org.samo_lego.canta/native');
 
-  Future<void> uninstallApp(String packageName) async {
+  Future<bool> uninstallApp(String packageName) async {
     // Call relevant Kotlin method
     try {
-      await platform.invokeMethod('uninstallApp', {'packageName': packageName});
+      return await platform
+          .invokeMethod('uninstallApp', {'packageName': packageName});
     } on PlatformException {}
+    return false;
   }
 
   Future<List<String>> getUninstalledApps() async {
@@ -34,17 +36,19 @@ class KotlinBind {
     }
   }
 
-  Future<void> reinstallApp(String packageName) async {
+  Future<bool> reinstallApp(String packageName) async {
     // Call relevant Kotlin method
     try {
-      await platform.invokeMethod('reinstallApp', {'packageName': packageName});
+      return await platform
+          .invokeMethod('reinstallApp', {'packageName': packageName});
     } on PlatformException {}
+    return false;
   }
 
-  AppInfo getAppInfo(String packageName) {
+  Future<AppInfo> getAppInfo(String packageName) async {
     try {
-      return AppInfo.create(
-          platform.invokeMethod('getAppInfo', {'packageName': packageName}));
+      return AppInfo.create(await platform
+          .invokeMethod('getAppInfo', {'packageName': packageName}));
     } on PlatformException {
       return AppInfo(
           packageName.split(".").last,
@@ -52,6 +56,14 @@ class KotlinBind {
           packageName,
           true,
           AppType.UNKNOWN);
+    }
+  }
+
+  Future<bool> checkShizuku() async {
+    try {
+      return await platform.invokeMethod('checkShizuku');
+    } on PlatformException {
+      return false;
     }
   }
 }

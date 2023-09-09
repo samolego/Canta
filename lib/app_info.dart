@@ -29,7 +29,13 @@ class AppInfo extends Comparable<AppInfo> {
   int compareTo(AppInfo other) {
     return name.compareTo(other.name);
   }
+
+  @override
+  String toString() {
+    return "AppInfo{name=$name, packageName=$packageName, isSystemApp=$isSystemApp, appType=$appType}";
+  }
 }
 
 /// See <a href="https://github.com/0x192/universal-android-debloater/wiki/FAQ#how-are-the-recommendations-chosen>recommendations</a>
+/// WARNING: Order must be synchronized with Kotlin code (org.samo_lego.canta.AppType)
 enum AppType { RECOMMENDED, ADVANCED, EXPERT, UNSAFE, UNKNOWN }

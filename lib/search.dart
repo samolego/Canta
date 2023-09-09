@@ -1,7 +1,7 @@
 import 'package:canta/app_info.dart';
 import 'package:canta/applist.dart';
+import 'package:canta/tiles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
 class AppSearch extends SearchDelegate<String> {
@@ -48,20 +48,15 @@ class AppSearch extends SearchDelegate<String> {
   }
 
   Widget _filteredApps(Iterable<AppInfo> filtered) {
-    return ListView(
-      children: filtered
-          .map((app) => ListTile(
-                leading: Image.memory(app.icon),
-                title: Text(app.name),
-                subtitle: Text(app.packageName),
-                trailing: Observer(
-                  builder: (context) => Checkbox(
-                    value: appList.selectedApps.contains(app.packageName),
-                    onChanged: (value) => _toggleApp(value, app.packageName),
-                  ),
-                ),
-              ))
-          .toList(),
+    final apps = filtered
+        .map((app) => InstalledAppTile(
+            appInfo: app,
+            onCheck: (value) => _toggleApp(value, app.packageName),
+            isSelected: () => appList.selectedApps.contains(app.packageName)))
+        .toList();
+    return ListView.builder(
+      itemCount: apps.length,
+      itemBuilder: (BuildContext context, int index) => apps[index],
     );
   }
 

@@ -44,20 +44,31 @@ class AppList {
     return uninstalledApps;
   }
 
-  void uninstallApp(String packageName) {
-    installedApps.removeWhere((app) => packageName == app.packageName);
-    kotlinBind.uninstallApp(packageName);
+  Future<bool> uninstallApp(String packageName) async {
+    final success = await kotlinBind.uninstallApp(packageName);
 
+    if (!success) {
+      return false;
+    }
+
+    installedApps.removeWhere((app) => packageName == app.packageName);
     uninstalledApps.add(packageName);
+
+    return true;
   }
 
-  Future<void> reinstallApp(String packageName) async {
-    await kotlinBind.reinstallApp(packageName);
+  Future<AppInfo?> reinstallApp(String packageName) async {
+    final success = await kotlinBind.reinstallApp(packageName);
+
+    if (!success) {
+      return null;
+    }
 
     uninstalledApps.remove(packageName);
-    // Todo: improve this
-    installedAppsLoaded = false;
-    getInstalledApps();
+    final info = await getAppInfo(packageName);
+    installedApps.add(info);
+
+    return info;
   }
 
   Future<AppInfo> getAppInfo(String packageName) async {

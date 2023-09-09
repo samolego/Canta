@@ -8,4 +8,5 @@ enum class AppType(type: String) {
     ADVANCED("Advanced"),
     EXPERT("Expert"),
     UNSAFE("Unsafe"),
+    UNKNOWN("Unknown"),
 }

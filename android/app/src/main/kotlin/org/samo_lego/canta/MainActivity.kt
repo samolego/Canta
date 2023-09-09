@@ -29,26 +29,46 @@ class MainActivity : FlutterActivity() {
             flutterEngine.dartExecutor.binaryMessenger, CHANNEL
         ).setMethodCallHandler { call, result ->
             when (call.method) {
+                "checkShizuku" -> result.success(Shizuku.pingBinder() && !Shizuku.isPreV11())
                 "uninstallApp" -> {
-                    val packageName = call.argument<String>("packageName")
-                    if (packageName != null) {
-                        uninstallApp(packageName)
-                    }
-                    result.success(true)
+                    val packageName = call.argument<String>("packageName")!!
+                    result.success(uninstallApp(packageName))
                 }
 
                 "reinstallApp" -> {
-                    val packageName = call.argument<String>("packageName")
-                    if (packageName != null) {
-                        reinstallApp(packageName)
-                    }
-                    result.success(true)
+                    val packageName = call.argument<String>("packageName")!!
+                    result.success(reinstallApp(packageName))
+                }
+
+                "getAppInfo" -> {
+                    val packageName = call.argument<String>("packageName")!!
+                    val packageManager = packageManager
+                    val packageInfo = getInfoForPackage(packageName, packageManager)
+                    val appInfo = AppInfo.fromPackageInfo(packageInfo, packageManager)
+                    result.success(appInfo.toMap())
                 }
 
                 "getUninstalledApps" -> result.success(getUninstalledPackages())
                 "getInstalledAppsInfo" -> result.success(getInstalledAppsInfo())
                 else -> result.notImplemented()
             }
+        }
+    }
+
+    private fun getInfoForPackage(
+        packageName: String,
+        packageManager: PackageManager
+    ): PackageInfo {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getPackageInfo(
+                packageName,
+                PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
+            )
+        } else {
+            packageManager.getPackageInfo(
+                packageName,
+                PackageManager.GET_META_DATA
+            )
         }
     }
 
@@ -143,17 +163,7 @@ class MainActivity : FlutterActivity() {
         )
 
         val packageInstaller = getPackageInstaller()
-        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.getPackageInfo(
-                packageName,
-                PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
-            )
-        } else {
-            packageManager.getPackageInfo(
-                packageName,
-                PackageManager.GET_META_DATA
-            )
-        }
+        val packageInfo = getInfoForPackage(packageName, packageManager)
 
         val isSystem = (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
 

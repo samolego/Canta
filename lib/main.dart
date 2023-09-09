@@ -1,4 +1,5 @@
 import 'package:canta/applist.dart';
+import 'package:canta/dialogue.dart';
 import 'package:canta/filters.dart';
 import 'package:canta/search.dart';
 import 'package:canta/tiles.dart';
@@ -45,11 +46,17 @@ class _HomePageState extends State<HomePage> {
   ObservableList<Function(AppInfo)> filters = ObservableList();
 
   @observable
-  final ObservableList<Row> installedAppRows = ObservableList<Row>();
+  final ObservableList<InstalledAppTile> installedAppRows = ObservableList();
 
   @override
   void initState() {
     super.initState();
+    appList.kotlinBind.checkShizuku().then((value) {
+      if (!value) {
+        showDialog(context: context, builder: (_) => const ShizukuDialog());
+      }
+    });
+
     _buildInstalledAppList();
     _buildUninstalledAppList();
   }
@@ -82,60 +89,24 @@ class _HomePageState extends State<HomePage> {
     }).toSet();
 
     for (var app in filteredApps) {
-      installedAppRows.add(
-        Row(
-          key: Key(app.packageName),
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.memory(
-                          app.icon,
-                          width: 48,
-                          height: 48,
-                        ),
-                      ),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Text(app.name,
-                                  style: const TextStyle(fontSize: 22)),
-                            ),
-                            Text(app.packageName),
-                            if (app.isSystemApp) getBadgeElement(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Observer(
-              builder: (_) => Checkbox(
-                value: appList.selectedApps.contains(app.packageName),
-                onChanged: (value) => _toggleApp(value, app.packageName),
-              ),
-            ),
-          ],
-        ),
-      );
+      _addInstalledApp(app);
     }
   }
 
+  @action
+  void _addInstalledApp(AppInfo appInfo) {
+    installedAppRows.add(
+      InstalledAppTile(
+        appInfo: appInfo,
+        onCheck: (value) => _toggleApp(value, appInfo.packageName),
+        isSelected: () => appList.selectedApps.contains(appInfo.packageName),
+      ),
+    );
+  }
+
   @observable
-  final ObservableList<Row> uninstalledAppRows =
-      ObservableList<InstallableAppTile>();
+  final ObservableList<UninstalledAppTile> uninstalledAppRows =
+      ObservableList();
 
   @action
   Future<void> _buildUninstalledAppList() async {
@@ -143,10 +114,10 @@ class _HomePageState extends State<HomePage> {
     final Set<String> allApps = await appList.getUninstalledApps();
 
     for (var packageName in allApps) {
-      uninstalledAppRows.add(InstallableAppTile(
+      uninstalledAppRows.add(UninstalledAppTile(
         packageName: packageName,
         isSelected: () => appList.selectedApps.contains(packageName),
-        onCheck: _toggleApp,
+        onCheck: (value) => _toggleApp(value, packageName),
       ));
     }
   }
@@ -169,22 +140,24 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (_, index) => uninstalledAppRows[index]),
       ),
       floatingActionButton: Observer(
-          builder: (_) => appList.selectedApps.isEmpty
-              ? const SizedBox()
-              : FloatingActionButton(
-                  backgroundColor: Colors.green,
-                  onPressed: _reinstallApps,
-                  tooltip: 'Reinstall apps.',
-                  child: const Icon(
-                    Icons.install_mobile,
-                    color: Colors.white,
-                  ),
-                )),
+          builder: (_) =>
+              appList.selectedApps.isEmpty || appList.uninstalledApps.isEmpty
+                  ? const SizedBox()
+                  : FloatingActionButton(
+                      backgroundColor: Colors.green,
+                      onPressed: _reinstallApps,
+                      tooltip: 'Reinstall apps.',
+                      child: const Icon(
+                        Icons.install_mobile,
+                        color: Colors.white,
+                      ),
+                    )),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    //showDialog(context: context, builder: (_) => const WarningDialog());
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -281,20 +254,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   @action
-  void _uninstallApps() {
+  Future<void> _uninstallApps() async {
+    if (appList.selectedApps.isEmpty) {
+      return;
+    }
+
+    final acceptUninstall = await showDialog(
+        context: context,
+        builder: (_) => UninstallDialog(packages: appList.selectedApps));
+
+    if (!acceptUninstall || !await appList.kotlinBind.checkShizuku()) {
+      return;
+    }
+
     // Create a copy of selectedApps to avoid modifying it while iterating
     final List<String> appsToRemove = List.from(appList.selectedApps);
 
     for (var packageName in appsToRemove) {
+      final sucess = await appList.uninstallApp(packageName);
+
+      if (!sucess) {
+        continue;
+      }
+
       installedAppRows
-          .removeWhere((element) => element.key == Key(packageName));
-      uninstalledAppRows.add(InstallableAppTile(
+          .removeWhere((element) => element.appInfo.packageName == packageName);
+      uninstalledAppRows.add(UninstalledAppTile(
         packageName: packageName,
         isSelected: () => appList.selectedApps.contains(packageName),
-        onCheck: _toggleApp,
+        onCheck: (value) => _toggleApp(value, packageName),
       ));
-
-      appList.uninstallApp(packageName);
     }
     appList.selectedApps.clear();
   }
@@ -302,26 +291,17 @@ class _HomePageState extends State<HomePage> {
   @action
   Future<void> _reinstallApps() async {
     for (var packageName in appList.selectedApps) {
-      uninstalledAppRows
-          .removeWhere((element) => element.key == Key(packageName));
-      await appList.reinstallApp(packageName);
+      final appInfo = await appList.reinstallApp(packageName);
 
-      // Todo: add to installed section
+      if (appInfo == null) {
+        continue;
+      }
+
+      uninstalledAppRows
+          .removeWhere((element) => element.packageName == packageName);
+      _addInstalledApp(appInfo);
     }
     appList.selectedApps.clear();
-  }
-
-  Badge getBadgeElement() {
-    return Badge(
-      label: Row(
-        children: const [
-          Icon(Icons.android),
-          SizedBox(width: 8.0),
-          Text("System App"),
-        ],
-      ),
-      backgroundColor: Colors.redAccent,
-    );
   }
 
   @action
