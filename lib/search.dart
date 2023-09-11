@@ -1,6 +1,6 @@
-import 'package:canta/app_info.dart';
-import 'package:canta/applist.dart';
-import 'package:canta/tiles.dart';
+import 'package:canta/components/tiles.dart';
+import 'package:canta/util/app_info.dart';
+import 'package:canta/util/applist.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -50,7 +50,8 @@ class AppSearch extends SearchDelegate<String> {
   Widget _filteredApps(Iterable<AppInfo> filtered) {
     final apps = filtered
         .map((app) => InstalledAppTile(
-            appInfo: app,
+        appInfo: app,
+            visible: BoolWrap(true),
             onCheck: (value) => _toggleApp(value, app.packageName),
             isSelected: () => appList.selectedApps.contains(app.packageName)))
         .toList();

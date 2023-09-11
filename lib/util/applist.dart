@@ -1,9 +1,9 @@
 import 'dart:collection';
 
-import 'package:canta/app_info.dart';
+import 'package:canta/util/app_info.dart';
 import 'package:mobx/mobx.dart';
 
-import 'kotlin_bind.dart';
+import '../kotlin_bind.dart';
 
 class AppList {
   static SplayTreeSet<T> _createSortedSet<T extends Comparable>() {

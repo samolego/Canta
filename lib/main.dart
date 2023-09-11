@@ -1,13 +1,13 @@
-import 'package:canta/applist.dart';
-import 'package:canta/dialogue.dart';
+import 'package:canta/components/dialogue.dart';
+import 'package:canta/components/tiles.dart';
 import 'package:canta/filters.dart';
 import 'package:canta/search.dart';
-import 'package:canta/tiles.dart';
+import 'package:canta/util/applist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
-import 'app_info.dart';
+import 'util/app_info.dart';
 
 void main() {
   runApp(const CantaApp());
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   final AppList appList = AppList();
 
   @observable
-  ObservableList<Function(AppInfo)> filters = ObservableList();
+  final ObservableSet<Function(AppInfo)> filters = ObservableSet();
 
   @observable
   final ObservableList<InstalledAppTile> installedAppRows = ObservableList();
@@ -94,14 +94,33 @@ class _HomePageState extends State<HomePage> {
   }
 
   @action
-  void _addInstalledApp(AppInfo appInfo) {
-    installedAppRows.add(
-      InstalledAppTile(
-        appInfo: appInfo,
-        onCheck: (value) => _toggleApp(value, appInfo.packageName),
-        isSelected: () => appList.selectedApps.contains(appInfo.packageName),
-      ),
+  void _addInstalledApp(AppInfo appInfo, {bool ordered = false}) {
+    final InstalledAppTile tile = InstalledAppTile(
+      appInfo: appInfo,
+      visible: BoolWrap(filters.every((filter) => filter(appInfo))),
+      onCheck: (value) => _toggleApp(value, appInfo.packageName),
+      isSelected: () => appList.selectedApps.contains(appInfo.packageName),
     );
+
+    if (!ordered) {
+      installedAppRows.add(tile);
+      return;
+    }
+
+    // find appropriate index to insert app
+    int index = 0;
+    while (index < uninstalledAppRows.length &&
+        appInfo.packageName.compareTo(uninstalledAppRows[index].packageName) >=
+            0) {
+      index += 1;
+    }
+
+    if (index == uninstalledAppRows.length) {
+      installedAppRows.add(tile);
+      return;
+    }
+
+    installedAppRows.insert(index, tile);
   }
 
   @observable
@@ -141,17 +160,19 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: Observer(
           builder: (_) =>
-              appList.selectedApps.isEmpty || appList.uninstalledApps.isEmpty
-                  ? const SizedBox()
-                  : FloatingActionButton(
-                      backgroundColor: Colors.green,
-                      onPressed: _reinstallApps,
-                      tooltip: 'Reinstall apps.',
-                      child: const Icon(
-                        Icons.install_mobile,
-                        color: Colors.white,
-                      ),
-                    )),
+          appList.selectedApps.isEmpty ||
+                  appList
+                      .uninstalledApps.isEmpty // todo : selectedapps is shared
+              ? const SizedBox()
+              : FloatingActionButton(
+                  backgroundColor: Colors.green,
+                  onPressed: _reinstallApps,
+                  tooltip: 'Reinstall apps.',
+                  child: const Icon(
+                    Icons.install_mobile,
+                    color: Colors.white,
+                  ),
+                )),
     );
   }
 
@@ -251,6 +272,12 @@ class _HomePageState extends State<HomePage> {
     } else {
       filters.remove(filter.filterFn);
     }
+
+    // Rescan apps
+    for (var element in installedAppRows) {
+      final visible = filters.every((filter) => filter(element.appInfo));
+      element.visible.setValue(visible);
+    }
   }
 
   @action
@@ -279,11 +306,24 @@ class _HomePageState extends State<HomePage> {
 
       installedAppRows
           .removeWhere((element) => element.appInfo.packageName == packageName);
-      uninstalledAppRows.add(UninstalledAppTile(
+
+      final tile = UninstalledAppTile(
         packageName: packageName,
         isSelected: () => appList.selectedApps.contains(packageName),
         onCheck: (value) => _toggleApp(value, packageName),
-      ));
+      );
+
+      int index = 0;
+      while (index < uninstalledAppRows.length &&
+          packageName.compareTo(uninstalledAppRows[index].packageName) >= 0) {
+        index += 1;
+      }
+
+      if (index == uninstalledAppRows.length) {
+        uninstalledAppRows.add(tile);
+      } else {
+        uninstalledAppRows.insert(index, tile);
+      }
     }
     appList.selectedApps.clear();
   }
@@ -299,7 +339,7 @@ class _HomePageState extends State<HomePage> {
 
       uninstalledAppRows
           .removeWhere((element) => element.packageName == packageName);
-      _addInstalledApp(appInfo);
+      _addInstalledApp(appInfo, ordered: true);
     }
     appList.selectedApps.clear();
   }

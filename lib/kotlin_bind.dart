@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import 'app_info.dart';
+import 'util/app_info.dart';
 
 class KotlinBind {
   static const platform = MethodChannel('org.samo_lego.canta/native');

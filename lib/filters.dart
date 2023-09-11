@@ -1,4 +1,4 @@
-import 'package:canta/app_info.dart';
+import 'package:canta/util/app_info.dart';
 
 class Filter {
   final String name;
@@ -8,5 +8,6 @@ class Filter {
 
   static List<Filter> available = [
     Filter("System apps only", (app) => app.isSystemApp),
+    Filter("User apps only", (app) => !app.isSystemApp),
   ];
 }
