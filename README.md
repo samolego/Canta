@@ -15,5 +15,5 @@ if you've already removed any using adb
 
 
 ## Thanks
-* Icon created on [icon kitchen](icon.kitchen)
+* Icon created on [icon kitchen](https://icon.kitchen)
 * @RikkaApps for Shizuku
