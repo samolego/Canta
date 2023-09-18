@@ -16,7 +16,9 @@ void main() {
 class CantaApp extends StatelessWidget {
   static const String title = 'Canta';
 
-  const CantaApp({super.key});
+  const CantaApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +26,20 @@ class CantaApp extends StatelessWidget {
       title: title,
       theme: ThemeData(
         primarySwatch: Colors.orange,
+        primaryColorDark: Colors.deepOrange,
       ),
-      home: const HomePage(title: title),
+      home: HomePage(title: title),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
+  final Set<AppInfo> filteredHiddenApps = {};
+
+  HomePage({
+    super.key,
+    required this.title,
+  });
 
   final String title;
 
@@ -48,6 +56,10 @@ class _HomePageState extends State<HomePage> {
   @observable
   final ObservableList<InstalledAppTile> installedAppRows = ObservableList();
 
+  @observable
+  final ObservableList<UninstalledAppTile> uninstalledAppRows =
+      ObservableList();
+
   @override
   void initState() {
     super.initState();
@@ -59,24 +71,6 @@ class _HomePageState extends State<HomePage> {
 
     _buildInstalledAppList();
     _buildUninstalledAppList();
-  }
-
-  Observer _getInstalledAppList() {
-    return Observer(
-      builder: (_) => installedAppRows.isEmpty
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Loading apps ..."),
-                SizedBox(height: 16.0),
-                CircularProgressIndicator(),
-              ],
-            )
-          : ListView.builder(
-              itemCount: installedAppRows.length,
-              itemBuilder: (_, index) => installedAppRows[index],
-            ),
-    );
   }
 
   @action
@@ -94,38 +88,33 @@ class _HomePageState extends State<HomePage> {
   }
 
   @action
-  void _addInstalledApp(AppInfo appInfo, {bool ordered = false}) {
+  void _addInstalledApp(AppInfo appInfo, {bool last = true}) {
     final InstalledAppTile tile = InstalledAppTile(
       appInfo: appInfo,
-      visible: BoolWrap(filters.every((filter) => filter(appInfo))),
+      visible: filters.every((filter) => filter(appInfo)),
       onCheck: (value) => _toggleApp(value, appInfo.packageName),
       isSelected: () => appList.selectedApps.contains(appInfo.packageName),
     );
 
-    if (!ordered) {
+    if (last) {
       installedAppRows.add(tile);
       return;
     }
 
     // find appropriate index to insert app
     int index = 0;
-    while (index < uninstalledAppRows.length &&
-        appInfo.packageName.compareTo(uninstalledAppRows[index].packageName) >=
-            0) {
+    while (index < installedAppRows.length &&
+        appInfo.name.compareTo(installedAppRows[index].appInfo.name) >= 0) {
       index += 1;
     }
 
-    if (index == uninstalledAppRows.length) {
+    if (index == installedAppRows.length) {
       installedAppRows.add(tile);
       return;
     }
 
     installedAppRows.insert(index, tile);
   }
-
-  @observable
-  final ObservableList<UninstalledAppTile> uninstalledAppRows =
-      ObservableList();
 
   @action
   Future<void> _buildUninstalledAppList() async {
@@ -141,44 +130,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Scaffold _getUninstalledAppList() {
-    return Scaffold(
-      body: Observer(
-        builder: (_) => uninstalledAppRows.isEmpty
-            ? const Scaffold(
-                body: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text("No recoverable uninstalled apps found.",
-                        style: TextStyle(fontSize: 18)),
-                  ),
-                ),
-              )
-            : ListView.builder(
-                itemCount: uninstalledAppRows.length,
-                itemBuilder: (_, index) => uninstalledAppRows[index]),
-      ),
-      floatingActionButton: Observer(
-          builder: (_) =>
-          appList.selectedApps.isEmpty ||
-                  appList
-                      .uninstalledApps.isEmpty // todo : selectedapps is shared
-              ? const SizedBox()
-              : FloatingActionButton(
-                  backgroundColor: Colors.green,
-                  onPressed: _reinstallApps,
-                  tooltip: 'Reinstall apps.',
-                  child: const Icon(
-                    Icons.install_mobile,
-                    color: Colors.white,
-                  ),
-                )),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    //showDialog(context: context, builder: (_) => const WarningDialog());
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -221,10 +174,12 @@ class _HomePageState extends State<HomePage> {
                             ),
                           )))
                       .toList();
-                  items.add(PopupMenuItem<String>(
-                    child: const Text("Deselect all"),
-                    onTap: () => clearSelectedApps(),
-                  ));
+                  items.add(
+                    PopupMenuItem<String>(
+                      child: const Text("Deselect all apps"),
+                      onTap: () => clearSelectedApps(),
+                    ),
+                  );
                   return items;
                 },
               ),
@@ -233,22 +188,80 @@ class _HomePageState extends State<HomePage> {
         ),
         body: TabBarView(
           children: [
-            Scaffold(
-              body: Center(
-                child: _getInstalledAppList(),
-              ),
-              floatingActionButton: FloatingActionButton(
-                backgroundColor: Colors.red,
-                onPressed: _uninstallApps,
-                tooltip: 'Uninstall',
-                child: const Icon(
-                  Icons.delete,
-                  color: Colors.white,
+            Stack(
+              children: [
+                Center(
+                  child: Observer(
+                    builder: (_) => installedAppRows.isEmpty
+                        ? const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Loading apps ..."),
+                              SizedBox(height: 16.0),
+                              CircularProgressIndicator(),
+                            ],
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            itemCount: installedAppRows.length,
+                            itemBuilder: (_, index) => installedAppRows[index],
+                          ),
+                  ),
                 ),
-              ),
+                Positioned(
+                  bottom: 16.0,
+                  right: 16.0,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.red,
+                    onPressed: _uninstallApps,
+                    tooltip: 'Uninstall',
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Center(
-              child: _getUninstalledAppList(),
+              child: Stack(
+                children: [
+                  Observer(
+                    builder: (_) => uninstalledAppRows.isEmpty
+                        ? const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Text(
+                                  "No recoverable uninstalled apps found.",
+                                  style: TextStyle(fontSize: 18)),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: uninstalledAppRows.length,
+                            itemBuilder: (_, index) =>
+                                uninstalledAppRows[index]),
+                  ),
+                  Positioned(
+                    bottom: 16.0,
+                    right: 16.0,
+                    child: Observer(
+                      builder: (_) => appList.selectedApps.isEmpty ||
+                              appList.uninstalledApps
+                                  .isEmpty // todo : selectedapps is shared
+                          ? const Offstage()
+                          : FloatingActionButton(
+                              backgroundColor: Colors.green,
+                              onPressed: _reinstallApps,
+                              tooltip: 'Reinstall apps.',
+                              child: const Icon(
+                                Icons.install_mobile,
+                                color: Colors.white,
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -274,15 +287,43 @@ class _HomePageState extends State<HomePage> {
     }
 
     // Rescan apps
+    final Set<InstalledAppTile> filtered = {};
     for (var element in installedAppRows) {
       final visible = filters.every((filter) => filter(element.appInfo));
-      element.visible.setValue(visible);
+
+      if (!visible) {
+        filtered.add(element);
+      }
     }
+
+    for (var element in filtered) {
+      installedAppRows.remove(element);
+    }
+
+    // Check old filtered apps
+    final Set<AppInfo> hidden = filtered.map((e) => e.appInfo).toSet();
+    for (var element in widget.filteredHiddenApps) {
+      final visible = filters.every((filter) => filter(element));
+
+      if (visible) {
+        _addInstalledApp(element, last: false);
+      } else {
+        hidden.add(element);
+      }
+    }
+
+    widget.filteredHiddenApps.clear();
+    widget.filteredHiddenApps.addAll(hidden);
   }
 
   @action
   Future<void> _uninstallApps() async {
     if (appList.selectedApps.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("No apps selected."),
+        ),
+      );
       return;
     }
 
@@ -291,6 +332,11 @@ class _HomePageState extends State<HomePage> {
         builder: (_) => UninstallDialog(packages: appList.selectedApps));
 
     if (!acceptUninstall || !await appList.kotlinBind.checkShizuku()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Uninstall cancelled."),
+        ),
+      );
       return;
     }
 
@@ -326,6 +372,12 @@ class _HomePageState extends State<HomePage> {
       }
     }
     appList.selectedApps.clear();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Uninstall complete."),
+      ),
+    );
   }
 
   @action
@@ -339,9 +391,15 @@ class _HomePageState extends State<HomePage> {
 
       uninstalledAppRows
           .removeWhere((element) => element.packageName == packageName);
-      _addInstalledApp(appInfo, ordered: true);
+      _addInstalledApp(appInfo, last: false);
     }
     appList.selectedApps.clear();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Reinstall complete."),
+      ),
+    );
   }
 
   @action
