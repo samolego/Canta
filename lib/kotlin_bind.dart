@@ -41,8 +41,9 @@ class KotlinBind {
     try {
       return await platform
           .invokeMethod('reinstallApp', {'packageName': packageName});
-    } on PlatformException {}
-    return false;
+    } on PlatformException {
+      return false;
+    }
   }
 
   Future<AppInfo> getAppInfo(String packageName) async {
