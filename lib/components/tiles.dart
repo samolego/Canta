@@ -1,3 +1,6 @@
+import 'package:canta/components/badges/removal_safety_badge.dart';
+import 'package:canta/components/badges/system_badge.dart';
+import 'package:canta/components/dialogues/app_info_dialogue.dart';
 import 'package:canta/util/app_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -35,7 +38,6 @@ class UninstalledAppTile extends ListTile {
   }
 }
 
-
 class InstalledAppTile extends StatelessWidget {
   final AppInfo appInfo;
   final Function(bool?) onCheck;
@@ -51,7 +53,8 @@ class InstalledAppTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onCheck(!isSelected()),
+      onTap: () => showDialog(
+          context: context, builder: (_) => AppInfoDialogue(appInfo: appInfo)),
       child: ListTile(
         leading: Image.memory(appInfo.icon),
         title: Text(appInfo.name),
@@ -59,23 +62,26 @@ class InstalledAppTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(appInfo.packageName),
-            if (appInfo.isSystemApp)
-              const Badge(
-                label: Row(
-                  children: [
-                    Icon(Icons.android),
-                    Text("System"),
-                  ],
-                ),
-                backgroundColor: Colors.redAccent,
-              ),
+            Row(
+              children: [
+                if (appInfo.isSystemApp) ...[
+                  const SystemBadge(),
+                  const SizedBox(width: 8),
+                ],
+                if (appInfo.removalInfo != null)
+                  RemovalSafetyBadge(
+                    removalInfo: appInfo.removalInfo!,
+                  ),
+              ],
+            ),
           ],
         ),
         trailing: Observer(
-            builder: (context) => Checkbox(
-                  value: isSelected(),
-                  onChanged: (value) => onCheck(value),
-                )),
+          builder: (context) => Checkbox(
+            value: isSelected(),
+            onChanged: (value) => onCheck(value),
+          ),
+        ),
       ),
     );
   }

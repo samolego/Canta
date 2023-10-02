@@ -52,19 +52,19 @@ class KotlinBind {
           .invokeMethod('getAppInfo', {'packageName': packageName}));
     } on PlatformException {
       return AppInfo(
-          packageName.split(".").last,
-          Uint8List.fromList(List.generate(48 * 48 * 3, (index) => 0)),
-          packageName,
-          true,
-          AppType.UNKNOWN);
+        packageName.split(".").last,
+        Uint8List.fromList(List.generate(48 * 48 * 3, (index) => 0)),
+        packageName,
+        true,
+      );
     }
   }
 
-  Future<bool> checkShizuku() async {
+  Future<bool?> checkShizuku() async {
     try {
       return await platform.invokeMethod('checkShizuku');
     } on PlatformException {
-      return false;
+      return null;
     }
   }
 }

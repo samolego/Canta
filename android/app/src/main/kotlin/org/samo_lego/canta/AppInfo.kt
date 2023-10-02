@@ -11,16 +11,23 @@ import java.io.ByteArrayOutputStream
 class AppInfo(
     name: String?,
     private var packageName: String,
-    private var icon: ByteArray,
-    private var versionName: String,
-    private var versionCode: Long,
-    private var isSystemApp: Boolean,
+    private val icon: ByteArray,
+    private val versionName: String,
+    private val versionCode: Long,
+    private val isSystemApp: Boolean,
+    bloatData: BloatData?
 ) {
 
-    private var name: String
+    private val name: String
+    private val removalInfo: RemovalRecommendation?
+    private val installInfo: InstallData?
+    private val description: String?
 
     init {
         this.name = name ?: packageName.split(".").last()
+        this.installInfo = bloatData?.installData
+        this.removalInfo = bloatData?.removal
+        this.description = bloatData?.description
     }
 
 
@@ -32,19 +39,29 @@ class AppInfo(
         map["version_name"] = versionName
         map["version_code"] = versionCode
         map["is_system_app"] = isSystemApp
-        map["app_type"] = AppType.UNKNOWN.ordinal
+        map["install_info"] = installInfo?.ordinal
+        map["removal_info"] = removalInfo?.ordinal
+        map["description"] = description
 
         return map
     }
 
     companion object {
-        fun fromPackageInfo(packageInfo: PackageInfo, packageManager: PackageManager): AppInfo {
+        fun fromPackageInfo(
+            packageInfo: PackageInfo,
+            packageManager: PackageManager,
+            bloatList: Map<String, BloatData>
+        ): AppInfo {
             val icon = packageInfo.applicationInfo.loadIcon(packageManager)
             // Convert icon to byte array
             val drawableBytes = drawableToByteArray(icon)
 
+            val bloatData = bloatList[packageInfo.packageName]
+
+
             val isSystemApp =
                 (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+
 
             return AppInfo(
                 packageInfo.applicationInfo.loadLabel(packageManager).toString(),
@@ -52,7 +69,8 @@ class AppInfo(
                 drawableBytes,
                 packageInfo.versionName,
                 packageInfo.longVersionCode,
-                isSystemApp
+                isSystemApp,
+                bloatData
             )
         }
 

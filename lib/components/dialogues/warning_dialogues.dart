@@ -1,6 +1,4 @@
-import 'package:canta/util/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class WarningDialog extends StatelessWidget {
   const WarningDialog({super.key});
@@ -49,25 +47,3 @@ class UninstallDialog extends StatelessWidget {
   }
 }
 
-class ShizukuDialog extends StatelessWidget {
-  const ShizukuDialog({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text("Shizuku not installed"),
-      content: const Text(
-          "This app requires Shizuku to work. Please install Shizuku and activate it first."),
-      actions: [
-        TextButton(
-          onPressed: () => launchUrl(Constants.SHIZUKU_SITE),
-          child: const Text("Visit site"),
-        ),
-        TextButton(
-          onPressed: () => launchUrl(Constants.SHIZUKU_PLAYSTORE),
-          child: const Text("Install Shizuku"),
-        ),
-      ],
-    );
-  }
-}

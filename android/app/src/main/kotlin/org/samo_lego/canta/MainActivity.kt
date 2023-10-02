@@ -9,18 +9,58 @@ import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import org.json.JSONArray
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
+import java.io.File
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "org.samo_lego.canta/native"
     private val SHIZUKU_CODE = 0xCA07A
+    private val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
+    private lateinit var BLOAT_LIST: Map<String, BloatData>
+
+    // main
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        Thread {
+            // Load app data file
+            val uadList = File(filesDir, "uad_lists.json")
+            val config = File(filesDir, "canta.conf")
+            val bloatFetcher = BloatUtils()
+
+            val jsonList =
+                if (!uadList.exists() || !config.exists() || bloatFetcher.checkForUpdates(config)) {
+                    uadList.createNewFile()
+
+                    bloatFetcher.fetchBloatList(uadList, config)
+                } else {
+                    // Just read the file
+                    JSONArray(uadList.readText())
+                }
+
+            // Parse json to map
+            val bloatList = HashMap<String, BloatData>()
+
+            // Go through each entry in json
+            for (key in 0 until jsonList.length()) {
+                val json = jsonList.getJSONObject(key)
+                val bloatData = BloatData.fromJson(json)
+
+                bloatList[json.getString("id")] = bloatData
+            }
+
+            BLOAT_LIST = bloatList
+        }.start()
+    }
 
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -29,7 +69,17 @@ class MainActivity : FlutterActivity() {
             flutterEngine.dartExecutor.binaryMessenger, CHANNEL
         ).setMethodCallHandler { call, result ->
             when (call.method) {
-                "checkShizuku" -> result.success(Shizuku.pingBinder() && !Shizuku.isPreV11())
+                "checkShizuku" -> {
+                    val shizukuInstalled =
+                        getInstalledPackages().any { app -> app.packageName == SHIZUKU_PACKAGE_NAME }
+
+                    if (shizukuInstalled) {
+                        result.success(Shizuku.pingBinder() && !Shizuku.isPreV11())
+                    } else {
+                        result.success(null)
+                    }
+                }
+
                 "uninstallApp" -> {
                     val packageName = call.argument<String>("packageName")!!
                     result.success(uninstallApp(packageName))
@@ -44,7 +94,7 @@ class MainActivity : FlutterActivity() {
                     val packageName = call.argument<String>("packageName")!!
                     val packageManager = packageManager
                     val packageInfo = getInfoForPackage(packageName, packageManager)
-                    val appInfo = AppInfo.fromPackageInfo(packageInfo, packageManager)
+                    val appInfo = AppInfo.fromPackageInfo(packageInfo, packageManager, BLOAT_LIST)
                     result.success(appInfo.toMap())
                 }
 
@@ -139,7 +189,9 @@ class MainActivity : FlutterActivity() {
     private fun getInstalledAppsInfo(): List<Map<String, Any?>> {
         val packageManager = packageManager
         val installedApps = getInstalledPackages()
-        return installedApps.map { app -> AppInfo.fromPackageInfo(app, packageManager).toMap() }
+        return installedApps.map { app ->
+            AppInfo.fromPackageInfo(app, packageManager, BLOAT_LIST).toMap()
+        }
     }
 
 

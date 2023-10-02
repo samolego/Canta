@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:canta/util/app_info.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
 
 import '../kotlin_bind.dart';
@@ -27,7 +28,9 @@ class AppList {
 
   Future<Set<AppInfo>> getInstalledApps() async {
     var apps = await kotlinBind.getInstalledApps();
-    print("Loaded ${apps.length} apps!");
+    if (kDebugMode) {
+      print("Loaded ${apps.length} apps!");
+    }
     installedApps.clear();
     installedApps.addAll(apps);
     installedAppsLoaded = true;

@@ -1,8 +1,9 @@
-import 'package:canta/components/dialogue.dart';
+import 'package:canta/components/dialogues/shizuku_dialogues.dart';
+import 'package:canta/components/dialogues/warning_dialogues.dart';
 import 'package:canta/components/tiles.dart';
-import 'package:canta/filters.dart';
 import 'package:canta/search.dart';
 import 'package:canta/util/applist.dart';
+import 'package:canta/util/filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -66,8 +67,19 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     appList.kotlinBind.checkShizuku().then((value) {
-      if (!value) {
-        showDialog(context: context, builder: (_) => const ShizukuDialog());
+      final Widget? dialog;
+      if (value == null) {
+        // Shizuku is not even installed
+        dialog = const ShizukuNotInstalledDialog();
+      } else if (!value) {
+        dialog = const ShizukuNotActiveDialog();
+      } else {
+        // Shizuku is installed and active
+        dialog = null;
+      }
+
+      if (dialog != null) {
+        showDialog(context: context, builder: (_) => dialog!);
       }
     });
 
@@ -159,7 +171,8 @@ class _HomePageState extends State<HomePage> {
               icon: PopupMenuButton<void>(
                 child: const Icon(Icons.more_vert),
                 itemBuilder: (BuildContext context) {
-                  final List<PopupMenuItem<void>> items = Filter.available
+                  final List<PopupMenuItem<void>> items = Filter
+                      .availableFilters
                       .map((fltr) => PopupMenuItem<void>(
                               child: Observer(
                             builder: (_) => Row(
@@ -167,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Text(fltr.name),
                                 Checkbox(
-                                  value: filters.contains(fltr.filterFn),
+                                  value: filters.contains(fltr.shouldShow),
                                   onChanged: (value) =>
                                       _toggleFilter(value, fltr),
                                 ),
@@ -306,9 +319,9 @@ class _HomePageState extends State<HomePage> {
   @action
   void _toggleFilter(bool? value, Filter filter) async {
     if (value!) {
-      filters.add(filter.filterFn);
+      filters.add(filter.shouldShow);
     } else {
-      filters.remove(filter.filterFn);
+      filters.remove(filter.shouldShow);
     }
 
     // Rescan apps
@@ -356,7 +369,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (_) => UninstallDialog(packages: appList.selectedApps));
 
-    if (!acceptUninstall || !await appList.kotlinBind.checkShizuku()) {
+    if (!acceptUninstall || await appList.kotlinBind.checkShizuku() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Uninstall cancelled."),

@@ -1,17 +1,26 @@
 # Canta
+
 ![](https://github.com/samolego/Canta/blob/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
 
 Uninstall any app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/).
 
+Uses [universal debloat list](https://github.com/0x192/universal-android-debloater/) for badges.
+Please read the guide
+on [how recommendations are chosen](https://github.com/0x192/universal-android-debloater/wiki/FAQ#how-are-the-recommendations-chosen)
+.
+
 ## How-to
-* install [Shizuku](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) & [activate it](https://shizuku.rikka.app/guide/setup/)
+
+* install [Shizuku](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api)
+  & [activate it](https://shizuku.rikka.app/guide/setup/)
 * install Canta
 * select an app and click the trash button
 
 ## Features
+
 * auto detect previously uninstalled apps
-if you've already removed any using adb
+  if you've already removed any using adb
 
 ## Screenshots
 ![Screenshot_20231001-153839_Canta](https://github.com/samolego/Canta/assets/34912839/6c505647-7cee-45f2-8754-8d82e22bc001)
