@@ -80,6 +80,13 @@ class MainActivity : FlutterActivity() {
                     }
                 }
 
+                "launchShizuku" -> {
+                    // Open shizuku app
+                    val launchIntent =
+                        packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE_NAME)
+                    startActivity(launchIntent)
+                }
+
                 "uninstallApp" -> {
                     val packageName = call.argument<String>("packageName")!!
                     result.success(uninstallApp(packageName))

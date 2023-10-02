@@ -1,3 +1,4 @@
+import 'package:canta/kotlin_bind.dart';
 import 'package:canta/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,7 +28,9 @@ class ShizukuNotInstalledDialog extends StatelessWidget {
 }
 
 class ShizukuNotActiveDialog extends StatelessWidget {
-  const ShizukuNotActiveDialog({super.key});
+  final KotlinBind kotlinBind;
+
+  const ShizukuNotActiveDialog(this.kotlinBind, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +47,7 @@ class ShizukuNotActiveDialog extends StatelessWidget {
         TextButton(
           onPressed: () {
             // Launch shizuku app
+            kotlinBind.launchShizuku();
           },
           child: const Text("Activate Shizuku"),
         ),

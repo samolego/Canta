@@ -67,4 +67,10 @@ class KotlinBind {
       return null;
     }
   }
+
+  Future<void> launchShizuku() async {
+    try {
+      await platform.invokeMethod('launchShizuku');
+    } on PlatformException {}
+  }
 }

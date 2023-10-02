@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
         // Shizuku is not even installed
         dialog = const ShizukuNotInstalledDialog();
       } else if (!value) {
-        dialog = const ShizukuNotActiveDialog();
+        dialog = ShizukuNotActiveDialog(appList.kotlinBind);
       } else {
         // Shizuku is installed and active
         dialog = null;
