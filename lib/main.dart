@@ -49,6 +49,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AppList appList = AppList();
+  late final Future<void> _installedAppsLoading;
+  late final Future<void> _uninstalledAppsLoading;
 
   @observable
   final ObservableSet<Function(AppInfo)> filters = ObservableSet();
@@ -69,8 +71,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    _buildInstalledAppList();
-    _buildUninstalledAppList();
+    _installedAppsLoading = _buildInstalledAppList();
+    _uninstalledAppsLoading = _buildUninstalledAppList();
   }
 
   @action
@@ -91,7 +93,6 @@ class _HomePageState extends State<HomePage> {
   void _addInstalledApp(AppInfo appInfo, {bool last = true}) {
     final InstalledAppTile tile = InstalledAppTile(
       appInfo: appInfo,
-      visible: filters.every((filter) => filter(appInfo)),
       onCheck: (value) => _toggleApp(value, appInfo.packageName),
       isSelected: () => appList.selectedApps.contains(appInfo.packageName),
     );
@@ -191,22 +192,29 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Center(
-                  child: Observer(
-                    builder: (_) => installedAppRows.isEmpty
-                        ? const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Loading apps ..."),
-                              SizedBox(height: 16.0),
-                              CircularProgressIndicator(),
-                            ],
-                          )
-                        : ListView.builder(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            itemCount: installedAppRows.length,
-                            itemBuilder: (_, index) => installedAppRows[index],
-                          ),
-                  ),
+                  child: FutureBuilder<void>(
+                      future: _installedAppsLoading,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Observer(
+                            builder: (_) => ListView.builder(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              itemCount: installedAppRows.length,
+                              itemBuilder: (_, index) =>
+                                  installedAppRows[index],
+                            ),
+                          );
+                        }
+                        return const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Loading apps ..."),
+                            SizedBox(height: 16.0),
+                            CircularProgressIndicator(),
+                          ],
+                        );
+                      }),
                 ),
                 Positioned(
                   bottom: 16.0,
@@ -226,39 +234,56 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: Stack(
                 children: [
+                  FutureBuilder<void>(
+                      future: _uninstalledAppsLoading,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Observer(
+                            builder: (_) => uninstalledAppRows.isEmpty
+                                ? const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(16.0),
+                                      child: Text(
+                                          "No recoverable uninstalled apps found.",
+                                          style: TextStyle(fontSize: 18)),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    itemCount: uninstalledAppRows.length,
+                                    itemBuilder: (_, index) =>
+                                        uninstalledAppRows[index]),
+                          );
+                        }
+                        return const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Loading apps ..."),
+                            SizedBox(height: 16.0),
+                            CircularProgressIndicator(),
+                          ],
+                        );
+                      }),
                   Observer(
-                    builder: (_) => uninstalledAppRows.isEmpty
-                        ? const Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text(
-                                  "No recoverable uninstalled apps found.",
-                                  style: TextStyle(fontSize: 18)),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: uninstalledAppRows.length,
-                            itemBuilder: (_, index) =>
-                                uninstalledAppRows[index]),
-                  ),
-                  Positioned(
-                    bottom: 16.0,
-                    right: 16.0,
-                    child: Observer(
-                      builder: (_) => appList.selectedApps.isEmpty ||
-                              appList.uninstalledApps
-                                  .isEmpty // todo : selectedapps is shared
-                          ? const Offstage()
-                          : FloatingActionButton(
-                              backgroundColor: Colors.green,
-                              onPressed: _reinstallApps,
-                              tooltip: 'Reinstall apps.',
-                              child: const Icon(
-                                Icons.install_mobile,
-                                color: Colors.white,
-                              ),
-                            ),
-                    ),
+                    builder: (_) {
+                      if (appList.selectedApps.isEmpty ||
+                          appList.uninstalledApps.isEmpty) {
+                        return const Offstage();
+                      }
+
+                      return Positioned(
+                        bottom: 16.0,
+                        right: 16.0,
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.green,
+                          onPressed: _reinstallApps,
+                          tooltip: 'Reinstall apps.',
+                          child: const Icon(
+                            Icons.install_mobile,
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

@@ -51,7 +51,6 @@ class AppSearch extends SearchDelegate<String> {
     final apps = filtered
         .map((app) => InstalledAppTile(
         appInfo: app,
-            visible: true,
             onCheck: (value) => _toggleApp(value, app.packageName),
             isSelected: () => appList.selectedApps.contains(app.packageName)))
         .toList();

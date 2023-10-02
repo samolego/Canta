@@ -16,16 +16,19 @@ class UninstalledAppTile extends ListTile {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      key: Key(packageName),
-      title: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Text(packageName, style: const TextStyle(fontSize: 18)),
-      ),
-      trailing: Observer(
-        builder: (_) => Checkbox(
-          value: isSelected(),
-          onChanged: (value) => onCheck(value),
+    return InkWell(
+      onTap: () => onCheck(!isSelected()),
+      child: ListTile(
+        key: Key(packageName),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(packageName, style: const TextStyle(fontSize: 18)),
+        ),
+        trailing: Observer(
+          builder: (_) => Checkbox(
+            value: isSelected(),
+            onChanged: (value) => onCheck(value),
+          ),
         ),
       ),
     );
@@ -33,8 +36,7 @@ class UninstalledAppTile extends ListTile {
 }
 
 
-
-class InstalledAppTile extends StatefulWidget {
+class InstalledAppTile extends StatelessWidget {
   final AppInfo appInfo;
   final Function(bool?) onCheck;
   final bool Function() isSelected;
@@ -44,25 +46,20 @@ class InstalledAppTile extends StatefulWidget {
     required this.appInfo,
     required this.onCheck,
     required this.isSelected,
-    required bool visible,
   });
 
   @override
-  State<InstalledAppTile> createState() => _InstalledAppTileState();
-}
-
-class _InstalledAppTileState extends State<InstalledAppTile> {
-  @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      return ListTile(
-        leading: Image.memory(widget.appInfo.icon),
-        title: Text(widget.appInfo.name),
+    return InkWell(
+      onTap: () => onCheck(!isSelected()),
+      child: ListTile(
+        leading: Image.memory(appInfo.icon),
+        title: Text(appInfo.name),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.appInfo.packageName),
-            if (widget.appInfo.isSystemApp)
+            Text(appInfo.packageName),
+            if (appInfo.isSystemApp)
               const Badge(
                 label: Row(
                   children: [
@@ -74,11 +71,12 @@ class _InstalledAppTileState extends State<InstalledAppTile> {
               ),
           ],
         ),
-        trailing: Checkbox(
-          value: widget.isSelected(),
-          onChanged: (value) => widget.onCheck(value),
-        ),
-      );
-    });
+        trailing: Observer(
+            builder: (context) => Checkbox(
+                  value: isSelected(),
+                  onChanged: (value) => onCheck(value),
+                )),
+      ),
+    );
   }
 }
