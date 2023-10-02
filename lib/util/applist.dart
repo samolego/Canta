@@ -12,15 +12,18 @@ class AppList {
   }
 
   @observable
-  ObservableSet<String> selectedApps = ObservableSet<String>.splayTreeSetFrom(
-      [],
-      compare: (a, b) => a.compareTo(b));
+  ObservableSet<String> selectedAppsForRemoval =
+      ObservableSet<String>.splayTreeSetFrom([],
+          compare: (a, b) => a.compareTo(b));
+
+  @observable
+  ObservableSet<String> selectedAppsForInstallation =
+      ObservableSet<String>.splayTreeSetFrom([],
+          compare: (a, b) => a.compareTo(b));
 
   Set<AppInfo> installedApps = _createSortedSet<AppInfo>();
-  bool installedAppsLoaded = false;
 
   Set<String> uninstalledApps = _createSortedSet<String>();
-  bool uninstalledAppsLoaded = false;
 
   KotlinBind kotlinBind = KotlinBind();
 
@@ -33,7 +36,6 @@ class AppList {
     }
     installedApps.clear();
     installedApps.addAll(apps);
-    installedAppsLoaded = true;
 
     return installedApps;
   }
@@ -42,7 +44,6 @@ class AppList {
     List<String> apps = await kotlinBind.getUninstalledApps();
     uninstalledApps.clear();
     uninstalledApps.addAll(apps);
-    uninstalledAppsLoaded = true;
 
     return uninstalledApps;
   }

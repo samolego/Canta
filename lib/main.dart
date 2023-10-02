@@ -105,8 +105,9 @@ class _HomePageState extends State<HomePage> {
   void _addInstalledApp(AppInfo appInfo, {bool last = true}) {
     final InstalledAppTile tile = InstalledAppTile(
       appInfo: appInfo,
-      onCheck: (value) => _toggleApp(value, appInfo.packageName),
-      isSelected: () => appList.selectedApps.contains(appInfo.packageName),
+      onCheck: (value) => _toggleAppRemoval(value, appInfo.packageName),
+      isSelected: () =>
+          appList.selectedAppsForRemoval.contains(appInfo.packageName),
     );
 
     if (last) {
@@ -137,8 +138,9 @@ class _HomePageState extends State<HomePage> {
     for (var packageName in allApps) {
       uninstalledAppRows.add(UninstalledAppTile(
         packageName: packageName,
-        isSelected: () => appList.selectedApps.contains(packageName),
-        onCheck: (value) => _toggleApp(value, packageName),
+        isSelected: () =>
+            appList.selectedAppsForInstallation.contains(packageName),
+        onCheck: (value) => _toggleAppInstall(value, packageName),
       ));
     }
   }
@@ -278,8 +280,7 @@ class _HomePageState extends State<HomePage> {
                       }),
                   Observer(
                     builder: (_) {
-                      if (appList.selectedApps.isEmpty ||
-                          appList.uninstalledApps.isEmpty) {
+                      if (appList.selectedAppsForInstallation.isEmpty) {
                         return const Offstage();
                       }
 
@@ -308,11 +309,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   @action
-  void _toggleApp(bool? value, String packageName) {
+  void _toggleAppRemoval(bool? value, String packageName) {
     if (value!) {
-      appList.selectedApps.add(packageName);
+      appList.selectedAppsForRemoval.add(packageName);
     } else {
-      appList.selectedApps.remove(packageName);
+      appList.selectedAppsForRemoval.remove(packageName);
+    }
+  }
+
+  @action
+  void _toggleAppInstall(bool? value, String packageName) {
+    if (value!) {
+      appList.selectedAppsForInstallation.add(packageName);
+    } else {
+      appList.selectedAppsForInstallation.remove(packageName);
     }
   }
 
@@ -356,7 +366,7 @@ class _HomePageState extends State<HomePage> {
 
   @action
   Future<void> _uninstallApps() async {
-    if (appList.selectedApps.isEmpty) {
+    if (appList.selectedAppsForRemoval.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("No apps selected."),
@@ -367,7 +377,8 @@ class _HomePageState extends State<HomePage> {
 
     final acceptUninstall = await showDialog(
         context: context,
-        builder: (_) => UninstallDialog(packages: appList.selectedApps));
+        builder: (_) =>
+            UninstallDialog(packages: appList.selectedAppsForRemoval));
 
     if (!acceptUninstall || await appList.kotlinBind.checkShizuku() != true) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -379,7 +390,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     // Create a copy of selectedApps to avoid modifying it while iterating
-    final List<String> appsToRemove = List.from(appList.selectedApps);
+    final List<String> appsToRemove = List.from(appList.selectedAppsForRemoval);
 
     for (var packageName in appsToRemove) {
       final sucess = await appList.uninstallApp(packageName);
@@ -393,8 +404,9 @@ class _HomePageState extends State<HomePage> {
 
       final tile = UninstalledAppTile(
         packageName: packageName,
-        isSelected: () => appList.selectedApps.contains(packageName),
-        onCheck: (value) => _toggleApp(value, packageName),
+        isSelected: () =>
+            appList.selectedAppsForInstallation.contains(packageName),
+        onCheck: (value) => _toggleAppInstall(value, packageName),
       );
 
       int index = 0;
@@ -409,7 +421,7 @@ class _HomePageState extends State<HomePage> {
         uninstalledAppRows.insert(index, tile);
       }
     }
-    appList.selectedApps.clear();
+    appList.selectedAppsForRemoval.clear();
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -420,7 +432,7 @@ class _HomePageState extends State<HomePage> {
 
   @action
   Future<void> _reinstallApps() async {
-    for (var packageName in appList.selectedApps) {
+    for (var packageName in appList.selectedAppsForInstallation) {
       final appInfo = await appList.reinstallApp(packageName);
 
       if (appInfo == null) {
@@ -431,7 +443,7 @@ class _HomePageState extends State<HomePage> {
           .removeWhere((element) => element.packageName == packageName);
       _addInstalledApp(appInfo, last: false);
     }
-    appList.selectedApps.clear();
+    appList.selectedAppsForInstallation.clear();
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -442,6 +454,6 @@ class _HomePageState extends State<HomePage> {
 
   @action
   void clearSelectedApps() {
-    appList.selectedApps.clear();
+    appList.selectedAppsForRemoval.clear();
   }
 }

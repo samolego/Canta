@@ -44,15 +44,17 @@ class AppSearch extends SearchDelegate<String> {
         app.name.toLowerCase().contains(query.toLowerCase()) ||
         app.packageName.toLowerCase().contains(query.toLowerCase()));
 
-    return _filteredApps(filtered);
+    return _filteredApps(filtered, context);
   }
 
-  Widget _filteredApps(Iterable<AppInfo> filtered) {
+  Widget _filteredApps(Iterable<AppInfo> filtered, BuildContext context) {
     final apps = filtered
         .map((app) => InstalledAppTile(
-        appInfo: app,
-            onCheck: (value) => _toggleApp(value, app.packageName),
-            isSelected: () => appList.selectedApps.contains(app.packageName)))
+              appInfo: app,
+              onCheck: (value) => _toggleApp(value, app.packageName),
+              isSelected: () =>
+                  appList.selectedAppsForRemoval.contains(app.packageName),
+            ))
         .toList();
     return ListView.builder(
       itemCount: apps.length,
@@ -63,9 +65,9 @@ class AppSearch extends SearchDelegate<String> {
   @action
   void _toggleApp(bool? value, String packageName) {
     if (value!) {
-      appList.selectedApps.add(packageName);
+      appList.selectedAppsForRemoval.add(packageName);
     } else {
-      appList.selectedApps.remove(packageName);
+      appList.selectedAppsForRemoval.remove(packageName);
     }
   }
 }
