@@ -6,6 +6,7 @@ on:
       - published
 jobs:
   deployAndroid:
+    permissions: write-all
     name: 🤖📦🚀 Build & deploy Android release
     runs-on: ubuntu-latest
     steps:
