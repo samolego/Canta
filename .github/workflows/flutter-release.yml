@@ -14,14 +14,13 @@ jobs:
       - name: ⚙️ Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'zulu'
           java-version: "12.x"
           cache: 'gradle'
         id: java
       - name: ⚙️ Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.7.0"
+          flutter-version: "3.13.6"
           channel: 'stable'
           cache: true
         id: flutter
@@ -52,10 +51,6 @@ jobs:
           echo "Tag used version:"$GIT_TAG_NAME
       - name: Pub Get Packages
         run: flutter pub get
-      - name: ⚙️ Setup Melos
-        uses: bluefireteam/melos-action@v2
-      - name: ⚙️ Install dependencies for all packages
-        run: melos build:pub_get:all
       - name: 🤖📦 Create Android release
         run: |
           flutter build appbundle --release
