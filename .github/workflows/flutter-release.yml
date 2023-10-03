@@ -16,6 +16,7 @@ jobs:
         with:
           java-version: "12.x"
           cache: 'gradle'
+          distribution: 'adopt'
         id: java
       - name: ⚙️ Setup Flutter
         uses: subosito/flutter-action@v2
