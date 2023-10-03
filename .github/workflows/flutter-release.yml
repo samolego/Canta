@@ -1,0 +1,52 @@
+name: 📦🚀 Build & deploy Android app for an environment
+
+on:
+  release:
+    types:
+      - published
+jobs:
+  deployAndroid:
+    name: 🤖📦🚀 Build & deploy Android ${{ inputs.short-environment-name }} release
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+      - name: ⚙️ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: "12.x"
+          cache: 'gradle'
+        id: java
+      - name: ⚙️ Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.7.0"
+          channel: 'stable'
+          cache: true
+        id: flutter
+      - name: 🔐 Retrieve base64 keystore and decode it to a file
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+        run: echo $KEYSTORE_BASE64 | base64 --decode > "${{ github.workspace }}/android-keystore.jks"
+      - name: 📝🔐 Create keystore.properties file
+        env:
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/android/key.properties
+        run: |
+          echo '${{ inputs.flavor }}storeFile=${{ github.workspace }}/android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
+          echo '${{ inputs.flavor }}keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo '${{ inputs.flavor }}storePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo '${{ inputs.flavor }}keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+      - name: ⚙️ Setup Melos
+        uses: bluefireteam/melos-action@v2
+      - name: ⚙️ Install dependencies for all packages
+        run: melos build:pub_get:all
+      - name: 🤖📦 Create Android release
+        run: |
+          flutter build appbundle --release
+          flutter build apk --split-per-abi --release
+      - name: 🤖🚀 Upload to GitHub release
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: 'build/app/outputs/flutter-apk/*'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
