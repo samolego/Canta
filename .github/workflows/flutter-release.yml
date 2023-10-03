@@ -14,7 +14,7 @@ jobs:
       - name: ⚙️ Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: "20.x"
+          java-version: "19.x"
           cache: 'gradle'
           distribution: 'adopt'
         id: java
