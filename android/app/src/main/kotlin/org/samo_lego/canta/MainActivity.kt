@@ -25,13 +25,14 @@ class MainActivity : FlutterActivity() {
     private val CHANNEL = "org.samo_lego.canta/native"
     private val SHIZUKU_CODE = 0xCA07A
     private val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
-    private lateinit var BLOAT_LIST: Map<String, BloatData>
+    private val BLOAT_LIST: HashMap<String, BloatData> = HashMap()
+    private lateinit var SETUP_THREAD: Thread
 
     // main
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Thread {
+        SETUP_THREAD = Thread {
             // Load app data file
             val uadList = File(filesDir, "uad_lists.json")
             val config = File(filesDir, "canta.conf")
@@ -48,18 +49,15 @@ class MainActivity : FlutterActivity() {
                 }
 
             // Parse json to map
-            val bloatList = HashMap<String, BloatData>()
-
-            // Go through each entry in json
             for (key in 0 until jsonList.length()) {
                 val json = jsonList.getJSONObject(key)
                 val bloatData = BloatData.fromJson(json)
 
-                bloatList[json.getString("id")] = bloatData
+                BLOAT_LIST[json.getString("id")] = bloatData
             }
+        }
 
-            BLOAT_LIST = bloatList
-        }.start()
+        SETUP_THREAD.start()
     }
 
 
@@ -196,6 +194,7 @@ class MainActivity : FlutterActivity() {
     private fun getInstalledAppsInfo(): List<Map<String, Any?>> {
         val packageManager = packageManager
         val installedApps = getInstalledPackages()
+        SETUP_THREAD.join()
         return installedApps.map { app ->
             AppInfo.fromPackageInfo(app, packageManager, BLOAT_LIST).toMap()
         }

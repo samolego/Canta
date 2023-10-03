@@ -22,10 +22,11 @@ class AppInfoDialogue extends StatelessWidget {
             title: Text(appInfo.packageName),
           ),
           spacer,
-          if (appInfo.description != null) ...[
+          if (appInfo.description != null &&
+              appInfo.description!.isNotEmpty) ...[
             Text(appInfo.description!),
           ] else
-            const Text("No description available"),
+            const Text("No description provided"),
         ],
       ),
     );

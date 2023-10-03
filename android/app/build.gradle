@@ -68,8 +68,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.release
 
             /*proguardFiles(
@@ -80,7 +80,19 @@ android {
                     "proguard-rules.pro"
             )*/
         }
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    // List additional ProGuard rules for the given build type here. By default,
+                    // Android Studio creates and includes an empty rules file for you (located
+                    // at the root directory of each module).
+                    "proguard-rules.pro"
+            )
+        }
     }
+    namespace 'org.samo_lego.canta'
 }
 
 flutter {
