@@ -26,9 +26,12 @@ jobs:
           cache: true
         id: flutter
       - name: 🔐 Retrieve base64 keystore and decode it to a file
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
-        run: echo -n $KEYSTORE_BASE64 | base64 --decode > "${{ github.workspace }}/android-keystore.jks"
+        id: write_file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: "android-keystore.jks"
+          fileDir: "${{ github.workspace }}/"
+          encodedString: ${{ secrets.KEYSTORE_FILE_BASE64 }}
       - name: 📝🔐 Create keystore.properties file
         env:
           KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/android/key.properties
