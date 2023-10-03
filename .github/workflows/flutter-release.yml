@@ -6,7 +6,7 @@ on:
       - published
 jobs:
   deployAndroid:
-    name: 🤖📦🚀 Build & deploy Android ${{ inputs.short-environment-name }} release
+    name: 🤖📦🚀 Build & deploy Android release
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repository
@@ -33,10 +33,10 @@ jobs:
         env:
           KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/android/key.properties
         run: |
-          echo '${{ inputs.flavor }}storeFile=${{ github.workspace }}/android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
-          echo '${{ inputs.flavor }}keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
-          echo '${{ inputs.flavor }}storePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
-          echo '${{ inputs.flavor }}keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'storeFile=${{ github.workspace }}/android-keystore.jks' > $KEYSTORE_PROPERTIES_PATH
+          echo 'keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'storePassword=${{ secrets.KEYSTORE_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
+          echo 'keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}' >> $KEYSTORE_PROPERTIES_PATH
       - name: ⚙️ Setup Melos
         uses: bluefireteam/melos-action@v2
       - name: ⚙️ Install dependencies for all packages
