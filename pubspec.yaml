@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
-  path_provider: ^2.1.0
   url_launcher: ^6.1.11
 
 dev_dependencies:
