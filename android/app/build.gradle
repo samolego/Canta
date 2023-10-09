@@ -14,15 +14,15 @@ if (flutterRoot == null) {
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0.0+1000000'
+    flutterVersionName = '1.0.0'
 }
+print("Version name: $flutterVersionName\n")
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = flutterVersionName.split("\\+")[1].toInteger()
-
-    print("Version code: $flutterVersionCode")
+    flutterVersionCode = '1'
 }
+print("Version code: $flutterVersionCode\n")
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
