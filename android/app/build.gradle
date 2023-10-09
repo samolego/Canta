@@ -14,15 +14,12 @@ if (flutterRoot == null) {
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0.0'
+    flutterVersionName = '1.0.0+1000000'
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    def patchNum = flutterVersionName.split("\\.")[2].toInteger()
-    def minorNum = flutterVersionName.split("\\.")[1].toInteger() * 1000
-    def majorNum = flutterVersionName.split("\\.")[0].toInteger() * 1000000
-    flutterVersionCode = majorNum + minorNum + patchNum
+    flutterVersionCode = flutterVersionName.split("\\+")[1].toInteger()
 
     print("Version code: $flutterVersionCode")
 }
