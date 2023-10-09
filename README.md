@@ -14,7 +14,7 @@ on [how recommendations are chosen](https://github.com/0x192/universal-android-d
 
 * install [Shizuku](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api)
   & [activate it](https://shizuku.rikka.app/guide/setup/)
-  * you can follow [this XDA guide for more in-depth explanation](https://www.androidpolice.com/how-to-use-shizuku-for-adb-rootless-mods-on-any-android-device/)
+  * you can follow [this Android Police guide for more in-depth explanation](https://www.androidpolice.com/how-to-use-shizuku-for-adb-rootless-mods-on-any-android-device/)
 * install Canta
 * select an app and click the trash button
 
