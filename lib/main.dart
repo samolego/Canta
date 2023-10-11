@@ -195,8 +195,16 @@ class _HomePageState extends State<HomePage> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               itemCount: installedAppRows.length,
-                              itemBuilder: (_, index) =>
-                                  installedAppRows[index],
+                              itemBuilder: (_, index) {
+                                if (index == installedAppRows.length - 1) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 64.0),
+                                    child: installedAppRows[index],
+                                  );
+                                }
+                                return installedAppRows[index];
+                              },
                             ),
                           );
                         }
@@ -225,61 +233,68 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            Center(
-              child: Stack(
-                children: [
-                  FutureBuilder<void>(
-                      future: _uninstalledAppsLoading,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return Observer(
-                            builder: (_) => uninstalledAppRows.isEmpty
-                                ? const Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Text(
-                                          "No recoverable uninstalled apps found.",
-                                          style: TextStyle(fontSize: 18)),
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    itemCount: uninstalledAppRows.length,
-                                    itemBuilder: (_, index) =>
-                                        uninstalledAppRows[index]),
-                          );
-                        }
-                        return const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Loading apps ..."),
-                            SizedBox(height: 16.0),
-                            CircularProgressIndicator(),
-                          ],
+            Stack(
+              children: [
+                FutureBuilder<void>(
+                    future: _uninstalledAppsLoading,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return Observer(
+                          builder: (_) => uninstalledAppRows.isEmpty
+                              ? const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Text(
+                                        "No recoverable uninstalled apps found.",
+                                        style: TextStyle(fontSize: 18)),
+                                  ),
+                                )
+                              : ListView.builder(
+                                  itemCount: uninstalledAppRows.length,
+                                  itemBuilder: (_, index) {
+                                    if (index ==
+                                        uninstalledAppRows.length - 1) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 64.0),
+                                        child: uninstalledAppRows[index],
+                                      );
+                                    }
+                                    return uninstalledAppRows[index];
+                                  }),
                         );
-                      }),
-                  Observer(
-                    builder: (_) {
-                      if (appList.selectedAppsForInstallation.isEmpty) {
-                        return const Offstage();
                       }
-
-                      return Positioned(
-                        bottom: 16.0,
-                        right: 16.0,
-                        child: FloatingActionButton(
-                          backgroundColor: Colors.green,
-                          onPressed: _reinstallApps,
-                          tooltip: 'Reinstall apps.',
-                          child: const Icon(
-                            Icons.install_mobile,
-                            color: Colors.white,
-                          ),
-                        ),
+                      return const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Loading apps ..."),
+                          SizedBox(height: 16.0),
+                          CircularProgressIndicator(),
+                        ],
                       );
-                    },
-                  ),
-                ],
-              ),
+                    }),
+                Observer(
+                  builder: (_) {
+                    if (appList.selectedAppsForInstallation.isEmpty) {
+                      return const Offstage();
+                    }
+
+                    return Positioned(
+                      bottom: 16.0,
+                      right: 16.0,
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.green,
+                        onPressed: _reinstallApps,
+                        tooltip: 'Reinstall apps.',
+                        child: const Icon(
+                          Icons.install_mobile,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

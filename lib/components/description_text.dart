@@ -1,10 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DescriptionText extends StatelessWidget {
-  static final _linkRegExp = RegExp(r'https?://[^\s)]+');
+  static final _linkRegExp = RegExp(r'https?://[^\s)\n]+');
 
   final String text;
 
@@ -15,22 +14,22 @@ class DescriptionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Parse text for links, build a list of TextSpans
-
+    // Parse text for links, build a list of RichTexts
     final descriptionTexts = <Widget>[];
     final matches = _linkRegExp.allMatches(text);
 
-    for (final match in matches) {
+    var lastStart = 0;
+    for (int i = 0; i < matches.length; ++i) {
+      final match = matches.elementAt(i);
       final url = match.group(0);
-      if (kDebugMode) {
-        print("Detected url: $url");
-      }
+      final preText = text.substring(lastStart, match.start);
+      final end =
+          i + 1 < matches.length ? matches.elementAt(i + 1).start : text.length;
+      final postText = text.substring(match.end, end);
 
-      final start = match.start;
-      final end = match.end;
       descriptionTexts.add(RichText(
         text: TextSpan(
-          text: text.substring(0, start),
+          text: preText,
           style: const TextStyle(color: Colors.black),
           children: [
             TextSpan(
@@ -40,12 +39,14 @@ class DescriptionText extends StatelessWidget {
                 ..onTap = () => launchUrl(Uri.parse(url!)),
             ),
             TextSpan(
-              text: text.substring(end),
+              text: postText,
               style: const TextStyle(color: Colors.black),
             ),
           ],
         ),
       ));
+
+      lastStart = end;
     }
 
     if (matches.isEmpty) {

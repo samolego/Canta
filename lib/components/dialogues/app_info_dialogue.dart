@@ -41,7 +41,12 @@ class AppInfoDialogue extends StatelessWidget {
           spacer,
           if (appInfo.description != null &&
               appInfo.description!.isNotEmpty) ...[
-            DescriptionText(text: appInfo.description!),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 200),
+              child: SingleChildScrollView(
+                child: DescriptionText(text: appInfo.description!),
+              ),
+            ),
           ] else
             const Text("No description provided"),
         ],
