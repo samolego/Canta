@@ -114,7 +114,7 @@ dependencies {
 }
 
 // Map for the version code that gives each ABI a value.
-ext.abiCodes = ['arm64-v8a': 0, 'armeabi-v7a': 1, x86_64: 2]
+ext.abiCodes = ['armeabi-v7a': 1, x86_64: 2, 'arm64-v8a': 3]
 
 // For per-density APKs, create a similar map:
 // ext.densityCodes = ['mdpi': 1, 'hdpi': 2, 'xhdpi': 3]
@@ -145,8 +145,7 @@ android.applicationVariants.all { variant ->
             // Assigns the new version code to versionCodeOverride, which changes the
             // version code for only the output APK, not for the variant itself. Skipping
             // this step causes Gradle to use the value of variant.versionCode for the APK.
-            output.versionCodeOverride =
-                    baseAbiVersionCode * 1000 + variant.versionCode
+            output.versionCodeOverride = variant.versionCode * 10 + baseAbiVersionCode
         }
     }
 }
