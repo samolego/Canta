@@ -1,5 +1,6 @@
 import 'package:canta/components/dialogues/shizuku_dialogues.dart';
 import 'package:canta/components/dialogues/warning_dialogues.dart';
+import 'package:canta/components/more_menu.dart';
 import 'package:canta/components/tiles.dart';
 import 'package:canta/search.dart';
 import 'package:canta/util/applist.dart';
@@ -50,11 +51,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AppList appList = AppList();
+  Filter? _lastRemovalFilter;
   late final Future<void> _installedAppsLoading;
   late final Future<void> _uninstalledAppsLoading;
 
   @observable
-  final ObservableSet<Function(AppInfo)> filters = ObservableSet();
+  final ObservableSet<Filter> filters = ObservableSet();
 
   @observable
   final ObservableList<InstalledAppTile> installedAppRows = ObservableList();
@@ -93,7 +95,7 @@ class _HomePageState extends State<HomePage> {
     final Set<AppInfo> allApps = await appList.getInstalledApps();
 
     Set<AppInfo> filteredApps = allApps.where((appInfo) {
-      return filters.every((filter) => filter(appInfo));
+      return filters.every((filter) => filter.shouldShow(appInfo));
     }).toSet();
 
     for (var app in filteredApps) {
@@ -170,35 +172,12 @@ class _HomePageState extends State<HomePage> {
             ),
             IconButton(
               onPressed: () {},
-              icon: PopupMenuButton<void>(
-                child: const Icon(Icons.more_vert),
-                itemBuilder: (BuildContext context) {
-                  final List<PopupMenuItem<void>> items = Filter
-                      .availableFilters
-                      .map((fltr) => PopupMenuItem<void>(
-                              child: Observer(
-                            builder: (_) => Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(fltr.name),
-                                Checkbox(
-                                  value: filters.contains(fltr.shouldShow),
-                                  onChanged: (value) =>
-                                      _toggleFilter(value, fltr),
-                                ),
-                              ],
-                            ),
-                          )))
-                      .toList();
-                  items.add(
-                    PopupMenuItem<String>(
-                      child: const Text("Deselect all apps"),
-                      onTap: () => clearSelectedApps(),
-                    ),
-                  );
-                  return items;
-                },
-              ),
+              icon: MoreMenu(
+                  filters: filters,
+                  clearSelectedApps: clearSelectedApps,
+                  toggleFilter: _toggleFilter,
+                  removalTypeFilter: _toggleRemovalTypeFilter,
+                  selectedRemovalTypeFilter: _lastRemovalFilter),
             ),
           ],
         ),
@@ -327,17 +306,35 @@ class _HomePageState extends State<HomePage> {
   }
 
   @action
+  void _toggleRemovalTypeFilter(Filter? filter) {
+    if (filter != _lastRemovalFilter) {
+      filters.remove(_lastRemovalFilter);
+      if (filter != null) {
+        filters.add(filter);
+      }
+
+      _lastRemovalFilter = filter;
+      _rescanApps();
+    }
+  }
+
+  @action
   void _toggleFilter(bool? value, Filter filter) async {
     if (value!) {
-      filters.add(filter.shouldShow);
+      filters.add(filter);
     } else {
-      filters.remove(filter.shouldShow);
+      filters.remove(filter);
     }
 
-    // Rescan apps
+    _rescanApps();
+  }
+
+  @action
+  void _rescanApps() {
     final Set<InstalledAppTile> filtered = {};
     for (var element in installedAppRows) {
-      final visible = filters.every((filter) => filter(element.appInfo));
+      final visible =
+          filters.every((filter) => filter.shouldShow(element.appInfo));
 
       if (!visible) {
         filtered.add(element);
@@ -351,7 +348,7 @@ class _HomePageState extends State<HomePage> {
     // Check old filtered apps
     final Set<AppInfo> hidden = filtered.map((e) => e.appInfo).toSet();
     for (var element in widget.filteredHiddenApps) {
-      final visible = filters.every((filter) => filter(element));
+      final visible = filters.every((filter) => filter.shouldShow(element));
 
       if (visible) {
         _addInstalledApp(element, last: false);

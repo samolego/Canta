@@ -54,7 +54,12 @@ class InstalledAppTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => showDialog(
-          context: context, builder: (_) => AppInfoDialogue(appInfo: appInfo)),
+        context: context,
+        builder: (_) => AppInfoDialogue(
+          appInfo: appInfo,
+          onSelect: () => onCheck(true),
+        ),
+      ),
       child: ListTile(
         leading: Image.memory(appInfo.icon),
         title: Text(appInfo.name),
