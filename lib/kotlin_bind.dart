@@ -60,17 +60,27 @@ class KotlinBind {
     }
   }
 
-  Future<bool?> checkShizuku() async {
+  Future<bool?> checkShizukuActive() async {
     try {
-      return await platform.invokeMethod('checkShizuku');
+      return await platform.invokeMethod('checkShizukuActive');
     } on PlatformException {
       return null;
+    }
+  }
+
+  Future<bool> checkShizukuPermission() async {
+    try {
+      return await platform.invokeMethod('checkShizukuPermission');
+    } on PlatformException {
+      return false;
     }
   }
 
   Future<void> launchShizuku() async {
     try {
       await platform.invokeMethod('launchShizuku');
-    } on PlatformException {}
+    } on PlatformException {
+      return;
+    }
   }
 }

@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    appList.kotlinBind.checkShizuku().then((value) {
+    appList.kotlinBind.checkShizukuActive().then((value) {
       final Widget? dialog;
       if (value == null) {
         // Shizuku is not even installed
@@ -406,7 +406,8 @@ class _HomePageState extends State<HomePage> {
         builder: (_) =>
             UninstallDialog(packages: appList.selectedAppsForRemoval));
 
-    if (!acceptUninstall || await appList.kotlinBind.checkShizuku() != true) {
+    if (!acceptUninstall ||
+        !await appList.kotlinBind.checkShizukuPermission()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Uninstall cancelled."),

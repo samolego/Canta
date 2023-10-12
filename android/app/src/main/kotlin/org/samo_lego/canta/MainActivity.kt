@@ -20,6 +20,7 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
 import java.io.File
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -30,6 +31,7 @@ class MainActivity : FlutterActivity() {
     private val BLOAT_LIST: HashMap<String, BloatData> = HashMap()
     private val flutterExecutor: ExecutorService = Executors.newCachedThreadPool()
     private lateinit var SETUP_THREAD: Thread
+    private var shizukuPermissionFuture = CompletableFuture<Boolean>()
 
     // main
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,8 +61,14 @@ class MainActivity : FlutterActivity() {
                 BLOAT_LIST[json.getString("id")] = bloatData
             }
         }
-
         SETUP_THREAD.start()
+
+        Shizuku.addRequestPermissionResultListener { requestCode, grantResult ->
+            if (requestCode == SHIZUKU_CODE) {
+                val granted = grantResult == PackageManager.PERMISSION_GRANTED
+                shizukuPermissionFuture.complete(granted)
+            }
+        }
     }
 
 
@@ -71,7 +79,7 @@ class MainActivity : FlutterActivity() {
         ).setMethodCallHandler { call, result ->
             flutterExecutor.submit {
                 when (call.method) {
-                    "checkShizuku" -> {
+                    "checkShizukuActive" -> {
                         val shizukuInstalled =
                             getInstalledPackages().any { app -> app.packageName == SHIZUKU_PACKAGE_NAME }
 
@@ -82,6 +90,7 @@ class MainActivity : FlutterActivity() {
                         }
                     }
 
+                    "checkShizukuPermission" -> result.success(checkShizukuPermission())
                     "launchShizuku" -> {
                         // Open shizuku app
                         val launchIntent =
@@ -134,7 +143,7 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun checkShizukuPermission(): Boolean {
-        return if (!Shizuku.pingBinder()) {
+        val b = if (!Shizuku.pingBinder()) {
             Toast.makeText(this, "Shizuku is not available", Toast.LENGTH_LONG).show()
             false
         } else if (Shizuku.isPreV11()) {
@@ -152,8 +161,13 @@ class MainActivity : FlutterActivity() {
         } else {
             Shizuku.requestPermission(SHIZUKU_CODE)
 
-            Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED
+            val result = shizukuPermissionFuture.get()
+            shizukuPermissionFuture = CompletableFuture<Boolean>()
+
+            result
         }
+
+        return b
     }
 
     override fun onRequestPermissionsResult(
