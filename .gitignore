@@ -43,5 +43,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+/icon.html
 # Secrets
 /android/key.properties

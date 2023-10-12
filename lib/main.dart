@@ -5,6 +5,7 @@ import 'package:canta/components/tiles.dart';
 import 'package:canta/search.dart';
 import 'package:canta/util/applist.dart';
 import 'package:canta/util/filters.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -161,6 +162,19 @@ class _HomePageState extends State<HomePage> {
           ),
           title: Text(widget.title, style: const TextStyle(fontSize: 24)),
           actions: [
+            if (kDebugMode)
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const CantaApp(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.refresh),
+              ),
             IconButton(
               onPressed: () {
                 showSearch(

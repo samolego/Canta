@@ -20,12 +20,15 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuProvider
 import java.io.File
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "org.samo_lego.canta/native"
     private val SHIZUKU_CODE = 0xCA07A
     private val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
     private val BLOAT_LIST: HashMap<String, BloatData> = HashMap()
+    private val flutterExecutor: ExecutorService = Executors.newCachedThreadPool()
     private lateinit var SETUP_THREAD: Thread
 
     // main
@@ -66,46 +69,49 @@ class MainActivity : FlutterActivity() {
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger, CHANNEL
         ).setMethodCallHandler { call, result ->
-            when (call.method) {
-                "checkShizuku" -> {
-                    val shizukuInstalled =
-                        getInstalledPackages().any { app -> app.packageName == SHIZUKU_PACKAGE_NAME }
+            flutterExecutor.submit {
+                when (call.method) {
+                    "checkShizuku" -> {
+                        val shizukuInstalled =
+                            getInstalledPackages().any { app -> app.packageName == SHIZUKU_PACKAGE_NAME }
 
-                    if (shizukuInstalled) {
-                        result.success(Shizuku.pingBinder() && !Shizuku.isPreV11())
-                    } else {
-                        result.success(null)
+                        if (shizukuInstalled) {
+                            result.success(Shizuku.pingBinder() && !Shizuku.isPreV11())
+                        } else {
+                            result.success(null)
+                        }
                     }
-                }
 
-                "launchShizuku" -> {
-                    // Open shizuku app
-                    val launchIntent =
-                        packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE_NAME)
-                    startActivity(launchIntent)
-                }
+                    "launchShizuku" -> {
+                        // Open shizuku app
+                        val launchIntent =
+                            packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE_NAME)
+                        startActivity(launchIntent)
+                    }
 
-                "uninstallApp" -> {
-                    val packageName = call.argument<String>("packageName")!!
-                    result.success(uninstallApp(packageName))
-                }
+                    "uninstallApp" -> {
+                        val packageName = call.argument<String>("packageName")!!
+                        result.success(uninstallApp(packageName))
+                    }
 
-                "reinstallApp" -> {
-                    val packageName = call.argument<String>("packageName")!!
-                    result.success(reinstallApp(packageName))
-                }
+                    "reinstallApp" -> {
+                        val packageName = call.argument<String>("packageName")!!
+                        result.success(reinstallApp(packageName))
+                    }
 
-                "getAppInfo" -> {
-                    val packageName = call.argument<String>("packageName")!!
-                    val packageManager = packageManager
-                    val packageInfo = getInfoForPackage(packageName, packageManager)
-                    val appInfo = AppInfo.fromPackageInfo(packageInfo, packageManager, BLOAT_LIST)
-                    result.success(appInfo.toMap())
-                }
+                    "getAppInfo" -> {
+                        val packageName = call.argument<String>("packageName")!!
+                        val packageManager = packageManager
+                        val packageInfo = getInfoForPackage(packageName, packageManager)
+                        val appInfo =
+                            AppInfo.fromPackageInfo(packageInfo, packageManager, BLOAT_LIST)
+                        result.success(appInfo.toMap())
+                    }
 
-                "getUninstalledApps" -> result.success(getUninstalledPackages())
-                "getInstalledAppsInfo" -> result.success(getInstalledAppsInfo())
-                else -> result.notImplemented()
+                    "getUninstalledApps" -> result.success(getUninstalledPackages())
+                    "getInstalledAppsInfo" -> result.success(getInstalledAppsInfo())
+                    else -> result.notImplemented()
+                }
             }
         }
     }
