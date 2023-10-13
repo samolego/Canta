@@ -21,7 +21,7 @@ on [how recommendations are chosen](https://github.com/0x192/universal-android-d
 ## Features
 
 * no bricking - if you remove essential
-  app you will need to do factory reset,
+  app and get stuck in a bootloop after reboot - you will need to do factory reset,
   but that's it!
 * auto detect previously uninstalled apps
   if you've already removed any using adb
