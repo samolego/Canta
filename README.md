@@ -9,7 +9,7 @@ Uses [universal debloat list](https://github.com/0x192/universal-android-debloat
 Please read the guide
 on [how recommendations are chosen](https://github.com/0x192/universal-android-debloater/wiki/FAQ#how-are-the-recommendations-chosen).
 
-Please note: Android 11 doesn't work atm.
+Please note: Android <= 11 doesn't work atm.
 
 ## How-to
 
