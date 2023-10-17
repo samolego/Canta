@@ -55,7 +55,7 @@ android {
         applicationId "org.samo_lego.canta"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 30 //flutter.minSdkVersion
+        minSdkVersion 28 //flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -18,7 +18,6 @@ import io.flutter.plugin.common.MethodChannel
 import org.json.JSONArray
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
-import rikka.shizuku.ShizukuProvider
 import java.io.File
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ExecutorService
@@ -170,30 +169,14 @@ class MainActivity : FlutterActivity() {
         return b
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray
-    ) {
-        permissions.forEachIndexed { index, permission ->
-            if (permission == ShizukuProvider.PERMISSION) {
-                onRequestPermissionResult(requestCode, grantResults[index])
-                println("Permission $permission granted: ${grantResults[index]}")
-            }
-        }
-    }
-
-    private fun onRequestPermissionResult(requestCode: Int, grantResult: Int) {
-        val isGranted = grantResult == PackageManager.PERMISSION_GRANTED
-        //Do stuff based on the result.
-
-    }
-
     private fun getUninstalledPackages(): List<String> {
         val pm = packageManager
+        val flags = PackageManager.MATCH_UNINSTALLED_PACKAGES
         val unp = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pm.getInstalledPackages(PackageInfoFlags.of(PackageManager.MATCH_UNINSTALLED_PACKAGES.toLong()))
+            pm.getInstalledPackages(PackageInfoFlags.of(flags.toLong()))
                 .map { app -> app.packageName }
         } else {
-            pm.getInstalledApplications(PackageManager.MATCH_UNINSTALLED_PACKAGES)
+            pm.getInstalledApplications(flags)
                 .map { app -> app.packageName }
         }.toSet()
         val inp = getInstalledPackages().map { app -> app.packageName }.toSet()
@@ -202,12 +185,14 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun getInstalledPackages(): List<PackageInfo> {
+        val flags = PackageManager.GET_META_DATA
+
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getInstalledPackages(
-                PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
+                PackageInfoFlags.of(flags.toLong())
             )
         } else {
-            packageManager.getInstalledPackages(PackageManager.GET_META_DATA)
+            packageManager.getInstalledPackages(flags)
         }
     }
 
@@ -317,7 +302,7 @@ class MainActivity : FlutterActivity() {
         // The reason for use "com.android.shell" as installer package under adb is that
         // getMySessions will check installer package's owner
         return ShizukuPackageInstallerUtils.createPackageInstaller(
-            iPackageInstaller, "com.android.shell", userId
+            iPackageInstaller, "com.android.shell", userId, this
         )
     }
 }
