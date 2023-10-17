@@ -7,9 +7,10 @@ Powered by [Shizuku](https://shizuku.rikka.app/).
 
 Uses [universal debloat list](https://github.com/0x192/universal-android-debloater/) for badges.
 Please read the guide
-on [how recommendations are chosen](https://github.com/0x192/universal-android-debloater/wiki/FAQ#how-are-the-recommendations-chosen).
+on [how recommendations are chosen](https://github.com/0x192/universal-android-debloater/wiki/FAQ#how-are-the-recommendations-chosen)
+.
 
-Please note: Android <= 11 doesn't work atm.
+Please note: Supports only Android >= 9.0 (SDK 28).
 
 ## How-to
 
