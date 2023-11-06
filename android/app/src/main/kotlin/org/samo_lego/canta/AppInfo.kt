@@ -62,12 +62,13 @@ class AppInfo(
             val isSystemApp =
                 (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
 
+            val versionName = packageInfo.versionName ?: "unknown"
 
             return AppInfo(
                 packageInfo.applicationInfo.loadLabel(packageManager).toString(),
                 packageInfo.packageName,
                 drawableBytes,
-                packageInfo.versionName,
+                versionName,
                 packageInfo.longVersionCode,
                 isSystemApp,
                 bloatData
