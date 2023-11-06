@@ -24,6 +24,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
+    private val LOGGER_TAG = "Canta"
     private val CHANNEL = "org.samo_lego.canta/native"
     private val SHIZUKU_CODE = 0xCA07A
     private val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
@@ -99,25 +100,36 @@ class MainActivity : FlutterActivity() {
 
                     "uninstallApp" -> {
                         val packageName = call.argument<String>("packageName")!!
+                        Log.i(LOGGER_TAG, "Uninstalling '$packageName'")
                         result.success(uninstallApp(packageName))
                     }
 
                     "reinstallApp" -> {
                         val packageName = call.argument<String>("packageName")!!
+                        Log.i(LOGGER_TAG, "Installing '$packageName'")
                         result.success(reinstallApp(packageName))
                     }
 
                     "getAppInfo" -> {
                         val packageName = call.argument<String>("packageName")!!
                         val packageManager = packageManager
+                        Log.i(LOGGER_TAG, "Getting info for '$packageName'")
                         val packageInfo = getInfoForPackage(packageName, packageManager)
                         val appInfo =
                             AppInfo.fromPackageInfo(packageInfo, packageManager, BLOAT_LIST)
                         result.success(appInfo.toMap())
                     }
 
-                    "getUninstalledApps" -> result.success(getUninstalledPackages())
-                    "getInstalledAppsInfo" -> result.success(getInstalledAppsInfo())
+                    "getUninstalledApps" -> {
+                        Log.i(LOGGER_TAG, "Getting uninstalled apps ...")
+                        result.success(getUninstalledPackages())
+                    }
+
+                    "getInstalledAppsInfo" -> {
+                        Log.i(LOGGER_TAG, "Getting installed apps info ...")
+                        result.success(getInstalledAppsInfo())
+                    }
+
                     else -> result.notImplemented()
                 }
             }
@@ -197,7 +209,6 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun getInstalledAppsInfo(): List<Map<String, Any?>> {
-        val packageManager = packageManager
         val installedApps = getInstalledPackages()
         SETUP_THREAD.join()
         return installedApps.map { app ->
@@ -230,7 +241,7 @@ class MainActivity : FlutterActivity() {
 
         val isSystem = (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
 
-        Log.d("Canta", "Uninstalling '$packageName' [system: $isSystem]")
+        Log.i(LOGGER_TAG, "Uninstalling '$packageName' [system: $isSystem]")
 
         // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
         // 0x00000002 = PackageManager.DELETE_ALL_USERS
