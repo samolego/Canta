@@ -11,13 +11,13 @@ import android.content.pm.PackageManager.PackageInfoFlags
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import org.json.JSONArray
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
+import rikka.sui.Sui
 import java.io.File
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ExecutorService
@@ -25,13 +25,14 @@ import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
     private val LOGGER_TAG = "Canta"
-    private val CHANNEL = "org.samo_lego.canta/native"
+    private val CHANNEL = BuildConfig.APPLICATION_ID + "/native"
     private val SHIZUKU_CODE = 0xCA07A
     private val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
     private val BLOAT_LIST: HashMap<String, BloatData> = HashMap()
     private val flutterExecutor: ExecutorService = Executors.newCachedThreadPool()
     private lateinit var SETUP_THREAD: Thread
     private var shizukuPermissionFuture = CompletableFuture<Boolean>()
+    private val isSui = Sui.init(BuildConfig.APPLICATION_ID)
 
     // main
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,14 +81,19 @@ class MainActivity : FlutterActivity() {
             flutterExecutor.submit {
                 when (call.method) {
                     "checkShizukuActive" -> {
-                        val shizukuInstalled =
-                            getInstalledPackages().any { app -> app.packageName == SHIZUKU_PACKAGE_NAME }
-
-                        if (shizukuInstalled) {
-                            result.success(Shizuku.pingBinder() && !Shizuku.isPreV11())
+                        if (isSui) {
+                            result.success(true)
                         } else {
-                            result.success(null)
+                            val shizukuInstalled =
+                                getInstalledPackages().any { app -> app.packageName == SHIZUKU_PACKAGE_NAME }
+
+                            if (shizukuInstalled) {
+                                result.success(Shizuku.pingBinder() && !Shizuku.isPreV11())
+                            } else {
+                                result.success(null)
+                            }
                         }
+
                     }
 
                     "checkShizukuPermission" -> result.success(checkShizukuPermission())
@@ -154,21 +160,10 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun checkShizukuPermission(): Boolean {
-        val b = if (!Shizuku.pingBinder()) {
-            Toast.makeText(this, "Shizuku is not available", Toast.LENGTH_LONG).show()
+        return if (!Shizuku.pingBinder() || Shizuku.isPreV11() || Shizuku.shouldShowRequestPermissionRationale()) {
             false
-        } else if (Shizuku.isPreV11()) {
-            Toast.makeText(this, "Shizuku < 11 is not supported!", Toast.LENGTH_LONG).show()
-            false
-        } else if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+        } else if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED || isSui) {
             true
-        } else if (Shizuku.shouldShowRequestPermissionRationale()) {
-            Toast.makeText(
-                this,
-                "You denied the permission for Shizuku. Please enable it in app.",
-                Toast.LENGTH_LONG
-            ).show()
-            false
         } else {
             Shizuku.requestPermission(SHIZUKU_CODE)
 
@@ -177,8 +172,6 @@ class MainActivity : FlutterActivity() {
 
             result
         }
-
-        return b
     }
 
     private fun getUninstalledPackages(): List<String> {
