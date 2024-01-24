@@ -9,9 +9,9 @@ Powered by [Shizuku](https://shizuku.rikka.app/).
     alt="Get it on F-Droid"
     height="80">](https://f-droid.org/en/packages/org.samo_lego.canta/)
 
-Uses [universal debloat list](https://github.com/0x192/universal-android-debloater/) for badges.
+Uses [universal debloat list](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/) for badges.
 Please read the guide
-on [how recommendations are chosen](https://github.com/0x192/universal-android-debloater/wiki/FAQ#how-are-the-recommendations-chosen)
+on [how recommendations are chosen](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/wiki/FAQ#how-are-the-recommendations-chosen)
 .
 
 **Note**: Supports only Android >= 9.0 (SDK >= 28).
