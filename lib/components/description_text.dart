@@ -30,7 +30,7 @@ class DescriptionText extends StatelessWidget {
       descriptionTexts.add(RichText(
         text: TextSpan(
           text: preText,
-          style: const TextStyle(color: Colors.black),
+          style: Theme.of(context).textTheme.bodySmall,
           children: [
             TextSpan(
               text: url,
@@ -40,7 +40,7 @@ class DescriptionText extends StatelessWidget {
             ),
             TextSpan(
               text: postText,
-              style: const TextStyle(color: Colors.black),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
         ),
