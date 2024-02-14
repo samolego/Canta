@@ -81,6 +81,7 @@ class MainActivity : FlutterActivity() {
             flutterExecutor.submit {
                 when (call.method) {
                     "checkShizukuActive" -> {
+                        Log.i(LOGGER_TAG, "Checking Shizuku ...")
                         if (isSui) {
                             result.success(true)
                         } else {
@@ -93,7 +94,6 @@ class MainActivity : FlutterActivity() {
                                 result.success(null)
                             }
                         }
-
                     }
 
                     "checkShizukuPermission" -> result.success(checkShizukuPermission())
@@ -191,6 +191,7 @@ class MainActivity : FlutterActivity() {
 
     private fun getInstalledPackages(): List<PackageInfo> {
         val flags = PackageManager.GET_META_DATA
+        Log.i(LOGGER_TAG, "Loading installed packages ...")
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             packageManager.getInstalledPackages(

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.util.Log
 import java.io.ByteArrayOutputStream
 
 class AppInfo(
@@ -52,6 +53,7 @@ class AppInfo(
             packageManager: PackageManager,
             bloatList: Map<String, BloatData>
         ): AppInfo {
+            Log.i("AppInfo", "fromPackageInfo: ${packageInfo.packageName}")
             val icon = packageInfo.applicationInfo.loadIcon(packageManager)
             // Convert icon to byte array
             val drawableBytes = drawableToByteArray(icon)
