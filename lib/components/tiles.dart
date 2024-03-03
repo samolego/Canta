@@ -66,6 +66,9 @@ class InstalledAppTile extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            appInfo.versionName != null
+                ? Text("v${appInfo.versionName}")
+                : const SizedBox.shrink(),
             Text(appInfo.packageName),
             Row(
               children: [

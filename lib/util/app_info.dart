@@ -10,6 +10,7 @@ class AppInfo extends Comparable<AppInfo> {
   String? description;
   RemovalInfo? removalInfo;
   InstallInfo? installInfo;
+  String? versionName;
 
   AppInfo(
     this.name,
@@ -19,6 +20,7 @@ class AppInfo extends Comparable<AppInfo> {
     this.description,
     this.removalInfo,
     this.installInfo,
+    this.versionName
   });
 
   factory AppInfo.create(dynamic data) {
@@ -43,6 +45,7 @@ class AppInfo extends Comparable<AppInfo> {
       description: data["description"],
       removalInfo: removalInfo,
       installInfo: installInfo,
+      versionName: data["version_name"]
     );
   }
 
