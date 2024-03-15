@@ -26,6 +26,7 @@ class AppInfoDialogue extends StatelessWidget {
           ),
         ),
         trailing: IconButton(
+          padding: const EdgeInsets.only(right: 8),
           onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(Icons.close),
         ),

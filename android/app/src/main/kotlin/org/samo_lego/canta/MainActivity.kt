@@ -14,7 +14,7 @@ import android.util.Log
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
-import org.json.JSONArray
+import org.json.JSONObject
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.sui.Sui
@@ -44,22 +44,22 @@ class MainActivity : FlutterActivity() {
             val config = File(filesDir, "canta.conf")
             val bloatFetcher = BloatUtils()
 
-            val jsonList =
+            val uadLists =
                 if (!uadList.exists() || !config.exists() || bloatFetcher.checkForUpdates(config)) {
                     uadList.createNewFile()
 
                     bloatFetcher.fetchBloatList(uadList, config)
                 } else {
                     // Just read the file
-                    JSONArray(uadList.readText())
+                    JSONObject(uadList.readText())
                 }
 
             // Parse json to map
-            for (key in 0 until jsonList.length()) {
-                val json = jsonList.getJSONObject(key)
+            for (key in uadLists.keys()) {
+                val json = uadLists.getJSONObject(key)
                 val bloatData = BloatData.fromJson(json)
 
-                BLOAT_LIST[json.getString("id")] = bloatData
+                BLOAT_LIST[key] = bloatData
             }
         }
         SETUP_THREAD.start()

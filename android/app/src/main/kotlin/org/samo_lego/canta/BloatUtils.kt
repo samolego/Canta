@@ -1,6 +1,5 @@
 package org.samo_lego.canta
 
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import java.net.URL
@@ -11,12 +10,12 @@ class BloatUtils {
     private val BLOAT_COMMITS =
         "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
 
-    fun fetchBloatList(uadList: File, config: File): JSONArray {
+    fun fetchBloatList(uadList: File, config: File): JSONObject {
         try {
             // Fetch json from BLOAT_URL and parse it
             val response = URL(BLOAT_URL).readText()
             // Parse response to json
-            val json = JSONArray(response)
+            val json = JSONObject(response)
 
             val commits = URL(BLOAT_COMMITS).readText()
             // Parse commits to get latest commit hash
@@ -29,7 +28,7 @@ class BloatUtils {
 
             return json
         } catch (e: Exception) {
-            return JSONArray()
+            return JSONObject()
         }
     }
 
