@@ -2,6 +2,8 @@
 
 ![](https://github.com/samolego/Canta/blob/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
 
+## Note : currently undergoing a rewrite to Jetpack Compose.
+
 Uninstall any app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/).
 
