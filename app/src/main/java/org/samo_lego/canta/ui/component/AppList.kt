@@ -1,7 +1,11 @@
 package org.samo_lego.canta.ui.component
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -19,7 +23,6 @@ import org.samo_lego.canta.util.AppInfo
 
 @Composable
 fun AppList(
-    fabAction: (String) -> Boolean,
     getApps: () -> List<AppInfo>,
 ) {
     val availableApps = remember { mutableStateListOf<AppInfo>() }
@@ -38,9 +41,22 @@ fun AppList(
     }
 
 
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+    ) {
         if (isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(48.dp)
+                )
+            }
         } else {
             LazyColumn(
                 modifier = Modifier.weight(1f),
