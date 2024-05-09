@@ -14,7 +14,8 @@ data class AppInfo(
     val versionName: String,
     val versionCode: Long,
     val isSystemApp: Boolean,
-    private val bloatData: BloatData?
+    val isUninstalled: Boolean,
+    val bloatData: BloatData?
 ) : Parcelable {
 
     val name: String
@@ -35,6 +36,7 @@ data class AppInfo(
         fun fromPackageInfo(
             packageInfo: PackageInfo,
             packageManager: PackageManager,
+            isUninstalled: Boolean,
             bloatList: Map<String, BloatData> = emptyMap()
         ): AppInfo {
             val bloatData = bloatList[packageInfo.packageName]
@@ -50,7 +52,8 @@ data class AppInfo(
                 versionName,
                 packageInfo.longVersionCode,
                 isSystemApp,
-                bloatData
+                isUninstalled,
+                bloatData,
             )
         }
     }

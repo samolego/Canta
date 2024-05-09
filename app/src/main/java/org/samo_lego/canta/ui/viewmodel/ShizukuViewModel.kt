@@ -2,6 +2,8 @@ package org.samo_lego.canta.ui.viewmodel
 
 import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.samo_lego.canta.SHIZUKU_PACKAGE_NAME
 import org.samo_lego.canta.extension.getInstalledPackages
 import org.samo_lego.canta.packageName
@@ -16,7 +18,6 @@ class ShizukuViewModel : ViewModel() {
     private var isSui: Boolean = Sui.init(packageName)
     private var shizukuPermissionFuture = CompletableFuture<Boolean>()
 
-
     init {
         Shizuku.addRequestPermissionResultListener { requestCode, grantResult ->
             if (requestCode == SHIZUKU_CODE) {
@@ -26,8 +27,7 @@ class ShizukuViewModel : ViewModel() {
         }
     }
 
-
-    fun checkShizukuPermission(): Boolean {
+    suspend fun checkShizukuPermission(): Boolean {
         return if (!Shizuku.pingBinder() || Shizuku.isPreV11() || Shizuku.shouldShowRequestPermissionRationale()) {
             false
         } else if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED || isSui) {
@@ -35,10 +35,12 @@ class ShizukuViewModel : ViewModel() {
         } else {
             Shizuku.requestPermission(SHIZUKU_CODE)
 
-            val result = shizukuPermissionFuture.get()
-            shizukuPermissionFuture = CompletableFuture<Boolean>()
+            withContext(Dispatchers.IO) {
+                val result = shizukuPermissionFuture.get()
+                shizukuPermissionFuture = CompletableFuture<Boolean>()
 
-            result
+                result
+            }
         }
     }
 

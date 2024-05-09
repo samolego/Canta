@@ -1,6 +1,7 @@
 package org.samo_lego.canta.ui.component
 
 import android.content.pm.PackageManager.NameNotFoundException
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -26,12 +27,14 @@ import org.samo_lego.canta.util.AppInfo
 fun AppTile(
     appInfo: AppInfo,
     isSelected: Boolean,
-    onCheckChanged: (Boolean) -> Unit
+    onCheckChanged: (Boolean) -> Unit,
+    onShowDialog: () -> Unit,
 ) {
     ListItem(
         modifier = Modifier.clickable(
             onClick = {
                 // Show dialog about app
+                onShowDialog()
             },
         ),
         headlineContent = { Text(appInfo.name) },
@@ -49,26 +52,7 @@ fun AppTile(
             }
         },
         leadingContent = {
-            val context = LocalContext.current
-            val appIcon = try {
-                context.packageManager.getApplicationIcon(appInfo.packageName)
-            } catch (e: NameNotFoundException) {
-                null
-            }
-
-            if (appIcon != null) {
-                AsyncImage(
-                    model = ImageRequest.Builder(context)
-                        .data(appIcon)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = appInfo.name,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .width(48.dp)
-                        .height(48.dp)
-                )
-            }
+            AppIconImage(appInfo)
         },
         trailingContent = {
             Checkbox(
@@ -80,6 +64,44 @@ fun AppTile(
                 )
             )
         }
+    )
+}
+
+@Composable
+fun AppIconImage(
+    appInfo: AppInfo,
+) {
+    val context = LocalContext.current
+    val appIcon = try {
+        context.packageManager.getApplicationIcon(appInfo.packageName)
+    } catch (e: NameNotFoundException) {
+        null
+    }
+
+    if (appIcon != null) {
+        AppIconImage(
+            appIconImage = appIcon,
+            contentDescription = appInfo.name,
+        )
+    }
+}
+
+@Composable
+fun AppIconImage(
+    appIconImage: Drawable,
+    contentDescription: String,
+) {
+    val context = LocalContext.current
+    AsyncImage(
+        model = ImageRequest.Builder(context)
+            .data(appIconImage)
+            .crossfade(true)
+            .build(),
+        contentDescription = contentDescription,
+        modifier = Modifier
+            .padding(4.dp)
+            .width(48.dp)
+            .height(48.dp)
     )
 }
 

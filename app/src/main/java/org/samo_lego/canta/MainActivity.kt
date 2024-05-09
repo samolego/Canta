@@ -14,17 +14,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import org.json.JSONObject
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import org.samo_lego.canta.extension.getInfoForPackage
 import org.samo_lego.canta.ui.CantaApp
 import org.samo_lego.canta.ui.theme.CantaTheme
-import org.samo_lego.canta.util.BloatData
-import org.samo_lego.canta.util.BloatUtils
 import org.samo_lego.canta.util.ShizukuPackageInstallerUtils
 import rikka.shizuku.Shizuku
 import rikka.sui.Sui
-import java.io.File
 import kotlin.properties.Delegates
 
 const val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
@@ -40,30 +36,7 @@ class MainActivity : ComponentActivity() {
 
         isSui = Sui.init(applicationContext.packageName)
 
-        SETUP_THREAD = Thread {
-            // Load app data file
-            val uadList = File(filesDir, "uad_lists.json")
-            val config = File(filesDir, "canta.conf")
-            val bloatFetcher = BloatUtils()
-
-            val uadLists =
-                if (!uadList.exists() || !config.exists() || bloatFetcher.checkForUpdates(config)) {
-                    uadList.createNewFile()
-
-                    bloatFetcher.fetchBloatList(uadList, config)
-                } else {
-                    // Just read the file
-                    JSONObject(uadList.readText())
-                }
-
-            // Parse json to map
-            for (key in uadLists.keys()) {
-                val json = uadLists.getJSONObject(key)
-                val bloatData = BloatData.fromJson(json)
-
-                //BLOAT_LIST[key] = bloatData
-            }
-        }
+//        SETUP_THREAD = Thread }
 
         setContent {
             CantaTheme {

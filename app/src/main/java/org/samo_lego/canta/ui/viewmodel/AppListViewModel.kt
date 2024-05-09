@@ -1,12 +1,21 @@
 package org.samo_lego.canta.ui.viewmodel
 
+import android.content.pm.PackageManager
 import android.icu.text.Collator
+import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import org.samo_lego.canta.extension.getAllPackagesInfo
 import org.samo_lego.canta.util.AppInfo
+import org.samo_lego.canta.util.BloatData
+import org.samo_lego.canta.util.BloatUtils
+import java.io.File
 import java.util.Locale
 
 class AppListViewModel : ViewModel() {
@@ -17,54 +26,79 @@ class AppListViewModel : ViewModel() {
     }
 
     var search by mutableStateOf("")
-    var showSystemApps by mutableStateOf(false)
-    var isRefreshing by mutableStateOf(false)
+    var showSystem by mutableStateOf(false)
+    var showUninstalled by mutableStateOf(false)
+    var isLoading by mutableStateOf(false)
+        private set
+    var isLoadingBadges by mutableStateOf(false)
         private set
 
     private val sortedList by derivedStateOf {
-        val comparator = compareBy<AppInfo> {
-            when {
-                it.isSystemApp -> 0
-                //it.hasCustomProfile -> 1
-                else -> 1
-            }
-        }.then(compareBy(Collator.getInstance(Locale.getDefault()), AppInfo::name))
+        isLoading = true
+        val comparator = compareBy(Collator.getInstance(Locale.getDefault()), AppInfo::name)
         apps.sortedWith(comparator).also {
-            isRefreshing = false
+            isLoading = false
         }
     }
 
     val appList by derivedStateOf {
         sortedList.filter {
-            it.name.contains(search, true) || it.packageName.contains(
+            val search = it.name.contains(search, true) || it.packageName.contains(
                 search, true
             )
-        }.filter { showSystemApps }
+
+            search && showUninstalled == it.isUninstalled
+        }.filter {
+            it.isSystemApp || !showSystem
+        }
     }
 
-    /*suspend fun fetchAppList(pm: PackageManager) {
-
-        isRefreshing = true
+    suspend fun loadInstalled(packageManager: PackageManager, filesDir: File) {
+        isLoading = true
 
         withContext(Dispatchers.IO) {
-            val start = SystemClock.elapsedRealtime()
+            val start = System.currentTimeMillis()
+            apps = packageManager.getAllPackagesInfo()
+            val endPackages = System.currentTimeMillis()
+            Log.i(TAG, "Loaded packages in ${endPackages - start}ms")
+            isLoading = false
 
-            val allPackages = pm.getInstalledPackages(PackageManager.GET_META_DATA)
+            isLoadingBadges = true
+            // Load app data file
+            val uadList = File(filesDir, "uad_lists.json")
+            val config = File(filesDir, "canta.conf")
+            val bloatFetcher = BloatUtils()
 
-            val packages = allPackages.list
+            val uadLists =
+                if (!uadList.exists() || !config.exists() || bloatFetcher.checkForUpdates(config)) {
+                    uadList.createNewFile()
 
-            apps = packages.map {
-                val appInfo = it.applicationInfo
-                val uid = appInfo.uid
-                val profile = Natives.getAppProfile(it.packageName, uid)
-                AppInfo(
-                    name = appInfo.loadLabel(pm).toString(),
-                    packageInfo = it,
-                    profile = profile,
-                )
-            }.filter { it.packageName != ksuApp.packageName }
-            Log.i(TAG, "Load cost: ${SystemClock.elapsedRealtime() - start}")
+                    bloatFetcher.fetchBloatList(uadList, config)
+                } else {
+                    // Just read the file
+                    JSONObject(uadList.readText())
+                }
+
+            // Parse json to map
+            val bloatMap = mutableMapOf<String, BloatData>()
+            for (key in uadLists.keys()) {
+                val json = uadLists.getJSONObject(key)
+                val bloatData = BloatData.fromJson(json)
+
+                bloatMap[key] = bloatData
+            }
+
+            // Assign bloat data to apps
+            apps = apps.map { app ->
+                if (bloatMap[app.packageName] != null) {
+                    app.copy(bloatData = bloatMap[app.packageName])
+                } else {
+                    app
+                }
+            }
+            isLoadingBadges = false
+            val end = System.currentTimeMillis()
+            Log.i(TAG, "Loaded badges in ${end - endPackages}ms")
         }
-    }*/
-
+    }
 }

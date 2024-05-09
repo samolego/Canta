@@ -6,17 +6,30 @@ import android.os.Build
 import org.samo_lego.canta.util.AppInfo
 
 
-fun PackageManager.getUninstalledPackages(): List<PackageInfo> {
+private fun PackageManager.getUninstalledPackages(installedPackages: List<PackageInfo>): List<PackageInfo> {
     val flags = PackageManager.MATCH_UNINSTALLED_PACKAGES
 
     // Get uninstalled packages + installed packages
     val uninstalledPackages = getPackages(flags).toSet()
 
-    val installed = getInstalledPackages().map { it.packageName }
+    val installed = installedPackages.map { it.packageName }
     val minus = uninstalledPackages.filter { !installed.contains(it.packageName) }
 
     // Return only apps that have been uninstalled
     return minus.toList()
+}
+
+fun PackageManager.getAllPackagesInfo(): List<AppInfo> {
+    val installedPackages = getInstalledPackages()
+    val uninstalledPackages = getUninstalledPackages(installedPackages)
+
+    val all = uninstalledPackages.map { app ->
+        AppInfo.fromPackageInfo(app, this, true)
+    } + installedPackages.map { app ->
+        AppInfo.fromPackageInfo(app, this, false)
+    }
+
+    return all
 }
 
 fun PackageManager.getInstalledPackages(): List<PackageInfo> {
@@ -24,7 +37,7 @@ fun PackageManager.getInstalledPackages(): List<PackageInfo> {
     return getPackages(flags)
 }
 
-fun PackageManager.getPackages(flags: Int): List<PackageInfo> {
+private fun PackageManager.getPackages(flags: Int): List<PackageInfo> {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         this.getInstalledPackages(
             PackageManager.PackageInfoFlags.of(flags.toLong())
@@ -33,21 +46,6 @@ fun PackageManager.getPackages(flags: Int): List<PackageInfo> {
         this.getInstalledPackages(flags)
     }
 }
-
-fun PackageManager.getInstalledAppsInfo(): List<AppInfo> {
-    val installedApps = getInstalledPackages()
-    return installedApps.map { app ->
-        AppInfo.fromPackageInfo(app, this)
-    }.sortedBy { it.name }
-}
-
-fun PackageManager.getUninstalledAppsInfo(): List<AppInfo> {
-    val uninstalledApps = getUninstalledPackages()
-    return uninstalledApps.map { app ->
-        AppInfo.fromPackageInfo(app, this)
-    }.sortedBy { it.name }
-}
-
 
 fun PackageManager.getInfoForPackage(
     packageName: String,

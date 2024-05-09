@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoDelete
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,12 +28,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.samo_lego.canta.APP_NAME
-import org.samo_lego.canta.extension.getInstalledAppsInfo
-import org.samo_lego.canta.extension.getUninstalledAppsInfo
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.ui.viewmodel.ShizukuViewModel
@@ -43,11 +42,9 @@ fun CantaApp(
     uninstallApp: (String) -> Boolean,
     reinstallApp: (String) -> Boolean,
 ) {
-    var selectedTab by remember { mutableStateOf(Tab.INSTALLED) }
+    var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
     val shizukuModel = viewModel<ShizukuViewModel>()
-    val appListModel = viewModel<AppListViewModel>()
-
-    val pm = LocalContext.current.packageManager
+    val appListViewModel = viewModel<AppListViewModel>()
 
     Scaffold(
         topBar = {
@@ -75,15 +72,15 @@ fun CantaApp(
                 shape = RoundedCornerShape(32.dp),
                 modifier = Modifier.padding(16.dp),
                 onClick = {
-                    when (selectedTab) {
-                        Tab.INSTALLED -> {
+                    when (selectedAppsType) {
+                        AppsType.INSTALLED -> {
                             /*launchShizuku()
                             appListModel.selectedAppsForRemoval.forEach {
                                 uninstallApp(it)
                             }*/
                         }
 
-                        Tab.UNINSTALLED -> {
+                        AppsType.UNINSTALLED -> {
                             /*appListModel.selectedAppsForRemoval.forEach {
                                 reinstallApp(it)
                             }*/
@@ -91,7 +88,7 @@ fun CantaApp(
                     }
                 },
             ) {
-                Icon(Icons.Default.DeleteForever, contentDescription = "Remove")
+                Icon(Icons.Default.Delete, contentDescription = "Remove")
             }
 
         },
@@ -104,42 +101,43 @@ fun CantaApp(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             TabRow(
-                selectedTabIndex = selectedTab.ordinal,
-                // backgroundColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
+                selectedTabIndex = selectedAppsType.ordinal,
+                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
             ) {
                 Tab(
-                    selected = selectedTab == Tab.INSTALLED,
+                    selected = selectedAppsType == AppsType.INSTALLED,
                     onClick = {
-                        selectedTab = Tab.INSTALLED
+                        selectedAppsType = AppsType.INSTALLED
+                        appListViewModel.showUninstalled = false
                     },
-                    text = { Text(text = "Installed") },
-                    //icon = { Icon(Icons.Default.Delete) }
+                    icon = {
+                        Icon(
+                            Icons.Default.AutoDelete,
+                            contentDescription = AppsType.INSTALLED.toString()
+                        )
+                    },
                 )
                 Tab(
-                    selected = selectedTab == Tab.UNINSTALLED,
-                    onClick = { selectedTab = Tab.UNINSTALLED },
-                    text = { Text(text = "Uninstalled") },
+                    selected = selectedAppsType == AppsType.UNINSTALLED,
+                    onClick = {
+                        selectedAppsType = AppsType.UNINSTALLED
+                        appListViewModel.showUninstalled = true
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.DeleteForever,
+                            contentDescription = AppsType.UNINSTALLED.toString()
+                        )
+                    },
                 )
             }
-            when (selectedTab) {
-                Tab.INSTALLED -> AppList(
-                    getApps = {
-                        return@AppList pm.getInstalledAppsInfo()
-                    }
-                )
-
-                Tab.UNINSTALLED -> AppList(
-                    getApps = {
-                        return@AppList pm.getUninstalledAppsInfo()
-                    }
-                )
-            }
+            AppList()
         }
     }
 }
 
-private enum class Tab {
+enum class AppsType {
     INSTALLED,
     UNINSTALLED,
 }
