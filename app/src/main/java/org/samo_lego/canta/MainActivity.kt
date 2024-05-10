@@ -28,7 +28,6 @@ const val APP_NAME = "Canta"
 const val packageName = "org.samo_lego.canta"
 
 class MainActivity : ComponentActivity() {
-    private lateinit var SETUP_THREAD: Thread
     private var isSui by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +35,6 @@ class MainActivity : ComponentActivity() {
 
         isSui = Sui.init(applicationContext.packageName)
 
-//        SETUP_THREAD = Thread }
 
         setContent {
             CantaTheme {

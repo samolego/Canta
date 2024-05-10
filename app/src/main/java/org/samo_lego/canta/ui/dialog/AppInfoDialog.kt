@@ -92,19 +92,19 @@ fun AppInfoDialog(
                             )
                             .padding(horizontal = 8.dp, vertical = 4.dp),
                     ) {
-                        Text(
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                            text = appInfo.packageName,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                        Spacer(modifier = Modifier.size(4.dp))
-                        // Todo - on overflow, icon is not visible
                         Icon(
                             Icons.Default.ContentCopy,
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
                                 .size(12.dp),
                             contentDescription = "Copy package name to clipboard",
+                        )
+                        Spacer(modifier = Modifier.size(4.dp))
+                        Text(
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically),
+                            text = appInfo.packageName,
+                            style = MaterialTheme.typography.labelSmall
                         )
                     }
                 }
@@ -130,6 +130,23 @@ fun AppInfoDialogPreview() {
         appInfo = AppInfo(
             "App name",
             packageName = "com.example.app.very.long.package.name.that.should.overflow",
+            isSystemApp = false,
+            isUninstalled = false,
+            versionCode = 1,
+            versionName = "1.0",
+            bloatData = null,
+        ),
+        onDismiss = {}
+    )
+}
+
+@Preview
+@Composable
+fun AppInfoDialogPreviewShort() {
+    AppInfoDialog(
+        appInfo = AppInfo(
+            "App name",
+            packageName = "com.example.app",
             isSystemApp = false,
             isUninstalled = false,
             versionCode = 1,

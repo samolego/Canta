@@ -1,15 +1,21 @@
 package org.samo_lego.canta.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -27,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,6 +41,7 @@ import org.samo_lego.canta.APP_NAME
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.ui.viewmodel.ShizukuViewModel
+import org.samo_lego.canta.util.Filter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +53,7 @@ fun CantaApp(
     var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
     val shizukuModel = viewModel<ShizukuViewModel>()
     val appListViewModel = viewModel<AppListViewModel>()
+    var showMoreOptionsPanel by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -52,10 +61,14 @@ fun CantaApp(
                 title = { Text(text = APP_NAME) },
                 actions = {
                     IconButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { showMoreOptionsPanel = !showMoreOptionsPanel },
                     ) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More options")
                     }
+                    MoreOptionsMenu(
+                        showMoreOptionsPanel = showMoreOptionsPanel,
+                        onDismiss = { showMoreOptionsPanel = false },
+                    )
                 },
                 colors = TopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -133,6 +146,63 @@ fun CantaApp(
                 )
             }
             AppList()
+        }
+    }
+}
+
+@Composable
+fun MoreOptionsMenu(
+    showMoreOptionsPanel: Boolean,
+    onDismiss: () -> Unit,
+) {
+    val appListViewModel = viewModel<AppListViewModel>()
+    DropdownMenu(
+        expanded = showMoreOptionsPanel,
+        onDismissRequest = onDismiss,
+    ) {
+        Row(
+            modifier = Modifier.padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text("Only system")
+            Checkbox(
+                checked = appListViewModel.showSystem,
+                onCheckedChange = {
+                    appListViewModel.showSystem = it
+                },
+            )
+        }
+        // Filters
+        var filtersMenu by remember { mutableStateOf(false) }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { filtersMenu = !filtersMenu }
+                .padding(8.dp)
+                .padding(end = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(appListViewModel.selectedFilter.name)
+            Icon(Icons.Default.ArrowDropDown, contentDescription = "Filters")
+        }
+
+        if (filtersMenu) {
+            Filter.availableFilters.forEach { filter ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            appListViewModel.selectedFilter = filter
+                        }
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Text(filter.name)
+                }
+            }
         }
     }
 }

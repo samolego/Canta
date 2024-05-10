@@ -15,6 +15,7 @@ import org.samo_lego.canta.extension.getAllPackagesInfo
 import org.samo_lego.canta.util.AppInfo
 import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.BloatUtils
+import org.samo_lego.canta.util.Filter
 import java.io.File
 import java.util.Locale
 
@@ -33,10 +34,12 @@ class AppListViewModel : ViewModel() {
     var isLoadingBadges by mutableStateOf(false)
         private set
 
+    var selectedFilter by mutableStateOf(Filter.any)
+
     private val sortedList by derivedStateOf {
         isLoading = true
         val comparator = compareBy(Collator.getInstance(Locale.getDefault()), AppInfo::name)
-        apps.sortedWith(comparator).also {
+        apps.filter { selectedFilter.shouldShow(it) }.sortedWith(comparator).also {
             isLoading = false
         }
     }

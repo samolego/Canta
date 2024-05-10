@@ -3,9 +3,12 @@ package org.samo_lego.canta.ui.component
 import android.content.pm.PackageManager.NameNotFoundException
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,10 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.samo_lego.canta.util.AppInfo
+import org.samo_lego.canta.util.BloatData
+import org.samo_lego.canta.util.InstallData
+import org.samo_lego.canta.util.RemovalRecommendation
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -33,14 +40,21 @@ fun AppTile(
     ListItem(
         modifier = Modifier.clickable(
             onClick = {
-                // Show dialog about app
                 onShowDialog()
             },
         ),
-        headlineContent = { Text(appInfo.name) },
+        headlineContent = {
+            Text(appInfo.name)
+        },
         supportingContent = {
             Column {
-                Text(appInfo.packageName)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Text(appInfo.packageName, modifier = Modifier.weight(9f))
+
+                }
                 FlowRow {
                     if (appInfo.removalInfo != null) {
                         RemovalBadge(removalRecommendation = appInfo.removalInfo!!)
@@ -106,18 +120,48 @@ fun AppIconImage(
 }
 
 
-/*
 @Preview
 @Composable
-fun InstalledAppTileDemo() {
-    InstalledAppTile(
+fun CantaAppTileDemo() {
+    AppTile(
         appInfo = AppInfo(
             "Canta",
             packageName = "org.samo_lego.canta",
             isSystemApp = false,
-
+            isUninstalled = false,
+            versionCode = 1,
+            versionName = "1.0",
+            bloatData = BloatData(
+                installData = InstallData.OEM,
+                description = "Canta is a system app",
+                removal = RemovalRecommendation.RECOMMENDED,
+            ),
         ),
-        isSelected =,
-        onCheckChanged =
+        isSelected = false,
+        onCheckChanged = {},
+        onShowDialog = {},
     )
-}*/
+}
+
+@Preview
+@Composable
+fun LongTileDemo() {
+    AppTile(
+        appInfo = AppInfo(
+            "Canta",
+            packageName = "very.long.package.name.that.should.overflow.and.maybe.it.will.overflow.even.2.lines",
+            isSystemApp = false,
+            isUninstalled = false,
+            versionCode = 1,
+            versionName = "1.0",
+            bloatData = BloatData(
+                installData = InstallData.OEM,
+                description = "Canta is a system app",
+                removal = RemovalRecommendation.RECOMMENDED,
+            ),
+        ),
+        isSelected = false,
+        onCheckChanged = {},
+        onShowDialog = {},
+    )
+}
