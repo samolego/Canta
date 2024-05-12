@@ -1,5 +1,6 @@
 package org.samo_lego.canta.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
+import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
@@ -32,11 +34,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import org.samo_lego.canta.APP_NAME
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
@@ -54,6 +59,8 @@ fun CantaApp(
     val shizukuModel = viewModel<ShizukuViewModel>()
     val appListViewModel = viewModel<AppListViewModel>()
     var showMoreOptionsPanel by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -82,26 +89,62 @@ fun CantaApp(
         floatingActionButton = {
             // Add floating action button
             FloatingActionButton(
+                containerColor = when (selectedAppsType) {
+                    AppsType.INSTALLED -> MaterialTheme.colorScheme.errorContainer
+                    AppsType.UNINSTALLED -> MaterialTheme.colorScheme.tertiaryContainer
+                },
                 shape = RoundedCornerShape(32.dp),
                 modifier = Modifier.padding(16.dp),
                 onClick = {
-                    when (selectedAppsType) {
-                        AppsType.INSTALLED -> {
-                            /*launchShizuku()
-                            appListModel.selectedAppsForRemoval.forEach {
-                                uninstallApp(it)
-                            }*/
-                        }
+                    coroutineScope.launch {
+                        // Check shizuku permission
+                        val permission = shizukuModel.checkShizukuPermission()
+                        println("Shizuku permission: $permission")
 
-                        AppsType.UNINSTALLED -> {
-                            /*appListModel.selectedAppsForRemoval.forEach {
-                                reinstallApp(it)
-                            }*/
+                        if (!permission) {
+                            Toast.makeText(
+                                context,
+                                "Please start Shizuku and authorise Canta.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            launchShizuku()
+                        } else {
+                            // Proceed with the action
+                            when (selectedAppsType) {
+                                AppsType.INSTALLED -> {
+                                    launchShizuku()
+                                    appListViewModel.selectedAppsForRemoval.forEach {
+                                        val uninstalled = uninstallApp(it.key)
+                                        if (uninstalled) {
+                                            appListViewModel.changeAppStatus(it.key)
+                                        }
+                                    }
+                                }
+
+                                AppsType.UNINSTALLED -> {
+                                    appListViewModel.selectedAppsForRemoval.forEach {
+                                        val installed = reinstallApp(it.key)
+                                        if (installed) {
+                                            appListViewModel.changeAppStatus(it.key)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
             ) {
-                Icon(Icons.Default.Delete, contentDescription = "Remove")
+                when (selectedAppsType) {
+                    AppsType.INSTALLED -> Icon(
+                        Icons.Default.Delete,
+                        contentDescription = "Uninstall"
+                    )
+
+                    AppsType.UNINSTALLED -> Icon(
+                        Icons.Default.InstallMobile,
+                        contentDescription = "ReInstall"
+                    )
+                }
             }
 
         },
@@ -123,6 +166,7 @@ fun CantaApp(
                     onClick = {
                         selectedAppsType = AppsType.INSTALLED
                         appListViewModel.showUninstalled = false
+                        appListViewModel.selectedFilter = Filter.any
                     },
                     icon = {
                         Icon(
@@ -136,6 +180,7 @@ fun CantaApp(
                     onClick = {
                         selectedAppsType = AppsType.UNINSTALLED
                         appListViewModel.showUninstalled = true
+                        appListViewModel.selectedFilter = Filter.any
                     },
                     icon = {
                         Icon(

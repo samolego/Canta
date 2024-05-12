@@ -18,22 +18,29 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import org.samo_lego.canta.extension.getInfoForPackage
 import org.samo_lego.canta.ui.CantaApp
 import org.samo_lego.canta.ui.theme.CantaTheme
+import org.samo_lego.canta.ui.viewmodel.ShizukuViewModel
+import org.samo_lego.canta.ui.viewmodel.ShizukuViewModel.Companion.SHIZUKU_CODE
 import org.samo_lego.canta.util.ShizukuPackageInstallerUtils
 import rikka.shizuku.Shizuku
-import rikka.sui.Sui
-import kotlin.properties.Delegates
 
 const val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
 const val APP_NAME = "Canta"
 const val packageName = "org.samo_lego.canta"
 
 class MainActivity : ComponentActivity() {
-    private var isSui by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        isSui = Sui.init(applicationContext.packageName)
+
+        Shizuku.addRequestPermissionResultListener { requestCode, grantResult ->
+            if (requestCode == SHIZUKU_CODE) {
+                val granted = grantResult == PackageManager.PERMISSION_GRANTED
+                ShizukuViewModel.shizukuPermissionFuture.complete(granted)
+            }
+        }
+        Shizuku.addBinderDeadListener { ShizukuViewModel.binderStatus = false }
+        Shizuku.addBinderReceivedListener { ShizukuViewModel.binderStatus = true }
 
 
         setContent {

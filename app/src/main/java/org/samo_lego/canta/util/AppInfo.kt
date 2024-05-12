@@ -7,6 +7,9 @@ import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Data class to hold information about an app.
+ */
 @Parcelize
 data class AppInfo(
     private val appName: String?,

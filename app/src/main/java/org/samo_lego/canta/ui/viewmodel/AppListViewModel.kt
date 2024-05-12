@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import org.samo_lego.canta.extension.getAllPackagesInfo
+import org.samo_lego.canta.extension.mutableStateSetOf
 import org.samo_lego.canta.util.AppInfo
 import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.BloatUtils
@@ -25,6 +26,8 @@ class AppListViewModel : ViewModel() {
         private const val TAG = "AppListViewModel"
         private var apps by mutableStateOf<List<AppInfo>>(emptyList())
     }
+
+    var selectedAppsForRemoval = mutableStateSetOf<String>()
 
     var search by mutableStateOf("")
     var showSystem by mutableStateOf(false)
@@ -102,6 +105,20 @@ class AppListViewModel : ViewModel() {
             isLoadingBadges = false
             val end = System.currentTimeMillis()
             Log.i(TAG, "Loaded badges in ${end - endPackages}ms")
+        }
+    }
+
+    fun resetSelectedApps() {
+        selectedAppsForRemoval = mutableStateSetOf()
+    }
+
+    fun changeAppStatus(packageName: String) {
+        apps = apps.map {
+            if (it.packageName == packageName) {
+                it.copy(isUninstalled = !it.isUninstalled)
+            } else {
+                it
+            }
         }
     }
 }

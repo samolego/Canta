@@ -36,7 +36,7 @@ fun AppInfoDialog(
     appInfo: AppInfo,
     onDismiss: () -> Unit,
 ) {
-    val bloatDescripton = appInfo.bloatData?.description
+    val bloatDescripton = appInfo.description
     val clipboardManager = LocalClipboardManager.current
 
     val context = LocalContext.current

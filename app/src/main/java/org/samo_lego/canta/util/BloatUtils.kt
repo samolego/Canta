@@ -58,6 +58,9 @@ class BloatUtils {
     }
 }
 
+/**
+ * App bloat information, parsed from the UAD json.
+ */
 @Parcelize
 data class BloatData(
     internal val installData: InstallData?,
@@ -75,6 +78,9 @@ data class BloatData(
     }
 }
 
+/**
+ * Enum class to represent the removal recommendation, from the UAD list.
+ */
 enum class RemovalRecommendation(val icon: ImageVector, val badgeColor: Color) {
     RECOMMENDED(Icons.Default.Check, Color.Green),
     ADVANCED(Icons.Default.Settings, Color.Yellow),
@@ -88,6 +94,9 @@ enum class RemovalRecommendation(val icon: ImageVector, val badgeColor: Color) {
     }
 }
 
+/**
+ * Represents the install data from the UAD list.
+ */
 enum class InstallData {
     OEM,
     CARRIER;

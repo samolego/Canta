@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -27,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.samo_lego.canta.extension.add
 import org.samo_lego.canta.ui.dialog.AppInfoDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.AppInfo
@@ -34,7 +34,6 @@ import org.samo_lego.canta.util.AppInfo
 
 @Composable
 fun AppList() {
-    val selectedAppsForRemoval = remember { mutableStateListOf<String>() }
     val appListModel = viewModel<AppListViewModel>()
     val context = LocalContext.current
     var showAppDialog by remember {
@@ -45,6 +44,7 @@ fun AppList() {
         if (appListModel.appList.isEmpty()) {
             appListModel.loadInstalled(context.packageManager, context.filesDir)
         }
+        appListModel.resetSelectedApps()
     }
 
     Column(
@@ -67,18 +67,17 @@ fun AppList() {
             }
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 8.dp),
+                    .fillMaxSize(),
             ) {
                 items(appListModel.appList, key = { it.packageName }) { appInfo ->
                     AppTile(
                         appInfo = appInfo,
-                        isSelected = selectedAppsForRemoval.contains(appInfo.packageName),
+                        isSelected = appListModel.selectedAppsForRemoval.contains(appInfo.packageName),
                         onCheckChanged = { checked ->
                             if (checked) {
-                                selectedAppsForRemoval.add(appInfo.packageName)
+                                appListModel.selectedAppsForRemoval.add(appInfo.packageName)
                             } else {
-                                selectedAppsForRemoval.remove(appInfo.packageName)
+                                appListModel.selectedAppsForRemoval.remove(appInfo.packageName)
                             }
                         },
                         onShowDialog = {
