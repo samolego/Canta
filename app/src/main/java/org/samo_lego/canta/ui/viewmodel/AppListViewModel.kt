@@ -29,7 +29,7 @@ class AppListViewModel : ViewModel() {
 
     var selectedAppsForRemoval = mutableStateSetOf<String>()
 
-    var search by mutableStateOf("")
+    var searchQuery by mutableStateOf("")
     var showSystem by mutableStateOf(false)
     var showUninstalled by mutableStateOf(false)
     var isLoading by mutableStateOf(false)
@@ -49,8 +49,8 @@ class AppListViewModel : ViewModel() {
 
     val appList by derivedStateOf {
         sortedList.filter {
-            val search = it.name.contains(search, true) || it.packageName.contains(
-                search, true
+            val search = it.name.contains(searchQuery, true) || it.packageName.contains(
+                searchQuery, true
             )
 
             search && showUninstalled == it.isUninstalled

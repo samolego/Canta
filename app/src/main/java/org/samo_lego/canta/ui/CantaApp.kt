@@ -12,10 +12,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.AutoDelete
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +27,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -60,17 +64,29 @@ fun CantaApp(
     var showMoreOptionsPanel by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+    var searchActive by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = APP_NAME) },
+                title = {
+                    Text(text = APP_NAME)
+                },
                 actions = {
+                    IconButton(
+                        onClick = {
+                            searchActive = true
+                        }
+                    ) {
+                        Icon(Icons.Default.Search, contentDescription = "Search")
+                    }
+
                     IconButton(
                         onClick = { showMoreOptionsPanel = !showMoreOptionsPanel },
                     ) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More options")
                     }
+
                     MoreOptionsMenu(
                         showMoreOptionsPanel = showMoreOptionsPanel,
                         onDismiss = { showMoreOptionsPanel = false },
@@ -84,6 +100,29 @@ fun CantaApp(
                     actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
             )
+            if (searchActive) {
+                SearchBar(
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                appListViewModel.searchQuery = ""
+                                searchActive = false
+                            }
+                        ) {
+                            Icon(Icons.Default.Clear, contentDescription = "Clear search")
+                        }
+                    },
+                    query = appListViewModel.searchQuery,
+                    onQueryChange = { appListViewModel.searchQuery = it },
+                    active = false,
+                    onActiveChange = { },
+                    onSearch = { },
+                    content = { },
+                    colors = SearchBarDefaults.colors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    )
+                )
+            }
         },
         floatingActionButton = {
             // Add floating action button
