@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 import org.samo_lego.canta.APP_NAME
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
-import org.samo_lego.canta.ui.viewmodel.ShizukuViewModel
+import org.samo_lego.canta.ui.viewmodel.ShizukuData
 import org.samo_lego.canta.util.Filter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +56,6 @@ fun CantaApp(
     reinstallApp: (String) -> Boolean,
 ) {
     var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
-    val shizukuModel = viewModel<ShizukuViewModel>()
     val appListViewModel = viewModel<AppListViewModel>()
     var showMoreOptionsPanel by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -96,9 +95,9 @@ fun CantaApp(
                 shape = RoundedCornerShape(32.dp),
                 modifier = Modifier.padding(16.dp),
                 onClick = {
+                    // Check shizuku permission
+                    val permission = ShizukuData.checkShizukuPermission()
                     coroutineScope.launch {
-                        // Check shizuku permission
-                        val permission = shizukuModel.checkShizukuPermission()
                         println("Shizuku permission: $permission")
 
                         if (!permission) {
@@ -112,7 +111,6 @@ fun CantaApp(
                             // Proceed with the action
                             when (selectedAppsType) {
                                 AppsType.INSTALLED -> {
-                                    launchShizuku()
                                     appListViewModel.selectedAppsForRemoval.forEach {
                                         val uninstalled = uninstallApp(it.key)
                                         if (uninstalled) {
@@ -130,6 +128,7 @@ fun CantaApp(
                                     }
                                 }
                             }
+                            appListViewModel.resetSelectedApps()
                         }
                     }
                 },

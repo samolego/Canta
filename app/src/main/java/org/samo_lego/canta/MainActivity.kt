@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.IPackageInstaller
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -18,8 +19,7 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import org.samo_lego.canta.extension.getInfoForPackage
 import org.samo_lego.canta.ui.CantaApp
 import org.samo_lego.canta.ui.theme.CantaTheme
-import org.samo_lego.canta.ui.viewmodel.ShizukuViewModel
-import org.samo_lego.canta.ui.viewmodel.ShizukuViewModel.Companion.SHIZUKU_CODE
+import org.samo_lego.canta.ui.viewmodel.ShizukuData
 import org.samo_lego.canta.util.ShizukuPackageInstallerUtils
 import rikka.shizuku.Shizuku
 
@@ -32,16 +32,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        Shizuku.addRequestPermissionResultListener { requestCode, grantResult ->
-            if (requestCode == SHIZUKU_CODE) {
-                val granted = grantResult == PackageManager.PERMISSION_GRANTED
-                ShizukuViewModel.shizukuPermissionFuture.complete(granted)
-            }
-        }
-        Shizuku.addBinderDeadListener { ShizukuViewModel.binderStatus = false }
-        Shizuku.addBinderReceivedListener { ShizukuViewModel.binderStatus = true }
-
+        ShizukuData.init()
 
         setContent {
             CantaTheme {
@@ -144,14 +135,24 @@ class MainActivity : ComponentActivity() {
         val flags = if (isSystem) 0x00000004 else 0x00000002
 
         return try {
-            HiddenApiBypass.invoke(
-                PackageInstaller::class.java,
-                packageInstaller,
-                "uninstall",
-                packageName,
-                flags,
-                intent.intentSender
-            )
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                PackageInstaller::class.java.getDeclaredMethod(
+                    "uninstall",
+                    String::class.java,
+                    Int::class.javaPrimitiveType,
+                    PendingIntent::class.java
+                ).invoke(packageInstaller, packageName, flags, intent)
+                //packageInstaller.uninstall(packageName, flags, intent.intentSender)
+            } else {
+                HiddenApiBypass.invoke(
+                    PackageInstaller::class.java,
+                    packageInstaller,
+                    "uninstall",
+                    packageName,
+                    flags,
+                    intent.intentSender
+                )
+            }
             true
         } catch (e: Exception) {
             e.printStackTrace()

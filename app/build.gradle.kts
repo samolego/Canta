@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId = "org.samo_lego.canta"
-        minSdk = 28
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
