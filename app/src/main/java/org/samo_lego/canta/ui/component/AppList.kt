@@ -65,25 +65,36 @@ fun AppList() {
             if (appListModel.isLoadingBadges) {
                 LoadingBadgesIndicator()
             }
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                items(appListModel.appList, key = { it.packageName }) { appInfo ->
-                    AppTile(
-                        appInfo = appInfo,
-                        isSelected = appListModel.selectedAppsForRemoval.contains(appInfo.packageName),
-                        onCheckChanged = { checked ->
-                            if (checked) {
-                                appListModel.selectedAppsForRemoval.add(appInfo.packageName)
-                            } else {
-                                appListModel.selectedAppsForRemoval.remove(appInfo.packageName)
+            if (appListModel.appList.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                ) {
+                    items(appListModel.appList, key = { it.packageName }) { appInfo ->
+                        AppTile(
+                            appInfo = appInfo,
+                            isSelected = appListModel.selectedAppsForRemoval.contains(appInfo.packageName),
+                            onCheckChanged = { checked ->
+                                if (checked) {
+                                    appListModel.selectedAppsForRemoval.add(appInfo.packageName)
+                                } else {
+                                    appListModel.selectedAppsForRemoval.remove(appInfo.packageName)
+                                }
+                            },
+                            onShowDialog = {
+                                showAppDialog = appInfo
                             }
-                        },
-                        onShowDialog = {
-                            showAppDialog = appInfo
-                        }
-                    )
+                        )
+                    }
+                }
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("No apps found")
                 }
             }
         }

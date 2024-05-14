@@ -3,12 +3,15 @@ package org.samo_lego.canta.ui
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.AutoDelete
@@ -27,11 +30,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
@@ -42,7 +45,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
@@ -59,26 +68,74 @@ fun CantaApp(
     uninstallApp: (String) -> Boolean,
     reinstallApp: (String) -> Boolean,
 ) {
-    var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
-    val appListViewModel = viewModel<AppListViewModel>()
-    var showMoreOptionsPanel by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    // Selected tab
+    var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
+
+    val appListViewModel = viewModel<AppListViewModel>()
+
+    var showMoreOptionsPanel by remember { mutableStateOf(false) }
     var searchActive by remember { mutableStateOf(false) }
+    val searchFocusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = APP_NAME)
+                    Box(
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
+                        if (!searchActive) {
+                            Text(
+                                text = APP_NAME,
+                                modifier = Modifier.clickable { println("Click title") })
+                        }
+                        TextField(
+                            modifier = Modifier
+                                .focusRequester(searchFocusRequester)
+                                .alpha(if (searchActive) 1f else 0f),
+                            value = appListViewModel.searchQuery,
+                            onValueChange = {
+                                appListViewModel.searchQuery = it
+                            },
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                            keyboardActions = KeyboardActions(
+                                onDone = { keyboardController?.hide() }
+                            ),
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                errorIndicatorColor = Color.Transparent,
+                            ),
+                        )
+                    }
                 },
                 actions = {
                     IconButton(
                         onClick = {
-                            searchActive = true
+                            searchActive = !searchActive
+                            appListViewModel.searchQuery = ""
+
+                            if (searchActive) {
+                                searchFocusRequester.requestFocus()
+                                keyboardController?.show()
+                            } else {
+                                searchFocusRequester.freeFocus()
+                                keyboardController?.hide()
+                            }
                         }
                     ) {
-                        Icon(Icons.Default.Search, contentDescription = "Search")
+                        Icon(
+                            if (searchActive) Icons.Default.Clear
+                            else Icons.Default.Search,
+                            contentDescription = "Search"
+                        )
                     }
 
                     IconButton(
@@ -100,29 +157,6 @@ fun CantaApp(
                     actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
             )
-            if (searchActive) {
-                SearchBar(
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                appListViewModel.searchQuery = ""
-                                searchActive = false
-                            }
-                        ) {
-                            Icon(Icons.Default.Clear, contentDescription = "Clear search")
-                        }
-                    },
-                    query = appListViewModel.searchQuery,
-                    onQueryChange = { appListViewModel.searchQuery = it },
-                    active = false,
-                    onActiveChange = { },
-                    onSearch = { },
-                    content = { },
-                    colors = SearchBarDefaults.colors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    )
-                )
-            }
         },
         floatingActionButton = {
             // Add floating action button
