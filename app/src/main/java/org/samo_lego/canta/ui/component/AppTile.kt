@@ -57,7 +57,7 @@ fun AppTile(
                 }
                 FlowRow {
                     if (appInfo.removalInfo != null) {
-                        RemovalBadge(removalRecommendation = appInfo.removalInfo!!)
+                        RemovalBadge(type = appInfo.removalInfo!!)
                     }
                     if (appInfo.isSystemApp) {
                         SystemBadge()

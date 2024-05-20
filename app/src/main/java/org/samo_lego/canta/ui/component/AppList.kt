@@ -16,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,17 +28,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.samo_lego.canta.extension.add
+import org.samo_lego.canta.ui.AppsType
 import org.samo_lego.canta.ui.dialog.AppInfoDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.AppInfo
 
 
 @Composable
-fun AppList() {
+fun AppList(
+    appType: AppsType = AppsType.INSTALLED
+) {
     val appListModel = viewModel<AppListViewModel>()
     val context = LocalContext.current
     var showAppDialog by remember {
         mutableStateOf<AppInfo?>(null)
+    }
+
+    val appList by derivedStateOf {
+        appListModel.appList.filter {
+            when (appType) {
+                AppsType.INSTALLED -> !it.isUninstalled
+                AppsType.UNINSTALLED -> it.isUninstalled
+            }
+        }
     }
 
     LaunchedEffect(Unit) {
@@ -65,20 +78,20 @@ fun AppList() {
             if (appListModel.isLoadingBadges) {
                 LoadingBadgesIndicator()
             }
-            if (appListModel.appList.isNotEmpty()) {
+            if (appList.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize(),
                 ) {
-                    items(appListModel.appList, key = { it.packageName }) { appInfo ->
+                    items(appList, key = { it.packageName }) { appInfo ->
                         AppTile(
                             appInfo = appInfo,
-                            isSelected = appListModel.selectedAppsForRemoval.contains(appInfo.packageName),
+                            isSelected = appListModel.selectedApps.contains(appInfo.packageName),
                             onCheckChanged = { checked ->
                                 if (checked) {
-                                    appListModel.selectedAppsForRemoval.add(appInfo.packageName)
+                                    appListModel.selectedApps.add(appInfo.packageName)
                                 } else {
-                                    appListModel.selectedAppsForRemoval.remove(appInfo.packageName)
+                                    appListModel.selectedApps.remove(appInfo.packageName)
                                 }
                             },
                             onShowDialog = {

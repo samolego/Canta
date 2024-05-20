@@ -27,11 +27,10 @@ class AppListViewModel : ViewModel() {
         private var apps by mutableStateOf<List<AppInfo>>(emptyList())
     }
 
-    var selectedAppsForRemoval = mutableStateSetOf<String>()
+    var selectedApps = mutableStateSetOf<String>()
 
     var searchQuery by mutableStateOf("")
     var showSystem by mutableStateOf(false)
-    var showUninstalled by mutableStateOf(false)
     var isLoading by mutableStateOf(false)
         private set
     var isLoadingBadges by mutableStateOf(false)
@@ -49,11 +48,9 @@ class AppListViewModel : ViewModel() {
 
     val appList by derivedStateOf {
         sortedList.filter {
-            val search = it.name.contains(searchQuery, true) || it.packageName.contains(
+            it.name.contains(searchQuery, true) || it.packageName.contains(
                 searchQuery, true
             )
-
-            search && showUninstalled == it.isUninstalled
         }.filter {
             it.isSystemApp || !showSystem
         }
@@ -109,7 +106,7 @@ class AppListViewModel : ViewModel() {
     }
 
     fun resetSelectedApps() {
-        selectedAppsForRemoval = mutableStateSetOf()
+        selectedApps = mutableStateSetOf()
     }
 
     fun changeAppStatus(packageName: String) {

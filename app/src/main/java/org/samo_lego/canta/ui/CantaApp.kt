@@ -1,6 +1,8 @@
 package org.samo_lego.canta.ui
 
 import android.widget.Toast
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +11,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -38,17 +42,20 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -57,11 +64,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import org.samo_lego.canta.APP_NAME
 import org.samo_lego.canta.ui.component.AppList
+import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
-import org.samo_lego.canta.ui.viewmodel.ShizukuData
 import org.samo_lego.canta.util.Filter
+import org.samo_lego.canta.util.ShizukuData
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class,
+    ExperimentalFoundationApi::class
+)
 @Composable
 fun CantaApp(
     launchShizuku: () -> Unit,
@@ -77,10 +88,20 @@ fun CantaApp(
     val appListViewModel = viewModel<AppListViewModel>()
 
     var showMoreOptionsPanel by remember { mutableStateOf(false) }
+    var showBadgeInfoDialog by remember { mutableStateOf(false) }
     var searchActive by remember { mutableStateOf(false) }
     val searchFocusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
+
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            selectedAppsType = AppsType.entries[page]
+            appListViewModel.selectedFilter = Filter.any
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -107,8 +128,8 @@ fun CantaApp(
                                 onDone = { keyboardController?.hide() }
                             ),
                             colors = TextFieldDefaults.colors(
-                                focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedContainerColor = Color.Transparent,
                                 focusedIndicatorColor = Color.Transparent,
                                 unfocusedIndicatorColor = Color.Transparent,
                                 errorIndicatorColor = Color.Transparent,
@@ -146,11 +167,15 @@ fun CantaApp(
 
                     MoreOptionsMenu(
                         showMoreOptionsPanel = showMoreOptionsPanel,
+                        showBadgeInfoDialog = {
+                            showBadgeInfoDialog = true
+                            showMoreOptionsPanel = false
+                        },
                         onDismiss = { showMoreOptionsPanel = false },
                     )
                 },
                 colors = TopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = if (!searchActive) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer,
                     scrolledContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -184,7 +209,7 @@ fun CantaApp(
                             // Proceed with the action
                             when (selectedAppsType) {
                                 AppsType.INSTALLED -> {
-                                    appListViewModel.selectedAppsForRemoval.forEach {
+                                    appListViewModel.selectedApps.forEach {
                                         val uninstalled = uninstallApp(it.key)
                                         if (uninstalled) {
                                             appListViewModel.changeAppStatus(it.key)
@@ -193,7 +218,7 @@ fun CantaApp(
                                 }
 
                                 AppsType.UNINSTALLED -> {
-                                    appListViewModel.selectedAppsForRemoval.forEach {
+                                    appListViewModel.selectedApps.forEach {
                                         val installed = reinstallApp(it.key)
                                         if (installed) {
                                             appListViewModel.changeAppStatus(it.key)
@@ -233,36 +258,40 @@ fun CantaApp(
                 contentColor = MaterialTheme.colorScheme.primary,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
             ) {
-                Tab(
-                    selected = selectedAppsType == AppsType.INSTALLED,
-                    onClick = {
-                        selectedAppsType = AppsType.INSTALLED
-                        appListViewModel.showUninstalled = false
-                        appListViewModel.selectedFilter = Filter.any
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Default.AutoDelete,
-                            contentDescription = AppsType.INSTALLED.toString()
-                        )
-                    },
-                )
-                Tab(
-                    selected = selectedAppsType == AppsType.UNINSTALLED,
-                    onClick = {
-                        selectedAppsType = AppsType.UNINSTALLED
-                        appListViewModel.showUninstalled = true
-                        appListViewModel.selectedFilter = Filter.any
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Default.DeleteForever,
-                            contentDescription = AppsType.UNINSTALLED.toString()
-                        )
-                    },
+                AppsType.entries.forEach { currentTab ->
+                    Tab(
+                        selected = selectedAppsType == currentTab,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(currentTab.ordinal)
+                            }
+                            selectedAppsType = currentTab
+                            appListViewModel.selectedFilter = Filter.any
+                        },
+                        icon = {
+                            Icon(
+                                currentTab.icon,
+                                contentDescription = currentTab.toString()
+                            )
+                        },
+                    )
+                }
+            }
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+            ) { page ->
+                if (showBadgeInfoDialog) {
+                    ExplainBadgesDialog(
+                        onDismissRequest = { showBadgeInfoDialog = false }
+                    )
+                }
+                AppList(
+                    appType = AppsType.entries[page]
                 )
             }
-            AppList()
         }
     }
 }
@@ -270,6 +299,7 @@ fun CantaApp(
 @Composable
 fun MoreOptionsMenu(
     showMoreOptionsPanel: Boolean,
+    showBadgeInfoDialog: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     val appListViewModel = viewModel<AppListViewModel>()
@@ -321,10 +351,24 @@ fun MoreOptionsMenu(
                 }
             }
         }
+
+        // Badge info dialog
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    showBadgeInfoDialog()
+                }
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text("Badge info")
+        }
     }
 }
 
-enum class AppsType {
-    INSTALLED,
-    UNINSTALLED,
+enum class AppsType(val icon: ImageVector) {
+    INSTALLED(Icons.Default.AutoDelete),
+    UNINSTALLED(Icons.Default.DeleteForever),
 }

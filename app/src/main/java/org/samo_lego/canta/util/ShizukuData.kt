@@ -1,10 +1,9 @@
-package org.samo_lego.canta.ui.viewmodel
+package org.samo_lego.canta.util
 
 import android.content.pm.PackageManager
 import android.util.Log
 import org.samo_lego.canta.SHIZUKU_PACKAGE_NAME
 import org.samo_lego.canta.packageName
-import org.samo_lego.canta.util.ShizukuInfo
 import rikka.shizuku.Shizuku
 import rikka.sui.Sui
 import java.util.concurrent.CompletableFuture
@@ -84,4 +83,13 @@ class ShizukuData {
             return ShizukuInfo.NOT_INSTALLED
         }
     }
+}
+
+/**
+ * Enum class to represent Shizuku status.
+ */
+enum class ShizukuInfo {
+    ACTIVE,
+    NOT_ACTIVE,
+    NOT_INSTALLED,
 }

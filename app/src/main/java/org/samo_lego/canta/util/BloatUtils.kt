@@ -2,6 +2,7 @@ package org.samo_lego.canta.util
 
 import android.os.Parcelable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
@@ -81,11 +82,36 @@ data class BloatData(
 /**
  * Enum class to represent the removal recommendation, from the UAD list.
  */
-enum class RemovalRecommendation(val icon: ImageVector, val badgeColor: Color) {
-    RECOMMENDED(Icons.Default.Check, Color.Green),
-    ADVANCED(Icons.Default.Settings, Color.Yellow),
-    EXPERT(Icons.Default.Warning, Color.Red),
-    UNSAFE(Icons.Default.Close, Color.Magenta);
+enum class RemovalRecommendation(
+    val icon: ImageVector,
+    val badgeColor: Color,
+    val description: String
+) {
+    RECOMMENDED(
+        Icons.Default.Check,
+        Color.Green,
+        "Pointless or outright negative packages, and/or apps available through Google Play."
+    ),
+    ADVANCED(
+        Icons.Default.Settings,
+        Color.Yellow,
+        "Breaks obscure or minor parts of functionality, or apps that aren't easily enabled/installed through Settings/Google Play. This category is also used for apps that are useful (default keyboard/gallery/launcher/music app.) but that can easily be replaced by a better alternative."
+    ),
+    EXPERT(
+        Icons.Default.Warning,
+        Color.Red,
+        "Breaks widespread and/or important functionality, but nothing important to the basic operation of the operating system. Removing an 'Expert' package should not bootloop the device (unless mentioned in the description) but we can't guarantee it 100%."
+    ),
+    UNSAFE(
+        Icons.Default.Close,
+        Color.Magenta,
+        "Can break vital parts of the operating system. Removing an 'Unsafe' package have an extremely high risk of bootlooping your device."
+    ),
+    SYSTEM(
+        Icons.Default.Android,
+        Color.DarkGray,
+        "System apps are apps that come pre-installed with your device."
+    );
 
     companion object {
         fun byNameIgnoreCaseOrNull(input: String): RemovalRecommendation? {

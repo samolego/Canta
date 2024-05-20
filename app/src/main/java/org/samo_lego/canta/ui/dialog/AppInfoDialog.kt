@@ -55,72 +55,71 @@ fun AppInfoDialog(
             decorFitsSystemWindows = true,
             usePlatformDefaultWidth = false,
         ),
-        content = {
+        onDismissRequest = onDismiss,
+    ) {
+        Column(
+            modifier = Modifier.padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
             Column(
-                modifier = Modifier.padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Row {
-                        if (appIcon != null) {
-                            AppIconImage(
-                                appIconImage = appIcon,
-                                contentDescription = "${appInfo.name} icon"
-                            )
-                            Spacer(modifier = Modifier.size(8.dp))
-                        }
-                        Text(
-                            text = appInfo.name,
-                            modifier = Modifier.align(Alignment.CenterVertically)
+                Row {
+                    if (appIcon != null) {
+                        AppIconImage(
+                            appIconImage = appIcon,
+                            contentDescription = "${appInfo.name} icon"
                         )
+                        Spacer(modifier = Modifier.size(8.dp))
                     }
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Row(
-                        modifier = Modifier
-                            .background(
-                                MaterialTheme.colorScheme.secondaryContainer,
-                                MaterialTheme.shapes.small
-                            )
-                            .clickable(
-                                onClick = {
-                                    // Copy package name to clipboard
-                                    clipboardManager.setText(AnnotatedString(appInfo.packageName))
-                                }
-                            )
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                    ) {
-                        Icon(
-                            Icons.Default.ContentCopy,
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .size(12.dp),
-                            contentDescription = "Copy package name to clipboard",
-                        )
-                        Spacer(modifier = Modifier.size(4.dp))
-                        Text(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically),
-                            text = appInfo.packageName,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
+                    Text(
+                        text = appInfo.name,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
                 }
                 Spacer(modifier = Modifier.size(8.dp))
-                if (bloatDescripton != null) {
-                    Text(text = bloatDescripton, style = MaterialTheme.typography.bodyMedium)
-                } else {
+                Row(
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.secondaryContainer,
+                            MaterialTheme.shapes.small
+                        )
+                        .clickable(
+                            onClick = {
+                                // Copy package name to clipboard
+                                clipboardManager.setText(AnnotatedString(appInfo.packageName))
+                            }
+                        )
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                ) {
+                    Icon(
+                        Icons.Default.ContentCopy,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .size(12.dp),
+                        contentDescription = "Copy package name to clipboard",
+                    )
+                    Spacer(modifier = Modifier.size(4.dp))
                     Text(
-                        text = "No description available",
-                        style = MaterialTheme.typography.bodySmall
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically),
+                        text = appInfo.packageName,
+                        style = MaterialTheme.typography.labelSmall
                     )
                 }
             }
-        },
-        onDismissRequest = onDismiss,
-    )
+            Spacer(modifier = Modifier.size(8.dp))
+            if (bloatDescripton != null) {
+                Text(text = bloatDescripton, style = MaterialTheme.typography.bodyMedium)
+            } else {
+                Text(
+                    text = "No description available",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        }
+    }
 }
 
 @Preview
