@@ -51,7 +51,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -110,20 +109,14 @@ fun CantaApp(
                     Box(
                         contentAlignment = Alignment.CenterStart,
                     ) {
-                        if (!searchActive) {
-                            Text(
-                                text = APP_NAME,
-                                modifier = Modifier.clickable { println("Click title") })
-                        }
+
                         TextField(
-                            modifier = Modifier
-                                .focusRequester(searchFocusRequester)
-                                .alpha(if (searchActive) 1f else 0f),
+                            modifier = Modifier.focusRequester(searchFocusRequester),
                             value = appListViewModel.searchQuery,
                             onValueChange = {
                                 appListViewModel.searchQuery = it
                             },
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                             keyboardActions = KeyboardActions(
                                 onDone = { keyboardController?.hide() }
                             ),
@@ -135,6 +128,15 @@ fun CantaApp(
                                 errorIndicatorColor = Color.Transparent,
                             ),
                         )
+                    }
+
+                    if (!searchActive) {
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(APP_NAME)
+                        }
                     }
                 },
                 actions = {
@@ -204,7 +206,7 @@ fun CantaApp(
                                 "Please start Shizuku and authorise Canta.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            launchShizuku()
+                            //launchShizuku()
                         } else {
                             // Proceed with the action
                             when (selectedAppsType) {

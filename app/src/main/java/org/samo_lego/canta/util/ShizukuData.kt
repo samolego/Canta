@@ -59,10 +59,12 @@ class ShizukuData {
                 Log.i(TAG, "Requesting shizuku permission")
                 Shizuku.requestPermission(SHIZUKU_CODE)
 
-                val result = shizukuPermissionFuture.get()
-                shizukuPermissionFuture = CompletableFuture<Boolean>()
+                // This hangs the process ...
+                //val result = shizukuPermissionFuture.get()
+                //shizukuPermissionFuture = CompletableFuture<Boolean>()
 
-                result
+                //result
+                false
             }
         }
     }

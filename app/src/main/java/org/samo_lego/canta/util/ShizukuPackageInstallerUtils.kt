@@ -18,9 +18,11 @@ import java.lang.reflect.InvocationTargetException
 object ShizukuPackageInstallerUtils {
     private val PACKAGE_MANAGER: IPackageManager by lazy {
         // This is needed to access hidden methods in IPackageManager
-        HiddenApiBypass.addHiddenApiExemptions(
-            "Landroid/content/pm"
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            HiddenApiBypass.addHiddenApiExemptions(
+                "Landroid/content/pm"
+            )
+        }
 
         IPackageManager.Stub.asInterface(
             ShizukuBinderWrapper(

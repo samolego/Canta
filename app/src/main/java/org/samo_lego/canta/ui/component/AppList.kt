@@ -125,7 +125,7 @@ fun LoadingBadgesIndicator() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.size(4.dp)
+            modifier = Modifier.size(32.dp),
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text("Loading badges ...")
