@@ -19,7 +19,6 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import org.samo_lego.canta.extension.getInfoForPackage
 import org.samo_lego.canta.ui.CantaApp
 import org.samo_lego.canta.ui.theme.CantaTheme
-import org.samo_lego.canta.util.ShizukuData
 import org.samo_lego.canta.util.ShizukuPackageInstallerUtils
 import rikka.shizuku.Shizuku
 
@@ -31,8 +30,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        ShizukuData.init()
 
         setContent {
             CantaTheme {

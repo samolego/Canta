@@ -1,5 +1,6 @@
 package org.samo_lego.canta.ui
 
+import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -18,6 +19,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
@@ -67,6 +69,7 @@ import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.ShizukuData
+import org.samo_lego.canta.util.ShizukuInfo
 
 @OptIn(
     ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class,
@@ -195,40 +198,63 @@ fun CantaApp(
                 shape = RoundedCornerShape(32.dp),
                 modifier = Modifier.padding(16.dp),
                 onClick = {
-                    // Check shizuku permission
-                    val permission = ShizukuData.checkShizukuPermission()
                     coroutineScope.launch {
-                        println("Shizuku permission: $permission")
+                        when (ShizukuData.checkShizukuActive(context.packageManager)) {
+                            ShizukuInfo.NOT_INSTALLED -> {
+                                Toast.makeText(
+                                    context,
+                                    "Please install Shizuku and authorise Canta.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@launch
+                            }
 
-                        if (!permission) {
-                            Toast.makeText(
-                                context,
-                                "Please start Shizuku and authorise Canta.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            //launchShizuku()
-                        } else {
-                            // Proceed with the action
-                            when (selectedAppsType) {
-                                AppsType.INSTALLED -> {
-                                    appListViewModel.selectedApps.forEach {
-                                        val uninstalled = uninstallApp(it.key)
-                                        if (uninstalled) {
-                                            appListViewModel.changeAppStatus(it.key)
-                                        }
-                                    }
-                                }
+                            ShizukuInfo.NOT_ACTIVE -> {
+                                Toast.makeText(
+                                    context,
+                                    "Please start Shizuku.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                launchShizuku()
+                                return@launch
+                            }
 
-                                AppsType.UNINSTALLED -> {
-                                    appListViewModel.selectedApps.forEach {
-                                        val installed = reinstallApp(it.key)
-                                        if (installed) {
-                                            appListViewModel.changeAppStatus(it.key)
+                            ShizukuInfo.ACTIVE -> {
+                                // Check shizuku permission
+                                ShizukuData.checkShizukuPermission { permResult ->
+                                    val permission = permResult == PackageManager.PERMISSION_GRANTED
+
+                                    if (!permission) {
+                                        Toast.makeText(
+                                            context,
+                                            "Please allow Shizuku access for Canta.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        // Proceed with the action
+                                        when (selectedAppsType) {
+                                            AppsType.INSTALLED -> {
+                                                appListViewModel.selectedApps.forEach {
+                                                    val uninstalled = uninstallApp(it.key)
+                                                    if (uninstalled) {
+                                                        appListViewModel.changeAppStatus(it.key)
+                                                    }
+                                                }
+                                            }
+
+                                            AppsType.UNINSTALLED -> {
+                                                appListViewModel.selectedApps.forEach {
+                                                    val installed = reinstallApp(it.key)
+                                                    if (installed) {
+                                                        appListViewModel.changeAppStatus(it.key)
+                                                    }
+                                                }
+                                            }
                                         }
+                                        appListViewModel.resetSelectedApps()
                                     }
                                 }
                             }
-                            appListViewModel.resetSelectedApps()
                         }
                     }
                 },
@@ -310,7 +336,11 @@ fun MoreOptionsMenu(
         onDismissRequest = onDismiss,
     ) {
         Row(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .clickable {
+                    appListViewModel.showSystem = !appListViewModel.showSystem
+                },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -328,13 +358,19 @@ fun MoreOptionsMenu(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { filtersMenu = !filtersMenu }
-                .padding(8.dp)
-                .padding(end = 12.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(appListViewModel.selectedFilter.name)
-            Icon(Icons.Default.ArrowDropDown, contentDescription = "Filters")
+            Icon(
+                if (filtersMenu) {
+                    Icons.Default.ArrowDropUp
+                } else {
+                    Icons.Default.ArrowDropDown
+                },
+                contentDescription = "Filters",
+            )
         }
 
         if (filtersMenu) {
@@ -344,6 +380,7 @@ fun MoreOptionsMenu(
                         .fillMaxWidth()
                         .clickable {
                             appListViewModel.selectedFilter = filter
+                            filtersMenu = false
                         }
                         .padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically,

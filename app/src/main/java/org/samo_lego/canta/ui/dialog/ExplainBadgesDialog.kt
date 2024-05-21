@@ -4,11 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -16,6 +15,7 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +39,6 @@ fun ExplainBadgesDialog(
         ),
         onDismissRequest = onDismissRequest,
     ) {
-
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,6 +46,7 @@ fun ExplainBadgesDialog(
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
                 modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -58,20 +58,27 @@ fun ExplainBadgesDialog(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Box(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(2f),
                         ) {
                             RemovalBadge(
                                 type = removalRecommendation
                             )
                         }
-                        Spacer(modifier = Modifier.size(8.dp))
                         Text(
                             removalRecommendation.description,
                             style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.weight(2f)
+                            modifier = Modifier.weight(3f)
                         )
                     }
                 }
+            }
+            TextButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                onClick = onDismissRequest,
+            ) {
+                Text("Got it")
             }
         }
     }

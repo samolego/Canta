@@ -6,7 +6,6 @@ import org.samo_lego.canta.SHIZUKU_PACKAGE_NAME
 import org.samo_lego.canta.packageName
 import rikka.shizuku.Shizuku
 import rikka.sui.Sui
-import java.util.concurrent.CompletableFuture
 
 class ShizukuData {
     companion object {
@@ -14,20 +13,9 @@ class ShizukuData {
 
         private val isSui: Boolean = Sui.init(packageName)
         private val TAG: String = ShizukuData::class.java.simpleName
-        private var shizukuPermissionFuture = CompletableFuture<Boolean>()
         private var binderStatus = Shizuku.pingBinder()
 
-        fun init() {
-            println("Shizuku permission init")
-            // Print current thread name
-            println("Current thread: ${Thread.currentThread().name}")
-            Shizuku.addRequestPermissionResultListener { requestCode, grantResult ->
-                println("Shizuku permission result: $requestCode, $grantResult")
-                if (requestCode == SHIZUKU_CODE) {
-                    val granted = grantResult == PackageManager.PERMISSION_GRANTED
-                    shizukuPermissionFuture.complete(granted)
-                }
-            }
+        init {
             Shizuku.addBinderDeadListener { binderStatus = false }
             Shizuku.addBinderReceivedListener { binderStatus = true }
         }
@@ -35,9 +23,10 @@ class ShizukuData {
         /**
          * Checks if the shizuku permission is granted. Call from main thread only!
          */
-        fun checkShizukuPermission(): Boolean {
-            println("Current thread: ${Thread.currentThread().name}")
-            return if (!binderStatus || Shizuku.isPreV11() || Shizuku.shouldShowRequestPermissionRationale()) {
+        fun checkShizukuPermission(
+            onPermissionResult: (Int) -> Unit
+        ) {
+            if (!binderStatus || Shizuku.isPreV11() || Shizuku.shouldShowRequestPermissionRationale()) {
                 val shouldShow = try {
                     Shizuku.shouldShowRequestPermissionRationale()
                 } catch (e: Exception) {
@@ -48,41 +37,37 @@ class ShizukuData {
                     TAG,
                     "Shizuku permission result: ping: ${Shizuku.pingBinder()}, preV11: ${Shizuku.isPreV11()}, shouldShowRequestPermissionRationale: $shouldShow"
                 )
-                false
+                onPermissionResult(PackageManager.PERMISSION_DENIED)
             } else if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED || isSui) {
                 Log.i(
                     TAG,
                     "Shizuku permission result: ${Shizuku.checkSelfPermission()}, sui status: $isSui"
                 )
-                true
+                onPermissionResult(PackageManager.PERMISSION_GRANTED)
             } else {
                 Log.i(TAG, "Requesting shizuku permission")
+                Shizuku.addRequestPermissionResultListener { requestCode, grantResult ->
+                    if (requestCode == SHIZUKU_CODE) {
+                        onPermissionResult(grantResult)
+                    }
+                }
                 Shizuku.requestPermission(SHIZUKU_CODE)
-
-                // This hangs the process ...
-                //val result = shizukuPermissionFuture.get()
-                //shizukuPermissionFuture = CompletableFuture<Boolean>()
-
-                //result
-                false
             }
         }
-    }
 
-
-
-    fun checkShizukuActive(packageManager: PackageManager): ShizukuInfo {
-        if (isSui) {
-            return ShizukuInfo.ACTIVE
-        }
-        try {
-            packageManager.getPackageInfo(SHIZUKU_PACKAGE_NAME, 0)
-            if (Shizuku.pingBinder() && !Shizuku.isPreV11()) {
+        fun checkShizukuActive(packageManager: PackageManager): ShizukuInfo {
+            if (isSui) {
                 return ShizukuInfo.ACTIVE
             }
-            return ShizukuInfo.NOT_ACTIVE
-        } catch (e: PackageManager.NameNotFoundException) {
-            return ShizukuInfo.NOT_INSTALLED
+            try {
+                packageManager.getPackageInfo(SHIZUKU_PACKAGE_NAME, 0)
+                if (Shizuku.pingBinder() && !Shizuku.isPreV11()) {
+                    return ShizukuInfo.ACTIVE
+                }
+                return ShizukuInfo.NOT_ACTIVE
+            } catch (e: PackageManager.NameNotFoundException) {
+                return ShizukuInfo.NOT_INSTALLED
+            }
         }
     }
 }
