@@ -1,5 +1,6 @@
 *.iml
 .gradle
+.idea
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -14,3 +15,4 @@
 .cxx
 local.properties
 icon.html
+app/key.properties

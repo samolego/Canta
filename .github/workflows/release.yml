@@ -19,13 +19,6 @@ jobs:
           cache: 'gradle'
           distribution: 'adopt'
         id: java
-      - name: ⚙️ Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.13.6"
-          channel: 'stable'
-          cache: true
-        id: flutter
       - name: 🔐 Retrieve base64 keystore and decode it to a file
         id: write_file
         uses: timheuer/base64-to-file@v1.2
@@ -35,7 +28,7 @@ jobs:
           encodedString: ${{ secrets.KEYSTORE_FILE_BASE64 }}
       - name: 📝🔐 Create keystore.properties file
         env:
-          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/android/key.properties
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/app/key.properties
         run: |
           echo "storeFile=${{ github.workspace }}/android-keystore.jks" > $KEYSTORE_PROPERTIES_PATH
           echo "keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}" >> $KEYSTORE_PROPERTIES_PATH
@@ -46,17 +39,9 @@ jobs:
         with:
           tagRegex: 'internal-v([0-9]+.[0-9]+.[0-9]+\+[0-9]+)' # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
           tagRegexGroup: 1 # Optional. Default is 1.
-
-      - name: Replace YAML version with tag version
-        run: |
-          sed -i 's/99.99.99+99/'$GIT_TAG_NAME'/g' pubspec.yaml|
-          echo "Tag used version:"$GIT_TAG_NAME
-      - name: Pub Get Packages
-        run: flutter pub get
       - name: 🤖📦 Create Android release
         run: |
-          flutter build appbundle --release
-          flutter build apk --split-per-abi --release
+          ./gradlew app:assembleRelease
       - name: 🤖🚀 Upload to GitHub release
         uses: AButler/upload-release-assets@v2.0
         with:

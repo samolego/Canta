@@ -19,10 +19,10 @@ android {
 
     defaultConfig {
         applicationId = "org.samo_lego.canta"
-        minSdk = 26
+        minSdk = 28  // todo - figure out a way to bypass hidden api methods on android <9
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = project.property("version_code")?.toString()?.toInt() ?: 1
+        versionName = project.property("version_name")?.toString() ?: "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
