@@ -292,9 +292,9 @@ fun CantaApp(
                         onClick = {
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(currentTab.ordinal)
+                                selectedAppsType = currentTab
+                                appListViewModel.selectedFilter = Filter.any
                             }
-                            selectedAppsType = currentTab
-                            appListViewModel.selectedFilter = Filter.any
                         },
                         icon = {
                             Icon(

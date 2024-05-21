@@ -57,7 +57,6 @@ fun AppList(
         if (appListModel.appList.isEmpty()) {
             appListModel.loadInstalled(context.packageManager, context.filesDir)
         }
-        appListModel.resetSelectedApps()
     }
 
     Column(
