@@ -1,12 +1,12 @@
 package org.samo_lego.canta.ui
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,34 +15,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.AutoDelete
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.InstallMobile
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -53,19 +43,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.samo_lego.canta.APP_NAME
 import org.samo_lego.canta.ui.component.AppList
+import org.samo_lego.canta.ui.component.CantaTopBar
 import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
+import org.samo_lego.canta.ui.dialog.UninstallAppsDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.ShizukuData
@@ -89,11 +76,9 @@ fun CantaApp(
 
     val appListViewModel = viewModel<AppListViewModel>()
 
-    var showMoreOptionsPanel by remember { mutableStateOf(false) }
     var showBadgeInfoDialog by remember { mutableStateOf(false) }
-    var searchActive by remember { mutableStateOf(false) }
-    val searchFocusRequester = remember { FocusRequester() }
-    val keyboardController = LocalSoftwareKeyboardController.current
+    var showUninstallConfirmDialog by remember { mutableStateOf(false) }
+
 
     val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
 
@@ -107,85 +92,8 @@ fun CantaApp(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Box(
-                        contentAlignment = Alignment.CenterStart,
-                    ) {
-
-                        TextField(
-                            modifier = Modifier.focusRequester(searchFocusRequester),
-                            value = appListViewModel.searchQuery,
-                            onValueChange = {
-                                appListViewModel.searchQuery = it
-                            },
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                            keyboardActions = KeyboardActions(
-                                onDone = { keyboardController?.hide() }
-                            ),
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = Color.Transparent,
-                                unfocusedContainerColor = Color.Transparent,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                errorIndicatorColor = Color.Transparent,
-                            ),
-                        )
-                    }
-
-                    if (!searchActive) {
-                        Row(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(APP_NAME)
-                        }
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            searchActive = !searchActive
-                            appListViewModel.searchQuery = ""
-
-                            if (searchActive) {
-                                searchFocusRequester.requestFocus()
-                                keyboardController?.show()
-                            } else {
-                                searchFocusRequester.freeFocus()
-                                keyboardController?.hide()
-                            }
-                        }
-                    ) {
-                        Icon(
-                            if (searchActive) Icons.Default.Clear
-                            else Icons.Default.Search,
-                            contentDescription = "Search"
-                        )
-                    }
-
-                    IconButton(
-                        onClick = { showMoreOptionsPanel = !showMoreOptionsPanel },
-                    ) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "More options")
-                    }
-
-                    MoreOptionsMenu(
-                        showMoreOptionsPanel = showMoreOptionsPanel,
-                        showBadgeInfoDialog = {
-                            showBadgeInfoDialog = true
-                            showMoreOptionsPanel = false
-                        },
-                        onDismiss = { showMoreOptionsPanel = false },
-                    )
-                },
-                colors = TopAppBarColors(
-                    containerColor = if (!searchActive) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer,
-                    scrolledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                ),
+            CantaTopBar(
+                openBadgesInfoDialog = { showBadgeInfoDialog = true },
             )
         },
         floatingActionButton = {
@@ -198,65 +106,19 @@ fun CantaApp(
                 shape = RoundedCornerShape(32.dp),
                 modifier = Modifier.padding(16.dp),
                 onClick = {
-                    coroutineScope.launch {
-                        when (ShizukuData.checkShizukuActive(context.packageManager)) {
-                            ShizukuInfo.NOT_INSTALLED -> {
-                                Toast.makeText(
-                                    context,
-                                    "Please install Shizuku and authorise Canta.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                return@launch
-                            }
-
-                            ShizukuInfo.NOT_ACTIVE -> {
-                                Toast.makeText(
-                                    context,
-                                    "Please start Shizuku.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                launchShizuku()
-                                return@launch
-                            }
-
-                            ShizukuInfo.ACTIVE -> {
-                                // Check shizuku permission
-                                ShizukuData.checkShizukuPermission { permResult ->
-                                    val permission = permResult == PackageManager.PERMISSION_GRANTED
-
-                                    if (!permission) {
-                                        Toast.makeText(
-                                            context,
-                                            "Please allow Shizuku access for Canta.",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        // Proceed with the action
-                                        when (selectedAppsType) {
-                                            AppsType.INSTALLED -> {
-                                                appListViewModel.selectedApps.forEach {
-                                                    val uninstalled = uninstallApp(it.key)
-                                                    if (uninstalled) {
-                                                        appListViewModel.changeAppStatus(it.key)
-                                                    }
-                                                }
-                                            }
-
-                                            AppsType.UNINSTALLED -> {
-                                                appListViewModel.selectedApps.forEach {
-                                                    val installed = reinstallApp(it.key)
-                                                    if (installed) {
-                                                        appListViewModel.changeAppStatus(it.key)
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        appListViewModel.resetSelectedApps()
-                                    }
-                                }
-                            }
-                        }
+                    if (selectedAppsType == AppsType.INSTALLED) {
+                        showUninstallConfirmDialog = appListViewModel.selectedApps.isNotEmpty()
+                        return@FloatingActionButton
                     }
+                    uninstallOrReinstall(
+                        context = context,
+                        coroutineScope = coroutineScope,
+                        launchShizuku = launchShizuku,
+                        uninstallApp = uninstallApp,
+                        reinstallApp = reinstallApp,
+                        selectedAppsType = selectedAppsType,
+                        appListViewModel = appListViewModel,
+                    )
                 },
             ) {
                 when (selectedAppsType) {
@@ -315,10 +177,99 @@ fun CantaApp(
                     ExplainBadgesDialog(
                         onDismissRequest = { showBadgeInfoDialog = false }
                     )
+                } else if (showUninstallConfirmDialog) {
+                    UninstallAppsDialog(
+                        appCount = appListViewModel.selectedApps.size,
+                        onDismiss = { showUninstallConfirmDialog = false },
+                        onAgree = {
+                            showUninstallConfirmDialog = false
+
+                            // Trigger uninstall
+                            uninstallOrReinstall(
+                                context = context,
+                                coroutineScope = coroutineScope,
+                                launchShizuku = launchShizuku,
+                                uninstallApp = uninstallApp,
+                                reinstallApp = reinstallApp,
+                                selectedAppsType = selectedAppsType,
+                                appListViewModel = appListViewModel,
+                            )
+                        }
+                    )
                 }
                 AppList(
                     appType = AppsType.entries[page]
                 )
+            }
+        }
+    }
+}
+
+fun uninstallOrReinstall(
+    context: Context,
+    coroutineScope: CoroutineScope,
+    launchShizuku: () -> Unit,
+    uninstallApp: (String) -> Boolean,
+    reinstallApp: (String) -> Boolean,
+    selectedAppsType: AppsType,
+    appListViewModel: AppListViewModel,
+) {
+    coroutineScope.launch {
+        when (ShizukuData.checkShizukuActive(context.packageManager)) {
+            ShizukuInfo.NOT_INSTALLED -> {
+                Toast.makeText(
+                    context,
+                    "Please install Shizuku and authorise Canta.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@launch
+            }
+
+            ShizukuInfo.NOT_ACTIVE -> {
+                Toast.makeText(
+                    context,
+                    "Please start Shizuku.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                launchShizuku()
+                return@launch
+            }
+
+            ShizukuInfo.ACTIVE -> {
+                // Check shizuku permission
+                ShizukuData.checkShizukuPermission { permResult ->
+                    val permission = permResult == PackageManager.PERMISSION_GRANTED
+
+                    if (!permission) {
+                        Toast.makeText(
+                            context,
+                            "Please allow Shizuku access for Canta.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        // Proceed with the action
+                        when (selectedAppsType) {
+                            AppsType.INSTALLED -> {
+                                appListViewModel.selectedApps.forEach {
+                                    val uninstalled = uninstallApp(it.key)
+                                    if (uninstalled) {
+                                        appListViewModel.changeAppStatus(it.key)
+                                    }
+                                }
+                            }
+
+                            AppsType.UNINSTALLED -> {
+                                appListViewModel.selectedApps.forEach {
+                                    val installed = reinstallApp(it.key)
+                                    if (installed) {
+                                        appListViewModel.changeAppStatus(it.key)
+                                    }
+                                }
+                            }
+                        }
+                        appListViewModel.resetSelectedApps()
+                    }
+                }
             }
         }
     }
