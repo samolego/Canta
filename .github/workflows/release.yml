@@ -34,16 +34,11 @@ jobs:
           echo "keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}" >> $KEYSTORE_PROPERTIES_PATH
           echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
           echo "keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
-      - uses: olegtarasov/get-tag@v2 # that generate $GIT_TAG_NAME env
-        id: tagName
-        with:
-          tagRegex: 'internal-v([0-9]+.[0-9]+.[0-9]+\+[0-9]+)' # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
-          tagRegexGroup: 1 # Optional. Default is 1.
       - name: 🤖📦 Create Android release
         run: |
           ./gradlew app:assembleRelease
       - name: 🤖🚀 Upload to GitHub release
         uses: AButler/upload-release-assets@v2.0
         with:
-          files: 'build/app/outputs/flutter-apk/*;build/app/outputs/bundle/release/*'
+          files: 'app/build/outputs/apk/release/*.apk'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
