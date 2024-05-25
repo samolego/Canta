@@ -35,9 +35,9 @@ on [how recommendations are chosen](https://github.com/Universal-Debloater-Allia
 
 ## Screenshots
 
-<img width="256" src="https://github.com/samolego/Canta/assets/34912839/6c505647-7cee-45f2-8754-8d82e22bc001" alt="Screenshot_20231001-153839_Canta">
-<img width="256" src="https://github.com/samolego/Canta/assets/34912839/ef7c91fe-d821-42a4-b699-0e83be591ff6" alt="Screenshot_20231001-153859_Canta">
-<img width="256" src="https://github.com/samolego/Canta/assets/34912839/049ad2dd-0cbf-4a42-9a1f-e4f55f0abf8d" alt="Screenshot_20231001-153906_Canta">
+<img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-main.png">
+<img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-search.png">
+<img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstall-dialog.png">
 
 ## Thanks
 
