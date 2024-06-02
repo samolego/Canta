@@ -12,7 +12,7 @@ class Filter(val name: String, val shouldShow: (AppInfo) -> Boolean) {
         /**
          * Filter to show all apps.
          */
-        val any: Filter
+        val any: Filter = Filter(name = "Any", shouldShow = { true })
 
         /**
          * List of available filters.
@@ -20,8 +20,6 @@ class Filter(val name: String, val shouldShow: (AppInfo) -> Boolean) {
         val availableFilters: List<Filter>
 
         init {
-            any = Filter(name = "Any", shouldShow = { true })
-
             // Filters are generated from the RemovalRecommendation enum.
             val removalFilters =
                 RemovalRecommendation.entries.filter { RemovalRecommendation.SYSTEM != it }
@@ -33,6 +31,14 @@ class Filter(val name: String, val shouldShow: (AppInfo) -> Boolean) {
                         )
                     }.toMutableList()
             removalFilters.add(0, any)
+
+            // Apps that are not system apps.
+            val user = Filter(name = "User", shouldShow = { app -> !app.isSystemApp })
+            removalFilters.add(1, user)
+
+            val unclassified =
+                Filter(name = "Unclassified", shouldShow = { app -> app.removalInfo == null })
+            removalFilters.add(2, unclassified)
 
             availableFilters = removalFilters
         }
