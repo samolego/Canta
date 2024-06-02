@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +31,7 @@ import org.samo_lego.canta.ui.component.AppIconImage
 import org.samo_lego.canta.util.AppInfo
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AppInfoDialog(
     appInfo: AppInfo,
@@ -45,6 +46,8 @@ fun AppInfoDialog(
     } catch (e: PackageManager.NameNotFoundException) {
         null
     }
+
+    val colorsScheme = MaterialTheme.colorScheme
 
 
     BasicAlertDialog(
@@ -133,6 +136,7 @@ fun AppInfoDialogPreview() {
             isUninstalled = false,
             versionCode = 1,
             versionName = "1.0",
+            isDisabled = false,
             bloatData = null,
         ),
         onDismiss = {}
@@ -150,8 +154,10 @@ fun AppInfoDialogPreviewShort() {
             isUninstalled = false,
             versionCode = 1,
             versionName = "1.0",
+            isDisabled = true,
             bloatData = null,
         ),
         onDismiss = {}
     )
 }
+

@@ -62,6 +62,9 @@ fun AppTile(
                     if (appInfo.isSystemApp) {
                         SystemBadge()
                     }
+                    if (appInfo.isDisabled) {
+                        DisabledBadge()
+                    }
                 }
             }
         },
@@ -128,6 +131,7 @@ fun CantaAppTileDemo() {
             "Canta",
             packageName = "org.samo_lego.canta",
             isSystemApp = false,
+            isDisabled = false,
             isUninstalled = false,
             versionCode = 1,
             versionName = "1.0",
@@ -150,10 +154,11 @@ fun LongTileDemo() {
         appInfo = AppInfo(
             "Canta",
             packageName = "very.long.package.name.that.should.overflow.and.maybe.it.will.overflow.even.2.lines",
-            isSystemApp = false,
+            isSystemApp = true,
             isUninstalled = false,
             versionCode = 1,
             versionName = "1.0",
+            isDisabled = true,
             bloatData = BloatData(
                 installData = InstallData.OEM,
                 description = "Canta is a system app",

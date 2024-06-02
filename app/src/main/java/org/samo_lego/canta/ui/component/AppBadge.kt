@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DisabledByDefault
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,7 +26,7 @@ import org.samo_lego.canta.util.RemovalRecommendation
 
 @Composable
 fun RemovalBadge(type: RemovalRecommendation) {
-    Badge(
+    AppBadge(
         label = type.name,
         icon = type.icon,
         color = type.badgeColor
@@ -36,7 +39,16 @@ fun SystemBadge() {
 }
 
 @Composable
-private fun Badge(
+fun DisabledBadge() {
+    AppBadge(
+        label = "DISABLED",
+        icon = Icons.Default.DisabledByDefault,
+        color = MaterialTheme.colorScheme.tertiary,
+    )
+}
+
+@Composable
+private fun AppBadge(
     label: String,
     icon: ImageVector,
     color: Color,
@@ -86,6 +98,6 @@ fun BadgePreviews() {
         for (removal in RemovalRecommendation.entries) {
             RemovalBadge(removal)
         }
-        SystemBadge()
+        DisabledBadge()
     }
 }
