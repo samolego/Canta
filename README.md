@@ -1,6 +1,6 @@
 # Canta
 
-![](https://github.com/samolego/Canta/blob/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true)
+![](https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
 Uninstall any app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/).
