@@ -45,10 +45,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.component.CantaTopBar
 import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
@@ -124,12 +126,12 @@ fun CantaApp(
                 when (selectedAppsType) {
                     AppsType.INSTALLED -> Icon(
                         Icons.Default.Delete,
-                        contentDescription = "Uninstall"
+                        contentDescription = stringResource(R.string.uninstall)
                     )
 
                     AppsType.UNINSTALLED -> Icon(
                         Icons.Default.InstallMobile,
-                        contentDescription = "ReInstall"
+                        contentDescription = stringResource(R.string.reinstall)
                     )
                 }
             }
@@ -219,7 +221,7 @@ fun uninstallOrReinstall(
             ShizukuInfo.NOT_INSTALLED -> {
                 Toast.makeText(
                     context,
-                    "Please install Shizuku and authorise Canta.",
+                    context.getString(R.string.please_install_shizuku_and_authorise_canta),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@launch
@@ -228,7 +230,7 @@ fun uninstallOrReinstall(
             ShizukuInfo.NOT_ACTIVE -> {
                 Toast.makeText(
                     context,
-                    "Please start Shizuku.",
+                    context.getString(R.string.please_start_shizuku),
                     Toast.LENGTH_SHORT
                 ).show()
                 launchShizuku()
@@ -243,7 +245,7 @@ fun uninstallOrReinstall(
                     if (!permission) {
                         Toast.makeText(
                             context,
-                            "Please allow Shizuku access for Canta.",
+                            context.getString(R.string.please_allow_shizuku_access_for_canta),
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
@@ -295,7 +297,7 @@ fun MoreOptionsMenu(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text("Only system")
+            Text(stringResource(R.string.only_system))
             Checkbox(
                 checked = appListViewModel.showSystem,
                 onCheckedChange = {

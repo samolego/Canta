@@ -34,7 +34,7 @@ fun UninstallAppsDialog(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("Are you sure to uninstall $appCount apps?")
+            Text(stringResource(R.string.are_you_sure_to_uninstall_apps, appCount))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End

@@ -3,4 +3,14 @@
     <string name="app_name" translatable="false">Canta</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
+    <string name="are_you_sure_to_uninstall_apps">Are you sure to uninstall %1$s apps?</string>
+    <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
+    <string name="no_description_available">No description available</string>
+    <string name="canta_is_a_system_app">Canta is a system app</string>
+    <string name="uninstall">Uninstall</string>
+    <string name="reinstall">ReInstall</string>
+    <string name="please_start_shizuku">Please start Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Please install Shizuku and authorise Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
+    <string name="only_system">Only system</string>
 </resources>
