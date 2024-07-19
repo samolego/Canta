@@ -39,7 +39,7 @@ data class AppInfo(
             val bloatData = bloatList[packageInfo.packageName]
 
             val isSystemApp =
-                (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+                (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
 
             val isDisabled = try {
                 !packageManager.getApplicationInfo(packageInfo.packageName, 0).enabled
@@ -50,7 +50,7 @@ data class AppInfo(
             val versionName = packageInfo.versionName ?: "unknown"
 
             return AppInfo(
-                appName = packageInfo.applicationInfo.loadLabel(packageManager).toString(),
+                appName = packageInfo.applicationInfo!!.loadLabel(packageManager).toString(),
                 packageName = packageInfo.packageName,
                 versionName = versionName,
                 versionCode = packageInfo.longVersionCode,

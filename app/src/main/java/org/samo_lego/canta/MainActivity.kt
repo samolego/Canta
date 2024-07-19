@@ -123,7 +123,7 @@ class MainActivity : ComponentActivity() {
         val packageInstaller = getPackageInstaller()
         val packageInfo = packageManager.getInfoForPackage(packageName)
 
-        val isSystem = (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+        val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
 
         Log.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem]")
 
