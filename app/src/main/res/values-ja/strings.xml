@@ -5,7 +5,7 @@
     <string name="ok">OK</string>
     <string name="are_you_sure_to_uninstall_apps">%1$s個のアプリをアンインストールしますか？</string>
     <string name="copy_package_name_to_clipboard">クリップボードにコピーしました</string>
-    <string name="no_description_available">No description available</string>
+    <string name="no_description_available">説明はありません</string>
     <string name="canta_is_a_system_app">Canta is a system app</string>
     <string name="uninstall">アンインストール</string>
     <string name="reinstall">再インストール</string>
@@ -16,4 +16,4 @@
     <string name="no_apps_found">アプリが見つかりません</string>
     <string name="loading_apps">アプリを読み込み中</string>
     <string name="badge_info">バッジの情報</string>
-</resources>
+    </resources>
