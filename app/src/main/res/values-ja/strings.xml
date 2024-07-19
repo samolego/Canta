@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Canta</string>
     <string name="cancel">キャンセル</string>
+    <string name="ok">OK</string>
 </resources>

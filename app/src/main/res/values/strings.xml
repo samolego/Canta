@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Canta</string>
-    <string name="cancel">cancel</string>
+    <string name="app_name" translatable="false">Canta</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>
