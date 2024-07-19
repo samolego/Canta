@@ -24,9 +24,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.samo_lego.canta.R
 import org.samo_lego.canta.extension.add
 import org.samo_lego.canta.ui.AppsType
 import org.samo_lego.canta.ui.dialog.AppInfoDialog
@@ -106,7 +108,7 @@ fun AppList(
                         .fillMaxHeight(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("No apps found")
+                    Text(stringResource(R.string.no_apps_found))
                 }
             }
         }
@@ -147,7 +149,7 @@ fun LoadingAppsInfo() {
                     .align(Alignment.CenterHorizontally),
             )
             Spacer(modifier = Modifier.size(16.dp))
-            Text("Loading apps")
+            Text(stringResource(R.string.loading_apps))
         }
     }
 }

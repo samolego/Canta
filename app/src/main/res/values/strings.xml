@@ -13,4 +13,7 @@
     <string name="please_install_shizuku_and_authorise_canta">Please install Shizuku and authorise Canta.</string>
     <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
     <string name="only_system">Only system</string>
+    <string name="no_apps_found">No apps found</string>
+    <string name="loading_apps">Loading apps</string>
+    <string name="badge_info">Badge info</string>
 </resources>

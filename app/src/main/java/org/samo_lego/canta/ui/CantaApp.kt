@@ -355,7 +355,7 @@ fun MoreOptionsMenu(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text("Badge info")
+            Text(stringResource(R.string.badge_info))
         }
     }
 }
