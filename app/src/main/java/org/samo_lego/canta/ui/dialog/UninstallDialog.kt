@@ -43,7 +43,7 @@ fun UninstallAppsDialog(
                 TextButton(
                     onClick = onDismiss
                 ) {
-                    Text("Cancel")
+                    Text(R.string.cancel)
                 }
             }
         }
