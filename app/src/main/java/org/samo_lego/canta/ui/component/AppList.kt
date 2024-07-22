@@ -129,7 +129,7 @@ fun LoadingBadgesIndicator() {
             modifier = Modifier.size(32.dp),
         )
         Spacer(modifier = Modifier.size(8.dp))
-        Text("Loading badges ...")
+        Text(stringResource(R.string.loading_badges))
     }
 }
 

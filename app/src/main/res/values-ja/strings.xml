@@ -16,4 +16,6 @@
     <string name="no_apps_found">アプリが見つかりません</string>
     <string name="loading_apps">アプリを読み込み中</string>
     <string name="badge_info">バッジの情報</string>
-    </resources>
+    <string name="got_it">閉じる</string>
+    <string name="loading_badges">バッジを読み込み中…</string>
+</resources>

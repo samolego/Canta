@@ -19,8 +19,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.RemovalBadge
 import org.samo_lego.canta.util.RemovalRecommendation
 
@@ -78,7 +80,7 @@ fun ExplainBadgesDialog(
                     .padding(8.dp),
                 onClick = onDismissRequest,
             ) {
-                Text("Got it")
+                Text(stringResource(R.string.got_it))
             }
         }
     }
