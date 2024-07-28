@@ -1,6 +1,7 @@
 name: 📦🚀 Build & deploy Android app for an environment
 
 on:
+  workflow_dispatch:
   release:
     types:
       - published

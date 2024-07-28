@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,6 +30,8 @@ const val packageName = "org.samo_lego.canta"
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        window.isNavigationBarContrastEnforced = false
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -123,7 +126,7 @@ class MainActivity : ComponentActivity() {
         val packageInstaller = getPackageInstaller()
         val packageInfo = packageManager.getInfoForPackage(packageName)
 
-        val isSystem = (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+        val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
 
         Log.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem]")
 

@@ -23,10 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.AppIconImage
 import org.samo_lego.canta.util.AppInfo
 
@@ -101,7 +103,7 @@ fun AppInfoDialog(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .size(12.dp),
-                        contentDescription = "Copy package name to clipboard",
+                        contentDescription = stringResource(R.string.copy_package_name_to_clipboard),
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
@@ -117,7 +119,7 @@ fun AppInfoDialog(
                 Text(text = bloatDescripton, style = MaterialTheme.typography.bodyMedium)
             } else {
                 Text(
-                    text = "No description available",
+                    text = stringResource(R.string.no_description_available),
                     style = MaterialTheme.typography.bodySmall
                 )
             }

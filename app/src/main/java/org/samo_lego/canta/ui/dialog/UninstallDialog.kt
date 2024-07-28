@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.samo_lego.canta.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,18 +34,18 @@ fun UninstallAppsDialog(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("Are you sure to uninstall $appCount apps?")
+            Text(stringResource(R.string.are_you_sure_to_uninstall_apps, appCount))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 TextButton(onClick = onAgree) {
-                    Text("Ok")
+                    Text(stringResource(R.string.ok))
                 }
                 TextButton(
                     onClick = onDismiss
                 ) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         }
