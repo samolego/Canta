@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Canta</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="ok">OK</string>
+    <string name="are_you_sure_to_uninstall_apps">Bist du dir sicher, dass du %1$s apps deinstallieren möchtest?</string>
+    <string name="copy_package_name_to_clipboard">Appnamen in die Zwischenablage kopieren</string>
+    <string name="no_description_available">Keine Beschreibung verfügbar</string>
+    <string name="canta_is_a_system_app">Canta ist eine System-App</string>
+    <string name="uninstall">Deinstallieren</string>
+    <string name="reinstall">Neu installieren</string>
+    <string name="please_start_shizuku">Bitte starte Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Bitte installier Shizuku und autorisiere Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Bitte gebe Canta Shizuku zugriff.</string>
+    <string name="only_system">Nur Systemapps</string>
+    <string name="no_apps_found">Keine Apps gefunden</string>
+    <string name="loading_apps">Apps werden geladen</string>
+    <string name="badge_info">Abzeichen Information</string>
+    <string name="got_it">Verstanden</string>
+    <string name="loading_badges">Abzeichen werden geladen...</string>
+</resources>
