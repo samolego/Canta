@@ -4,7 +4,7 @@
     <string name="ok">V redu</string>
     <string name="are_you_sure_to_uninstall_apps">Ste prepričani, da želite odstraniti %1$s aplikacij?</string>
     <string name="copy_package_name_to_clipboard">Kopiraj ime paketa</string>
-    <string name="no_description_available">Opis ni podan</string>
+    <string name="no_description_available">Opis ni na voljo</string>
     <string name="canta_is_a_system_app">Canta je sistemska aplikacija</string>
     <string name="uninstall">Odstrani</string>
     <string name="reinstall">Ponovno namesti</string>
