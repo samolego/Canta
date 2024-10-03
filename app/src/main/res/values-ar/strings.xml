@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Canta</string>
     <string name="cancel">إلغاء</string>
     <string name="ok">موافق</string>
     <string name="are_you_sure_to_uninstall_apps">هل أنت متأكد من إلغاء تثبيت %1$s تطبيقات؟</string>
