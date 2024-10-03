@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Canta</string>
     <string name="cancel">キャンセル</string>
     <string name="ok">OK</string>
     <string name="are_you_sure_to_uninstall_apps">%1$s個のアプリをアンインストールしますか？</string>
