@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Canta</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">OK</string>
     <string name="are_you_sure_to_uninstall_apps">Bist du dir sicher, dass du %1$s apps deinstallieren möchtest?</string>
