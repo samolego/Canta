@@ -33,6 +33,18 @@ on [how recommendations are chosen](https://github.com/Universal-Debloater-Allia
 * auto detect previously uninstalled apps
   if you've already removed any using adb
 
+## Translations
+
+Do you want to help translate Canta? You can help us at [Crowdin](https://crowdin.com/project/canta)! Thank you 🙂!
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://badges.crowdin.net/badge/light/crowdin-on-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://badges.crowdin.net/badge/dark/crowdin-on-light.png">
+  <img alt="Crowdin logo" src="https://badges.crowdin.net/badge/light/crowdin-on-dark.png">
+</picture>
+
+https://crowdin.com/project/canta
+
+
 ## Screenshots
 
 <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-main.png">
