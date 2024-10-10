@@ -13,8 +13,8 @@
     <string name="please_allow_shizuku_access_for_canta">Por favor, permita que Shizuku acesse Canta.</string>
     <string name="only_system">Apenas do sistema</string>
     <string name="no_apps_found">Nenhum aplicativo encontrado</string>
-    <string name="loading_apps">Carregando aplicativos...</string>
+    <string name="loading_apps">Carregando aplicativos</string>
     <string name="badge_info">Informações da etiqueta</string>
     <string name="got_it">Entendi</string>
-    <string name="loading_badges">Carregando etiquetas</string>
+    <string name="loading_badges">Carregando etiquetas...</string>
 </resources>
