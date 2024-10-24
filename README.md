@@ -9,6 +9,11 @@ Powered by [Shizuku](https://shizuku.rikka.app/).
 alt="Get it on F-Droid"
 height="80">](https://f-droid.org/en/packages/org.samo_lego.canta/)
 
+**Warning**: Fdroid has old versions only. Please download from [GitHub releases page](https://github.com/samolego/Canta/releases/latest).
+If you know how to fix it, please help with [#49](https://github.com/samolego/Canta/issues/49).
+
+
+
 Uses [universal debloat list](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/)
 for badges.
 Please read the guide
