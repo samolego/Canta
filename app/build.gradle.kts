@@ -17,6 +17,14 @@ android {
     namespace = "org.samo_lego.canta"
     compileSdk = 35
 
+    // For reproducible builds
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
     defaultConfig {
         applicationId = "org.samo_lego.canta"
         minSdk = 28  // todo - figure out a way to bypass hidden api methods on android <9
