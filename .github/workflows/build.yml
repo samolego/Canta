@@ -1,0 +1,64 @@
+name: 🌙 Nightly Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  buildAndroid:
+    permissions: write-all
+    name: 🤖📦 Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21.x"
+          cache: 'gradle'
+          distribution: 'adopt'
+        id: java
+
+      - name: 🔐 Retrieve base64 keystore and decode it to a file
+        id: write_file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: "android-keystore.jks"
+          fileDir: "${{ github.workspace }}/"
+          encodedString: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+
+      - name: 📝🔐 Create keystore.properties file
+        env:
+          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/key.properties
+        run: |
+          echo "storeFile=${{ github.workspace }}/android-keystore.jks" > $KEYSTORE_PROPERTIES_PATH
+          echo "keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}" >> $KEYSTORE_PROPERTIES_PATH
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
+          echo "keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
+
+      - name: 🤖📦 Create Android release
+        run: |
+          ./gradlew app:assembleRelease
+
+      - name: 📝 Generate build date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: 📝 Rename APK to ZIP
+        run: |
+          cd app/build/outputs/apk/release/
+          mv *.apk "app-release-${{ steps.date.outputs.date }}.zip"
+
+      - name: 🚀 Upload build artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app/build/outputs/apk/release/app-release-${{ steps.date.outputs.date }}.zip
+          asset_name: canta-app-release-${{ steps.date.outputs.date }}.zip
+          asset_content_type: application/zip
