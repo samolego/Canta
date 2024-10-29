@@ -53,12 +53,9 @@ jobs:
           cd app/build/outputs/apk/release/
           mv *.apk "app-release-${{ steps.date.outputs.date }}.zip"
 
-      - name: 🚀 Upload build artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 📦 Upload Build Artifact
+        uses: actions/upload-artifact@v3
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/release/app-release-${{ steps.date.outputs.date }}.zip
-          asset_name: canta-app-release-${{ steps.date.outputs.date }}.zip
-          asset_content_type: application/zip
+          name: app-release
+          path: app/build/outputs/apk/release/app-release${{ steps.date.outputs.date }}.zip
+          retention-days: 7
