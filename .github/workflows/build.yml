@@ -57,5 +57,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-release
-          path: app/build/outputs/apk/release/app-release${{ steps.date.outputs.date }}.zip
+          path: app/build/outputs/apk/release/app-release-${{ steps.date.outputs.date }}.zip
           retention-days: 7
