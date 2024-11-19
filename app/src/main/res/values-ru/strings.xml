@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Отмена</string>
     <string name="ok">ОК</string>
-    <string name="are_you_sure_to_uninstall_apps">Are you sure to uninstall %1$s apps?</string>
+    <string name="are_you_sure_to_uninstall_apps">Вы уверены, что хотите удалить %1$s приложений?</string>
     <string name="copy_package_name_to_clipboard">Копировать имя пакета в буфер обмена</string>
     <string name="no_description_available">Описание отсутствует</string>
     <string name="canta_is_a_system_app">Canta — системное приложение</string>
