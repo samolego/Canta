@@ -15,6 +15,6 @@
     <string name="no_apps_found">Aucune application trouvée</string>
     <string name="loading_apps">Chargement d\'applications</string>
     <string name="badge_info">Informations sur le badge</string>
-    <string name="got_it">Je l\'ai</string>
-    <string name="loading_badges">Chargement des badges</string>
+    <string name="got_it">Je comprends</string>
+    <string name="loading_badges">Chargement des badges...</string>
 </resources>
