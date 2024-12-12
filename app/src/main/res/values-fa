@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Canta</string>
+    <string name="cancel">لغو</string>
+    <string name="ok">موافق</string>
+    <string name="are_you_sure_to_uninstall_apps">آیا از حذف برنامه ها مطمئنید؟ </string>
+    <string name="copy_package_name_to_clipboard">کپی کردن نام برنامه به کلیپ بورد</string>
+    <string name="no_description_available">هیچ توضیحی در دسترس نیست</string>
+    <string name="canta_is_a_system_app">Canta یک برنامه سیستمی است</string>
+    <string name="uninstall">حذف نصب</string>
+    <string name="reinstall">نصب مجدد</string>
+    <string name="please_start_shizuku">لطفا Shizuku را شروع کنید.</string>
+    <string name="please_install_shizuku_and_authorise_canta">لطفا Shizuku را نصب کنید و Canta را مجاز کنید.</string>
+    <string name="please_allow_shizuku_access_for_canta">لطفاً اجازه دسترسی Shizuku را برای Canta بدهید.</string>
+    <string name="only_system">فقط سیستم</string>
+    <string name="no_apps_found">هیچ برنامه ای پیدا نشد</string>
+    <string name="loading_apps">در حال بارگیری برنامه ها</string>
+    <string name="badge_info">اطلاعات نشان</string>
+    <string name="got_it">متوجه شدم</string>
+    <string name="loading_badges">در حال بارگیری نشان ها...</string>
+</resources>
