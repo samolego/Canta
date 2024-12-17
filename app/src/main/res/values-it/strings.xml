@@ -8,7 +8,7 @@
     <string name="canta_is_a_system_app">Canta is a system app</string>
     <string name="uninstall">Uninstall</string>
     <string name="reinstall">ReInstall</string>
-    <string name="please_start_shizuku">Please start Shizuku.</string>
+    <string name="please_start_shizuku">Per favore, avvia Shizuku.</string>
     <string name="please_install_shizuku_and_authorise_canta">Please install Shizuku and authorise Canta.</string>
     <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
     <string name="only_system">Only system</string>
@@ -16,5 +16,5 @@
     <string name="loading_apps">Loading apps</string>
     <string name="badge_info">Badge info</string>
     <string name="got_it">Got it</string>
-    <string name="loading_badges">Loading badges ...</string>
+    <string name="loading_badges">Caricamento badge ...</string>
 </resources>
