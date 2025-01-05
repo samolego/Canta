@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Anuluj</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Czy na pewno chcesz odinstalować aplikację %1$s?</string>
+    <string name="are_you_sure_to_uninstall_apps">Czy na pewno chcesz odinstalować %1$s aplikację/aplikacje?</string>
     <string name="copy_package_name_to_clipboard">Skopiuj nazwę pakietu do schowka</string>
     <string name="no_description_available">Opis niedostępny</string>
     <string name="canta_is_a_system_app">Canta jest aplikacją systemową</string>
