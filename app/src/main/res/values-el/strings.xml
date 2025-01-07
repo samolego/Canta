@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cancel">Cancel</string>
-    <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Are you sure to uninstall %1$s apps?</string>
-    <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
-    <string name="no_description_available">No description available</string>
-    <string name="canta_is_a_system_app">Canta is a system app</string>
-    <string name="uninstall">Uninstall</string>
-    <string name="reinstall">ReInstall</string>
-    <string name="please_start_shizuku">Please start Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Please install Shizuku and authorise Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
-    <string name="only_system">Only system</string>
-    <string name="no_apps_found">No apps found</string>
-    <string name="loading_apps">Loading apps</string>
-    <string name="badge_info">Badge info</string>
-    <string name="got_it">Got it</string>
-    <string name="loading_badges">Loading badges ...</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="ok">ΟΚ</string>
+    <string name="are_you_sure_to_uninstall_apps">Σίγουρα θέλετε να απεγκαταστήσετε %1$s εφαρμογές;</string>
+    <string name="copy_package_name_to_clipboard">Αντιγραφή ονόματος πακέτου στο πρόχειρο</string>
+    <string name="no_description_available">Δεν υπάρχει διαθέσιμη περιγραφή</string>
+    <string name="canta_is_a_system_app">Το Canta είναι μια εφαρμογή συστήματος</string>
+    <string name="uninstall">Απεγκατάσταση</string>
+    <string name="reinstall">Επανεγκατάσταση</string>
+    <string name="please_start_shizuku">Παρακαλώ ξεκινήστε το Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Παρακαλώ εγκαταστήστε το Shizuku και εξουσιοδοτήστε το Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Παρακαλώ επιτρέψτε την πρόσβαση Shizuku για το Canta.</string>
+    <string name="only_system">Μόνο σύστημα</string>
+    <string name="no_apps_found">Δεν βρέθηκαν εφαρμογές</string>
+    <string name="loading_apps">Φόρτωση εφαρμογών</string>
+    <string name="badge_info">Πληροφορίες σήματος</string>
+    <string name="got_it">Το \'πιασα</string>
+    <string name="loading_badges">Φόρτωση σημάτων ...</string>
 </resources>
