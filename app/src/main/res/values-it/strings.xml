@@ -5,16 +5,16 @@
     <string name="are_you_sure_to_uninstall_apps">Sei sicuro di voler disinstallare %1$s apps?</string>
     <string name="copy_package_name_to_clipboard">Copia il nome del pacchetto negli appunti</string>
     <string name="no_description_available">Nessuna descrizione disponibile</string>
-    <string name="canta_is_a_system_app">Canta is a system app</string>
-    <string name="uninstall">Uninstall</string>
-    <string name="reinstall">ReInstall</string>
+    <string name="canta_is_a_system_app">Canta è un app di sistema</string>
+    <string name="uninstall">Disinstalla</string>
+    <string name="reinstall">Reinstalla</string>
     <string name="please_start_shizuku">Per favore, avvia Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Please install Shizuku and authorise Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
-    <string name="only_system">Only system</string>
-    <string name="no_apps_found">No apps found</string>
-    <string name="loading_apps">Loading apps</string>
-    <string name="badge_info">Badge info</string>
-    <string name="got_it">Got it</string>
+    <string name="please_install_shizuku_and_authorise_canta">Per favore, installa Shizuku e autorizza Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Si prega di consentire l\'accesso a Shizuku per Canta.</string>
+    <string name="only_system">Solo sistema</string>
+    <string name="no_apps_found">Nessuna applicazione trovata</string>
+    <string name="loading_apps">Caricamento applicazioni</string>
+    <string name="badge_info">Informazioni badge</string>
+    <string name="got_it">Ho capito</string>
     <string name="loading_badges">Caricamento badge ...</string>
 </resources>
