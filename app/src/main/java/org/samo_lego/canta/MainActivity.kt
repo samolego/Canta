@@ -31,7 +31,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
-        window.isNavigationBarContrastEnforced = false
         super.onCreate(savedInstanceState)
 
         setContent {
