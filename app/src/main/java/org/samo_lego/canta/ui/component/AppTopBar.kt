@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,15 +34,18 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.lifecycle.viewmodel.compose.viewModel
 import org.samo_lego.canta.APP_NAME
-import org.samo_lego.canta.ui.MoreOptionsMenu
+import org.samo_lego.canta.ui.menu.FiltersMenu
+import org.samo_lego.canta.ui.menu.MoreOptionsMenu
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CantaTopBar(
     openBadgesInfoDialog: () -> Unit,
+    openLogsDialog: () -> Unit,
 ) {
-    var showMoreOptionsPanel by remember { mutableStateOf(false) }
+    var showMoreOptionsMenu by remember { mutableStateOf(false) }
+    var showFiltersMenu by remember { mutableStateOf(false) }
     var searchActive by remember { mutableStateOf(false) }
     val searchFocusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -113,18 +117,32 @@ fun CantaTopBar(
             }
 
             IconButton(
-                onClick = { showMoreOptionsPanel = !showMoreOptionsPanel },
+                onClick = { showFiltersMenu = !showFiltersMenu },
+            ) {
+                Icon(Icons.Default.FilterAlt, contentDescription = "Filter")
+            }
+
+            IconButton(
+                onClick = { showMoreOptionsMenu = !showMoreOptionsMenu },
             ) {
                 Icon(Icons.Default.MoreVert, contentDescription = "More options")
             }
 
+            FiltersMenu(
+                showMenu = showFiltersMenu,
+                onDismiss = { showFiltersMenu = false },
+            )
+
             MoreOptionsMenu(
-                showMoreOptionsPanel = showMoreOptionsPanel,
+                showMenu = showMoreOptionsMenu,
                 showBadgeInfoDialog = {
-                    showMoreOptionsPanel = false
+                    showMoreOptionsMenu = false
                     openBadgesInfoDialog()
                 },
-                onDismiss = { showMoreOptionsPanel = false },
+                showLogsDialog = {
+                    openLogsDialog()
+                },
+                onDismiss = { showMoreOptionsMenu = false },
             )
         },
         colors = TopAppBarColors(

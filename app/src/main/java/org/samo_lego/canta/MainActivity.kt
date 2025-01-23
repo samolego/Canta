@@ -20,6 +20,7 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import org.samo_lego.canta.extension.getInfoForPackage
 import org.samo_lego.canta.ui.CantaApp
 import org.samo_lego.canta.ui.theme.CantaTheme
+import org.samo_lego.canta.util.LogUtils
 import org.samo_lego.canta.util.ShizukuPackageInstallerUtils
 import rikka.shizuku.Shizuku
 
@@ -54,60 +55,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
-    /*fun handleCall() {
-        val method = ""
-        when (method) {
-            "checkShizukuActive" -> {
-
-
-            }
-
-            "checkShizukuPermission" -> result.success(checkShizukuPermission())
-            "launchShizuku" -> {
-                // Open shizuku app
-                val launchIntent =
-                    packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE_NAME)
-                startActivity(launchIntent)
-            }
-
-            "uninstallApp" -> {
-                val packageName = call.argument<String>("packageName")!!
-                Log.i(APP_NAME, "Uninstalling '$packageName'")
-                result.success(uninstallApp(packageName))
-            }
-
-            "reinstallApp" -> {
-                val packageName = call.argument<String>("packageName")!!
-                Log.i(APP_NAME, "Installing '$packageName'")
-                result.success(reinstallApp(packageName))
-            }
-
-            "getAppInfo" -> {
-                val packageName = call.argument<String>("packageName")!!
-                val packageManager = packageManager
-                Log.i(APP_NAME, "Getting info for '$packageName'")
-                val packageInfo = getInfoForPackage(packageName, packageManager)
-                val appInfo =
-                    AppInfo.fromPackageInfo(packageInfo, packageManager, BLOAT_LIST)
-                result.success(appInfo.toMap())
-            }
-
-            "getUninstalledApps" -> {
-                Log.i(APP_NAME, "Getting uninstalled apps ...")
-                result.success(getUninstalledPackages())
-            }
-
-            "getInstalledAppsInfo" -> {
-                Log.i(APP_NAME, "Getting installed apps info ...")
-                result.success(getInstalledAppsInfo())
-            }
-
-            else -> result.notImplemented()
-        }
-    }*/
-
-
     /**
      * Uninstalls app using Shizuku.
      * See <a href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=2144">PackageManagerShellCommand.java</a>
@@ -127,7 +74,7 @@ class MainActivity : ComponentActivity() {
 
         val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
 
-        Log.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem]")
+        LogUtils.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem]")
 
         // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
         // 0x00000002 = PackageManager.DELETE_ALL_USERS

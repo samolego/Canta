@@ -17,6 +17,7 @@ import org.samo_lego.canta.util.AppInfo
 import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.BloatUtils
 import org.samo_lego.canta.util.Filter
+import org.samo_lego.canta.util.LogUtils
 import java.io.File
 import java.util.Locale
 
@@ -63,7 +64,7 @@ class AppListViewModel : ViewModel() {
             val start = System.currentTimeMillis()
             apps = packageManager.getAllPackagesInfo()
             val endPackages = System.currentTimeMillis()
-            Log.i(TAG, "Loaded packages in ${endPackages - start}ms")
+            LogUtils.i(TAG, "Loaded packages in ${endPackages - start}ms")
             isLoading = false
 
             isLoadingBadges = true
@@ -101,7 +102,7 @@ class AppListViewModel : ViewModel() {
             }
             isLoadingBadges = false
             val end = System.currentTimeMillis()
-            Log.i(TAG, "Loaded badges in ${end - endPackages}ms")
+            LogUtils.i(TAG, "Loaded badges in ${end - endPackages}ms")
         }
     }
 

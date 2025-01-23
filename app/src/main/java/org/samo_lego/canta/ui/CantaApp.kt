@@ -5,29 +5,21 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.InstallMobile
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -36,7 +28,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -45,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -58,6 +48,7 @@ import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.component.CantaTopBar
 import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
+import org.samo_lego.canta.ui.dialog.LogsDialog
 import org.samo_lego.canta.ui.dialog.UninstallAppsDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.Filter
@@ -65,14 +56,15 @@ import org.samo_lego.canta.util.ShizukuData
 import org.samo_lego.canta.util.ShizukuInfo
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class,
-    ExperimentalFoundationApi::class
+        ExperimentalMaterial3Api::class,
+        ExperimentalAnimationApi::class,
+        ExperimentalFoundationApi::class
 )
 @Composable
 fun CantaApp(
-    launchShizuku: () -> Unit,
-    uninstallApp: (String) -> Boolean,
-    reinstallApp: (String) -> Boolean,
+        launchShizuku: () -> Unit,
+        uninstallApp: (String) -> Boolean,
+        reinstallApp: (String) -> Boolean,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -84,10 +76,9 @@ fun CantaApp(
 
     var showBadgeInfoDialog by remember { mutableStateOf(false) }
     var showUninstallConfirmDialog by remember { mutableStateOf(false) }
-
+    var showLogsDialog by remember { mutableStateOf(false) }
 
     val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
-
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -97,103 +88,30 @@ fun CantaApp(
     }
 
     Scaffold(
-        topBar = {
-            CantaTopBar(
-                openBadgesInfoDialog = { showBadgeInfoDialog = true },
-            )
-        },
-        floatingActionButton = {
-            // Add floating action button
-            FloatingActionButton(
-                containerColor = when (selectedAppsType) {
-                    AppsType.INSTALLED -> MaterialTheme.colorScheme.errorContainer
-                    AppsType.UNINSTALLED -> MaterialTheme.colorScheme.tertiaryContainer
-                },
-                shape = RoundedCornerShape(32.dp),
-                modifier = Modifier
-                    .padding(16.dp)
-                    .navigationBarsPadding(),
-                onClick = {
-                    if (selectedAppsType == AppsType.INSTALLED) {
-                        showUninstallConfirmDialog = appListViewModel.selectedApps.isNotEmpty()
-                        return@FloatingActionButton
-                    }
-                    uninstallOrReinstall(
-                        context = context,
-                        coroutineScope = coroutineScope,
-                        launchShizuku = launchShizuku,
-                        uninstallApp = uninstallApp,
-                        reinstallApp = reinstallApp,
-                        selectedAppsType = selectedAppsType,
-                        appListViewModel = appListViewModel,
-                    )
-                },
-            ) {
-                when (selectedAppsType) {
-                    AppsType.INSTALLED -> Icon(
-                        Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.uninstall)
-                    )
-
-                    AppsType.UNINSTALLED -> Icon(
-                        Icons.Default.InstallMobile,
-                        contentDescription = stringResource(R.string.reinstall)
-                    )
-                }
-            }
-
-        },
-        floatingActionButtonPosition = FabPosition.End,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0)
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            TabRow(
-                selectedTabIndex = selectedAppsType.ordinal,
-                contentColor = MaterialTheme.colorScheme.primary,
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ) {
-                AppsType.entries.forEach { currentTab ->
-                    Tab(
-                        selected = selectedAppsType == currentTab,
+            topBar = {
+                CantaTopBar(
+                    openBadgesInfoDialog = { showBadgeInfoDialog = true },
+                    openLogsDialog = { showLogsDialog = true }
+                )
+            },
+            floatingActionButton = {
+                // Make the FAB hidden if no apps are selected
+                if (appListViewModel.selectedApps.isNotEmpty()) {
+                    FloatingActionButton(
+                        containerColor =
+                        when (selectedAppsType) {
+                            AppsType.INSTALLED -> MaterialTheme.colorScheme.errorContainer
+                            AppsType.UNINSTALLED ->
+                                MaterialTheme.colorScheme.tertiaryContainer
+                        },
+                        shape = RoundedCornerShape(32.dp),
+                        modifier = Modifier.padding(16.dp).navigationBarsPadding(),
                         onClick = {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(currentTab.ordinal)
-                                appListViewModel.selectedFilter = Filter.any
+                            if (selectedAppsType == AppsType.INSTALLED) {
+                                showUninstallConfirmDialog =
+                                    appListViewModel.selectedApps.isNotEmpty()
+                                return@FloatingActionButton
                             }
-                            selectedAppsType = currentTab
-                        },
-                        icon = {
-                            Icon(
-                                currentTab.icon,
-                                contentDescription = currentTab.toString()
-                            )
-                        },
-                    )
-                }
-            }
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-            ) { page ->
-                if (showBadgeInfoDialog) {
-                    ExplainBadgesDialog(
-                        onDismissRequest = { showBadgeInfoDialog = false }
-                    )
-                } else if (showUninstallConfirmDialog) {
-                    UninstallAppsDialog(
-                        appCount = appListViewModel.selectedApps.size,
-                        onDismiss = { showUninstallConfirmDialog = false },
-                        onAgree = {
-                            showUninstallConfirmDialog = false
-
-                            // Trigger uninstall
                             uninstallOrReinstall(
                                 context = context,
                                 coroutineScope = coroutineScope,
@@ -203,47 +121,118 @@ fun CantaApp(
                                 selectedAppsType = selectedAppsType,
                                 appListViewModel = appListViewModel,
                             )
+                        },
+                    ) {
+                        when (selectedAppsType) {
+                            AppsType.INSTALLED ->
+                                Icon(
+                                    Icons.Default.Delete,
+                                    contentDescription = stringResource(R.string.uninstall)
+                                )
+
+                            AppsType.UNINSTALLED ->
+                                Icon(
+                                    Icons.Default.InstallMobile,
+                                    contentDescription = stringResource(R.string.reinstall)
+                                )
                         }
+                    }
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0)
+    ) { innerPadding ->
+        Column(
+                modifier = Modifier.fillMaxSize().padding(innerPadding),
+                verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            TabRow(
+                    selectedTabIndex = selectedAppsType.ordinal,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+            ) {
+                AppsType.entries.forEach { currentTab ->
+                    Tab(
+                            selected = selectedAppsType == currentTab,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(currentTab.ordinal)
+                                    appListViewModel.selectedFilter = Filter.any
+                                }
+                                selectedAppsType = currentTab
+                            },
+                            icon = {
+                                Icon(currentTab.icon, contentDescription = currentTab.toString())
+                            },
                     )
                 }
-                AppList(
-                    appType = AppsType.entries[page]
-                )
+            }
+            HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.weight(1f).fillMaxWidth(),
+            ) { page ->
+                if (showBadgeInfoDialog) {
+                    ExplainBadgesDialog(onDismissRequest = { showBadgeInfoDialog = false })
+                } else if (showUninstallConfirmDialog) {
+                    UninstallAppsDialog(
+                            appCount = appListViewModel.selectedApps.size,
+                            onDismiss = { showUninstallConfirmDialog = false },
+                            onAgree = {
+                                showUninstallConfirmDialog = false
+
+                                // Trigger uninstall
+                                uninstallOrReinstall(
+                                        context = context,
+                                        coroutineScope = coroutineScope,
+                                        launchShizuku = launchShizuku,
+                                        uninstallApp = uninstallApp,
+                                        reinstallApp = reinstallApp,
+                                        selectedAppsType = selectedAppsType,
+                                        appListViewModel = appListViewModel,
+                                )
+                            }
+                    )
+                } else if (showLogsDialog) {
+                    LogsDialog(onDismissRequest = { showLogsDialog = false })
+                }
+                AppList(appType = AppsType.entries[page])
             }
         }
     }
 }
 
 fun uninstallOrReinstall(
-    context: Context,
-    coroutineScope: CoroutineScope,
-    launchShizuku: () -> Unit,
-    uninstallApp: (String) -> Boolean,
-    reinstallApp: (String) -> Boolean,
-    selectedAppsType: AppsType,
-    appListViewModel: AppListViewModel,
+        context: Context,
+        coroutineScope: CoroutineScope,
+        launchShizuku: () -> Unit,
+        uninstallApp: (String) -> Boolean,
+        reinstallApp: (String) -> Boolean,
+        selectedAppsType: AppsType,
+        appListViewModel: AppListViewModel,
 ) {
     coroutineScope.launch {
         when (ShizukuData.checkShizukuActive(context.packageManager)) {
             ShizukuInfo.NOT_INSTALLED -> {
                 Toast.makeText(
-                    context,
-                    context.getString(R.string.please_install_shizuku_and_authorise_canta),
-                    Toast.LENGTH_SHORT
-                ).show()
+                                context,
+                                context.getString(
+                                        R.string.please_install_shizuku_and_authorise_canta
+                                ),
+                                Toast.LENGTH_SHORT
+                        )
+                        .show()
                 return@launch
             }
-
             ShizukuInfo.NOT_ACTIVE -> {
                 Toast.makeText(
-                    context,
-                    context.getString(R.string.please_start_shizuku),
-                    Toast.LENGTH_SHORT
-                ).show()
+                                context,
+                                context.getString(R.string.please_start_shizuku),
+                                Toast.LENGTH_SHORT
+                        )
+                        .show()
                 launchShizuku()
                 return@launch
             }
-
             ShizukuInfo.ACTIVE -> {
                 // Check shizuku permission
                 ShizukuData.checkShizukuPermission { permResult ->
@@ -251,10 +240,13 @@ fun uninstallOrReinstall(
 
                     if (!permission) {
                         Toast.makeText(
-                            context,
-                            context.getString(R.string.please_allow_shizuku_access_for_canta),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                                        context,
+                                        context.getString(
+                                                R.string.please_allow_shizuku_access_for_canta
+                                        ),
+                                        Toast.LENGTH_SHORT
+                                )
+                                .show()
                     } else {
                         // Proceed with the action
                         when (selectedAppsType) {
@@ -266,7 +258,6 @@ fun uninstallOrReinstall(
                                     }
                                 }
                             }
-
                             AppsType.UNINSTALLED -> {
                                 appListViewModel.selectedApps.forEach {
                                     val installed = reinstallApp(it.key)
@@ -280,89 +271,6 @@ fun uninstallOrReinstall(
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun MoreOptionsMenu(
-    showMoreOptionsPanel: Boolean,
-    showBadgeInfoDialog: () -> Unit,
-    onDismiss: () -> Unit,
-) {
-    val appListViewModel = viewModel<AppListViewModel>()
-    DropdownMenu(
-        expanded = showMoreOptionsPanel,
-        onDismissRequest = onDismiss,
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(8.dp)
-                .clickable {
-                    appListViewModel.showSystem = !appListViewModel.showSystem
-                },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(stringResource(R.string.only_system))
-            Checkbox(
-                checked = appListViewModel.showSystem,
-                onCheckedChange = {
-                    appListViewModel.showSystem = it
-                },
-            )
-        }
-        // Filters
-        var filtersMenu by remember { mutableStateOf(false) }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { filtersMenu = !filtersMenu }
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(appListViewModel.selectedFilter.name)
-            Icon(
-                if (filtersMenu) {
-                    Icons.Default.ArrowDropUp
-                } else {
-                    Icons.Default.ArrowDropDown
-                },
-                contentDescription = "Filters",
-            )
-        }
-
-        if (filtersMenu) {
-            Filter.availableFilters.forEach { filter ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            appListViewModel.selectedFilter = filter
-                            filtersMenu = false
-                        }
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Text(filter.name)
-                }
-            }
-        }
-
-        // Badge info dialog
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    showBadgeInfoDialog()
-                }
-                .padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(stringResource(R.string.badge_info))
         }
     }
 }
