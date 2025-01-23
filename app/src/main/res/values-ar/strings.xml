@@ -5,7 +5,6 @@
     <string name="are_you_sure_to_uninstall_apps">هل أنت متأكد من إلغاء تثبيت %1$s تطبيقات؟</string>
     <string name="copy_package_name_to_clipboard">نسخ اسم الحزمة إلى الحافظة</string>
     <string name="no_description_available">لا توجد وصف متاح</string>
-    <string name="canta_is_a_system_app">كانتا هو تطبيق نظام</string>
     <string name="uninstall">إلغاء التثبيت</string>
     <string name="reinstall">إعادة التثبيت</string>
     <string name="please_start_shizuku">يرجى بدء Shizuku.</string>

@@ -139,7 +139,7 @@ fun CantaAppTileDemo() {
             versionName = "1.0",
             bloatData = BloatData(
                 installData = InstallData.OEM,
-                description = stringResource(R.string.canta_is_a_system_app),
+                description = "Canta is not a system app",
                 removal = RemovalRecommendation.RECOMMENDED,
             ),
         ),
@@ -163,7 +163,7 @@ fun LongTileDemo() {
             isDisabled = true,
             bloatData = BloatData(
                 installData = InstallData.OEM,
-                description = stringResource(R.string.canta_is_a_system_app),
+                description = "Canta is a system app",
                 removal = RemovalRecommendation.RECOMMENDED,
             ),
         ),

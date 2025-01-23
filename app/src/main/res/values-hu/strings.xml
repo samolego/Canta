@@ -5,7 +5,6 @@
     <string name="are_you_sure_to_uninstall_apps">Biztosan eltávolítod a(z) %1$s alkalmazásokat?</string>
     <string name="copy_package_name_to_clipboard">Csomagnév másolása a vágólapra</string>
     <string name="no_description_available">Nincs elérhető leírás</string>
-    <string name="canta_is_a_system_app">A Canta egy rendszeralkalmazás</string>
     <string name="uninstall">Eltávolítás</string>
     <string name="reinstall">Újratelepítés</string>
     <string name="please_start_shizuku">Indítsd el a Shizukut.</string>

@@ -31,6 +31,9 @@ import androidx.compose.ui.window.DialogProperties
 import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.AppIconImage
 import org.samo_lego.canta.util.AppInfo
+import org.samo_lego.canta.util.BloatData
+import org.samo_lego.canta.util.InstallData
+import org.samo_lego.canta.util.RemovalRecommendation
 
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
@@ -48,9 +51,6 @@ fun AppInfoDialog(
     } catch (e: PackageManager.NameNotFoundException) {
         null
     }
-
-    val colorsScheme = MaterialTheme.colorScheme
-
 
     BasicAlertDialog(
         modifier = Modifier
@@ -157,7 +157,11 @@ fun AppInfoDialogPreviewShort() {
             versionCode = 1,
             versionName = "1.0",
             isDisabled = true,
-            bloatData = null,
+            bloatData = BloatData(
+                InstallData.OEM,
+                "Long app description. A link to a site: https://github.com/samolego/Canta",
+                RemovalRecommendation.EXPERT,
+            ),
         ),
         onDismiss = {}
     )

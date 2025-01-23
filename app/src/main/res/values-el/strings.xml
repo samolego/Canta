@@ -5,7 +5,6 @@
     <string name="are_you_sure_to_uninstall_apps">Σίγουρα θέλετε να απεγκαταστήσετε %1$s εφαρμογές;</string>
     <string name="copy_package_name_to_clipboard">Αντιγραφή ονόματος πακέτου στο πρόχειρο</string>
     <string name="no_description_available">Δεν υπάρχει διαθέσιμη περιγραφή</string>
-    <string name="canta_is_a_system_app">Το Canta είναι μια εφαρμογή συστήματος</string>
     <string name="uninstall">Απεγκατάσταση</string>
     <string name="reinstall">Επανεγκατάσταση</string>
     <string name="please_start_shizuku">Παρακαλώ ξεκινήστε το Shizuku.</string>

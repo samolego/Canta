@@ -5,7 +5,6 @@
     <string name="are_you_sure_to_uninstall_apps">Bist du dir sicher, dass du %1$s apps deinstallieren möchtest?</string>
     <string name="copy_package_name_to_clipboard">Appnamen in die Zwischenablage kopieren</string>
     <string name="no_description_available">Keine Beschreibung verfügbar</string>
-    <string name="canta_is_a_system_app">Canta ist eine System-App</string>
     <string name="uninstall">Deinstallieren</string>
     <string name="reinstall">Neu installieren</string>
     <string name="please_start_shizuku">Bitte starte Shizuku.</string>

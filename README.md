@@ -5,6 +5,10 @@
 Uninstall any app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/).
 
+
+> [!warning]
+> **DISCLAIMER**: Use at your own risk. I'm not responsible for any data loss or damage caused by this app.
+
 ## Download
 
 [![](https://img.shields.io/f-droid/v/org.samo_lego.canta?include_prereleases&style=for-the-badge&logo=F-Droid&color=blue)](https://f-droid.org/en/packages/org.samo_lego.canta/)
@@ -55,5 +59,7 @@ https://crowdin.com/project/canta
 
 ## Thanks
 
-* Icon created on [icon kitchen](https://icon.kitchen)
+* [Universal-Debloater-Alliance](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/)
+  for the debloat list
 * @RikkaApps for Shizuku
+* Icon created on [icon kitchen](https://icon.kitchen)

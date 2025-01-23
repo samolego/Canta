@@ -5,7 +5,6 @@
     <string name="are_you_sure_to_uninstall_apps">Bạn có chắc muốn xóa %1$s app?</string>
     <string name="copy_package_name_to_clipboard">Copy tên gói vào bảng nhớ tạm</string>
     <string name="no_description_available">Không có mô tả</string>
-    <string name="canta_is_a_system_app">Canta là ứng dụng hệ thống</string>
     <string name="uninstall">Gỡ cài đặt</string>
     <string name="reinstall">Tải lại</string>
     <string name="please_start_shizuku">Hãy bật Shizuku.</string>
