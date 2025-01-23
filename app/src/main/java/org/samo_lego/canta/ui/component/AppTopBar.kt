@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -52,24 +53,38 @@ fun CantaTopBar(
             Box(
                 contentAlignment = Alignment.CenterStart,
             ) {
-                TextField(
-                    modifier = Modifier.focusRequester(searchFocusRequester),
-                    value = appListViewModel.searchQuery,
-                    onValueChange = {
-                        appListViewModel.searchQuery = it
-                    },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(
-                        onDone = { keyboardController?.hide() }
-                    ),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        errorIndicatorColor = Color.Transparent,
-                    ),
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    IconButton(
+                        onClick = {
+                            searchActive = false
+                            appListViewModel.searchQuery = ""
+                            searchFocusRequester.freeFocus()
+                            keyboardController?.hide()
+                        }
+                    ) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                    TextField(
+                        modifier = Modifier.focusRequester(searchFocusRequester),
+                        value = appListViewModel.searchQuery,
+                        onValueChange = {
+                            appListViewModel.searchQuery = it
+                        },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                        keyboardActions = KeyboardActions(
+                            onDone = { keyboardController?.hide() }
+                        ),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            errorIndicatorColor = Color.Transparent,
+                        ),
+                    )
+                }
             }
 
             if (!searchActive) {
@@ -84,16 +99,10 @@ fun CantaTopBar(
         actions = {
             IconButton(
                 onClick = {
-                    searchActive = !searchActive
                     appListViewModel.searchQuery = ""
-
-                    if (searchActive) {
-                        searchFocusRequester.requestFocus()
-                        keyboardController?.show()
-                    } else {
-                        searchFocusRequester.freeFocus()
-                        keyboardController?.hide()
-                    }
+                    searchActive = true
+                    searchFocusRequester.requestFocus()
+                    keyboardController?.show()
                 }
             ) {
                 Icon(
