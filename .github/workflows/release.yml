@@ -17,8 +17,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: "21.x"
-          cache: 'gradle'
-          distribution: 'adopt'
+          cache: "gradle"
+          distribution: "adopt"
         id: java
       - name: 🔐 Retrieve base64 keystore and decode it to a file
         id: write_file
@@ -38,8 +38,16 @@ jobs:
       - name: 🤖📦 Create Android release
         run: |
           ./gradlew app:assembleRelease
+      - name: 📝 Generate SHA-256
+        run: |
+          cd app/build/outputs/apk/release/
+          sha256sum *.apk > SHA256SUMS.txt
+      - name: "Echo SHA-256 sums"
+        run: cat app/build/outputs/apk/release/SHA256SUMS.txt
       - name: 🤖🚀 Upload to GitHub release
         uses: AButler/upload-release-assets@v2.0
         with:
-          files: 'app/build/outputs/apk/release/*.apk'
+          files: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/release/SHA256SUMS.txt
           repo-token: ${{ secrets.GITHUB_TOKEN }}

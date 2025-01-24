@@ -19,8 +19,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: "21.x"
-          cache: 'gradle'
-          distribution: 'adopt'
+          cache: "gradle"
+          distribution: "adopt"
         id: java
 
       - name: 🔐 Retrieve base64 keystore and decode it to a file
@@ -47,15 +47,16 @@ jobs:
       - name: 📝 Generate build date
         id: date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-
-      - name: 📝 Rename APK to ZIP
+      - name: 📝 Generate SHA-256
         run: |
           cd app/build/outputs/apk/release/
-          mv *.apk "app-release-${{ steps.date.outputs.date }}.zip"
-
+          sha256sum *.apk > SHA256SUMS.txt
+      - name: "Echo SHA-256 sums"
+        run: cat app/build/outputs/apk/release/SHA256SUMS.txt
       - name: 📦 Upload Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: app/build/outputs/apk/release/app-release-${{ steps.date.outputs.date }}.zip
+          # Include both the APK and the SHA-256 sums
+          path: app/build/outputs/apk/release/
           retention-days: 7
