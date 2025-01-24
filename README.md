@@ -2,7 +2,7 @@
 
 ![](https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
-Uninstall any app without root!
+Uninstall any\* app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/).
 
 
@@ -56,6 +56,8 @@ https://crowdin.com/project/canta
 | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-main.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-search.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstall-dialog.png"> |
 |:---:|:---:|:---:|
 | Home | Search | Uninstall |
+| <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-settings.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-about.png"> |  |
+| Settings | About |  |
 
 ## Thanks
 
