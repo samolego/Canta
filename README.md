@@ -56,8 +56,8 @@ https://crowdin.com/project/canta
 | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-main.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-search.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstall-dialog.png"> |
 |:---:|:---:|:---:|
 | Home | Search | Uninstall |
-| <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-settings.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-about.png"> |  |
-| Settings | About |  |
+| <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-app-description.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstalled-list.png"> |  |
+| App descriptions | See uninstalled |  |
 
 ## Thanks
 
