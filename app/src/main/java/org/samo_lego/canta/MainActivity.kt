@@ -8,7 +8,6 @@ import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -80,7 +79,7 @@ class MainActivity : ComponentActivity() {
         // 0x00000002 = PackageManager.DELETE_ALL_USERS
         val flags = if (isSystem) 0x00000004 else 0x00000002
 
-        return try {
+        return  try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
                 PackageInstaller::class.java.getDeclaredMethod(
                     "uninstall",
@@ -101,6 +100,8 @@ class MainActivity : ComponentActivity() {
             }
             true
         } catch (e: Exception) {
+            LogUtils.e(APP_NAME, "Failed to uninstall '$packageName'")
+            LogUtils.e(APP_NAME, "Error: ${e.message}")
             e.printStackTrace()
             false
         }
@@ -121,6 +122,8 @@ class MainActivity : ComponentActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        LogUtils.i(APP_NAME, "Reinstalling '$packageName'")
+
         // PackageManager.INSTALL_ALL_WHITELIST_RESTRICTED_PERMISSIONS
         val installFlags = 0x00400000
 
@@ -138,6 +141,8 @@ class MainActivity : ComponentActivity() {
             )
             true
         } catch (e: Exception) {
+            LogUtils.e(APP_NAME, "Failed to reinstall '$packageName'")
+            LogUtils.e(APP_NAME, "Error: ${e.message}")
             e.printStackTrace()
             false
         }

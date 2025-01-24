@@ -42,7 +42,7 @@ import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 @Composable
 fun CantaTopBar(
     openBadgesInfoDialog: () -> Unit,
-    openLogsDialog: () -> Unit,
+    openLogsScreen: () -> Unit,
 ) {
     var showMoreOptionsMenu by remember { mutableStateOf(false) }
     var showFiltersMenu by remember { mutableStateOf(false) }
@@ -136,11 +136,10 @@ fun CantaTopBar(
             MoreOptionsMenu(
                 showMenu = showMoreOptionsMenu,
                 showBadgeInfoDialog = {
-                    showMoreOptionsMenu = false
                     openBadgesInfoDialog()
                 },
-                showLogsDialog = {
-                    openLogsDialog()
+                openLogsScreen = {
+                    openLogsScreen()
                 },
                 onDismiss = { showMoreOptionsMenu = false },
             )

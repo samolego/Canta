@@ -3,7 +3,6 @@ package org.samo_lego.canta.ui
 import android.content.Context
 import android.content.pm.PackageManager
 import android.widget.Toast
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +19,6 @@ import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.InstallMobile
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -42,29 +40,53 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.component.CantaTopBar
 import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
-import org.samo_lego.canta.ui.dialog.LogsDialog
 import org.samo_lego.canta.ui.dialog.UninstallAppsDialog
+import org.samo_lego.canta.ui.navigation.Screen
+import org.samo_lego.canta.ui.screen.LogsPage
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.ShizukuData
 import org.samo_lego.canta.util.ShizukuInfo
 
-@OptIn(
-        ExperimentalMaterial3Api::class,
-        ExperimentalAnimationApi::class,
-        ExperimentalFoundationApi::class
-)
 @Composable
 fun CantaApp(
         launchShizuku: () -> Unit,
         uninstallApp: (String) -> Boolean,
         reinstallApp: (String) -> Boolean,
+) {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = Screen.Main.route) {
+        composable(Screen.Main.route) {
+            MainContent(
+                    launchShizuku = launchShizuku,
+                    uninstallApp = uninstallApp,
+                    reinstallApp = reinstallApp,
+                    navigateToLogs = { navController.navigate(Screen.Logs.route) }
+            )
+        }
+        composable(route = Screen.Logs.route) {
+            LogsPage(onNavigateBack = { navController.navigateUp() })
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun MainContent(
+    launchShizuku: () -> Unit,
+    uninstallApp: (String) -> Boolean,
+    reinstallApp: (String) -> Boolean,
+    navigateToLogs: () -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -76,7 +98,6 @@ fun CantaApp(
 
     var showBadgeInfoDialog by remember { mutableStateOf(false) }
     var showUninstallConfirmDialog by remember { mutableStateOf(false) }
-    var showLogsDialog by remember { mutableStateOf(false) }
 
     val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
 
@@ -90,51 +111,51 @@ fun CantaApp(
     Scaffold(
             topBar = {
                 CantaTopBar(
-                    openBadgesInfoDialog = { showBadgeInfoDialog = true },
-                    openLogsDialog = { showLogsDialog = true }
+                        openBadgesInfoDialog = { showBadgeInfoDialog = true },
+                        openLogsScreen = navigateToLogs
                 )
             },
             floatingActionButton = {
                 // Make the FAB hidden if no apps are selected
                 if (appListViewModel.selectedApps.isNotEmpty()) {
                     FloatingActionButton(
-                        containerColor =
-                        when (selectedAppsType) {
-                            AppsType.INSTALLED -> MaterialTheme.colorScheme.errorContainer
-                            AppsType.UNINSTALLED ->
-                                MaterialTheme.colorScheme.tertiaryContainer
-                        },
-                        shape = RoundedCornerShape(32.dp),
-                        modifier = Modifier.padding(16.dp).navigationBarsPadding(),
-                        onClick = {
-                            if (selectedAppsType == AppsType.INSTALLED) {
-                                showUninstallConfirmDialog =
-                                    appListViewModel.selectedApps.isNotEmpty()
-                                return@FloatingActionButton
-                            }
-                            uninstallOrReinstall(
-                                context = context,
-                                coroutineScope = coroutineScope,
-                                launchShizuku = launchShizuku,
-                                uninstallApp = uninstallApp,
-                                reinstallApp = reinstallApp,
-                                selectedAppsType = selectedAppsType,
-                                appListViewModel = appListViewModel,
-                            )
-                        },
+                            containerColor =
+                                    when (selectedAppsType) {
+                                        AppsType.INSTALLED ->
+                                                MaterialTheme.colorScheme.errorContainer
+                                        AppsType.UNINSTALLED ->
+                                                MaterialTheme.colorScheme.tertiaryContainer
+                                    },
+                            shape = RoundedCornerShape(32.dp),
+                            modifier = Modifier.padding(16.dp).navigationBarsPadding(),
+                            onClick = {
+                                if (selectedAppsType == AppsType.INSTALLED) {
+                                    showUninstallConfirmDialog =
+                                            appListViewModel.selectedApps.isNotEmpty()
+                                    return@FloatingActionButton
+                                }
+                                uninstallOrReinstall(
+                                        context = context,
+                                        coroutineScope = coroutineScope,
+                                        launchShizuku = launchShizuku,
+                                        uninstallApp = uninstallApp,
+                                        reinstallApp = reinstallApp,
+                                        selectedAppsType = selectedAppsType,
+                                        appListViewModel = appListViewModel,
+                                )
+                            },
                     ) {
                         when (selectedAppsType) {
                             AppsType.INSTALLED ->
-                                Icon(
-                                    Icons.Default.Delete,
-                                    contentDescription = stringResource(R.string.uninstall)
-                                )
-
+                                    Icon(
+                                            Icons.Default.Delete,
+                                            contentDescription = stringResource(R.string.uninstall)
+                                    )
                             AppsType.UNINSTALLED ->
-                                Icon(
-                                    Icons.Default.InstallMobile,
-                                    contentDescription = stringResource(R.string.reinstall)
-                                )
+                                    Icon(
+                                            Icons.Default.InstallMobile,
+                                            contentDescription = stringResource(R.string.reinstall)
+                                    )
                         }
                     }
                 }
@@ -192,8 +213,6 @@ fun CantaApp(
                                 )
                             }
                     )
-                } else if (showLogsDialog) {
-                    LogsDialog(onDismissRequest = { showLogsDialog = false })
                 }
                 AppList(appType = AppsType.entries[page])
             }

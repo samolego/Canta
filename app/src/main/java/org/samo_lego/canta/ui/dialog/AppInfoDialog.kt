@@ -1,16 +1,19 @@
 package org.samo_lego.canta.ui.dialog
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.BasicAlertDialog
@@ -25,6 +28,10 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
@@ -35,94 +42,147 @@ import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.InstallData
 import org.samo_lego.canta.util.RemovalRecommendation
 
-
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppInfoDialog(
-    appInfo: AppInfo,
-    onDismiss: () -> Unit,
+        appInfo: AppInfo,
+        onDismiss: () -> Unit,
 ) {
-    val bloatDescripton = appInfo.description
+    val bloatDescription = appInfo.description
     val clipboardManager = LocalClipboardManager.current
-
     val context = LocalContext.current
-    val appIcon = try {
-        context.packageManager.getApplicationIcon(appInfo.packageName)
-    } catch (e: PackageManager.NameNotFoundException) {
-        null
-    }
+
+    val appIcon =
+            try {
+                context.packageManager.getApplicationIcon(appInfo.packageName)
+            } catch (e: PackageManager.NameNotFoundException) {
+                null
+            }
 
     BasicAlertDialog(
-        modifier = Modifier
-            .fillMaxWidth(0.8f)
-            .background(MaterialTheme.colorScheme.surfaceContainer, MaterialTheme.shapes.large),
-        properties = DialogProperties(
-            decorFitsSystemWindows = true,
-            usePlatformDefaultWidth = false,
-        ),
-        onDismissRequest = onDismiss,
+            modifier =
+                    Modifier.fillMaxWidth(0.8f)
+                            .background(
+                                    MaterialTheme.colorScheme.surfaceContainer,
+                                    MaterialTheme.shapes.large
+                            ),
+            properties =
+                    DialogProperties(
+                            decorFitsSystemWindows = true,
+                            usePlatformDefaultWidth = false,
+                    ),
+            onDismissRequest = onDismiss,
     ) {
         Column(
-            modifier = Modifier.padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Row {
                     if (appIcon != null) {
                         AppIconImage(
-                            appIconImage = appIcon,
-                            contentDescription = "${appInfo.name} icon"
+                                appIconImage = appIcon,
+                                contentDescription = "${appInfo.name} icon"
                         )
                         Spacer(modifier = Modifier.size(8.dp))
                     }
-                    Text(
-                        text = appInfo.name,
-                        modifier = Modifier.align(Alignment.CenterVertically)
-                    )
+                    Text(text = appInfo.name, modifier = Modifier.align(Alignment.CenterVertically))
                 }
                 Spacer(modifier = Modifier.size(8.dp))
                 Row(
-                    modifier = Modifier
-                        .background(
-                            MaterialTheme.colorScheme.secondaryContainer,
-                            MaterialTheme.shapes.small
-                        )
-                        .clickable(
-                            onClick = {
-                                // Copy package name to clipboard
-                                clipboardManager.setText(AnnotatedString(appInfo.packageName))
-                            }
-                        )
-                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                        modifier =
+                                Modifier.background(
+                                                MaterialTheme.colorScheme.secondaryContainer,
+                                                MaterialTheme.shapes.small
+                                        )
+                                        .clickable(
+                                                onClick = {
+                                                    clipboardManager.setText(
+                                                            AnnotatedString(appInfo.packageName)
+                                                    )
+                                                }
+                                        )
+                                        .padding(horizontal = 8.dp, vertical = 4.dp),
                 ) {
                     Icon(
-                        Icons.Default.ContentCopy,
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .size(12.dp),
-                        contentDescription = stringResource(R.string.copy_package_name_to_clipboard),
+                            Icons.Default.ContentCopy,
+                            modifier = Modifier.align(Alignment.CenterVertically).size(12.dp),
+                            contentDescription =
+                                    stringResource(R.string.copy_package_name_to_clipboard),
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically),
-                        text = appInfo.packageName,
-                        style = MaterialTheme.typography.labelSmall
+                            modifier = Modifier.align(Alignment.CenterVertically),
+                            text = appInfo.packageName,
+                            style = MaterialTheme.typography.labelSmall
                     )
                 }
             }
             Spacer(modifier = Modifier.size(8.dp))
-            if (bloatDescripton != null) {
-                Text(text = bloatDescripton, style = MaterialTheme.typography.bodyMedium)
+            if (bloatDescription != null) {
+                val annotatedDescription = createAnnotatedDescription(bloatDescription)
+                SelectionContainer {
+                    ClickableText(
+                            text = annotatedDescription,
+                            style =
+                                    MaterialTheme.typography.bodyMedium.copy(
+                                            color = MaterialTheme.colorScheme.onSurface
+                                    ),
+                            onClick = { offset ->
+                                annotatedDescription
+                                        .getStringAnnotations("URL", offset, offset)
+                                        .firstOrNull()
+                                        ?.let { annotation ->
+                                            val intent =
+                                                    Intent(
+                                                            Intent.ACTION_VIEW,
+                                                            Uri.parse(annotation.item)
+                                                    )
+                                            context.startActivity(intent)
+                                        }
+                            }
+                    )
+                }
             } else {
                 Text(
-                    text = stringResource(R.string.no_description_available),
-                    style = MaterialTheme.typography.bodySmall
+                        text = stringResource(R.string.no_description_available),
+                        style = MaterialTheme.typography.bodySmall
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun createAnnotatedDescription(description: String): AnnotatedString {
+    return buildAnnotatedString {
+        val urlPattern = """(https?://[^\s<>\"')\]]+)""".toRegex()
+
+        var lastIndex = 0
+        urlPattern.findAll(description).forEach { matchResult ->
+            // Add text before URL
+            append(description.substring(lastIndex, matchResult.range.first))
+
+            // Add URL with styling
+            val urlText = matchResult.value
+            pushStringAnnotation("URL", urlText)
+            withStyle(
+                    SpanStyle(
+                            color = MaterialTheme.colorScheme.primary,
+                            textDecoration = TextDecoration.Underline
+                    )
+            ) { append(urlText) }
+            pop()
+
+            lastIndex = matchResult.range.last + 1
+        }
+
+        // Add remaining text
+        if (lastIndex < description.length) {
+            append(description.substring(lastIndex))
         }
     }
 }
@@ -131,17 +191,19 @@ fun AppInfoDialog(
 @Composable
 fun AppInfoDialogPreview() {
     AppInfoDialog(
-        appInfo = AppInfo(
-            "App name",
-            packageName = "com.example.app.very.long.package.name.that.should.overflow",
-            isSystemApp = false,
-            isUninstalled = false,
-            versionCode = 1,
-            versionName = "1.0",
-            isDisabled = false,
-            bloatData = null,
-        ),
-        onDismiss = {}
+            appInfo =
+                    AppInfo(
+                            "App name",
+                            packageName =
+                                    "com.example.app.very.long.package.name.that.should.overflow",
+                            isSystemApp = false,
+                            isUninstalled = false,
+                            versionCode = 1,
+                            versionName = "1.0",
+                            isDisabled = false,
+                            bloatData = null,
+                    ),
+            onDismiss = {}
     )
 }
 
@@ -149,21 +211,22 @@ fun AppInfoDialogPreview() {
 @Composable
 fun AppInfoDialogPreviewShort() {
     AppInfoDialog(
-        appInfo = AppInfo(
-            "App name",
-            packageName = "com.example.app",
-            isSystemApp = false,
-            isUninstalled = false,
-            versionCode = 1,
-            versionName = "1.0",
-            isDisabled = true,
-            bloatData = BloatData(
-                InstallData.OEM,
-                "Long app description. A link to a site: https://github.com/samolego/Canta",
-                RemovalRecommendation.EXPERT,
-            ),
-        ),
-        onDismiss = {}
+            appInfo =
+                    AppInfo(
+                            "App name",
+                            packageName = "com.example.app",
+                            isSystemApp = false,
+                            isUninstalled = false,
+                            versionCode = 1,
+                            versionName = "1.0",
+                            isDisabled = true,
+                            bloatData =
+                                    BloatData(
+                                            InstallData.OEM,
+                                            "Long app description. A link to a site: https://play.google.com/store/apps/details?id=com.android.vending",
+                                            RemovalRecommendation.EXPERT,
+                                    ),
+                    ),
+            onDismiss = {}
     )
 }
-
