@@ -57,7 +57,7 @@ https://crowdin.com/project/canta
 |:---:|:---:|:---:|
 | Home | Search | Uninstall |
 | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-app-description.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstalled-list.png"> |  |
-| App descriptions | See uninstalled |  |
+| [App descriptions](https://github.com/Universal-Debloater-Alliance/universal-android-preinstalled-lists/) | See uninstalled |  |
 
 ## Thanks
 
@@ -65,3 +65,8 @@ https://crowdin.com/project/canta
   for the debloat list
 * @RikkaApps for Shizuku
 * Icon created on [icon kitchen](https://icon.kitchen)
+* 
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=samolego/Canta&type=Date)](https://star-history.com/#samolego/Canta&Date)
