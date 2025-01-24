@@ -3,6 +3,11 @@ package org.samo_lego.canta.ui
 import android.content.Context
 import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -83,10 +88,10 @@ fun CantaApp(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
-    launchShizuku: () -> Unit,
-    uninstallApp: (String) -> Boolean,
-    reinstallApp: (String) -> Boolean,
-    navigateToLogs: () -> Unit,
+        launchShizuku: () -> Unit,
+        uninstallApp: (String) -> Boolean,
+        reinstallApp: (String) -> Boolean,
+        navigateToLogs: () -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -116,8 +121,12 @@ private fun MainContent(
                 )
             },
             floatingActionButton = {
-                // Make the FAB hidden if no apps are selected
-                if (appListViewModel.selectedApps.isNotEmpty()) {
+                AnimatedVisibility(
+                        // Make the FAB hidden if no apps are selected
+                        visible = appListViewModel.selectedApps.isNotEmpty(),
+                        enter = fadeIn() + scaleIn(),
+                        exit = fadeOut() + scaleOut()
+                ) {
                     FloatingActionButton(
                             containerColor =
                                     when (selectedAppsType) {

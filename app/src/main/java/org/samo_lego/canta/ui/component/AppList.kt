@@ -1,5 +1,7 @@
 package org.samo_lego.canta.ui.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,10 +16,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,22 +45,19 @@ import org.samo_lego.canta.ui.dialog.AppInfoDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.AppInfo
 
-
 @Composable
-fun AppList(
-    appType: AppsType = AppsType.INSTALLED
-) {
+fun AppList(appType: AppsType = AppsType.INSTALLED) {
     val appListModel = viewModel<AppListViewModel>()
     val context = LocalContext.current
-    var showAppDialog by remember {
-        mutableStateOf<AppInfo?>(null)
-    }
+    var showAppDialog by remember { mutableStateOf<AppInfo?>(null) }
 
-    val appList by derivedStateOf {
-        appListModel.appList.filter {
-            when (appType) {
-                AppsType.INSTALLED -> !it.isUninstalled
-                AppsType.UNINSTALLED -> it.isUninstalled
+    val appList by remember {
+        derivedStateOf {
+            appListModel.appList.filter {
+                when (appType) {
+                    AppsType.INSTALLED -> !it.isUninstalled
+                    AppsType.UNINSTALLED -> it.isUninstalled
+                }
             }
         }
     }
@@ -67,14 +69,12 @@ fun AppList(
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
     ) {
         if (showAppDialog != null) {
             AppInfoDialog(
-                appInfo = showAppDialog!!,
-                onDismiss = { showAppDialog = null },
+                    appInfo = showAppDialog!!,
+                    onDismiss = { showAppDialog = null },
             )
         }
 
@@ -86,38 +86,31 @@ fun AppList(
             }
             if (appList.isNotEmpty()) {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = WindowInsets.navigationBars.asPaddingValues()
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = WindowInsets.navigationBars.asPaddingValues()
                 ) {
                     items(appList, key = { it.packageName }) { appInfo ->
                         AppTile(
-                            appInfo = appInfo,
-                            isSelected = appListModel.selectedApps.contains(appInfo.packageName),
-                            onCheckChanged = { checked ->
-                                if (checked) {
-                                    appListModel.selectedApps.add(appInfo.packageName)
-                                } else {
-                                    appListModel.selectedApps.remove(appInfo.packageName)
-                                }
-                            },
-                            onShowDialog = {
-                                showAppDialog = appInfo
-                            }
+                                appInfo = appInfo,
+                                isSelected =
+                                        appListModel.selectedApps.contains(appInfo.packageName),
+                                onCheckChanged = { checked ->
+                                    if (checked) {
+                                        appListModel.selectedApps.add(appInfo.packageName)
+                                    } else {
+                                        appListModel.selectedApps.remove(appInfo.packageName)
+                                    }
+                                },
+                                onShowDialog = { showAppDialog = appInfo }
                         )
                     }
-                    item { 
-                        Spacer(modifier = Modifier.height(64.dp))
-                    }
+                    item { Spacer(modifier = Modifier.height(64.dp)) }
                 }
             } else {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(stringResource(R.string.no_apps_found))
-                }
+                        modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                        contentAlignment = Alignment.Center
+                ) { Text(stringResource(R.string.no_apps_found)) }
             }
         }
     }
@@ -127,14 +120,12 @@ fun AppList(
 @Composable
 fun LoadingBadgesIndicator() {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(32.dp),
         )
         Spacer(modifier = Modifier.size(8.dp))
         Text(stringResource(R.string.loading_badges))
@@ -144,17 +135,10 @@ fun LoadingBadgesIndicator() {
 @Preview(showBackground = true)
 @Composable
 fun LoadingAppsInfo() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        contentAlignment = Alignment.Center
-    ) {
+    Box(modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentAlignment = Alignment.Center) {
         Column {
             CircularProgressIndicator(
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(Alignment.CenterHorizontally),
+                    modifier = Modifier.size(48.dp).align(Alignment.CenterHorizontally),
             )
             Spacer(modifier = Modifier.size(16.dp))
             Text(stringResource(R.string.loading_apps))
