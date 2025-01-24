@@ -16,4 +16,10 @@
     <string name="badge_info">Informazioni badge</string>
     <string name="got_it">Ho capito</string>
     <string name="loading_badges">Caricamento badge ...</string>
+    <string name="logs">Logs</string>
+    <string name="back">Back</string>
+    <string name="copy_logs">Copy logs</string>
+    <string name="log_copied">Log copied to clipboard</string>
+    <string name="copy">Copy</string>
+    <string name="close">Close</string>
 </resources>

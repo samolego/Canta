@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cancel">Cancel</string>
-    <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Are you sure to uninstall %1$s apps?</string>
-    <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
-    <string name="no_description_available">No description available</string>
-    <string name="uninstall">Uninstall</string>
-    <string name="reinstall">ReInstall</string>
-    <string name="please_start_shizuku">Please start Shizuku.</string>
+    <string name="cancel">Откажи</string>
+    <string name="ok">Ок</string>
+    <string name="are_you_sure_to_uninstall_apps">Да ли сте сигурни да деинсталирате %1$s апликације?</string>
+    <string name="copy_package_name_to_clipboard">Копирајте назив пакета у међуспремник</string>
+    <string name="no_description_available">Нема доступног описа</string>
+    <string name="uninstall">Деинсталирајте</string>
+    <string name="reinstall">Поново инсталирај</string>
+    <string name="please_start_shizuku">Молимо вас покрените Shizuku.</string>
     <string name="please_install_shizuku_and_authorise_canta">Please install Shizuku and authorise Canta.</string>
     <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
-    <string name="only_system">Only system</string>
-    <string name="no_apps_found">No apps found</string>
-    <string name="loading_apps">Loading apps</string>
-    <string name="badge_info">Badge info</string>
-    <string name="got_it">Got it</string>
-    <string name="loading_badges">Loading badges ...</string>
+    <string name="only_system">Само систем</string>
+    <string name="no_apps_found">Није пронађена ниједна апликација</string>
+    <string name="loading_apps">Учитавање апликација</string>
+    <string name="badge_info">Информације о значки</string>
+    <string name="got_it">Схватио сам</string>
+    <string name="loading_badges">Учитавање значка...</string>
+    <string name="logs">Logs</string>
+    <string name="back">Back</string>
+    <string name="copy_logs">Copy logs</string>
+    <string name="log_copied">Log copied to clipboard</string>
+    <string name="copy">Copy</string>
+    <string name="close">Close</string>
 </resources>
