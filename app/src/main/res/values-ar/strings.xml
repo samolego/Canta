@@ -20,6 +20,14 @@
     <string name="back">Back</string>
     <string name="copy_logs">Copy logs</string>
     <string name="log_copied">Log copied to clipboard</string>
+    <plurals name="clear_selected_apps">
+        <item quantity="zero">Clear %d selected</item>
+        <item quantity="one">Clear %d selected</item>
+        <item quantity="two">Clear %d selected</item>
+        <item quantity="few">Clear %d selected</item>
+        <item quantity="many">Clear %d selected</item>
+        <item quantity="other">Clear %d selected</item>
+    </plurals>
     <string name="copy">Copy</string>
     <string name="close">Close</string>
 </resources>
