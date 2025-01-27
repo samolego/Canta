@@ -30,24 +30,28 @@ const val packageName = "org.samo_lego.canta"
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            enableEdgeToEdge()
+        }
         super.onCreate(savedInstanceState)
 
         setContent {
             CantaTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
                 ) {
                     CantaApp(
-                        launchShizuku = {
-                            // Open shizuku app
-                            val launchIntent =
-                                packageManager.getLaunchIntentForPackage(SHIZUKU_PACKAGE_NAME)
-                            startActivity(launchIntent)
-                        },
-                        uninstallApp = { uninstallApp(it) },
-                        reinstallApp = { reinstallApp(it) },
+                            launchShizuku = {
+                                // Open shizuku app
+                                val launchIntent =
+                                        packageManager.getLaunchIntentForPackage(
+                                                SHIZUKU_PACKAGE_NAME
+                                        )
+                                startActivity(launchIntent)
+                            },
+                            uninstallApp = { uninstallApp(it) },
+                            reinstallApp = { reinstallApp(it) },
                     )
                 }
             }
@@ -55,18 +59,19 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Uninstalls app using Shizuku.
-     * See <a href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=2144">PackageManagerShellCommand.java</a>
+     * Uninstalls app using Shizuku. See <a
+     * href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=2144">PackageManagerShellCommand.java</a>
      * @param packageName package name of the app to uninstall
      */
     private fun uninstallApp(packageName: String): Boolean {
         val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
-        val intent = PendingIntent.getBroadcast(
-            applicationContext,
-            0,
-            broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+        val intent =
+                PendingIntent.getBroadcast(
+                        applicationContext,
+                        0,
+                        broadcastIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
         val packageInstaller = getPackageInstaller()
         val packageInfo = packageManager.getInfoForPackage(packageName)
@@ -79,23 +84,26 @@ class MainActivity : ComponentActivity() {
         // 0x00000002 = PackageManager.DELETE_ALL_USERS
         val flags = if (isSystem) 0x00000004 else 0x00000002
 
-        return  try {
+        return try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-                PackageInstaller::class.java.getDeclaredMethod(
-                    "uninstall",
-                    String::class.java,
-                    Int::class.javaPrimitiveType,
-                    PendingIntent::class.java
-                ).invoke(packageInstaller, packageName, flags, intent)
-                //packageInstaller.uninstall(packageName, flags, intent.intentSender)
+                PackageInstaller::class
+                        .java
+                        .getDeclaredMethod(
+                                "uninstall",
+                                String::class.java,
+                                Int::class.javaPrimitiveType,
+                                PendingIntent::class.java
+                        )
+                        .invoke(packageInstaller, packageName, flags, intent)
+                // packageInstaller.uninstall(packageName, flags, intent.intentSender)
             } else {
                 HiddenApiBypass.invoke(
-                    PackageInstaller::class.java,
-                    packageInstaller,
-                    "uninstall",
-                    packageName,
-                    flags,
-                    intent.intentSender
+                        PackageInstaller::class.java,
+                        packageInstaller,
+                        "uninstall",
+                        packageName,
+                        flags,
+                        intent.intentSender
                 )
             }
             true
@@ -108,19 +116,20 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Reinstalls app using Shizuku.
-     * See <a href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=1408>PackageManagerShellCommand.java</a>
+     * Reinstalls app using Shizuku. See <a
+     * href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=1408>PackageManagerShellCommand.java</a>
      * @param packageName package name of the app to reinstall (must preinstalled on the phone)
      */
     private fun reinstallApp(packageName: String): Boolean {
         val installReason = PackageManager.INSTALL_REASON_UNKNOWN
         val broadcastIntent = Intent("org.samo_lego.canta.INSTALL_RESULT_ACTION")
-        val intent = PendingIntent.getBroadcast(
-            applicationContext,
-            0,
-            broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+        val intent =
+                PendingIntent.getBroadcast(
+                        applicationContext,
+                        0,
+                        broadcastIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
         LogUtils.i(APP_NAME, "Reinstalling '$packageName'")
 
@@ -129,15 +138,15 @@ class MainActivity : ComponentActivity() {
 
         return try {
             HiddenApiBypass.invoke(
-                IPackageInstaller::class.java,
-                ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller(),
-                "installExistingPackage",
-                packageName,
-                installFlags,
-                installReason,
-                intent.intentSender,
-                0,
-                null
+                    IPackageInstaller::class.java,
+                    ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller(),
+                    "installExistingPackage",
+                    packageName,
+                    installFlags,
+                    installReason,
+                    intent.intentSender,
+                    0,
+                    null
             )
             true
         } catch (e: Exception) {
@@ -156,7 +165,10 @@ class MainActivity : ComponentActivity() {
         // The reason for use "com.android.shell" as installer package under adb is that
         // getMySessions will check installer package's owner
         return ShizukuPackageInstallerUtils.createPackageInstaller(
-            iPackageInstaller, "com.android.shell", userId, this
+                iPackageInstaller,
+                "com.android.shell",
+                userId,
+                this
         )
     }
 }
