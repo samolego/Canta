@@ -34,5 +34,6 @@
         <item quantity="other">Clear %d selected</item>
     </plurals>
     <string name="copy">Copy</string>
+    <string name="app_settings">App info</string>
     <string name="close">Close</string>
 </resources>

@@ -3,6 +3,8 @@ package org.samo_lego.canta.ui.dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+import android.text.format.Formatter.formatFileSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,11 +14,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +41,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import java.io.File
 import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.AppIconImage
 import org.samo_lego.canta.util.AppInfo
@@ -56,6 +63,15 @@ fun AppInfoDialog(
             try {
                 context.packageManager.getApplicationIcon(appInfo.packageName)
             } catch (e: PackageManager.NameNotFoundException) {
+                null
+            }
+
+    val appSize =
+            try {
+                val packageInfo = context.packageManager.getPackageInfo(appInfo.packageName, 0)
+                val appFile = packageInfo.applicationInfo?.sourceDir?.let { File(it) }
+                appFile?.let { formatFileSize(context, it.length()) } ?: "? MB"
+            } catch (e: Exception) {
                 null
             }
 
@@ -89,7 +105,17 @@ fun AppInfoDialog(
                         )
                         Spacer(modifier = Modifier.size(8.dp))
                     }
-                    Text(text = appInfo.name, modifier = Modifier.align(Alignment.CenterVertically))
+
+                    Column(modifier = Modifier.align(Alignment.CenterVertically)) {
+                        Text(text = appInfo.name)
+                        if (appSize != null) {
+                            Text(
+                                    text = appSize,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
                 Spacer(modifier = Modifier.size(8.dp))
                 Row(
@@ -151,6 +177,34 @@ fun AppInfoDialog(
                         text = stringResource(R.string.no_description_available),
                         style = MaterialTheme.typography.bodySmall
                 )
+            }
+            if (!appInfo.isUninstalled) {
+                Row(modifier = Modifier.align(Alignment.End)) {
+                    Button(
+                        onClick = {
+                            val intent =
+                                Intent(ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                    data = Uri.fromParts("package", appInfo.packageName, null)
+                                }
+                            context.startActivity(intent)
+                        },
+                        colors =
+                        ButtonDefaults.buttonColors(
+                            containerColor =
+                            MaterialTheme.colorScheme.secondaryContainer,
+                            contentColor =
+                            MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    ) {
+                        Icon(
+                            Icons.Default.Settings,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(stringResource(R.string.app_settings))
+                    }
+                }
             }
         }
     }
