@@ -1,15 +1,17 @@
-name: 🌙 Nightly Build
+name: 🔍 Pull Request Check
 
 on:
-  workflow_dispatch:
-  push:
+  pull_request:
     branches:
       - master
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
-  buildAndroid:
-    permissions: write-all
-    name: 🤖📦 Build Android APK
+  validateAndroid:
+    name: 🤖 Validate Android Build
     runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repository
@@ -21,42 +23,16 @@ jobs:
           java-version: "21.x"
           cache: "gradle"
           distribution: "adopt"
-        id: java
 
-      - name: 🔐 Retrieve base64 keystore and decode it to a file
-        id: write_file
-        uses: timheuer/base64-to-file@v1.2
-        with:
-          fileName: "android-keystore.jks"
-          fileDir: "${{ github.workspace }}/"
-          encodedString: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+      - name: 🔍 Run tests
+        run: ./gradlew test
 
-      - name: 📝🔐 Create keystore.properties file
-        env:
-          KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/key.properties
-        run: |
-          echo "storeFile=${{ github.workspace }}/android-keystore.jks" > $KEYSTORE_PROPERTIES_PATH
-          echo "keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}" >> $KEYSTORE_PROPERTIES_PATH
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
-          echo "keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
+      - name: 🏗️ Verify debug build
+        run: ./gradlew assembleDebug
 
-      - name: 🤖📦 Create Android release
-        run: |
-          ./gradlew app:assembleRelease
-
-      - name: 📝 Generate build date
-        id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-      - name: 📝 Generate SHA-256
-        run: |
-          cd app/build/outputs/apk/release/
-          sha256sum *.apk > SHA256SUMS.txt
-      - name: "Echo SHA-256 sums"
-        run: cat app/build/outputs/apk/release/SHA256SUMS.txt
-      - name: 📦 Upload Build Artifact
+      - name: 📦 Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          # Include both the APK and the SHA-256 sums
-          path: app/build/outputs/apk/release/
+          name: app-debug
+          path: app/build/outputs/apk/debug/*.apk
           retention-days: 7
