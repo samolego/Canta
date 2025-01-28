@@ -14,11 +14,32 @@ import org.json.JSONObject
 import java.io.File
 import java.net.URL
 
+/**
+ * Extract the sub-string between the 1st instances of `pre` and `post`.
+ * `post` will always be searched after `pre`.
+ */
+fun slice_between(s: String, pre: String, post: String): String {
+    // we have to reassign because:
+    // - performance
+    // - ensure that `post` is searched after `pre`
+    // that is, we shouldn't `.slice().slice()`
+    val s = s.slice(
+        s.indexOf(pre) + pre.length
+        ..
+        s.length
+    )
+    return s.slice(0..s.indexOf(post))
+}
+
 private const val BLOAT_URL =
     "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
 private const val BLOAT_COMMITS =
     "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
 
+/**
+ * Parse commits to get latest commit hash
+ */
+fun parse_latest_hash(commits: String): String = slice_between(commits, "\"sha\":\"", "\"")
 
 class BloatUtils {
     fun fetchBloatList(uadList: File, config: File): JSONObject {
@@ -29,8 +50,8 @@ class BloatUtils {
             val json = JSONObject(response)
 
             val commits = URL(BLOAT_COMMITS).readText()
-            // Parse commits to get latest commit hash
-            val hash = commits.split("\"sha\":\"")[1].split("\"")[0]
+            
+            val hash = parse_latest_hash(commits)
 
             // Write json to file
             uadList.writeText(json.toString())
@@ -46,8 +67,7 @@ class BloatUtils {
     fun checkForUpdates(config: File): Boolean {
         return try {
             val commits = URL(BLOAT_COMMITS).readText()
-            // Parse commits to get latest commit hash
-            val hash = commits.split("\"sha\":\"")[1].split("\"")[0]
+            val hash = parse_latest_hash(commits)
 
             // Read config file
             val configHash = config.readText()
