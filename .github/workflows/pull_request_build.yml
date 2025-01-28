@@ -1,0 +1,38 @@
+name: 🔍 Pull Request Check
+
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  validateAndroid:
+    name: 🤖 Validate Android Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21.x"
+          cache: "gradle"
+          distribution: "adopt"
+
+      - name: 🔍 Run tests
+        run: ./gradlew test
+
+      - name: 🏗️ Verify debug build
+        run: ./gradlew assembleDebug
+
+      - name: 📦 Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/*.apk
+          retention-days: 7
