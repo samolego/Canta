@@ -19,6 +19,13 @@ private const val BLOAT_URL =
 private const val BLOAT_COMMITS =
     "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
 
+/**
+ * Parse commits to get latest commit hash
+ */
+fun parse_latest_hash(commits: String): String {
+    val c = commits.substringAfter("\"sha\":\"")
+    return c.substringBefore("\"")
+}
 
 class BloatUtils {
     fun fetchBloatList(uadList: File, config: File): JSONObject {
@@ -29,8 +36,8 @@ class BloatUtils {
             val json = JSONObject(response)
 
             val commits = URL(BLOAT_COMMITS).readText()
-            // Parse commits to get latest commit hash
-            val hash = commits.split("\"sha\":\"")[1].split("\"")[0]
+            
+            val hash = parse_latest_hash(commits)
 
             // Write json to file
             uadList.writeText(json.toString())
@@ -46,8 +53,7 @@ class BloatUtils {
     fun checkForUpdates(config: File): Boolean {
         return try {
             val commits = URL(BLOAT_COMMITS).readText()
-            // Parse commits to get latest commit hash
-            val hash = commits.split("\"sha\":\"")[1].split("\"")[0]
+            val hash = parse_latest_hash(commits)
 
             // Read config file
             val configHash = config.readText()
