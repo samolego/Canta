@@ -27,5 +27,6 @@
         <item quantity="other">Clear %d selected</item>
     </plurals>
     <string name="copy">Kopiraj</string>
+    <string name="app_settings">App info</string>
     <string name="close">Zapri</string>
 </resources>
