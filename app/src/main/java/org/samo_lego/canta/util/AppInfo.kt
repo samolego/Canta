@@ -22,7 +22,7 @@ data class AppInfo(
 ) : Parcelable {
 
     val name: String
-        get() = appName ?: packageName.split(".").last()
+        get() = appName ?: packageName.substringAfterLast('.')
     val removalInfo: RemovalRecommendation?
         get() = bloatData?.removal
     val description: String?
