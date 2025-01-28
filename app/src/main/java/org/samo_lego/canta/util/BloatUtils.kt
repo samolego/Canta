@@ -14,23 +14,6 @@ import org.json.JSONObject
 import java.io.File
 import java.net.URL
 
-/**
- * Extract the sub-string between the 1st instances of `pre` and `post`.
- * `post` will always be searched after `pre`.
- */
-fun slice_between(s: String, pre: String, post: String): String {
-    // we have to reassign because:
-    // - performance
-    // - ensure that `post` is searched after `pre`
-    // that is, we shouldn't `.slice().slice()`
-    val s = s.slice(
-        s.indexOf(pre) + pre.length
-        ..
-        s.length
-    )
-    return s.slice(0..s.indexOf(post))
-}
-
 private const val BLOAT_URL =
     "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
 private const val BLOAT_COMMITS =
@@ -39,7 +22,10 @@ private const val BLOAT_COMMITS =
 /**
  * Parse commits to get latest commit hash
  */
-fun parse_latest_hash(commits: String): String = slice_between(commits, "\"sha\":\"", "\"")
+fun parse_latest_hash(commits: String): String {
+    val c = commits.substringAfter("\"sha\":\"")
+    return c.substringBefore("\"")
+}
 
 class BloatUtils {
     fun fetchBloatList(uadList: File, config: File): JSONObject {
