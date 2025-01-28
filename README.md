@@ -73,7 +73,6 @@ https://crowdin.com/project/canta
   for the debloat list
 * @RikkaApps for Shizuku
 * Icon created on [icon kitchen](https://icon.kitchen)
-*
 
 ## Star History
 
