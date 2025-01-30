@@ -16,15 +16,15 @@
     <string name="badge_info">Informations sur le badge</string>
     <string name="got_it">Je comprends</string>
     <string name="loading_badges">Chargement des badges...</string>
-    <string name="logs">Logs</string>
-    <string name="back">Back</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="logs">Journaux</string>
+    <string name="back">Retour</string>
+    <string name="copy_logs">Copier les journaux</string>
+    <string name="log_copied">Journal copié dans le presse-papiers</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
+        <item quantity="one">Effacer %d sélectionné</item>
         <item quantity="other">Clear %d selected</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
+    <string name="copy">Copier</string>
+    <string name="app_settings">Infos sur l\'application</string>
+    <string name="close">Fermer</string>
 </resources>
