@@ -21,12 +21,12 @@
     <string name="copy_logs">نسخ السجلات</string>
     <string name="log_copied">تم نسخ السجل إلى الحافظة</string>
     <plurals name="clear_selected_apps">
-        <item quantity="zero">مسح %d المحدد</item>
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="two">Clear %d selected</item>
-        <item quantity="few">Clear %d selected</item>
-        <item quantity="many">Clear %d selected</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="zero">تنظيف %d المحدد</item>
+        <item quantity="one">تنظيف %d المحدد</item>
+        <item quantity="two">تنظيف %d المحدد</item>
+        <item quantity="few">تنظيف %d المحدد</item>
+        <item quantity="many">تنظيف %d المحدد</item>
+        <item quantity="other">تنظيف %d المحدد</item>
     </plurals>
     <string name="copy">نسخ</string>
     <string name="app_settings">معلومات التطبيق</string>
