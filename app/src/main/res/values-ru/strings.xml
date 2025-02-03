@@ -3,7 +3,7 @@
     <string name="cancel">Отмена</string>
     <string name="ok">ОК</string>
     <string name="are_you_sure_to_uninstall_apps">Вы уверены, что хотите удалить %1$s приложений?</string>
-    <string name="copy_package_name_to_clipboard">Копировать имя пакета в буфер обмена</string>
+    <string name="copy_package_name_to_clipboard">Скопировать имя пакета в буфер обмена</string>
     <string name="no_description_available">Описание отсутствует</string>
     <string name="uninstall">Удалить</string>
     <string name="reinstall">Переустановить</string>
@@ -16,17 +16,17 @@
     <string name="badge_info">Информация о значках</string>
     <string name="got_it">Понятно</string>
     <string name="loading_badges">Загрузка значков ...</string>
-    <string name="logs">Logs</string>
-    <string name="back">Back</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="logs">Логи</string>
+    <string name="back">Назад</string>
+    <string name="copy_logs">Скопировать логи</string>
+    <string name="log_copied">Лог скопирован в буфер обмена</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
         <item quantity="few">Clear %d selected</item>
         <item quantity="many">Clear %d selected</item>
         <item quantity="other">Clear %d selected</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
+    <string name="copy">Скопировать</string>
+    <string name="app_settings">Информация о приложении</string>
+    <string name="close">Закрыть</string>
 </resources>
