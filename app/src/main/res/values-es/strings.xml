@@ -2,29 +2,29 @@
 <resources>
     <string name="cancel">Cancelar</string>
     <string name="ok">De acuerdo</string>
-    <string name="are_you_sure_to_uninstall_apps">Estás seguro de desinstalar las aplicaciones?</string>
+    <string name="are_you_sure_to_uninstall_apps">¿Estás seguro de desinstalar las aplicaciones %1$s?</string>
     <string name="copy_package_name_to_clipboard">Copiar el nombre del paquete al portapapeles</string>
     <string name="no_description_available">No hay descripción</string>
     <string name="uninstall">Desinstalar</string>
     <string name="reinstall">Reinstalar</string>
     <string name="please_start_shizuku">Por favor, inicia Shizuku.</string>
     <string name="please_install_shizuku_and_authorise_canta">Por favor, instala Shizuku y autoriza a Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
-    <string name="only_system">Only system</string>
-    <string name="no_apps_found">No apps found</string>
-    <string name="loading_apps">Cargando aplicaciones</string>
-    <string name="badge_info">Badge info</string>
-    <string name="got_it">Got it</string>
-    <string name="loading_badges">Loading badges ...</string>
-    <string name="logs">Logs</string>
-    <string name="back">Back</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="please_allow_shizuku_access_for_canta">Por favor, permite a Shizuku acceder a Canta.</string>
+    <string name="only_system">Solo al sistema</string>
+    <string name="no_apps_found">No se han encontrado aplicaciones</string>
+    <string name="loading_apps">Cargando las aplicaciones</string>
+    <string name="badge_info">Información del distintivo</string>
+    <string name="got_it">Entendido</string>
+    <string name="loading_badges">Cargando distintivos ...</string>
+    <string name="logs">Registros</string>
+    <string name="back">Atrás</string>
+    <string name="copy_logs">Copiar los registros</string>
+    <string name="log_copied">Registro copiado en el portapapeles</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="one">Borrar %d seleccionado</item>
+        <item quantity="other">Borrar %d seleccionados</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
+    <string name="copy">Copiar</string>
+    <string name="app_settings">Información de la aplicación</string>
+    <string name="close">Cerrar</string>
 </resources>
