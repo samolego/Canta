@@ -16,10 +16,10 @@
     <string name="badge_info">Jelvényinformáció</string>
     <string name="got_it">Értem</string>
     <string name="loading_badges">Jelvények betöltése ...</string>
-    <string name="logs">Logs</string>
-    <string name="back">Back</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="logs">Naplók</string>
+    <string name="back">Vissza</string>
+    <string name="copy_logs">Naplók másolása</string>
+    <string name="log_copied">Naplók kimásolva a vágólapra</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
         <item quantity="other">Clear %d selected</item>
