@@ -7,7 +7,7 @@
     <string name="no_description_available">Nincs elérhető leírás</string>
     <string name="uninstall">Eltávolítás</string>
     <string name="reinstall">Újratelepítés</string>
-    <string name="please_start_shizuku">Indítsd el a Shizukut.</string>
+    <string name="please_start_shizuku">Indítsd el a Shizuku-t.</string>
     <string name="please_install_shizuku_and_authorise_canta">Telepítsd a Shizuku-t, és engedélyezd a Canta használatát.</string>
     <string name="please_allow_shizuku_access_for_canta">Engedélyezd a Shizuku hozzáférést a Canta számára.</string>
     <string name="only_system">Csak rendszer</string>
@@ -24,7 +24,7 @@
         <item quantity="one">Clear %d selected</item>
         <item quantity="other">Clear %d selected</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
+    <string name="copy">Másolás</string>
+    <string name="app_settings">Alkalmazásinformáció</string>
+    <string name="close">Bezár</string>
 </resources>
