@@ -7,7 +7,7 @@
     <string name="no_description_available">Nincs elérhető leírás</string>
     <string name="uninstall">Eltávolítás</string>
     <string name="reinstall">Újratelepítés</string>
-    <string name="please_start_shizuku">Indítsd el a Shizukut.</string>
+    <string name="please_start_shizuku">Indítsd el a Shizuku-t.</string>
     <string name="please_install_shizuku_and_authorise_canta">Telepítsd a Shizuku-t, és engedélyezd a Canta használatát.</string>
     <string name="please_allow_shizuku_access_for_canta">Engedélyezd a Shizuku hozzáférést a Canta számára.</string>
     <string name="only_system">Csak rendszer</string>
@@ -16,15 +16,15 @@
     <string name="badge_info">Jelvényinformáció</string>
     <string name="got_it">Értem</string>
     <string name="loading_badges">Jelvények betöltése ...</string>
-    <string name="logs">Logs</string>
-    <string name="back">Back</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="logs">Naplók</string>
+    <string name="back">Vissza</string>
+    <string name="copy_logs">Naplók másolása</string>
+    <string name="log_copied">Naplók kimásolva a vágólapra</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
         <item quantity="other">Clear %d selected</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
+    <string name="copy">Másolás</string>
+    <string name="app_settings">Alkalmazásinformáció</string>
+    <string name="close">Bezár</string>
 </resources>

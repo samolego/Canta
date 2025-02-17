@@ -17,14 +17,14 @@
     <string name="got_it">Entendi</string>
     <string name="loading_badges">Carregando etiquetas...</string>
     <string name="logs">Logs</string>
-    <string name="back">Back</string>
+    <string name="back">Voltar</string>
     <string name="copy_logs">Copy logs</string>
     <string name="log_copied">Log copied to clipboard</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
         <item quantity="other">Clear %d selected</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
+    <string name="copy">Copiar</string>
+    <string name="app_settings">Informarção do aplicativo</string>
+    <string name="close">Fechar</string>
 </resources>
