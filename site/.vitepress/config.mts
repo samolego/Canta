@@ -28,22 +28,32 @@ export default defineConfig({
       },
     ],
   ],
-
+  lastUpdated: true,
   // Theme customization
   themeConfig: {
     logo: "https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
     nav: [
       { text: "Home", link: "/" },
-      { text: "Guide", link: "/guide" },
+      { text: "Install", link: "/install" },
+      { text: "Features", link: "/features" },
       { text: "Download", link: "/download" },
     ],
+
+    search: {
+      provider: "local",
+    },
+
+    editLink: {
+      pattern: "https://github.com/samolego/Canta/edit/master/site/:path",
+      text: "Edit this page on GitHub",
+    },
 
     sidebar: [
       {
         text: "Guide",
         items: [
-          { text: "Getting Started", link: "/guide" },
-          { text: "Features", link: "/features" },
+          { text: "Setup", link: "/install" },
+          { text: "Usage", link: "/usage" },
         ],
       },
     ],

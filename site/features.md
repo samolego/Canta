@@ -31,13 +31,12 @@ App uses a modern Material Design 3 interface that adapts to your device's theme
 The interface provides detailed information about each app while maintaining simplicity in its controls.
 Finding specific apps is effortless thanks to the quick search functionality and comprehensive filtering options.
 
-#### Screenshots
-
-| <img width="256" src="/images/phoneScreenshots/screenshot-main.png"> | <img width="256" src="/images/phoneScreenshots/screenshot-search.png"> | <img width="256" src="/images/phoneScreenshots/screenshot-uninstall-dialog.png"> |
-|:---:|:---:|:---:|
-| Home | Search | Uninstall |
-| <img width="256" src="/images/phoneScreenshots/screenshot-app-description.png"> | <img width="256" src="/images/phoneScreenshots/screenshot-uninstalled-list.png"> |  |
-| [App descriptions](https://github.com/Universal-Debloater-Alliance/universal-android-preinstalled-lists/) | See uninstalled |  |
+<div class="screenshot-container">
+  <img src="/images/phoneScreenshots/screenshot-main.png" alt="Main screen" class="phone-screenshot">
+  <div class="screenshot-caption">
+      Canta Home Screen
+  </div>
+</div>
 
 ## Privacy & Security
 
