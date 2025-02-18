@@ -3,9 +3,13 @@
 ## Core Features
 
 ### Safe Uninstallation
-No permanent device damage risk can be done using Canta. The uninstallation process happens for current user
+No permanent device damage risk can be done when uninstalling apps with Canta. The uninstallation process happens for current user
 only, so APKs remain on device. In case you uninstall a critical system component, you can risk a bootloop.
 In that case, you will need to perform a factory reset and the device will not be bricked.
+
+::: info
+Canta calls Android System APIs directly to uninstall apps, similar to how ADB does it.
+:::
 
 ### System Requirements
 * Android 9.0 (SDK 28) or higher
@@ -44,8 +48,9 @@ Finding specific apps is effortless thanks to the quick search functionality and
 Canta can operate without internet connection and collects no data whatsoever.
 There's no analytics or tracking built into the app.
 
-::: warning Note
+::: warning NOTE
 Badges information and app descriptions are fetched from GitHub repository if connected to the internet.
+No data is uploaded whatsoever.
 :::
 
 ### Open Source

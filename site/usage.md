@@ -27,7 +27,8 @@
 </div>
 
 ### 3. Click the Trash Button
-::: info Note
+
+::: info
 You will need to grant Shizuku access for Canta upon first uninstallation.
 :::
 
