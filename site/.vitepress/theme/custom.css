@@ -1,0 +1,75 @@
+:root {
+    --vp-c-brand: #ff4444 !important;
+    --vp-c-brand-light: #ff6b6b !important;
+    --vp-c-brand-lighter: #ffa0a0 !important;
+    --vp-c-brand-dark: #cc0000 !important;
+    --vp-c-brand-darker: #a60000 !important;
+
+    --vp-home-hero-name-color: #ff4444 !important;
+    --vp-c-brand-1: #ff4444 !important;
+    --vp-c-brand-2: #ff6b6b !important;
+    --vp-c-brand-3: #ff8c8c !important;
+
+    --vp-button-brand-bg: #ff4444 !important;
+    --vp-button-brand-hover-bg: #ff6b6b !important;
+    --vp-button-brand-active-bg: #cc0000 !important;
+}
+
+.dark {
+    --vp-c-brand: #ff6666 !important;
+    --vp-c-brand-light: #ff8c8c !important;
+    --vp-c-brand-lighter: #ffb3b3 !important;
+    --vp-c-brand-dark: #ff4444 !important;
+    --vp-c-brand-darker: #cc0000 !important;
+
+    --vp-home-hero-name-color: #ff6666 !important;
+    --vp-c-brand-1: #ff6666 !important;
+    --vp-c-brand-2: #ff8c8c !important;
+    --vp-c-brand-3: #ffb3b3 !important;
+}
+
+.VPHero .image-src {
+    max-width: 192px;
+    max-height: 192px;
+}
+
+.VPNavBarTitle .logo {
+    height: 32px;
+    width: 32px;
+}
+
+.VPFeature {
+    position: relative;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.VPFeature[href] {
+    cursor: pointer;
+}
+
+.VPFeature[href]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.VPFeature[href]::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.VPFeature[href]:hover::after {
+    border-color: var(--vp-c-brand);
+}
+
+.dark .VPFeature[href]:hover {
+    box-shadow: 0 2px 12px rgba(255, 255, 255, 0.1);
+}

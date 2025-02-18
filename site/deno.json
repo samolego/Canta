@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "vitepress": "npm:vitepress@^1.6.3"
+  }
+}
