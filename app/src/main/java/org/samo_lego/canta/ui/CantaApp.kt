@@ -67,8 +67,10 @@ fun CantaApp(
         launchShizuku: () -> Unit,
         uninstallApp: (String) -> Boolean,
         reinstallApp: (String) -> Boolean,
+        viewModel: AppListViewModel
 ) {
     val navController = rememberNavController()
+    val isSelectionMode = viewModel.isSelectionMode
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
