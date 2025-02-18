@@ -32,7 +32,7 @@ features:
 
   - icon: 🌍
     title: Translations
-    details: Help translate Canta into your language on Crowdin.<!--br><br><a href="https://crowdin.com/project/canta"><img src="https://badges.crowdin.net/canta/localized.svg" alt="Crowdin translation status"></a-->
+    details: Help translate Canta into your language on Crowdin.<br><br><a href="https://crowdin.com/project/canta"><img src="https://badges.crowdin.net/canta/localized.svg" alt="Crowdin translation status"></a>
     link: https://crowdin.com/project/canta
 
 ---

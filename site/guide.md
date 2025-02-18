@@ -16,13 +16,4 @@
 3. Click the trash button
 4. Confirm the uninstallation
 
-> For a more detailed setup guide, check the [Android Police tutorial](https://www.androidpolice.com/how-to-use-shizuku-for-adb-rootless-mods-on-any-android-device/)
-
-## Screenshots
-
-
-| <img width="256" src="public/en-US/images/phoneScreenshots/screenshot-main.png"> | <img width="256" src="public/en-US/images/phoneScreenshots/screenshot-search.png"> | <img width="256" src="public/en-US/images/phoneScreenshots/screenshot-uninstall-dialog.png"> |
-|:---:|:---:|:---:|
-| Home | Search | Uninstall |
-| <img width="256" src="public/en-US/images/phoneScreenshots/screenshot-app-description.png"> | <img width="256" src="public/en-US/images/phoneScreenshots/screenshot-uninstalled-list.png"> |  |
-| [App descriptions](https://github.com/Universal-Debloater-Alliance/universal-android-preinstalled-lists/) | See uninstalled |  |
+> For a more detailed Shizuku setup guide, check the [Android Police tutorial](https://www.androidpolice.com/how-to-use-shizuku-for-adb-rootless-mods-on-any-android-device/)

@@ -44,7 +44,6 @@ export default defineConfig({
         items: [
           { text: "Getting Started", link: "/guide" },
           { text: "Features", link: "/features" },
-          { text: "Verification", link: "/verification" },
         ],
       },
     ],
@@ -54,8 +53,8 @@ export default defineConfig({
     ],
 
     footer: {
-      message: "Released under the GPL-3.0 License.",
-      copyright: "Copyright © 2023-present Samo Lego",
+      message: "Released under the LGPL-3.0 License.",
+      copyright: "Copyright © samo_lego",
     },
   },
 
