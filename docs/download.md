@@ -1,3 +1,7 @@
+---
+title: Canta - Download
+description: Download information for Canta.
+---
 # Download Canta
 
 Choose your preferred download source:

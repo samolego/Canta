@@ -1,3 +1,7 @@
+---
+title: Canta - Features
+description: Features of Canta.
+---
 # Features
 
 ## Core Features

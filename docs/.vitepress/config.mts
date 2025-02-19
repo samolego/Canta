@@ -21,6 +21,43 @@ export default defineConfig({
   base: "/Canta/",
   description: "Uninstall any app without root!",
   head: [
+    ["meta", { name: "author", content: "samo_lego" }],
+    [
+      "meta",
+      {
+        name: "keywords",
+        content: "canta, android, uninstall, debloat, shizuku, app",
+      },
+    ],
+    ["meta", { property: "og:type", content: "website" }],
+    [
+      "meta",
+      {
+        property: "og:title",
+        content: "Canta - Uninstall any app without root",
+      },
+    ],
+    [
+      "meta",
+      {
+        property: "og:image",
+        content:
+          "https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      },
+    ],
+    [
+      "meta",
+      { property: "og:url", content: "https://samolego.github.io/Canta" },
+    ],
+    [
+      "meta",
+      {
+        property: "og:description",
+        content: "Uninstall any Android app without root access using Shizuku",
+      },
+    ],
+    ["meta", { name: "twitter:card", content: "summary" }],
+    // Favicon
     [
       "link",
       {
@@ -29,6 +66,9 @@ export default defineConfig({
       },
     ],
   ],
+  sitemap: {
+    hostname: "https://samolego.github.io/Canta",
+  },
   lastUpdated: true,
   // Theme customization
   themeConfig: {

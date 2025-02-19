@@ -1,3 +1,7 @@
+---
+title: Canta - Usage
+description: Usage instructions for Canta.
+---
 # Usage
 
 ## Uninstalling Apps

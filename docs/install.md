@@ -1,3 +1,7 @@
+---
+title: Canta - Installation
+description: Installation instructions for Canta.
+---
 # Installation
 
 1. Install [Shizuku](https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api) from Google Play Store

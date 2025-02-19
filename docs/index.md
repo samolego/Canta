@@ -1,5 +1,7 @@
 ---
 layout: home
+title: Canta - Debloat Android without root
+description: A powerful Android app that lets you uninstall any app without requiring root access, powered by Shizuku
 
 hero:
   name: "Canta"
