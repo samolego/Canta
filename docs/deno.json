@@ -1,5 +1,10 @@
 {
   "imports": {
     "vitepress": "npm:vitepress@^1.6.3"
+  },
+  "tasks": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
   }
 }

@@ -18,6 +18,7 @@ const cantaRed = {
 
 export default defineConfig({
   title: "Canta",
+  base: "/Canta/",
   description: "Uninstall any app without root!",
   head: [
     [
