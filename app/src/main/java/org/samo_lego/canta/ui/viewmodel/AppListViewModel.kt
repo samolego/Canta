@@ -29,6 +29,7 @@ class AppListViewModel : ViewModel() {
     }
 
     var selectedApps = mutableStateSetOf<String>()
+
     var searchQuery by mutableStateOf("")
     var showSystem by mutableStateOf(false)
     var isLoading by mutableStateOf(false)
@@ -106,7 +107,7 @@ class AppListViewModel : ViewModel() {
     }
 
     fun resetSelectedApps() {
-        selectedApps.clear()   
+        selectedApps = mutableStateSetOf()   
     }
 
     fun changeAppStatus(packageName: String) {
