@@ -57,7 +57,6 @@ class MainActivity : ComponentActivity() {
                         },
                         uninstallApp = { uninstallApp(it) },
                         reinstallApp = { reinstallApp(it) },
-                        viewModel = appListViewModel
                     )
                 }
             }
@@ -71,7 +70,6 @@ class MainActivity : ComponentActivity() {
      * @param packageName package name of the app to uninstall
      */
     private fun uninstallApp(packageName: String): Boolean {
-        appListViewModel.removeAppFromSelected(packageName)
 
         val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
         val intent = 
