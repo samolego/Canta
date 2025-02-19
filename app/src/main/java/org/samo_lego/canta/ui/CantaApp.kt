@@ -283,6 +283,7 @@ fun uninstallOrReinstall(
                                     val uninstalled = uninstallApp(it.key)
                                     if (uninstalled) {
                                         appListViewModel.changeAppStatus(it.key)
+                                        appListViewModel.selectedApps.remove(it.key)
                                     }
                                 }
                             }
@@ -291,11 +292,11 @@ fun uninstallOrReinstall(
                                     val installed = reinstallApp(it.key)
                                     if (installed) {
                                         appListViewModel.changeAppStatus(it.key)
+                                        appListViewModel.selectedApps.remove(it.key)
                                     }
                                 }
                             }
                         }
-                        appListViewModel.resetSelectedApps()
                     }
                 }
             }
