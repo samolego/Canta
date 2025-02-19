@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "app/**"
 
 jobs:
   buildAndroid:

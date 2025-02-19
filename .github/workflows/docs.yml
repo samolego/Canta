@@ -36,6 +36,7 @@ jobs:
       - name: Build
         run: |
           cd docs
+          deno install
           deno task docs:build
 
       - name: Upload artifact
