@@ -19,7 +19,6 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 import org.samo_lego.canta.extension.getInfoForPackage
 import org.samo_lego.canta.ui.CantaApp
 import org.samo_lego.canta.ui.theme.CantaTheme
-import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.LogUtils
 import org.samo_lego.canta.util.ShizukuPackageInstallerUtils
 import rikka.shizuku.Shizuku
@@ -29,16 +28,12 @@ const val APP_NAME = "Canta"
 const val packageName = "org.samo_lego.canta"
 
 class MainActivity : ComponentActivity() {
-    private lateinit var appListViewModel: AppListViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             enableEdgeToEdge()
         }
         super.onCreate(savedInstanceState)
-
-        appListViewModel = AppListViewModel()
 
         setContent {
             CantaTheme {
@@ -47,22 +42,21 @@ class MainActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                 ) {
                     CantaApp(
-                        launchShizuku = {
-                            // Open shizuku app
-                            val launchIntent =
-                                packageManager.getLaunchIntentForPackage(
-                                    SHIZUKU_PACKAGE_NAME
-                                )
-                            startActivity(launchIntent)
-                        },
-                        uninstallApp = { uninstallApp(it) },
-                        reinstallApp = { reinstallApp(it) },
+                            launchShizuku = {
+                                // Open shizuku app
+                                val launchIntent =
+                                        packageManager.getLaunchIntentForPackage(
+                                                SHIZUKU_PACKAGE_NAME
+                                        )
+                                startActivity(launchIntent)
+                            },
+                            uninstallApp = { uninstallApp(it) },
+                            reinstallApp = { reinstallApp(it) },
                     )
                 }
             }
         }
     }
-
 
     /**
      * Uninstalls app using Shizuku. See <a
@@ -70,15 +64,14 @@ class MainActivity : ComponentActivity() {
      * @param packageName package name of the app to uninstall
      */
     private fun uninstallApp(packageName: String): Boolean {
-
         val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
-        val intent = 
-        PendingIntent.getBroadcast(
-            applicationContext,
-            0,
-            broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+        val intent =
+                PendingIntent.getBroadcast(
+                        applicationContext,
+                        0,
+                        broadcastIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
         val packageInstaller = getPackageInstaller()
         val packageInfo = packageManager.getInfoForPackage(packageName)
@@ -94,23 +87,23 @@ class MainActivity : ComponentActivity() {
         return try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
                 PackageInstaller::class
-                    .java
-                    .getDeclaredMethod(
-                        "uninstall",
-                        String::class.java,
-                        Int::class.javaPrimitiveType,
-                        PendingIntent::class.java
-                    )
-                    .invoke(packageInstaller, packageName, flags, intent)
+                        .java
+                        .getDeclaredMethod(
+                                "uninstall",
+                                String::class.java,
+                                Int::class.javaPrimitiveType,
+                                PendingIntent::class.java
+                        )
+                        .invoke(packageInstaller, packageName, flags, intent)
                 // packageInstaller.uninstall(packageName, flags, intent.intentSender)
             } else {
                 HiddenApiBypass.invoke(
-                    PackageInstaller::class.java,
-                    packageInstaller,
-                    "uninstall",
-                    packageName,
-                    flags,
-                    intent.intentSender
+                        PackageInstaller::class.java,
+                        packageInstaller,
+                        "uninstall",
+                        packageName,
+                        flags,
+                        intent.intentSender
                 )
             }
             true
