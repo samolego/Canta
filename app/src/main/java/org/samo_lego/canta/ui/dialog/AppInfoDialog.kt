@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Settings
@@ -31,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -148,6 +152,14 @@ fun AppInfoDialog(
                 }
             }
             Spacer(modifier = Modifier.size(8.dp))
+            val configuration = LocalConfiguration.current
+            val screenHeight = configuration.screenHeightDp.dp
+            val maxScrollableHeight = (screenHeight * 0.6f)
+            Column(
+                modifier = Modifier
+                    .heightIn(max = maxScrollableHeight)
+                    .verticalScroll(rememberScrollState())
+            ) {
             if (bloatDescription != null) {
                 val annotatedDescription = createAnnotatedDescription(bloatDescription)
                 SelectionContainer {
@@ -178,6 +190,7 @@ fun AppInfoDialog(
                         style = MaterialTheme.typography.bodySmall
                 )
             }
+        }
             if (!appInfo.isUninstalled) {
                 Row(modifier = Modifier.align(Alignment.End)) {
                     Button(
