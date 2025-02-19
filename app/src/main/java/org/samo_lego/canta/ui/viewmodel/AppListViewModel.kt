@@ -107,7 +107,7 @@ class AppListViewModel : ViewModel() {
     }
 
     fun resetSelectedApps() {
-        selectedApps = mutableStateSetOf()   
+        selectedApps = mutableStateSetOf()
     }
 
     fun changeAppStatus(packageName: String) {
@@ -119,5 +119,4 @@ class AppListViewModel : ViewModel() {
             }
         }
     }
-
 }
