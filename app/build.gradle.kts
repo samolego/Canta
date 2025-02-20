@@ -27,7 +27,7 @@ android {
 
     defaultConfig {
         applicationId = "org.samo_lego.canta"
-        minSdk = 28  // todo - figure out a way to bypass hidden api methods on android <9
+        minSdk = 28  // todo - figure out a way to bypass hidden api methods on android < 9
         targetSdk = 35
         versionCode = project.property("version_code")?.toString()?.toInt() ?: 1
         versionName = project.property("version_name")?.toString() ?: "1.0.0"
@@ -72,7 +72,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     packaging {
         resources {
@@ -82,6 +82,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
