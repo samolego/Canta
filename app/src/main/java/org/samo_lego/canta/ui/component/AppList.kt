@@ -64,7 +64,7 @@ fun AppList(appType: AppsType = AppsType.INSTALLED) {
 
     LaunchedEffect(Unit) {
         if (appListModel.appList.isEmpty()) {
-            appListModel.loadInstalled(context.packageManager, context.filesDir)
+            appListModel.loadInstalled(context.packageManager, context.filesDir, context)
         }
     }
 

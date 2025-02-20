@@ -1,5 +1,6 @@
 package org.samo_lego.canta.ui.viewmodel
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.icu.text.Collator
 import android.util.Log
@@ -7,12 +8,15 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import org.samo_lego.canta.extension.getAllPackagesInfo
 import org.samo_lego.canta.extension.mutableStateSetOf
+import org.samo_lego.canta.packageName
+import org.samo_lego.canta.ui.dialog.cantaBloatData
 import org.samo_lego.canta.util.AppInfo
 import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.BloatUtils
@@ -57,7 +61,7 @@ class AppListViewModel : ViewModel() {
         }
     }
 
-    suspend fun loadInstalled(packageManager: PackageManager, filesDir: File) {
+    suspend fun loadInstalled(packageManager: PackageManager, filesDir: File, context: Context) {
         isLoading = true
 
         withContext(Dispatchers.IO) {
@@ -91,6 +95,9 @@ class AppListViewModel : ViewModel() {
 
                 bloatMap[key] = bloatData
             }
+
+            // Add Canta app info
+            bloatMap[packageName] = cantaBloatData(context)
 
             // Assign bloat data to apps
             apps = apps.map { app ->
