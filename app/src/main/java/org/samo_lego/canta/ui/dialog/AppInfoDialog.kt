@@ -1,5 +1,6 @@
 package org.samo_lego.canta.ui.dialog
 
+import UrlText
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,10 +17,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Settings
@@ -38,20 +38,16 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import java.io.File
 import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.AppIconImage
 import org.samo_lego.canta.util.AppInfo
 import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.InstallData
 import org.samo_lego.canta.util.RemovalRecommendation
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -161,28 +157,8 @@ fun AppInfoDialog(
                     .verticalScroll(rememberScrollState())
             ) {
             if (bloatDescription != null) {
-                val annotatedDescription = createAnnotatedDescription(bloatDescription)
                 SelectionContainer {
-                    ClickableText(
-                            text = annotatedDescription,
-                            style =
-                                    MaterialTheme.typography.bodyMedium.copy(
-                                            color = MaterialTheme.colorScheme.onSurface
-                                    ),
-                            onClick = { offset ->
-                                annotatedDescription
-                                        .getStringAnnotations("URL", offset, offset)
-                                        .firstOrNull()
-                                        ?.let { annotation ->
-                                            val intent =
-                                                    Intent(
-                                                            Intent.ACTION_VIEW,
-                                                            Uri.parse(annotation.item)
-                                                    )
-                                            context.startActivity(intent)
-                                        }
-                            }
-                    )
+                    UrlText(text = bloatDescription)
                 }
             } else {
                 Text(
@@ -219,37 +195,6 @@ fun AppInfoDialog(
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun createAnnotatedDescription(description: String): AnnotatedString {
-    return buildAnnotatedString {
-        val urlPattern = """(https?://[^\s<>\"')\]]+)""".toRegex()
-
-        var lastIndex = 0
-        urlPattern.findAll(description).forEach { matchResult ->
-            // Add text before URL
-            append(description.substring(lastIndex, matchResult.range.first))
-
-            // Add URL with styling
-            val urlText = matchResult.value
-            pushStringAnnotation("URL", urlText)
-            withStyle(
-                    SpanStyle(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline
-                    )
-            ) { append(urlText) }
-            pop()
-
-            lastIndex = matchResult.range.last + 1
-        }
-
-        // Add remaining text
-        if (lastIndex < description.length) {
-            append(description.substring(lastIndex))
         }
     }
 }
