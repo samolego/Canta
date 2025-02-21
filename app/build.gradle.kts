@@ -5,6 +5,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
+    alias(libs.plugins.compose.compiler)
 }
 
 val keystoreProperties = Properties()
@@ -71,9 +72,9 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
+    //composeOptions {
+    //    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+    //}
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

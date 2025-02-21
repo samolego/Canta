@@ -14,8 +14,10 @@ materialIconsExtended = "1.7.8"
 navigationRuntimeKtx = "2.8.7"
 navigationCompose = "2.8.7"
 provider = "13.1.5"
-kotlin = "1.9.22"
-composeCompiler = "1.5.8"
+kotlin = "2.1.10"
+
+[plugins]
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
