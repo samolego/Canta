@@ -1,4 +1,4 @@
-Canta allows you to uninstall <b>any</b> app
+Canta allows you to uninstall <b>any(*)</b> app
 from your device, even if you don't have root access.
 
 You'll need to install Shizuku (https://shizuku.rikka.app/download/)
@@ -9,12 +9,6 @@ Please read the guide on how <a href="https://github.com/Universal-Debloater-All
 
 <b>Features</b>
 <ul>
-    <li>
-        No device bricking - though if you remove an important app
-        and get stuck in bootloop after rebooting,
-        you will still need to perform a factory reset
-    </li>
-    <li>
-        No root required
-    </li>
+    <li>No device bricking - though if you remove an important app and get stuck in bootloop after rebooting, you will still need to perform a factory reset</li>
+    <li>No root required</li>
 </ul>
