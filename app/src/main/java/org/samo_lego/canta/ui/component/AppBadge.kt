@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DisabledByDefault
+import androidx.compose.material.icons.filled.RestoreFromTrash
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,6 +45,15 @@ fun DisabledBadge() {
         label = "DISABLED",
         icon = Icons.Default.DisabledByDefault,
         color = MaterialTheme.colorScheme.tertiary,
+    )
+}
+
+@Composable
+fun CantaBadge() {
+    AppBadge(
+        label = "CANTA",
+        icon = Icons.Default.RestoreFromTrash,
+        color = Color.Red.copy(alpha = 0.7f),
     )
 }
 

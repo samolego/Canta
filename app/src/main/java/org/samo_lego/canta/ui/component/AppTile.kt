@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import org.samo_lego.canta.packageName
 import org.samo_lego.canta.util.AppInfo
 import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.InstallData
@@ -65,6 +66,9 @@ fun AppTile(
                     }
                     if (appInfo.isDisabled) {
                         DisabledBadge()
+                    }
+                    if (appInfo.packageName == packageName) {
+                        CantaBadge()
                     }
                 }
             }
