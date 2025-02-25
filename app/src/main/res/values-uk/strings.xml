@@ -21,13 +21,13 @@
     <string name="copy_logs">Копіювати журнали</string>
     <string name="log_copied">Журнал скопійовано в буфер обміну</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="few">Clear %d selected</item>
-        <item quantity="many">Clear %d selected</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="one">Очистити %d</item>
+        <item quantity="few">Очистити %d</item>
+        <item quantity="many">Очистити %d</item>
+        <item quantity="other">Очистити %d</item>
     </plurals>
     <string name="copy">Копіювати</string>
     <string name="app_settings">Інформація про програму</string>
     <string name="close">Закрити</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta — це програма-деінсталятор з відкритим вихідним кодом, яка використовує Shizuku для видалення системних та користувацьких програм.\nВоно дозволяє вам очищати пристрій на свій розсуд, без необхідності використання ПК.\n\nОсоблива подяка Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta була б іншою без їх роботи.</string>
 </resources>
