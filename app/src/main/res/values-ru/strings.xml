@@ -21,9 +21,9 @@
     <string name="copy_logs">Скопировать логи</string>
     <string name="log_copied">Лог скопирован в буфер обмена</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="few">Clear %d selected</item>
-        <item quantity="many">Clear %d selected</item>
+        <item quantity="one">Очистить %d</item>
+        <item quantity="few">Очистить %d</item>
+        <item quantity="many">Очистить %d</item>
         <item quantity="other">Очистить %d</item>
     </plurals>
     <string name="copy">Скопировать</string>
