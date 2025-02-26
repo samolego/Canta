@@ -46,6 +46,7 @@ on [how recommendations are chosen](https://github.com/Universal-Debloater-Allia
   app and get stuck in a bootloop after reboot - you will still need to do factory reset!
 * auto detect previously uninstalled apps
   if you've already removed any using adb
+    * uninstalled apps are found even if you uninstall and reinstall Canta!  
 
 ## Translations
 
