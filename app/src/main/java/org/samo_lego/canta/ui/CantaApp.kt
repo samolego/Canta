@@ -71,8 +71,11 @@ import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
 import org.samo_lego.canta.ui.dialog.UninstallAppsDialog
 import org.samo_lego.canta.ui.navigation.Screen
 import org.samo_lego.canta.ui.screen.LogsPage
+import org.samo_lego.canta.ui.screen.SettingsScreen
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
+import org.samo_lego.canta.ui.viewmodel.SettingsViewModel
 import org.samo_lego.canta.util.Filter
+import org.samo_lego.canta.util.SettingsStore
 import org.samo_lego.canta.util.ShizukuData
 import org.samo_lego.canta.util.ShizukuInfo
 
@@ -83,6 +86,14 @@ fun CantaApp(
         reinstallApp: (String) -> Boolean,
 ) {
     val navController = rememberNavController()
+    val context = LocalContext.current
+    val settingsViewModel: SettingsViewModel = viewModel()
+    val settingsStore = remember { SettingsStore(context) }
+
+    // Load settings when app starts
+    LaunchedEffect(Unit) {
+        settingsViewModel.loadSettings(settingsStore)
+    }
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
@@ -90,11 +101,22 @@ fun CantaApp(
                     launchShizuku = launchShizuku,
                     uninstallApp = uninstallApp,
                     reinstallApp = reinstallApp,
-                    navigateToLogs = { navController.navigate(Screen.Logs.route) }
+                    navigateToLogs = { navController.navigate(Screen.Logs.route) },
+                    navigateToSettings = { navController.navigate(Screen.Settings.route) },
             )
         }
         composable(route = Screen.Logs.route) {
             LogsPage(onNavigateBack = { navController.navigateUp() })
+        }
+        composable(route = Screen.Settings.route) {
+            SettingsScreen(
+                onNavigateBack = {
+                    // Save settings when navigating back
+                    settingsViewModel.saveSettings(settingsStore)
+                    navController.navigateUp()
+                },
+                settingsViewModel = settingsViewModel
+            )
         }
     }
 }
@@ -106,6 +128,7 @@ private fun MainContent(
         uninstallApp: (String) -> Boolean,
         reinstallApp: (String) -> Boolean,
         navigateToLogs: () -> Unit,
+        navigateToSettings: () -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -133,7 +156,8 @@ private fun MainContent(
             topBar = {
                 CantaTopBar(
                         openBadgesInfoDialog = { showBadgeInfoDialog = true },
-                        openLogsScreen = navigateToLogs
+                        openLogsScreen = navigateToLogs,
+                        openSettingsScreen = navigateToSettings
                 )
             },
             floatingActionButton = {

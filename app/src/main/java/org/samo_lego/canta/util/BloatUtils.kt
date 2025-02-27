@@ -14,7 +14,7 @@ import org.json.JSONObject
 import java.io.File
 import java.net.URL
 
-private const val BLOAT_URL =
+const val BLOAT_URL =
     "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
 private const val BLOAT_COMMITS =
     "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
@@ -22,13 +22,16 @@ private const val BLOAT_COMMITS =
 /**
  * Parse commits to get latest commit hash
  */
-fun parse_latest_hash(commits: String): String {
+fun parseLatestHash(commits: String): String {
     val c = commits.substringAfter("\"sha\":\"")
     return c.substringBefore("\"")
 }
 
+
+const val TAG = "BloatUtils"
+
 class BloatUtils {
-    fun fetchBloatList(uadList: File, config: File): JSONObject {
+    fun fetchBloatList(uadList: File): Pair<JSONObject, String> {
         try {
             // Fetch json from BLOAT_URL and parse it
             val response = URL(BLOAT_URL).readText()
@@ -36,30 +39,29 @@ class BloatUtils {
             val json = JSONObject(response)
 
             val commits = URL(BLOAT_COMMITS).readText()
-            
-            val hash = parse_latest_hash(commits)
+
+            val hash = parseLatestHash(commits)
 
             // Write json to file
             uadList.writeText(json.toString())
-            // Write latest commit hash to file
-            config.writeText(hash)
 
-            return json
+            LogUtils.i(TAG, "Successfully fetched latest bloat list.")
+
+            return Pair(json, hash)
         } catch (e: Exception) {
-            return JSONObject()
+            LogUtils.e(TAG, "Failed to fetch bloat list", e)
+            return Pair(JSONObject(), "")
         }
     }
 
-    fun checkForUpdates(config: File): Boolean {
+    fun checkForUpdates(latestBloatHash: String): Boolean {
         return try {
             val commits = URL(BLOAT_COMMITS).readText()
-            val hash = parse_latest_hash(commits)
+            val hash = parseLatestHash(commits)
 
-            // Read config file
-            val configHash = config.readText()
-
-            hash != configHash
+            hash != latestBloatHash
         } catch (e: Exception) {
+            LogUtils.e(TAG, "Failed to check for updates", e)
             false
         }
     }

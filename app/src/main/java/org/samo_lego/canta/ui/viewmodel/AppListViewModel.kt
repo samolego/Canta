@@ -3,14 +3,13 @@ package org.samo_lego.canta.ui.viewmodel
 import android.content.Context
 import android.content.pm.PackageManager
 import android.icu.text.Collator
-import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import org.samo_lego.canta.extension.getAllPackagesInfo
@@ -22,6 +21,7 @@ import org.samo_lego.canta.util.BloatData
 import org.samo_lego.canta.util.BloatUtils
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.LogUtils
+import org.samo_lego.canta.util.SettingsStore
 import java.io.File
 import java.util.Locale
 
@@ -74,14 +74,23 @@ class AppListViewModel : ViewModel() {
             isLoadingBadges = true
             // Load app data file
             val uadList = File(filesDir, "uad_lists.json")
-            val config = File(filesDir, "canta.conf")
             val bloatFetcher = BloatUtils()
 
+            // Get the auto-update preference
+            val settingsStore = SettingsStore(context)
+            val autoUpdate = settingsStore.autoUpdateBloatListFlow.first()
+
             val uadLists =
-                if (!uadList.exists() || !config.exists() || bloatFetcher.checkForUpdates(config)) {
+                if (!uadList.exists() || (bloatFetcher.checkForUpdates(settingsStore.getLatestCommitHash()) && autoUpdate)) {
                     uadList.createNewFile()
 
-                    bloatFetcher.fetchBloatList(uadList, config)
+                    val (json, hash) = bloatFetcher.fetchBloatList(uadList)
+
+                    // Write the hash to settings
+                    settingsStore.setLatestCommitHash(hash)
+
+                    json
+
                 } else {
                     // Just read the file
                     JSONObject(uadList.readText())

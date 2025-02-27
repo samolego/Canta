@@ -15,8 +15,6 @@ import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -49,6 +47,7 @@ import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 fun CantaTopBar(
     openBadgesInfoDialog: () -> Unit,
     openLogsScreen: () -> Unit,
+    openSettingsScreen: () -> Unit,
 ) {
     var showMoreOptionsMenu by remember { mutableStateOf(false) }
     var showFiltersMenu by remember { mutableStateOf(false) }
@@ -83,15 +82,15 @@ fun CantaTopBar(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        IconButton(
+                        IconClickButton(
                             onClick = {
                                 searchActive = false
                                 appListViewModel.searchQuery = ""
                                 keyboardController?.hide()
-                            }
-                        ) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                        }
+                            },
+                            icon = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
 
                         TextField(
                             modifier = Modifier
@@ -129,7 +128,7 @@ fun CantaTopBar(
             }
         },
         actions = {
-            IconButton(
+            IconClickButton(
                 onClick = {
                     if (searchActive) {
                         // If search is already active, clear the search
@@ -138,25 +137,22 @@ fun CantaTopBar(
                         // Enable search mode
                         searchActive = true
                     }
-                }
-            ) {
-                Icon(
-                    if (searchActive) Icons.Default.Clear else Icons.Default.Search,
-                    contentDescription = if (searchActive) "Clear search" else "Search"
-                )
-            }
+                },
+                icon = if (searchActive) Icons.Default.Clear else Icons.Default.Search,
+                contentDescription = if (searchActive) "Clear search" else "Search"
+            )
 
-            IconButton(
+            IconClickButton(
                 onClick = { showFiltersMenu = !showFiltersMenu },
-            ) {
-                Icon(Icons.Default.FilterAlt, contentDescription = "Filter")
-            }
+                icon = Icons.Default.FilterAlt,
+                contentDescription = "Filter"
+            )
 
-            IconButton(
+            IconClickButton(
                 onClick = { showMoreOptionsMenu = !showMoreOptionsMenu },
-            ) {
-                Icon(Icons.Default.MoreVert, contentDescription = "More options")
-            }
+                icon = Icons.Default.MoreVert,
+                contentDescription = "More options",
+            )
 
             FiltersMenu(
                 showMenu = showFiltersMenu,
@@ -170,6 +166,9 @@ fun CantaTopBar(
                 },
                 openLogsScreen = {
                     openLogsScreen()
+                },
+                openSettingsScreen = {
+                    openSettingsScreen()
                 },
                 onDismiss = { showMoreOptionsMenu = false },
             )

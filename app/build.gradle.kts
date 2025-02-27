@@ -1,3 +1,4 @@
+
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -37,6 +38,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "APP_VERSION", "\"${project.property("version_name")}\"")
+        buildConfigField("int", "VERSION_CODE", "${project.property("version_code")}")
     }
 
     signingConfigs {
@@ -71,6 +75,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig= true
     }
     //composeOptions {
     //    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
@@ -85,6 +90,7 @@ android {
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
