@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Canta</string>
     <string name="cancel">Cancelar</string>
     <string name="ok">OK</string>
     <string name="are_you_sure_to_uninstall_apps">Tem certeza de que deseja desinstalar %1$s apps?</string>
@@ -18,4 +17,5 @@
     <string name="got_it">Entendi</string>
     <string name="loading_badges">Carregando etiquetas</string>
     <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta would\'t be the same without their work.</string>
+    <string name="search_apps">Search apps</string>
 </resources>

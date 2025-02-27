@@ -21,13 +21,14 @@
     <string name="copy_logs">Kopiraj dnevnike</string>
     <string name="log_copied">Dnevnik skopiran na odložišče</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="two">Clear %d selected</item>
-        <item quantity="few">Clear %d selected</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="one">Počisti %d izbrano</item>
+        <item quantity="two">Počisti %d izbrani</item>
+        <item quantity="few">Počist %d izbrane</item>
+        <item quantity="other">Počisti %d </item>
     </plurals>
     <string name="copy">Kopiraj</string>
-    <string name="app_settings">App info</string>
+    <string name="app_settings">Podatki o aplikaciji</string>
     <string name="close">Zapri</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta je odprtokodna odmestitvena aplikacija, ki uporablja Shizuku, da lahko odstrani sistemske in uporabniške aplikacije.\nOmogoča vam da razbremenite svojo napravo navlake, ne da bi potrebovali računalnik.\n\nZahvala gre tudi Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta brez njih ne bi bila enaka.</string>
+    <string name="search_apps">Poišči aplikacije</string>
 </resources>

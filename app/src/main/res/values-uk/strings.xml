@@ -1,15 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">Скасувати</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Ви впевнені що хочете видалити %1$s програм?</string>
-    <string name="copy_package_name_to_clipboard">Скопіювати назву пакунка до буфера обміну</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >Ви впевнені що хочете видалити %1$s програм?</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >Скопіювати назву пакунка до буфера обміну</string>
     <string name="no_description_available">Немає опису</string>
     <string name="uninstall">Видалити</string>
     <string name="reinstall">Перевстановити</string>
     <string name="please_start_shizuku">Будь ласка, запустіть Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Будь ласка, встановіть Shizuku та авторизуйте Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Будь ласка, надайте Shizuku доступ до Canta.</string>
+    <string
+        name="please_install_shizuku_and_authorise_canta"
+    >Будь ласка, встановіть Shizuku та авторизуйте Canta.</string>
+    <string
+        name="please_allow_shizuku_access_for_canta"
+    >Будь ласка, надайте Shizuku доступ до Canta.</string>
     <string name="only_system">Лише система</string>
     <string name="no_apps_found">Не знайдено програм</string>
     <string name="loading_apps">Завантаження програм</string>
@@ -29,5 +37,8 @@
     <string name="copy">Копіювати</string>
     <string name="app_settings">Інформація про програму</string>
     <string name="close">Закрити</string>
-    <string name="canta_description">Canta — це програма-деінсталятор з відкритим вихідним кодом, яка використовує Shizuku для видалення системних та користувацьких програм.\nВоно дозволяє вам очищати пристрій на свій розсуд, без необхідності використання ПК.\n\nОсоблива подяка Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta була б іншою без їх роботи.</string>
+    <string
+        name="canta_description"
+    >Canta — це програма-деінсталятор з відкритим вихідним кодом, яка використовує Shizuku для видалення системних та користувацьких програм.\nВоно дозволяє вам очищати пристрій на свій розсуд, без необхідності використання ПК.\n\nОсоблива подяка %s.\nCanta була б іншою без їх роботи.</string>
+    <string name="search_apps">Search apps</string>
 </resources>
