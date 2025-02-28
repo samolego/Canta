@@ -98,7 +98,6 @@ fun CantaApp(
         settingsStore.disableRiskDialogFlow.collect { disableRiskDialog ->
             // Update the warning state based on the loaded setting
             showDisclaimerWarning.value = !disableRiskDialog
-            LogUtils.d("CantaApp", "disableRiskDialog: $disableRiskDialog")
         }
     }
 
