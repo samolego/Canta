@@ -304,7 +304,7 @@ private fun MainContent(
                             }
                     )
                 }
-                AppList(appType = AppsType.entries[page])
+                AppList(appType = AppsType.entries[page], appListModel = appListViewModel)
             }
         }
     }

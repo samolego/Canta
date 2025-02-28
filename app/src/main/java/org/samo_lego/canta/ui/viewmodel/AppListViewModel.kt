@@ -122,10 +122,9 @@ class AppListViewModel : ViewModel() {
         }
     }
 
-    fun resetSelectedApps() {
-        selectedApps = mutableStateSetOf()
-    }
-
+    /**
+     * Changes app status from installed to uninstalled or vice versa.
+     */
     fun changeAppStatus(packageName: String) {
         apps = apps.map {
             if (it.packageName == packageName) {
