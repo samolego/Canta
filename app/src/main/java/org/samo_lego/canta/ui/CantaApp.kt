@@ -2,8 +2,6 @@ package org.samo_lego.canta.ui
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -67,10 +65,14 @@ import org.samo_lego.canta.ui.screen.LogsPage
 import org.samo_lego.canta.ui.screen.SettingsScreen
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.ui.viewmodel.SettingsViewModel
+import org.samo_lego.canta.util.LogUtils
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.SettingsStore
 import org.samo_lego.canta.util.ShizukuData
 import org.samo_lego.canta.util.ShizukuInfo
+import org.samo_lego.canta.util.showFor
+
+private const val secretTaps = 12
 
 @Composable
 fun CantaApp(
@@ -83,13 +85,22 @@ fun CantaApp(
     val context = LocalContext.current
     val settingsViewModel: SettingsViewModel = viewModel()
     val settingsStore = remember { SettingsStore(context) }
-    var showDisclaimerWarning = remember { mutableStateOf(!settingsViewModel.disableRiskDialog) }
+    val showDisclaimerWarning = remember { mutableStateOf(true) }
     var versionTapCounter by remember { mutableIntStateOf(0) }
-    val secretTaps = 12
     val coroutineScope = rememberCoroutineScope()
 
-    // Load settings when app starts
-    LaunchedEffect(Unit) { settingsViewModel.loadSettings(settingsStore) }
+    // Load settings when app starts and update the disclaimer warning state
+    LaunchedEffect(Unit) {
+        // First load settings
+        settingsViewModel.loadSettings(settingsStore)
+
+        // Create a collector for the disableRiskDialog flow
+        settingsStore.disableRiskDialogFlow.collect { disableRiskDialog ->
+            // Update the warning state based on the loaded setting
+            showDisclaimerWarning.value = !disableRiskDialog
+            LogUtils.d("CantaApp", "disableRiskDialog: $disableRiskDialog")
+        }
+    }
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
@@ -121,25 +132,14 @@ fun CantaApp(
                         coroutineScope.launch {
                             if (versionTapCounter > 6 && versionTapCounter < secretTaps) {
                                 // Show quick toast
-                                // Show quick toast
                                 val remainingTaps = secretTaps - versionTapCounter
                                 val message = context.getString(R.string.select_all_tip, remainingTaps)
                                 val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
-                                toast.show()
-
-                                // Force cancel after 500ms
-                                Handler(Looper.getMainLooper()).postDelayed({
-                                    toast.cancel()
-                                }, 500)
+                                toast.showFor(500)
                             } else if (versionTapCounter >= secretTaps) {
                                 // Enable select all functionality with quick toast
                                 val toast = Toast.makeText(context, context.getString(R.string.select_all_enabled), Toast.LENGTH_SHORT)
-                                toast.show()
-
-                                // Force cancel after 500ms
-                                Handler(Looper.getMainLooper()).postDelayed({
-                                    toast.cancel()
-                                }, 500)
+                                toast.showFor(500)
                             }
                         }
                     }
@@ -158,7 +158,7 @@ private fun MainContent(
         navigateToSettings: () -> Unit,
         closeApp: () -> Unit,
         settingsStore: SettingsStore,
-        showWarning: MutableState<Boolean>,
+        showWarning: MutableState<Boolean>, // Accept MutableState instead of Boolean
         enableSelectAll: Boolean,
 ) {
     val context = LocalContext.current
@@ -330,8 +330,10 @@ private fun MainContent(
                     NoWarrantyDialog(
                             onProceed = { neverShowAgain ->
                                 showWarning.value = false
-                                settingsViewModel.disableRiskDialog = neverShowAgain
-                                settingsViewModel.saveDisableRiskDialog(settingsStore)
+                                if (neverShowAgain) {
+                                    settingsViewModel.disableRiskDialog = true
+                                    settingsViewModel.saveDisableRiskDialog(settingsStore)
+                                }
                             },
                             onCancel = {
                                 // Close the app

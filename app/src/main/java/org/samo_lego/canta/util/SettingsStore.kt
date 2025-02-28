@@ -41,7 +41,7 @@ class SettingsStore(private val context: Context) {
 
     // Confirm before uninstall preference
     val disableRiskDialogFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
-        preferences[KEY_DISABLE_RISK_DIALOG] != false
+        preferences[KEY_DISABLE_RISK_DIALOG] == true
     }
 
     suspend fun setDisableRiskDialog(disable: Boolean) {
