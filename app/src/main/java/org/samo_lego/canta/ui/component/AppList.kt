@@ -45,6 +45,7 @@ import org.samo_lego.canta.util.RemovalRecommendation
 fun AppList(
     appType: AppsType = AppsType.INSTALLED,
     appListModel: AppListViewModel,
+    enableSelectAll: Boolean = false,
 ) {
     val context = LocalContext.current
     var showAppDialog by remember { mutableStateOf<AppInfo?>(null) }
@@ -82,7 +83,7 @@ fun AppList(
             if (appListModel.isLoadingBadges) {
                 LoadingBadgesIndicator()
             }
-            if (appListModel.selectedApps.isNotEmpty() && appListModel.selectedFilter.removalRecommendation == RemovalRecommendation.RECOMMENDED) {
+            if (appType == AppsType.UNINSTALLED || enableSelectAll && appListModel.selectedApps.isNotEmpty() && appListModel.selectedFilter.removalRecommendation == RemovalRecommendation.RECOMMENDED) {
                 SelectAllOption(
                     onCheckedChange = {
                         LogUtils.d("AppList", "SelectAllOption: $it")
@@ -148,7 +149,7 @@ fun SelectAllOption(
 ) {
     var checked by remember { mutableStateOf(false) }
     Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
     ) {

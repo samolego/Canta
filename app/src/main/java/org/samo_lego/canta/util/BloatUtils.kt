@@ -60,10 +60,10 @@ class BloatUtils {
             val hash = parseLatestHash(commits)
 
 
-            val eq = hash != latestBloatHash
-            LogUtils.i(TAG, "Latest version of bloat list: $eq (commit hash: $hash)")
+            val needsUpdate = hash != latestBloatHash
+            LogUtils.i(TAG, "Bloat list needs update: $needsUpdate (commit hash: $hash)")
 
-            return eq
+            return needsUpdate
         } catch (e: Exception) {
             LogUtils.e(TAG, "Failed to check for updates", e)
             false

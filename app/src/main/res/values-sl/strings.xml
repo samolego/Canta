@@ -37,7 +37,7 @@
     <string name="close">Zapri</string>
     <string
         name="canta_description"
-    >Canta je odprtokodna odmestitvena aplikacija, ki uporablja Shizuku, da lahko odstrani sistemske in uporabniške aplikacije.\nOmogoča vam da razbremenite svojo napravo navlake, ne da bi potrebovali računalnik.\n\nZahvala gre tudi Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta brez njih ne bi bila enaka.</string>
+    >Canta je odprtokodna odmestitvena aplikacija, ki uporablja Shizuku, da lahko odstrani sistemske in uporabniške aplikacije.\nOmogoča vam da razbremenite svojo napravo navlake, ne da bi potrebovali računalnik.\n\nZahvala gre tudi %s.\nCanta brez njih ne bi bila enaka.</string>
     <string name="search_apps">Poišči aplikacije</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
     <string

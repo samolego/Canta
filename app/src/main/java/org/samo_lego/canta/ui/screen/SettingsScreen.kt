@@ -45,7 +45,8 @@ import org.samo_lego.canta.util.SettingsStore
 @Composable
 fun SettingsScreen(
     onNavigateBack: () -> Unit,
-    settingsViewModel: SettingsViewModel
+    settingsViewModel: SettingsViewModel,
+    onVersionTap: () -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -128,7 +129,10 @@ fun SettingsScreen(
                 Text(
                     text = stringResource(R.string.app_version, BuildConfig.VERSION_NAME),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.clickable {
+                        onVersionTap()
+                    }
                 )
 
                 // App homepage

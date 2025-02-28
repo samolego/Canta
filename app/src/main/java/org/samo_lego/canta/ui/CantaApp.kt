@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -81,6 +82,9 @@ fun CantaApp(
     val settingsViewModel: SettingsViewModel = viewModel()
     val settingsStore = remember { SettingsStore(context) }
     var showDisclaimerWarning = remember { mutableStateOf(settingsViewModel.disableRiskDialog) }
+    var versionTapCounter by remember { mutableIntStateOf(0) }
+    val secretTaps = 12
+    val coroutineScope = rememberCoroutineScope()
 
     // Load settings when app starts
     LaunchedEffect(Unit) { settingsViewModel.loadSettings(settingsStore) }
@@ -96,6 +100,7 @@ fun CantaApp(
                     closeApp = closeApp,
                     settingsStore = settingsStore,
                     showWarning = showDisclaimerWarning,
+                    enableSelectAll = versionTapCounter >= secretTaps,
             )
         }
         composable(route = Screen.Logs.route) {
@@ -108,7 +113,20 @@ fun CantaApp(
                         settingsViewModel.saveSettings(settingsStore)
                         navController.navigateUp()
                     },
-                    settingsViewModel = settingsViewModel
+                    settingsViewModel = settingsViewModel,
+                    onVersionTap = {
+                        versionTapCounter += 1
+                        coroutineScope.launch {
+                            if (versionTapCounter > 6 && versionTapCounter < secretTaps) {
+                                // Show toast
+                                val remainingTaps = secretTaps - versionTapCounter
+                                Toast.makeText(context, "Tap $remainingTaps more times to enable select all functionality.", Toast.LENGTH_SHORT).show()
+                            } else if (versionTapCounter >= secretTaps) {
+                                // Enable select all functionality
+                                Toast.makeText(context, "Select all functionality enabled!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
             )
         }
     }
@@ -124,7 +142,8 @@ private fun MainContent(
         navigateToSettings: () -> Unit,
         closeApp: () -> Unit,
         settingsStore: SettingsStore,
-        showWarning: MutableState<Boolean>
+        showWarning: MutableState<Boolean>,
+        enableSelectAll: Boolean,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -304,7 +323,11 @@ private fun MainContent(
                             }
                     )
                 }
-                AppList(appType = AppsType.entries[page], appListModel = appListViewModel)
+                AppList(
+                    appType = AppsType.entries[page],
+                    appListModel = appListViewModel,
+                    enableSelectAll = enableSelectAll,
+                )
             }
         }
     }
