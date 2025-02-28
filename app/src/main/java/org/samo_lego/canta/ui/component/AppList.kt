@@ -86,7 +86,6 @@ fun AppList(
             if (appType == AppsType.UNINSTALLED || enableSelectAll && appListModel.selectedApps.isNotEmpty() && appListModel.selectedFilter.removalRecommendation == RemovalRecommendation.RECOMMENDED) {
                 SelectAllOption(
                     onCheckedChange = {
-                        LogUtils.d("AppList", "SelectAllOption: $it")
                         if (!it) {
                             appListModel.selectedApps.clear()
                         } else {

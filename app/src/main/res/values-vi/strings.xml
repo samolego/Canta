@@ -59,4 +59,10 @@
         name="confirm_uninstall_description"
     >Whether to show the dialog for confirming uninstall action.</string>
     <string name="select_all">Select all</string>
+    <string
+        name="select_all_tip"
+    >Tap %d more times to enable select all functionality.</string>
+    <string
+        name="select_all_enabled"
+    >Select all has been enabled for filter type \"Recommended\".</string>
 </resources>

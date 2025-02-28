@@ -2,6 +2,8 @@ package org.samo_lego.canta.ui
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -81,7 +83,7 @@ fun CantaApp(
     val context = LocalContext.current
     val settingsViewModel: SettingsViewModel = viewModel()
     val settingsStore = remember { SettingsStore(context) }
-    var showDisclaimerWarning = remember { mutableStateOf(settingsViewModel.disableRiskDialog) }
+    var showDisclaimerWarning = remember { mutableStateOf(!settingsViewModel.disableRiskDialog) }
     var versionTapCounter by remember { mutableIntStateOf(0) }
     val secretTaps = 12
     val coroutineScope = rememberCoroutineScope()
@@ -118,12 +120,26 @@ fun CantaApp(
                         versionTapCounter += 1
                         coroutineScope.launch {
                             if (versionTapCounter > 6 && versionTapCounter < secretTaps) {
-                                // Show toast
+                                // Show quick toast
+                                // Show quick toast
                                 val remainingTaps = secretTaps - versionTapCounter
-                                Toast.makeText(context, "Tap $remainingTaps more times to enable select all functionality.", Toast.LENGTH_SHORT).show()
+                                val message = context.getString(R.string.select_all_tip, remainingTaps)
+                                val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+                                toast.show()
+
+                                // Force cancel after 500ms
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    toast.cancel()
+                                }, 500)
                             } else if (versionTapCounter >= secretTaps) {
-                                // Enable select all functionality
-                                Toast.makeText(context, "Select all functionality enabled!", Toast.LENGTH_SHORT).show()
+                                // Enable select all functionality with quick toast
+                                val toast = Toast.makeText(context, context.getString(R.string.select_all_enabled), Toast.LENGTH_SHORT)
+                                toast.show()
+
+                                // Force cancel after 500ms
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    toast.cancel()
+                                }, 500)
                             }
                         }
                     }
