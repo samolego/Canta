@@ -46,13 +46,3 @@ For advanced users, Canta includes a hidden "Select All" feature that can be ena
 ::: warning CAUTION
 Use this feature carefully, as mass uninstallation could affect device functionality.
 :::
-
-## Saving Settings
-
-All settings are automatically saved when you:
-
-1. Toggle any setting option
-2. Navigate away from the Settings screen
-3. Close the app
-
-Your preferences will be remembered the next time you launch Canta.
