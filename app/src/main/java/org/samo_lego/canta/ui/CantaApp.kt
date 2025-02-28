@@ -158,7 +158,7 @@ private fun MainContent(
         navigateToSettings: () -> Unit,
         closeApp: () -> Unit,
         settingsStore: SettingsStore,
-        showWarning: MutableState<Boolean>, // Accept MutableState instead of Boolean
+        showWarning: MutableState<Boolean>,
         enableSelectAll: Boolean,
 ) {
     val context = LocalContext.current
