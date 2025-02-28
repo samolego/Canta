@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -40,7 +39,6 @@ import org.samo_lego.canta.R
 import org.samo_lego.canta.ui.component.IconClickButton
 import org.samo_lego.canta.ui.component.SettingsItem
 import org.samo_lego.canta.ui.viewmodel.SettingsViewModel
-import org.samo_lego.canta.util.BLOAT_URL
 import org.samo_lego.canta.util.SettingsStore
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -126,38 +124,17 @@ fun SettingsScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                // Latest commit hash (clickable to go to repository)
-                if (latestCommitHash.value.isNotEmpty()) {
-                    Text(
-                        text = stringResource(R.string.bloatware_list_version),
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-
-                    Text(
-                        text = latestCommitHash.value,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.clickable {
-                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(BLOAT_URL))
-                            context.startActivity(browserIntent)
-                        }
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-
                 // App version
                 Text(
                     text = stringResource(R.string.app_version, BuildConfig.VERSION_NAME),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 // App homepage
                 Text(
                     text = "https://samolego.github.io/Canta",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.clickable {

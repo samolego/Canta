@@ -44,7 +44,7 @@ class SettingsStore(private val context: Context) {
         preferences[KEY_DISABLE_RISK_DIALOG] != false
     }
 
-    suspend fun disableRiskDialog(disable: Boolean) {
+    suspend fun setDisableRiskDialog(disable: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[KEY_DISABLE_RISK_DIALOG] = disable
         }

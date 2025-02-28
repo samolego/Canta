@@ -13,6 +13,7 @@ class SettingsViewModel : ViewModel() {
     // Settings values
     var autoUpdateBloatList by mutableStateOf(true)
     var confirmBeforeUninstall by mutableStateOf(true)
+    var disableRiskDialog by mutableStateOf(false)
     var latestCommitHash by mutableStateOf("")
 
     fun loadSettings(settingsStore: SettingsStore) {
@@ -36,6 +37,12 @@ class SettingsViewModel : ViewModel() {
                 latestCommitHash = it
             }
         }
+
+        viewModelScope.launch {
+            settingsStore.disableRiskDialogFlow.collect {
+                disableRiskDialog = it
+            }
+        }
     }
 
     fun saveAutoUpdateBloatList(settingsStore: SettingsStore) {
@@ -50,8 +57,22 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
+    fun saveLatestCommitHash(settingsStore: SettingsStore) {
+        viewModelScope.launch {
+            settingsStore.setLatestCommitHash(latestCommitHash)
+        }
+    }
+
+    fun saveDisableRiskDialog(settingsStore: SettingsStore) {
+        viewModelScope.launch {
+            settingsStore.setDisableRiskDialog(disableRiskDialog)
+        }
+    }
+
     fun saveSettings(store: SettingsStore) {
         saveAutoUpdateBloatList(store)
         saveConfirmBeforeUninstall(store)
+        saveLatestCommitHash(store)
+        saveDisableRiskDialog(store)
     }
 }

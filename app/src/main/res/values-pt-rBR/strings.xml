@@ -1,27 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">Cancelar</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Tem certeza de que deseja desinstalar %1$s apps?</string>
-    <string name="copy_package_name_to_clipboard">Copiar nome do pacote para a área de transferência</string>
-    <string name="no_description_available">Nenhuma descrição disponível</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >Tem certeza de que deseja desinstalar %1$s apps?</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >Copiar nome do pacote para a área de transferência</string>
+    <string
+        name="no_description_available"
+    >Nenhuma descrição disponível</string>
     <string name="uninstall">Desinstalar</string>
     <string name="reinstall">Reinstalar</string>
     <string name="please_start_shizuku">Por favor, inicie Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Por favor, instale o Shizuku e autorize o Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Por favor, permita que Shizuku acesse Canta.</string>
+    <string
+        name="please_install_shizuku_and_authorise_canta"
+    >Por favor, instale o Shizuku e autorize o Canta.</string>
+    <string
+        name="please_allow_shizuku_access_for_canta"
+    >Por favor, permita que Shizuku acesse Canta.</string>
     <string name="only_system">Apenas do sistema</string>
     <string name="no_apps_found">Nenhum aplicativo encontrado</string>
     <string name="loading_apps">Carregando aplicativos...</string>
     <string name="badge_info">Informações da etiqueta</string>
     <string name="got_it">Entendi</string>
     <string name="loading_badges">Carregando etiquetas</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta would\'t be the same without their work.</string>
+    <string
+        name="canta_description"
+    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/).\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
-    <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
+    <string
+        name="auto_update_bloat_list_description"
+    >Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
     <string name="settings">Settings</string>
     <string name="confirm_uninstall">Confirm uninstallations</string>
     <string name="app_version">App version: %s</string>
     <string name="bloatware_list_version">Latest bloatware list</string>
+    <string
+        name="no_warranty_content"
+    >This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
+    <string name="disclaimer">Disclaimer - No Warranty</string>
+    <string
+        name="proceed_at_own_risk"
+    >By clicking \"Proceed\", you agree to use this app at your own risk.</string>
+    <string name="never_show_again">Don\'t show this message again</string>
+    <string name="proceed">Proceed</string>
+    <string
+        name="confirm_uninstall_description"
+    >Whether to show the dialog for confirming uninstall action.</string>
 </resources>
