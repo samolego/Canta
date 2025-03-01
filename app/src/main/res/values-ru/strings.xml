@@ -44,6 +44,6 @@
     <string name="proceed">Приступить</string>
     <string name="confirm_uninstall_description">Показывать ли диалог для подтверждения удаления.</string>
     <string name="select_all">Выбрать всё</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="select_all_tip">Нажмите еще %d раз, чтобы включить выбор всех функций.</string>
+    <string name="select_all_enabled">Для типа фильтра \"Рекомендовано\" включен параметр \"Выбрать все\".</string>
 </resources>
