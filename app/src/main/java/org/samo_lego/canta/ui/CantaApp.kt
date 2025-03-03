@@ -4,12 +4,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -21,7 +15,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -40,19 +33,17 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -60,7 +51,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.samo_lego.canta.R
 import org.samo_lego.canta.packageName
@@ -68,21 +58,48 @@ import org.samo_lego.canta.ui.component.AppIconImage
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.component.CantaTopBar
 import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
+import org.samo_lego.canta.ui.dialog.NoWarrantyDialog
 import org.samo_lego.canta.ui.dialog.UninstallAppsDialog
 import org.samo_lego.canta.ui.navigation.Screen
 import org.samo_lego.canta.ui.screen.LogsPage
+import org.samo_lego.canta.ui.screen.SettingsScreen
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
+import org.samo_lego.canta.ui.viewmodel.SettingsViewModel
+import org.samo_lego.canta.util.LogUtils
 import org.samo_lego.canta.util.Filter
+import org.samo_lego.canta.util.SettingsStore
 import org.samo_lego.canta.util.ShizukuData
 import org.samo_lego.canta.util.ShizukuInfo
+import org.samo_lego.canta.util.showFor
+
+private const val secretTaps = 12
 
 @Composable
 fun CantaApp(
         launchShizuku: () -> Unit,
         uninstallApp: (String) -> Boolean,
         reinstallApp: (String) -> Boolean,
+        closeApp: () -> Unit,
 ) {
     val navController = rememberNavController()
+    val context = LocalContext.current
+    val settingsViewModel: SettingsViewModel = viewModel()
+    val settingsStore = remember { SettingsStore(context) }
+    val showDisclaimerWarning = remember { mutableStateOf(true) }
+    var versionTapCounter by remember { mutableIntStateOf(0) }
+    val coroutineScope = rememberCoroutineScope()
+
+    // Load settings when app starts and update the disclaimer warning state
+    LaunchedEffect(Unit) {
+        // First load settings
+        settingsViewModel.loadSettings(settingsStore)
+
+        // Create a collector for the disableRiskDialog flow
+        settingsStore.disableRiskDialogFlow.collect { disableRiskDialog ->
+            // Update the warning state based on the loaded setting
+            showDisclaimerWarning.value = !disableRiskDialog
+        }
+    }
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
@@ -90,11 +107,42 @@ fun CantaApp(
                     launchShizuku = launchShizuku,
                     uninstallApp = uninstallApp,
                     reinstallApp = reinstallApp,
-                    navigateToLogs = { navController.navigate(Screen.Logs.route) }
+                    navigateToLogs = { navController.navigate(Screen.Logs.route) },
+                    navigateToSettings = { navController.navigate(Screen.Settings.route) },
+                    closeApp = closeApp,
+                    settingsStore = settingsStore,
+                    showWarning = showDisclaimerWarning,
+                    enableSelectAll = versionTapCounter >= secretTaps,
             )
         }
         composable(route = Screen.Logs.route) {
             LogsPage(onNavigateBack = { navController.navigateUp() })
+        }
+        composable(route = Screen.Settings.route) {
+            SettingsScreen(
+                    onNavigateBack = {
+                        // Save settings when navigating back
+                        settingsViewModel.saveSettings(settingsStore)
+                        navController.navigateUp()
+                    },
+                    settingsViewModel = settingsViewModel,
+                    onVersionTap = {
+                        versionTapCounter += 1
+                        coroutineScope.launch {
+                            if (versionTapCounter > 6 && versionTapCounter < secretTaps) {
+                                // Show quick toast
+                                val remainingTaps = secretTaps - versionTapCounter
+                                val message = context.getString(R.string.select_all_tip, remainingTaps)
+                                val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
+                                toast.showFor(500)
+                            } else if (versionTapCounter >= secretTaps) {
+                                // Enable select all functionality with quick toast
+                                val toast = Toast.makeText(context, context.getString(R.string.select_all_enabled), Toast.LENGTH_SHORT)
+                                toast.showFor(500)
+                            }
+                        }
+                    }
+            )
         }
     }
 }
@@ -106,6 +154,11 @@ private fun MainContent(
         uninstallApp: (String) -> Boolean,
         reinstallApp: (String) -> Boolean,
         navigateToLogs: () -> Unit,
+        navigateToSettings: () -> Unit,
+        closeApp: () -> Unit,
+        settingsStore: SettingsStore,
+        showWarning: MutableState<Boolean>,
+        enableSelectAll: Boolean,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -114,6 +167,7 @@ private fun MainContent(
     var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
 
     val appListViewModel = viewModel<AppListViewModel>()
+    val settingsViewModel = viewModel<SettingsViewModel>()
 
     var showBadgeInfoDialog by remember { mutableStateOf(false) }
     var showUninstallConfirmDialog by remember { mutableStateOf(false) }
@@ -133,7 +187,8 @@ private fun MainContent(
             topBar = {
                 CantaTopBar(
                         openBadgesInfoDialog = { showBadgeInfoDialog = true },
-                        openLogsScreen = navigateToLogs
+                        openLogsScreen = navigateToLogs,
+                        openSettingsScreen = navigateToSettings
                 )
             },
             floatingActionButton = {
@@ -152,9 +207,7 @@ private fun MainContent(
                                                 MaterialTheme.colorScheme.tertiaryContainer
                                     },
                             shape = RoundedCornerShape(32.dp),
-                            modifier = Modifier
-                                    .padding(16.dp)
-                                    .navigationBarsPadding(),
+                            modifier = Modifier.padding(16.dp).navigationBarsPadding(),
                             onClick = {
                                 // Check if only Canta is selected
                                 // Super secret don't tell anyone you saw this
@@ -169,7 +222,13 @@ private fun MainContent(
                                     return@FloatingActionButton
                                 }
 
-                                if (selectedAppsType == AppsType.INSTALLED) {
+                                // Show dialog before uninstalling if we are on the "instelled" tab
+                                // However, do not show it if user has disabled the dialog in
+                                // settings
+                                // or if we are on the "uninstalled" tab
+                                if (selectedAppsType == AppsType.INSTALLED &&
+                                                settingsViewModel.confirmBeforeUninstall
+                                ) {
                                     showUninstallConfirmDialog =
                                             appListViewModel.selectedApps.isNotEmpty()
                                     return@FloatingActionButton
@@ -266,8 +325,26 @@ private fun MainContent(
                                 )
                             }
                     )
+                } else if (showWarning.value) {
+                    NoWarrantyDialog(
+                            onProceed = { neverShowAgain ->
+                                showWarning.value = false
+                                if (neverShowAgain) {
+                                    settingsViewModel.disableRiskDialog = true
+                                    settingsViewModel.saveDisableRiskDialog(settingsStore)
+                                }
+                            },
+                            onCancel = {
+                                // Close the app
+                                closeApp()
+                            }
+                    )
                 }
-                AppList(appType = AppsType.entries[page])
+                AppList(
+                    appType = AppsType.entries[page],
+                    appListModel = appListViewModel,
+                    enableSelectAll = enableSelectAll,
+                )
             }
         }
     }

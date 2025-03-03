@@ -1,7 +1,5 @@
 package org.samo_lego.canta.ui.component
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,11 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,17 +32,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import org.samo_lego.canta.R
 import org.samo_lego.canta.extension.add
 import org.samo_lego.canta.ui.AppsType
 import org.samo_lego.canta.ui.dialog.AppInfoDialog
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.util.AppInfo
+import org.samo_lego.canta.util.LogUtils
+import org.samo_lego.canta.util.RemovalRecommendation
 
 @Composable
-fun AppList(appType: AppsType = AppsType.INSTALLED) {
-    val appListModel = viewModel<AppListViewModel>()
+fun AppList(
+    appType: AppsType = AppsType.INSTALLED,
+    appListModel: AppListViewModel,
+    enableSelectAll: Boolean = false,
+) {
     val context = LocalContext.current
     var showAppDialog by remember { mutableStateOf<AppInfo?>(null) }
 
@@ -83,6 +82,17 @@ fun AppList(appType: AppsType = AppsType.INSTALLED) {
         } else {
             if (appListModel.isLoadingBadges) {
                 LoadingBadgesIndicator()
+            }
+            if (appType == AppsType.UNINSTALLED || enableSelectAll && appListModel.selectedApps.isNotEmpty() && appListModel.selectedFilter.removalRecommendation == RemovalRecommendation.RECOMMENDED) {
+                SelectAllOption(
+                    onCheckedChange = {
+                        if (!it) {
+                            appListModel.selectedApps.clear()
+                        } else {
+                            appList.map { it.packageName }.forEach { appListModel.selectedApps.add(it) }
+                        }
+                    }
+                )
             }
             if (appList.isNotEmpty()) {
                 LazyColumn(
@@ -132,6 +142,28 @@ fun LoadingBadgesIndicator() {
     }
 }
 
+@Composable
+fun SelectAllOption(
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    var checked by remember { mutableStateOf(false) }
+    Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(stringResource(R.string.select_all))
+        Spacer(modifier = Modifier.size(8.dp))
+        Checkbox(
+            checked = checked,
+            onCheckedChange = {
+                checked = !checked
+                onCheckedChange(checked)
+            },
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun LoadingAppsInfo() {
@@ -144,10 +176,4 @@ fun LoadingAppsInfo() {
             Text(stringResource(R.string.loading_apps))
         }
     }
-}
-
-@Preview
-@Composable
-fun AppListPreview() {
-    AppList()
 }

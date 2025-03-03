@@ -52,6 +52,7 @@ class MainActivity : ComponentActivity() {
                             },
                             uninstallApp = { uninstallApp(it) },
                             reinstallApp = { reinstallApp(it) },
+                            closeApp =  { finishAndRemoveTask() },
                     )
                 }
             }

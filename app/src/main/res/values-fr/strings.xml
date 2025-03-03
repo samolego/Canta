@@ -1,15 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">Annuler</string>
     <string name="ok">Ok</string>
-    <string name="are_you_sure_to_uninstall_apps">Êtes-vous sûr de désinstaller les applications %1$s ?</string>
-    <string name="copy_package_name_to_clipboard">Copier le nom du paquet dans le presse-papiers</string>
-    <string name="no_description_available">Pas de description disponible</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >Êtes-vous sûr de désinstaller les applications %1$s ?</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >Copier le nom du paquet dans le presse-papiers</string>
+    <string
+        name="no_description_available"
+    >Pas de description disponible</string>
     <string name="uninstall">Désinstaller</string>
     <string name="reinstall">Réinstaller</string>
-    <string name="please_start_shizuku">S\'il vous plaît, commencez Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Veuillez installer Shizuku et autoriser Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Veuillez permettre à Shizuku d\'accéder à Canta.</string>
+    <string
+        name="please_start_shizuku"
+    >S\'il vous plaît, commencez Shizuku.</string>
+    <string
+        name="please_install_shizuku_and_authorise_canta"
+    >Veuillez installer Shizuku et autoriser Canta.</string>
+    <string
+        name="please_allow_shizuku_access_for_canta"
+    >Veuillez permettre à Shizuku d\'accéder à Canta.</string>
     <string name="only_system">Système unique</string>
     <string name="no_apps_found">Aucune application trouvée</string>
     <string name="loading_apps">Chargement d\'applications</string>
@@ -27,7 +39,9 @@
     <string name="copy">Copier</string>
     <string name="app_settings">Infos sur l\'application</string>
     <string name="close">Fermer</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string
+        name="canta_description"
+    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
     <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>

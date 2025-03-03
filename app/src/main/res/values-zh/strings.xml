@@ -1,15 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">取消</string>
     <string name="ok">好</string>
-    <string name="are_you_sure_to_uninstall_apps">您確定要解除安裝 %1$s 個應用程式嗎？</string>
-    <string name="copy_package_name_to_clipboard">將包名複製到剪貼簿</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >您確定要解除安裝 %1$s 個應用程式嗎？</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >將包名複製到剪貼簿</string>
     <string name="no_description_available">沒有可用的描述</string>
     <string name="uninstall">解除安裝</string>
     <string name="reinstall">重新安裝</string>
     <string name="please_start_shizuku">請啟動Shizuku。</string>
-    <string name="please_install_shizuku_and_authorise_canta">請安裝 Shizuku 並授權 Canta。</string>
-    <string name="please_allow_shizuku_access_for_canta">請允許 Shizuku 存取 Canta。</string>
+    <string
+        name="please_install_shizuku_and_authorise_canta"
+    >請安裝 Shizuku 並授權 Canta。</string>
+    <string
+        name="please_allow_shizuku_access_for_canta"
+    >請允許 Shizuku 存取 Canta。</string>
     <string name="only_system">僅系統</string>
     <string name="no_apps_found">沒有找到應用程式</string>
     <string name="loading_apps">正在載入應用程式</string>

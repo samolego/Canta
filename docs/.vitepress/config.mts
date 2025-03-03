@@ -95,6 +95,7 @@ export default defineConfig({
         items: [
           { text: "Setup", link: "/install" },
           { text: "Usage", link: "/usage" },
+          { text: "Settings", link: "/settings" },
         ],
       },
     ],

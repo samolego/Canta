@@ -8,7 +8,7 @@ import org.samo_lego.canta.util.BloatData
 fun cantaBloatData(context: Context): BloatData {
     return BloatData(
         installData = null,
-        description = context.getString(R.string.canta_description),
+        description = context.getString(R.string.canta_description, "Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation)"),
         removal = null,
     )
 }

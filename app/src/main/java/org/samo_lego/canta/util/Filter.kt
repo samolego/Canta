@@ -7,7 +7,11 @@ import java.util.Locale
  * @param name Name of the filter.
  * @param shouldShow Function to determine if the app should be shown.
  */
-class Filter(val name: String, val shouldShow: (AppInfo) -> Boolean) {
+class Filter(
+    val name: String,
+    val shouldShow: (AppInfo) -> Boolean,
+    val removalRecommendation: RemovalRecommendation? = null
+) {
     companion object {
         /**
          * Filter to show all apps.
@@ -27,7 +31,8 @@ class Filter(val name: String, val shouldShow: (AppInfo) -> Boolean) {
                         Filter(
                             name = entry.toString().lowercase(Locale.ROOT)
                                 .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
-                            shouldShow = { app -> app.removalInfo == entry }
+                            shouldShow = { app -> app.removalInfo == entry },
+                            removalRecommendation = entry
                         )
                     }.toMutableList()
             removalFilters.add(0, any)

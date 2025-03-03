@@ -3,8 +3,6 @@ package org.samo_lego.canta.ui.screen
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +19,6 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -40,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import org.samo_lego.canta.R
+import org.samo_lego.canta.ui.component.IconClickButton
 import org.samo_lego.canta.util.LogUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,12 +54,11 @@ fun LogsPage(onNavigateBack: () -> Unit) {
                         ),
                         title = { Text(stringResource(R.string.logs)) },
                         navigationIcon = {
-                            IconButton(onClick = onNavigateBack) {
-                                Icon(
-                                        Icons.AutoMirrored.Filled.ArrowBack,
-                                        contentDescription = stringResource(R.string.back)
-                                )
-                            }
+                            IconClickButton(
+                                onClick = onNavigateBack,
+                                icon = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.back),
+                            )
                         }
                 )
             },
@@ -101,7 +98,8 @@ private fun LogEntryChip(logEntry: LogUtils.LogEntry) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(top = 8.dp)
+            .padding(horizontal = 8.dp)
             .combinedClickable(
                 onClick = { expanded = !expanded },
                 onLongClick = {

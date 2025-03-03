@@ -1,15 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">Отмена</string>
     <string name="ok">ОК</string>
-    <string name="are_you_sure_to_uninstall_apps">Вы уверены, что хотите удалить %1$s приложений?</string>
-    <string name="copy_package_name_to_clipboard">Скопировать имя пакета в буфер обмена</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >Вы уверены, что хотите удалить %1$s приложений?</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >Скопировать имя пакета в буфер обмена</string>
     <string name="no_description_available">Описание отсутствует</string>
     <string name="uninstall">Удалить</string>
     <string name="reinstall">Переустановить</string>
     <string name="please_start_shizuku">Пожалуйста, запустите Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Пожалуйста, установите Shizuku и авторизуйте Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Пожалуйста, разрешите доступ Shizuku к Canta.</string>
+    <string
+        name="please_install_shizuku_and_authorise_canta"
+    >Пожалуйста, установите Shizuku и авторизуйте Canta.</string>
+    <string
+        name="please_allow_shizuku_access_for_canta"
+    >Пожалуйста, разрешите доступ Shizuku к Canta.</string>
     <string name="only_system">Только системные</string>
     <string name="no_apps_found">Приложения не найдены</string>
     <string name="loading_apps">Загрузка приложений</string>
