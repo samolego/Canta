@@ -40,18 +40,13 @@
     >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
-<<<<<<< HEAD
     <string
         name="auto_update_bloat_list_description"
     >Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
-=======
-    <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
->>>>>>> l10n_master
     <string name="settings">Settings</string>
     <string name="confirm_uninstall">Confirm uninstallations</string>
     <string name="app_version">App version: %s</string>
     <string name="bloatware_list_version">Latest bloatware list</string>
-<<<<<<< HEAD
     <string
         name="no_warranty_content"
     >This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
@@ -71,15 +66,4 @@
     <string
         name="select_all_enabled"
     >Select all has been enabled for filter type \"Recommended\".</string>
-=======
-    <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
-    <string name="disclaimer">Disclaimer - No Warranty</string>
-    <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
-    <string name="never_show_again">Don\'t show this message again</string>
-    <string name="proceed">Proceed</string>
-    <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
-    <string name="select_all">Select all</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
->>>>>>> l10n_master
 </resources>
