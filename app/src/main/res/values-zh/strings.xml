@@ -1,23 +1,15 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">取消</string>
     <string name="ok">好</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >您確定要解除安裝 %1$s 個應用程式嗎？</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >將包名複製到剪貼簿</string>
+    <string name="are_you_sure_to_uninstall_apps">您確定要解除安裝 %1$s 個應用程式嗎？</string>
+    <string name="copy_package_name_to_clipboard">將包名複製到剪貼簿</string>
     <string name="no_description_available">沒有可用的描述</string>
     <string name="uninstall">解除安裝</string>
     <string name="reinstall">重新安裝</string>
     <string name="please_start_shizuku">請啟動Shizuku。</string>
-    <string
-        name="please_install_shizuku_and_authorise_canta"
-    >請安裝 Shizuku 並授權 Canta。</string>
-    <string
-        name="please_allow_shizuku_access_for_canta"
-    >請允許 Shizuku 存取 Canta。</string>
+    <string name="please_install_shizuku_and_authorise_canta">請安裝 Shizuku 並授權 Canta。</string>
+    <string name="please_allow_shizuku_access_for_canta">請允許 Shizuku 存取 Canta。</string>
     <string name="only_system">僅系統</string>
     <string name="no_apps_found">沒有找到應用程式</string>
     <string name="loading_apps">正在載入應用程式</string>
@@ -34,7 +26,7 @@
     <string name="copy">複製</string>
     <string name="app_settings">應用程式資訊</string>
     <string name="close">關閉</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta 是一款開源用來解除安裝應用的應用程式，它使用 Shizuku 來刪除系統和用戶應用程式。\n它允許您按照自己的意願對設備進行 消腫，無需電腦。 \n\n特別感謝 Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next- Generation/)。 \n沒有他們的工作，Canta 就不一樣了。</string>
     <string name="search_apps">搜尋應用</string>
     <string name="auto_update_bloat_list">自動更新膨脹軟體列表</string>
     <string name="auto_update_bloat_list_description">自動取得新版本的應用程式的膨脹資訊。這保證了最新的徽章和應用程式描述</string>
