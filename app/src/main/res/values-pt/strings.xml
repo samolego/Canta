@@ -1,40 +1,32 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Cancelar</string>
     <string name="ok">OK</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Are you sure to uninstall %1$s apps?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >Copy package name to clipboard</string>
-    <string name="no_description_available">No description available</string>
-    <string name="uninstall">Uninstall</string>
-    <string name="reinstall">ReInstall</string>
-    <string name="please_start_shizuku">Please start Shizuku.</string>
-    <string
-        name="please_install_shizuku_and_authorise_canta"
-    >Please install Shizuku and authorise Canta.</string>
-    <string
-        name="please_allow_shizuku_access_for_canta"
-    >Please allow Shizuku access for Canta.</string>
-    <string name="only_system">Only system</string>
-    <string name="no_apps_found">No apps found</string>
-    <string name="loading_apps">Loading apps</string>
-    <string name="badge_info">Badge info</string>
-    <string name="got_it">Got it</string>
-    <string name="loading_badges">Loading badges ...</string>
+    <string name="are_you_sure_to_uninstall_apps">Tem certeza de que deseja desinstalar %1$s apps?</string>
+    <string name="copy_package_name_to_clipboard">Copiar nome do pacote para a área de transferência</string>
+    <string name="no_description_available">Nenhuma descrição disponível</string>
+    <string name="uninstall">Desinstalar</string>
+    <string name="reinstall">Reinstalar</string>
+    <string name="please_start_shizuku">Por favor, inicie Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Por favor, instale o Shizuku e autorize o Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Por favor, permita que Shizuku acesse Canta.</string>
+    <string name="only_system">Apenas do sistema</string>
+    <string name="no_apps_found">Nenhum aplicativo encontrado</string>
+    <string name="loading_apps">Carregando aplicativos</string>
+    <string name="badge_info">Informações da etiqueta</string>
+    <string name="got_it">Entendi</string>
+    <string name="loading_badges">Carregando etiquetas...</string>
     <string name="logs">Logs</string>
-    <string name="back">Back</string>
+    <string name="back">Voltar</string>
     <string name="copy_logs">Copy logs</string>
     <string name="log_copied">Log copied to clipboard</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
         <item quantity="other">Clear %d selected</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
+    <string name="copy">Copiar</string>
+    <string name="app_settings">Informarção do aplicativo</string>
+    <string name="close">Fechar</string>
     <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps. \nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>

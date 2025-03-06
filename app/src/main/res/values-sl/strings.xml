@@ -1,21 +1,15 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Prekliči</string>
     <string name="ok">V redu</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Ste prepričani, da želite odstraniti %1$s aplikacij?</string>
+    <string name="are_you_sure_to_uninstall_apps">Ste prepričani, da želite odstraniti %1$s aplikacij?</string>
     <string name="copy_package_name_to_clipboard">Kopiraj ime paketa</string>
     <string name="no_description_available">Opis ni na voljo</string>
     <string name="uninstall">Odstrani</string>
     <string name="reinstall">Ponovno namesti</string>
     <string name="please_start_shizuku">Prosim, zaženite Shizuku.</string>
-    <string
-        name="please_install_shizuku_and_authorise_canta"
-    >Prosim, namestite Shizuku in avtorizirajte Canto.</string>
-    <string
-        name="please_allow_shizuku_access_for_canta"
-    >Prosim, dovolite dostop Canti do Shizukuja.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Prosim, namestite Shizuku in avtorizirajte Canto.</string>
+    <string name="please_allow_shizuku_access_for_canta">Prosim, dovolite dostop Canti do Shizukuja.</string>
     <string name="only_system">Samo sistemske</string>
     <string name="no_apps_found">Ni najdenih aplikacij</string>
     <string name="loading_apps">Nalaganje aplikacij</string>
@@ -35,23 +29,21 @@
     <string name="copy">Kopiraj</string>
     <string name="app_settings">Podatki o aplikaciji</string>
     <string name="close">Zapri</string>
-    <string
-        name="canta_description"
-    >Canta je odprtokodna odmestitvena aplikacija, ki uporablja Shizuku, da lahko odstrani sistemske in uporabniške aplikacije.\nOmogoča vam da razbremenite svojo napravo navlake, ne da bi potrebovali računalnik.\n\nZahvala gre tudi %s.\nCanta brez njih ne bi bila enaka.</string>
+    <string name="canta_description">Canta je odprtokodna aplikacija, ki uporablja Shizuku, da lahko odstrani sistemske in uporabniške aplikacije.\nOmogoča vam da razbremenite svojo napravo navlake, ne da bi potrebovali računalnik.\n\nZahvala gre tudi %s.\nCanta brez njih ne bi bila enaka.</string>
     <string name="search_apps">Poišči aplikacije</string>
-    <string name="auto_update_bloat_list">Auto update bloat list</string>
-    <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
-    <string name="settings">Settings</string>
-    <string name="confirm_uninstall">Confirm uninstallations</string>
-    <string name="app_version">App version: %s</string>
-    <string name="bloatware_list_version">Latest bloatware list</string>
-    <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
-    <string name="disclaimer">Disclaimer - No Warranty</string>
-    <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
-    <string name="never_show_again">Don\'t show this message again</string>
-    <string name="proceed">Proceed</string>
-    <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
-    <string name="select_all">Select all</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="auto_update_bloat_list">Samodejno posodobi seznam navlake</string>
+    <string name="auto_update_bloat_list_description">Samodejno pridobi nov seznam z navlako. Ta zagotavlja najnovejše opise in značke aplikacij.</string>
+    <string name="settings">Nastavitve</string>
+    <string name="confirm_uninstall">Potrdi odstranitve</string>
+    <string name="app_version">Verzija: %s</string>
+    <string name="bloatware_list_version">Zadnji seznam navlake</string>
+    <string name="no_warranty_content">Ta aplikacija zagotavlja priporočila za odstranitev aplikacij na podlagi informacij tretjih oseb. Ta priporočila so informativne narave in ne zagotavljajo varnosti ali združljivosti z vašo napravo. Odstranjevanje sistemskih aplikacij lahko povzroči nepričakovane težave, med drugim: izgubo funkcionalnosti, nestabilnost sistema, nezmožnost zagona naprave - bootloop, izgubo podatkov itd. Razvijalec te aplikacije ni odgovoren za morebitno škodo, ki bi nastala na vaši napravi zaradi upoštevanja navedenih priporočil oz. opisov.</string>
+    <string name="disclaimer">Izjava o omejitvi odgovornosti - ni garancije</string>
+    <string name="proceed_at_own_risk">S klikom na gumb \"Nadaljuj\" se strinjate z uporabo aplikacije na lastno odgovornost.</string>
+    <string name="never_show_again">Nikoli več ne prikaži tega obvestila</string>
+    <string name="proceed">Nadaljuj</string>
+    <string name="confirm_uninstall_description">Ali naj se prikaže pogovorno okno za potrditev odstranjevanja.</string>
+    <string name="select_all">Izberi vse</string>
+    <string name="select_all_tip">Kliknite še %d-krat, da omogočite možnost izbora vseh aplikacij.</string>
+    <string name="select_all_enabled">Za vrsto filtra \"Priporočeno\" je sedaj omogočena možnost \"Izberi vse\".</string>
 </resources>
