@@ -21,8 +21,9 @@
     <string name="copy_logs">複製日誌</string>
     <string name="log_copied">日誌已複製到剪貼簿</string>
     <plurals name="clear_selected_apps">
-        <item quantity="other">清除所選的 %d 個</item>
+        <item quantity="other">Clear %d selected</item>
     </plurals>
+
     <string name="copy">複製</string>
     <string name="app_settings">應用程式資訊</string>
     <string name="close">關閉</string>
