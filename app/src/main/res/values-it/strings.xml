@@ -1,25 +1,15 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Annulla</string>
     <string name="ok">OK</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Sei sicuro di voler disinstallare %1$s apps?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >Copia il nome del pacchetto negli appunti</string>
-    <string
-        name="no_description_available"
-    >Nessuna descrizione disponibile</string>
+    <string name="are_you_sure_to_uninstall_apps">Sei sicuro di voler disinstallare %1$s apps?</string>
+    <string name="copy_package_name_to_clipboard">Copia il nome del pacchetto negli appunti</string>
+    <string name="no_description_available">Nessuna descrizione disponibile</string>
     <string name="uninstall">Disinstalla</string>
     <string name="reinstall">Reinstalla</string>
     <string name="please_start_shizuku">Per favore, avvia Shizuku.</string>
-    <string
-        name="please_install_shizuku_and_authorise_canta"
-    >Per favore, installa Shizuku e autorizza Canta.</string>
-    <string
-        name="please_allow_shizuku_access_for_canta"
-    >Si prega di consentire l\'accesso a Shizuku per Canta.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Per favore, installa Shizuku e autorizza Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Si prega di consentire l\'accesso a Shizuku per Canta.</string>
     <string name="only_system">Solo sistema</string>
     <string name="no_apps_found">Nessuna applicazione trovata</string>
     <string name="loading_apps">Caricamento applicazioni</string>
@@ -31,29 +21,27 @@
     <string name="copy_logs">Copy logs</string>
     <string name="log_copied">Log copied to clipboard</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
+        <item quantity="one">Cancella %d selezionato</item>
         <item quantity="other">Clear %d selected</item>
     </plurals>
     <string name="copy">Copia</string>
     <string name="app_settings">App info</string>
     <string name="close">Chiudi</string>
-    <string
-        name="canta_description"
-    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
-    <string name="auto_update_bloat_list">Auto update bloat list</string>
+    <string name="auto_update_bloat_list">Aggiornamento automatico app indesiderate</string>
     <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
-    <string name="settings">Settings</string>
-    <string name="confirm_uninstall">Confirm uninstallations</string>
-    <string name="app_version">App version: %s</string>
-    <string name="bloatware_list_version">Latest bloatware list</string>
+    <string name="settings">Impostazioni</string>
+    <string name="confirm_uninstall">Conferma disinstallazioni</string>
+    <string name="app_version">Versione app: %s</string>
+    <string name="bloatware_list_version">Lista software indesiderato più recente</string>
     <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
-    <string name="disclaimer">Disclaimer - No Warranty</string>
-    <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
-    <string name="never_show_again">Don\'t show this message again</string>
-    <string name="proceed">Proceed</string>
-    <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
-    <string name="select_all">Select all</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
+    <string name="disclaimer">Esclusione di responsabilità - Nessuna Garanzia</string>
+    <string name="proceed_at_own_risk">Cliccando \"Procedi\", acconsenti all\'utilizzo di quest\'app a tuo rischio.</string>
+    <string name="never_show_again">Non mostrare più questo messaggio</string>
+    <string name="proceed">Procedi</string>
+    <string name="confirm_uninstall_description">Indica se mostrare la finestra di dialogo per confermare l\'azione di disinstallazione.</string>
+    <string name="select_all">Seleziona tutto</string>
+    <string name="select_all_tip">Tocca %d più volte per abilitare la selezione di tutte le funzionalità.</string>
     <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
 </resources>
