@@ -1,6 +1,10 @@
 package org.samo_lego.canta.ui.dialog
 
-import UrlText
+import androidx.compose.ui.viewinterop.AndroidView
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.widget.TextView
+import org.samo_lego.canta.util.CustomTextSelectionCallback
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -18,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
@@ -156,16 +159,36 @@ fun AppInfoDialog(
                     .heightIn(max = maxScrollableHeight)
                     .verticalScroll(rememberScrollState())
             ) {
-            if (bloatDescription != null) {
-                SelectionContainer {
-                    UrlText(text = bloatDescription)
-                }
-            } else {
-                Text(
-                        text = stringResource(R.string.no_description_available),
+                if (bloatDescription != null) {
+                    AndroidView(
+                        factory = { ctx ->
+                            TextView(ctx).apply {
+                                text =
+                                    Html.fromHtml(bloatDescription, Html.FROM_HTML_MODE_COMPACT)
+
+                                setTextIsSelectable(true)
+
+                                autoLinkMask = android.text.util.Linkify.WEB_URLS
+                                movementMethod = LinkMovementMethod.getInstance()
+
+                                setTextColor(androidx.core.content.ContextCompat.getColor(
+                                    context,
+                                    android.R.color.tab_indicator_text
+                                ))
+                                textSize = 14f
+
+                                customSelectionActionModeCallback =
+                                    CustomTextSelectionCallback(context, this)
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    Text(
+                        text = context.getString(R.string.no_description_available),
                         style = MaterialTheme.typography.bodySmall
-                )
-            }
+                    )
+                }
         }
             if (!appInfo.isUninstalled) {
                 Row(modifier = Modifier.align(Alignment.End)) {
