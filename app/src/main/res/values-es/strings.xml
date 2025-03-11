@@ -4,7 +4,7 @@
     <string name="ok">De acuerdo</string>
     <string name="are_you_sure_to_uninstall_apps">¿Estás seguro de desinstalar las aplicaciones %1$s?</string>
     <string name="copy_package_name_to_clipboard">Copiar el nombre del paquete al portapapeles</string>
-    <string name="no_description_available">No hay descripción</string>
+    <string name="no_description_available">Sin descripción</string>
     <string name="uninstall">Desinstalar</string>
     <string name="reinstall">Reinstalar</string>
     <string name="please_start_shizuku">Por favor, inicia Shizuku.</string>
@@ -27,7 +27,7 @@
     <string name="copy">Copiar</string>
     <string name="app_settings">Información de la aplicación</string>
     <string name="close">Cerrar</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta es una aplicación de desinstalación de código abierto que usa Shizuku para eliminar aplicaciones del sistema y del usuario. Le permite quitar aplicaciones no deseadas de su dispositivo como desee, sin necesidad de PC.\n\nUn agradecimiento especial a %s.\nCanta no sería lo mismo sin su trabajo.</string>
     <string name="search_apps">Buscar aplicaciones</string>
     <string name="auto_update_bloat_list">Actualizar automáticamente las aplicaciones no deseadas</string>
     <string name="auto_update_bloat_list_description">Recibir automáticamente una nueva versión de la lista de aplicaciones. Esto garantiza que los iconos y las descripciones de las aplicaciones estén actualizados.</string>
