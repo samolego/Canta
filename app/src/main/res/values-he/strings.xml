@@ -21,10 +21,10 @@
     <string name="copy_logs">העתק לוגים</string>
     <string name="log_copied">היומן הועתק ללוח</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="two">Clear %d selected</item>
-        <item quantity="many">Clear %d selected</item>
-        <item quantity="other">נקה %d נבחרים</item>
+        <item quantity="one">נקה %d נבחר</item>
+        <item quantity="two">נקה %d נבחרים</item>
+        <item quantity="many">נקה %d נבחרים</item>
+        <item quantity="other">Clear %d selected</item>
     </plurals>
     <string name="copy">העתק</string>
     <string name="app_settings">פרטי יישום</string>
@@ -32,7 +32,7 @@
     <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">חיפוש יישומים</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
-    <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
+    <string name="auto_update_bloat_list_description">אחזר אוטומטית גרסה חדשה של מידע על התנפחות האפליקציה.  זה מבטיח תגים ותיאורי אפליקציה עדכניים.</string>
     <string name="settings">הגדרות</string>
     <string name="confirm_uninstall">אימות הסרת יישומים</string>
     <string name="app_version">גרסת היישום: %s</string>
