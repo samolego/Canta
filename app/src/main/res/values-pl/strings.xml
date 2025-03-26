@@ -1,33 +1,25 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Anuluj</string>
     <string name="ok">OK</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Czy na pewno chcesz odinstalować %1$s aplikację/aplikacje?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >Skopiuj nazwę pakietu do schowka</string>
+    <string name="are_you_sure_to_uninstall_apps">Czy na pewno chcesz odinstalować %1$s aplikację/aplikacje?</string>
+    <string name="copy_package_name_to_clipboard">Skopiuj nazwę pakietu do schowka</string>
     <string name="no_description_available">Opis niedostępny</string>
     <string name="uninstall">Odinstaluj</string>
     <string name="reinstall">Zainstaluj ponownie</string>
     <string name="please_start_shizuku">Uruchom Shizuku.</string>
-    <string
-        name="please_install_shizuku_and_authorise_canta"
-    >Proszę zainstalować Shizuku i upoważnić Canta.</string>
-    <string
-        name="please_allow_shizuku_access_for_canta"
-    >Proszę zezwolić Canta na dostęp do Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Proszę zainstalować Shizuku i upoważnić Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Proszę zezwolić Canta na dostęp do Shizuku.</string>
     <string name="only_system">Tylko systemowe</string>
     <string name="no_apps_found">Nie znaleziono aplikacji</string>
     <string name="loading_apps">Ładowanie aplikacji</string>
     <string name="badge_info">Wyjaśnienie oznaczeń</string>
     <string name="got_it">Zrozumiano</string>
     <string name="loading_badges">Ładowanie oznaczeń ...</string>
-    <string name="logs">Logs</string>
-    <string name="back">Back</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="logs">Logi</string>
+    <string name="back">Powrót</string>
+    <string name="copy_logs">Skopiuj logi</string>
+    <string name="log_copied">Logi zostały skopiowane do schowka</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
         <item quantity="few">Clear %d selected</item>
@@ -37,9 +29,7 @@
     <string name="copy">Copy</string>
     <string name="app_settings">App info</string>
     <string name="close">Close</string>
-    <string
-        name="canta_description"
-    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
     <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
