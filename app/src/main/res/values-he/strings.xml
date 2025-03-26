@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cancel">בטל</string>
+    <string name="cancel">ביטול</string>
     <string name="ok">בסדר</string>
     <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח להסיר את ההתקנה של אפליקציות %1$s?</string>
     <string name="copy_package_name_to_clipboard">שם חבילה הועתק ללוח</string>
