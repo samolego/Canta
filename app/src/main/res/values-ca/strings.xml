@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Cancel·la</string>
     <string name="ok">D\'acord</string>
-    <string name="are_you_sure_to_uninstall_apps">Estàs segur de desinstal·lar %1$s app(s)?</string>
+    <string name="are_you_sure_to_uninstall_apps">Estàs segur de desinstal·lar %1$s aplicacions?</string>
     <string name="copy_package_name_to_clipboard">Copia el nom del paquet al porta-retalls</string>
     <string name="no_description_available">Descripció no disponible</string>
     <string name="uninstall">Desinstal·la</string>
@@ -40,8 +40,8 @@
     <string name="proceed_at_own_risk">En clicar \"Continua\" acceptes usar aquesta aplicació assumint-ne el risc.</string>
     <string name="never_show_again">No tornis a mostrar aquest missatge</string>
     <string name="proceed">Continua</string>
-    <string name="confirm_uninstall_description">Indica si vols que es mostri el diàleg per confirmar la desinstal·lació</string>
-    <string name="select_all">Select all</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="confirm_uninstall_description">Indica si vols que es mostri el diàleg per confirmar la desinstal·lació.</string>
+    <string name="select_all">Selecciona-ho tot</string>
+    <string name="select_all_tip">Pitja %d vegades més per activar la funció \"Selecciona-ho tot\"</string>
+    <string name="select_all_enabled">\"Selecciona-ho tot\" s\'ha activat per al filtre \"Recomanat\"</string>
 </resources>
