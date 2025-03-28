@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">ביטול</string>
     <string name="ok">בסדר</string>
-    <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח להסיר את ההתקנה של אפליקציות %1$s?</string>
+    <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח שברצונך להסיר את ההתקנה של אפליקציות %1$s?</string>
     <string name="copy_package_name_to_clipboard">שם חבילה הועתק ללוח</string>
     <string name="no_description_available">אין תיאור זמין</string>
     <string name="uninstall">הסר התקנה</string>
@@ -12,7 +12,7 @@
     <string name="please_allow_shizuku_access_for_canta">אנא אשר גישה Shizuku עבור Canta.</string>
     <string name="only_system">רק מערכת</string>
     <string name="no_apps_found">לא נמצאו יישומים</string>
-    <string name="loading_apps">טוען אפלקציות</string>
+    <string name="loading_apps">טוען יישומים</string>
     <string name="badge_info">מידע על תג</string>
     <string name="got_it">קיבלתי</string>
     <string name="loading_badges">טוען תגים...</string>
@@ -29,10 +29,10 @@
     <string name="copy">העתק</string>
     <string name="app_settings">פרטי יישום</string>
     <string name="close">סגור</string>
-    <string name="canta_description">Canta היא אפליקציית הסרת התקנה בקוד פתוח המשתמשת ב- Shizuku כדי להסיר אפליקציות מערכת ומשתמשים. זה מאפשר לך לנהל את המכשיר שלך כרצונך, ללא צורך במחשב.\n\nתודה מיוחדת ל-%s.\nCanta לא יהיה אותו דבר בלי העבודה שלהם.</string>
+    <string name="canta_description">Canta היא אפליקציית הסרת יישומים בקוד פתוח המשתמשת ב- Shizuku כדי להסיר אפליקציות מערכת ומשתמשים. זה מאפשר לך לנהל את המכשיר שלך כרצונך, ללא צורך במחשב.\n\nתודה מיוחדת ל-%s.\nCanta לא יהיה אותו דבר בלי העבודה שלהם.</string>
     <string name="search_apps">חיפוש יישומים</string>
     <string name="auto_update_bloat_list">עידכון אוטומטי רשימת נפח</string>
-    <string name="auto_update_bloat_list_description">אחזר אוטומטית גרסה חדשה של מידע על התנפחות האפליקציה.  זה מבטיח תגים ותיאורי אפליקציה עדכניים.</string>
+    <string name="auto_update_bloat_list_description">אחזר אוטומטית גרסה חדשה של מידע על נפח היישום זה מבטיח תגים ותיאורי יישום עדכניים.</string>
     <string name="settings">הגדרות</string>
     <string name="confirm_uninstall">אימות הסרת יישומים</string>
     <string name="app_version">גרסת היישום: %s</string>
@@ -44,6 +44,6 @@
     <string name="proceed">המשך</string>
     <string name="confirm_uninstall_description">האם להציג את תיבת הדו-שיח לאישור פעולת הסרת ההתקנה.</string>
     <string name="select_all">בחר הכל</string>
-    <string name="select_all_tip">הקש על %d פעמים נוספות כדי להפעיל בחר את כל הפונקציונליות.</string>
+    <string name="select_all_tip">הקש %d פעמים נוספות כדי להפעיל בחירת כל הפונקציונליות.</string>
     <string name="select_all_enabled">בחר הכל הופעל עבור סוג המסנן \"מומלץ\".</string>
 </resources>
