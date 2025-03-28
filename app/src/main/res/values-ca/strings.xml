@@ -1,57 +1,47 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cancel">Cancel</string>
-    <string name="ok">OK</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Are you sure to uninstall %1$s apps?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >Copy package name to clipboard</string>
-    <string name="no_description_available">No description available</string>
-    <string name="uninstall">Uninstall</string>
-    <string name="reinstall">ReInstall</string>
-    <string name="please_start_shizuku">Please start Shizuku.</string>
-    <string
-        name="please_install_shizuku_and_authorise_canta"
-    >Please install Shizuku and authorise Canta.</string>
-    <string
-        name="please_allow_shizuku_access_for_canta"
-    >Please allow Shizuku access for Canta.</string>
-    <string name="only_system">Only system</string>
-    <string name="no_apps_found">No apps found</string>
-    <string name="loading_apps">Loading apps</string>
-    <string name="badge_info">Badge info</string>
-    <string name="got_it">Got it</string>
-    <string name="loading_badges">Loading badges ...</string>
-    <string name="logs">Logs</string>
-    <string name="back">Back</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="cancel">Cancel·la</string>
+    <string name="ok">D\'acord</string>
+    <string name="are_you_sure_to_uninstall_apps">Estàs segur de desinstal·lar %1$s aplicacions?</string>
+    <string name="copy_package_name_to_clipboard">Copia el nom del paquet al porta-retalls</string>
+    <string name="no_description_available">Descripció no disponible</string>
+    <string name="uninstall">Desinstal·la</string>
+    <string name="reinstall">Reinstal·la</string>
+    <string name="please_start_shizuku">Si us plau, engega Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Si us plau, instal·la Shizuku i autoritza Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Si us plau, permet que Shizuku accedeixi a Canta.</string>
+    <string name="only_system">Només sistema</string>
+    <string name="no_apps_found">No s\'ha trobat cap aplicació</string>
+    <string name="loading_apps">Carregant aplicacions</string>
+    <string name="badge_info">Informació de les etiquetes</string>
+    <string name="got_it">Entesos</string>
+    <string name="loading_badges">Carregant les etiquetes ...</string>
+    <string name="logs">Registres</string>
+    <string name="back">Enrere</string>
+    <string name="copy_logs">Copia els registres</string>
+    <string name="log_copied">Registre copiat al porta-retalls</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="one">Esborra %d seleccionat</item>
+        <item quantity="other">Esborra %d seleccionats</item>
     </plurals>
-    <string name="copy">Copy</string>
-    <string name="app_settings">App info</string>
-    <string name="close">Close</string>
-    <string
-        name="canta_description"
-    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
-    <string name="search_apps">Search apps</string>
-    <string name="auto_update_bloat_list">Auto update bloat list</string>
-    <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
-    <string name="settings">Settings</string>
-    <string name="confirm_uninstall">Confirm uninstallations</string>
-    <string name="app_version">App version: %s</string>
-    <string name="bloatware_list_version">Latest bloatware list</string>
-    <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
-    <string name="disclaimer">Disclaimer - No Warranty</string>
-    <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
-    <string name="never_show_again">Don\'t show this message again</string>
-    <string name="proceed">Proceed</string>
-    <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
-    <string name="select_all">Select all</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="copy">Copia</string>
+    <string name="app_settings">Informació de l\'aplicació</string>
+    <string name="close">Tanca</string>
+    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="search_apps">Cerca aplicacions</string>
+    <string name="auto_update_bloat_list">Actualitzar automàticament la llista d\'aplicacions no desitjades</string>
+    <string name="auto_update_bloat_list_description">Obté automàticament la informació actualitzada de les aplicacions no desitjades. Això garanteix tenir al dia les etiquetes i les descripcions de les aplicacions.</string>
+    <string name="settings">Paràmetres</string>
+    <string name="confirm_uninstall">Confirma les desinstal·lacions</string>
+    <string name="app_version">Versió de l\'aplicació %s</string>
+    <string name="bloatware_list_version">Llista d\'aplicacions no desitjades més recent</string>
+    <string name="no_warranty_content">Aquesta aplicació ofereix les recomanacions per esborrar les aplicacions a partir d\'una informació obtinguda de tercers. Aquestes recomanacions són purament informatives i no garanteixen la seguretat ni la compatibilitat amb el vostre dispositiu. Desinstal·lar aplicacions del sistema pot produir problemes inesperats, com ara: pèrdua de funcionalitat, inestabilitat del sistema, reinici en bucle, pèrdua de dades, etc.  El desenvolupador d\'aquesta aplicació no es fa responsable dels danys que es puguin produir al vostre dispositiu si seguiu les recomanacions  donades.</string>
+    <string name="disclaimer">Exempció de responsabilitat - Sense garantia</string>
+    <string name="proceed_at_own_risk">En clicar \"Continua\" acceptes usar aquesta aplicació assumint-ne el risc.</string>
+    <string name="never_show_again">No tornis a mostrar aquest missatge</string>
+    <string name="proceed">Continua</string>
+    <string name="confirm_uninstall_description">Indica si vols que es mostri el diàleg per confirmar la desinstal·lació.</string>
+    <string name="select_all">Selecciona-ho tot</string>
+    <string name="select_all_tip">Pitja %d vegades més per activar la funció \"Selecciona-ho tot\"</string>
+    <string name="select_all_enabled">\"Selecciona-ho tot\" s\'ha activat per al filtre \"Recomanat\"</string>
 </resources>
