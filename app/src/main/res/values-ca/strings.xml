@@ -27,7 +27,7 @@
     <string name="copy">Copia</string>
     <string name="app_settings">Informació de l\'aplicació</string>
     <string name="close">Tanca</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta és una aplicació de desinstal·lació d\'aplicacions de codi obert que usa Shizuku per desinstal·lar tant les aplicacions de l\'usuari com les del sistema. Et permet desinstal·lar les aplicacions no desitjades sense necessitat d\'un ordinador.\n\nUn agraïment especial a %s.\nCanta no seria el mateix sense el seu treball.</string>
     <string name="search_apps">Cerca aplicacions</string>
     <string name="auto_update_bloat_list">Actualitzar automàticament la llista d\'aplicacions no desitjades</string>
     <string name="auto_update_bloat_list_description">Obté automàticament la informació actualitzada de les aplicacions no desitjades. Això garanteix tenir al dia les etiquetes i les descripcions de les aplicacions.</string>
