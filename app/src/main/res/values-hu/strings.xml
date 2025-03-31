@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Mégse</string>
     <string name="ok">Rendben</string>
-    <string name="are_you_sure_to_uninstall_apps">Biztosan eltávolítod a(z) %1$s alkalmazásokat?</string>
+    <string name="are_you_sure_to_uninstall_apps">Biztosan eltávolítod a kijelölt %1$s alkalmazást?</string>
     <string name="copy_package_name_to_clipboard">Csomagnév másolása a vágólapra</string>
     <string name="no_description_available">Nincs elérhető leírás</string>
     <string name="uninstall">Eltávolítás</string>
@@ -21,8 +21,8 @@
     <string name="copy_logs">Naplók másolása</string>
     <string name="log_copied">Naplók vágólapra másolva</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="other">A kiválasztott %d app törlése</item>
+        <item quantity="one">A %d kijelölés visszavonása</item>
+        <item quantity="other">Kijelölések visszavonása (%d)</item>
     </plurals>
     <string name="copy">Másolás</string>
     <string name="app_settings">App infó</string>
