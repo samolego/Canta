@@ -19,15 +19,15 @@
     <string name="logs">Naplók</string>
     <string name="back">Vissza</string>
     <string name="copy_logs">Naplók másolása</string>
-    <string name="log_copied">Naplók kimásolva a vágólapra</string>
+    <string name="log_copied">Naplók vágólapra másolva</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="other">A kiválasztott %d app törlése</item>
     </plurals>
     <string name="copy">Másolás</string>
-    <string name="app_settings">Alkalmazásinformáció</string>
+    <string name="app_settings">App infó</string>
     <string name="close">Bezár</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">A Canta egy nyílt forráskódú app eltávolító, ami a Shizuku-t használja rendszer és felhasználói app-ok eltávolítására.\nKívánságod szerint debloat-olhatod vele az eszközöd, PC használata nélkül.\n\nAkiket külön köszönet illet: %s.\n A Canta nem lenne ugyanaz a munkájuk nélkül.</string>
     <string name="search_apps">Alkalmazások keresése</string>
     <string name="auto_update_bloat_list">Bloat lista automatikus frissítése</string>
     <string name="auto_update_bloat_list_description">Automatikusan lekérdezi az alkalmazás új verziójának bloat-információit. Ez garantálja a naprakész jelvényeket és alkalmazásleírásokat.</string>
@@ -43,5 +43,5 @@
     <string name="confirm_uninstall_description">Megjelenjen az eltávolítási művelet megerősítésére szolgáló párbeszédpanel?</string>
     <string name="select_all">Mind kijelölése</string>
     <string name="select_all_tip">Még %d alkalommal érintse meg az \"Mind kijelölése\" funkció engedélyezéséhez!</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="select_all_enabled">A \"Mind kijelölése\" engedélyezésre került az „Ajánlott” szűrőtípushoz. </string>
 </resources>
