@@ -45,6 +45,10 @@ class Filter(
                 Filter(name = "Unclassified", shouldShow = { app -> app.removalInfo == null })
             removalFilters.add(2, unclassified)
 
+            // Apps that are disabled
+            val disabled = Filter(name = "Disabled", shouldShow = { app -> app.isDisabled })
+            removalFilters.add(3, disabled)
+
             availableFilters = removalFilters
         }
     }
