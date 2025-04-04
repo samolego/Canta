@@ -163,17 +163,6 @@ private fun MainContent(
 ) {
 
     val context = LocalContext.current
-    fun isSystemAppWithUpdates(packageName: String): Boolean {
-        try {
-            val packageInfo = context.packageManager.getPackageInfo(packageName, 0)
-            val isSystem = ((packageInfo.applicationInfo?.flags ?:0) and ApplicationInfo.FLAG_SYSTEM) != 0
-            val hasUpdates = ((packageInfo.applicationInfo?.flags ?:0) and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
-            return isSystem && hasUpdates
-        } catch (e: Exception) {
-            LogUtils.e("CantaApp", "Failed to check app status: ${e.message}")
-            return false
-        }
-    }
     val coroutineScope = rememberCoroutineScope()
 
     // Selected tab
@@ -246,6 +235,7 @@ private fun MainContent(
                                             appListViewModel.selectedApps.isNotEmpty()
                                     return@FloatingActionButton
                                 }
+                                // Trigger uninstall
                                 uninstallOrReinstall(
                                         context = context,
                                         coroutineScope = coroutineScope,
@@ -320,12 +310,11 @@ private fun MainContent(
                 if (showBadgeInfoDialog) {
                     ExplainBadgesDialog(onDismissRequest = { showBadgeInfoDialog = false })
                 } else if (showUninstallConfirmDialog) {
-                    // Replace your current UninstallAppsDialog call with this:
                     if (showUninstallConfirmDialog) {
                         // For a single selected app
                         if (appListViewModel.selectedApps.size == 1) {
                             val packageName = appListViewModel.selectedApps.keys.first()
-                            val isSystemWithUpdates = isSystemAppWithUpdates(packageName)
+                            val isSystemWithUpdates = isSystemAppWithUpdates(context,packageName)
 
                             UninstallAppsDialog(
                                 appCount = 1,
@@ -411,11 +400,23 @@ private fun MainContent(
     }
 }
 
+private fun isSystemAppWithUpdates(context: Context, packageName: String): Boolean {
+    try {
+        val packageInfo = context.packageManager.getPackageInfo(packageName, 0)
+        val isSystem = ((packageInfo.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM) != 0
+        val hasUpdates = ((packageInfo.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+        return isSystem && hasUpdates
+    } catch (e: Exception) {
+        LogUtils.e("CantaApp", "Failed to check app status: ${e.message}")
+        return false
+    }
+}
+
 fun uninstallOrReinstall(
         context: Context,
         coroutineScope: CoroutineScope,
         launchShizuku: () -> Unit,
-        uninstallApp: (String, Boolean) -> Boolean, // Change this line
+        uninstallApp: (String, Boolean) -> Boolean,
         reinstallApp: (String) -> Boolean,
         selectedAppsType: AppsType,
         appListViewModel: AppListViewModel,

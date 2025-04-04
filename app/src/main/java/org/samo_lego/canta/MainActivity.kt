@@ -72,7 +72,8 @@ class MainActivity : ComponentActivity() {
         val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
 
         val shouldReset = resetToFactory && isSystem && hasUpdates
-
+        // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
+        // 0x00000002 = PackageManager.DELETE_ALL_USERS
         LogUtils.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem, hasUpdates: $hasUpdates, resetFirst: $shouldReset]")
 
         if (shouldReset) {
