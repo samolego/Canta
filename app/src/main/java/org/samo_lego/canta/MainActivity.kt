@@ -75,6 +75,13 @@ class MainActivity : ComponentActivity() {
         // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
         // 0x00000002 = PackageManager.DELETE_ALL_USERS
         LogUtils.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem, hasUpdates: $hasUpdates, resetFirst: $shouldReset]")
+        val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
+        val intent = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            broadcastIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         if (shouldReset) {
             try {
@@ -82,14 +89,6 @@ class MainActivity : ComponentActivity() {
 
                 val packageInstaller = getPackageInstaller()
                 val flags = 0x00000002
-
-                val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
-                val intent = PendingIntent.getBroadcast(
-                    applicationContext,
-                    0,
-                    broadcastIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
 
                 HiddenApiBypass.invoke(
                     PackageInstaller::class.java,
@@ -116,13 +115,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
-        val intent = PendingIntent.getBroadcast(
-            applicationContext,
-            0,
-            broadcastIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+
 
         val packageInstaller = getPackageInstaller()
         val flags = if (isSystem) 0x00000004 else 0x00000002
