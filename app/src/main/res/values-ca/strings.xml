@@ -13,9 +13,9 @@
     <string name="only_system">Només sistema</string>
     <string name="no_apps_found">No s\'ha trobat cap aplicació</string>
     <string name="loading_apps">Carregant aplicacions</string>
-    <string name="badge_info">Informació de les etiquetes</string>
+    <string name="badge_info">Informació dels distintius</string>
     <string name="got_it">Entesos</string>
-    <string name="loading_badges">Carregant les etiquetes ...</string>
+    <string name="loading_badges">Carregant els distintius ...</string>
     <string name="logs">Registres</string>
     <string name="back">Enrere</string>
     <string name="copy_logs">Copia els registres</string>
@@ -30,7 +30,7 @@
     <string name="canta_description">Canta és una aplicació de desinstal·lació d\'aplicacions de codi obert que usa Shizuku per desinstal·lar tant les aplicacions de l\'usuari com les del sistema. Et permet desinstal·lar les aplicacions no desitjades sense necessitat d\'un ordinador.\n\nUn agraïment especial a %s.\nCanta no seria el mateix sense el seu treball.</string>
     <string name="search_apps">Cerca aplicacions</string>
     <string name="auto_update_bloat_list">Actualitzar automàticament la llista d\'aplicacions no desitjades</string>
-    <string name="auto_update_bloat_list_description">Obté automàticament la informació actualitzada de les aplicacions no desitjades. Això garanteix tenir al dia les etiquetes i les descripcions de les aplicacions.</string>
+    <string name="auto_update_bloat_list_description">Obté automàticament la informació actualitzada de les aplicacions no desitjades. Això garanteix tenir al dia els distintius i les descripcions de les aplicacions.</string>
     <string name="settings">Paràmetres</string>
     <string name="confirm_uninstall">Confirma les desinstal·lacions</string>
     <string name="app_version">Versió de l\'aplicació %s</string>
