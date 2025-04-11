@@ -323,36 +323,6 @@ private fun MainContent(
                         onAgree = { resetToFactory ->
                             showUninstallConfirmDialog = false
 
-                            coroutineScope.launch {
-                                when (ShizukuData.checkShizukuActive(context.packageManager)) {
-                                    ShizukuInfo.ACTIVE -> {
-                                        ShizukuData.checkShizukuPermission { permResult ->
-                                            if (permResult == PackageManager.PERMISSION_GRANTED) {
-                                                val uninstalled = uninstallApp(packageName, resetToFactory)
-                                                if (uninstalled) {
-                                                    appListViewModel.changeAppStatus(packageName)
-                                                    appListViewModel.selectedApps.remove(packageName)
-                                                }
-                                            } else {
-                                                Toast.makeText(
-                                                    context,
-                                                    context.getString(R.string.please_allow_shizuku_access_for_canta),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                        }
-                                    }
-                                    else -> {
-                                        Toast.makeText(
-                                            context,
-                                            context.getString(R.string.please_start_shizuku),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        launchShizuku()
-                                    }
-                                }
-                            }
-
                             uninstallOrReinstall(
                                 context = context,
                                 coroutineScope = coroutineScope,
