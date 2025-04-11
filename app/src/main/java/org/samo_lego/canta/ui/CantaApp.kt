@@ -311,69 +311,60 @@ private fun MainContent(
                 if (showBadgeInfoDialog) {
                     ExplainBadgesDialog(onDismissRequest = { showBadgeInfoDialog = false })
                 } else if (showUninstallConfirmDialog) {
-                    // For a single selected app
-                    if (appListViewModel.selectedApps.size == 1) {
-                        val packageName = appListViewModel.selectedApps.keys.first()
-                        val isSystemWithUpdates = isSystemAppWithUpdates(context,packageName)
 
-                        UninstallAppsDialog(
-                            appCount = 1,
-                            isSystemApp = isSystemWithUpdates,
-                            hasUpdates = isSystemWithUpdates,
-                            onDismiss = { showUninstallConfirmDialog = false },
-                            onAgree = { resetToFactory ->
-                                showUninstallConfirmDialog = false
+                    val containsSystemApps = appListViewModel.selectedApps.keys.any { pkg ->
+                        isSystemAppWithUpdates(context, pkg)
+                    }
+                    UninstallAppsDialog(
+                        appCount = appListViewModel.selectedApps.size,
+                        isSystemApp = containsSystemApps,
+                        hasUpdates = containsSystemApps,
+                        onDismiss = { showUninstallConfirmDialog = false },
+                        onAgree = { resetToFactory ->
+                            showUninstallConfirmDialog = false
 
-                                coroutineScope.launch {
-                                    when (ShizukuData.checkShizukuActive(context.packageManager)) {
-                                        ShizukuInfo.ACTIVE -> {
-                                            ShizukuData.checkShizukuPermission { permResult ->
-                                                if (permResult == PackageManager.PERMISSION_GRANTED) {
-                                                    val uninstalled = uninstallApp(packageName, resetToFactory)
-                                                    if (uninstalled) {
-                                                        appListViewModel.changeAppStatus(packageName)
-                                                        appListViewModel.selectedApps.remove(packageName)
-                                                    }
-                                                } else {
-                                                    Toast.makeText(
-                                                        context,
-                                                        context.getString(R.string.please_allow_shizuku_access_for_canta),
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
+                            coroutineScope.launch {
+                                when (ShizukuData.checkShizukuActive(context.packageManager)) {
+                                    ShizukuInfo.ACTIVE -> {
+                                        ShizukuData.checkShizukuPermission { permResult ->
+                                            if (permResult == PackageManager.PERMISSION_GRANTED) {
+                                                val uninstalled = uninstallApp(packageName, resetToFactory)
+                                                if (uninstalled) {
+                                                    appListViewModel.changeAppStatus(packageName)
+                                                    appListViewModel.selectedApps.remove(packageName)
                                                 }
+                                            } else {
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.please_allow_shizuku_access_for_canta),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
                                         }
-                                        else -> {
-                                            Toast.makeText(
-                                                context,
-                                                context.getString(R.string.please_start_shizuku),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            launchShizuku()
-                                        }
+                                    }
+                                    else -> {
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.please_start_shizuku),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        launchShizuku()
                                     }
                                 }
                             }
-                        )
-                    } else {
-                        UninstallAppsDialog(
-                            appCount = appListViewModel.selectedApps.size,
-                            onDismiss = { showUninstallConfirmDialog = false },
-                            onAgree = { _ ->
-                                showUninstallConfirmDialog = false
 
-                                uninstallOrReinstall(
-                                    context = context,
-                                    coroutineScope = coroutineScope,
-                                    launchShizuku = launchShizuku,
-                                    uninstallApp = uninstallApp,
-                                    reinstallApp = reinstallApp,
-                                    selectedAppsType = selectedAppsType,
-                                    appListViewModel = appListViewModel,
-                                )
-                            }
-                        )
-                    }
+                            uninstallOrReinstall(
+                                context = context,
+                                coroutineScope = coroutineScope,
+                                launchShizuku = launchShizuku,
+                                uninstallApp = uninstallApp,
+                                reinstallApp = reinstallApp,
+                                selectedAppsType = selectedAppsType,
+                                appListViewModel = appListViewModel,
+                                resetToFactory = resetToFactory
+                            )
+                        }
+                    )
                 } else if (showWarning.value) {
                     NoWarrantyDialog(
                             onProceed = { neverShowAgain ->
@@ -419,6 +410,7 @@ fun uninstallOrReinstall(
         reinstallApp: (String) -> Boolean,
         selectedAppsType: AppsType,
         appListViewModel: AppListViewModel,
+        resetToFactory: Boolean = false,
 ) {
     coroutineScope.launch {
         when (ShizukuData.checkShizukuActive(context.packageManager)) {
@@ -462,7 +454,7 @@ fun uninstallOrReinstall(
                         when (selectedAppsType) {
                             AppsType.INSTALLED -> {
                                 appListViewModel.selectedApps.forEach {
-                                    val uninstalled = uninstallApp(it.key,false)
+                                    val uninstalled = uninstallApp(it.key, resetToFactory)
                                     if (uninstalled) {
                                         appListViewModel.changeAppStatus(it.key)
                                         appListViewModel.selectedApps.remove(it.key)
