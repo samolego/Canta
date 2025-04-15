@@ -1,23 +1,15 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Hủy</string>
     <string name="ok">OK</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Bạn có chắc muốn xóa %1$s app?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >Copy tên gói vào bảng nhớ tạm</string>
+    <string name="are_you_sure_to_uninstall_apps">Bạn có chắc muốn xóa %1$s app?</string>
+    <string name="copy_package_name_to_clipboard">Copy tên gói vào bảng nhớ tạm</string>
     <string name="no_description_available">Không có mô tả</string>
     <string name="uninstall">Gỡ cài đặt</string>
     <string name="reinstall">Tải lại</string>
     <string name="please_start_shizuku">Hãy bật Shizuku.</string>
-    <string
-        name="please_install_shizuku_and_authorise_canta"
-    >Hãy tải Shizuku và ủy quyền cho Canta.</string>
-    <string
-        name="please_allow_shizuku_access_for_canta"
-    >Hãy cho phép Shizuku truy cập Canta.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Hãy tải Shizuku và ủy quyền cho Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Hãy cho phép Shizuku truy cập Canta.</string>
     <string name="only_system">Chỉ app hệ thống</string>
     <string name="no_apps_found">Không tìm thấy ứng dụng</string>
     <string name="loading_apps">Đang tải app</string>
@@ -34,9 +26,7 @@
     <string name="copy">Copy</string>
     <string name="app_settings">App info</string>
     <string name="close">Close</string>
-    <string
-        name="canta_description"
-    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
     <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
@@ -53,4 +43,7 @@
     <string name="select_all">Select all</string>
     <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
     <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="reset_to_factory_version">Reset to factory version</string>
 </resources>
