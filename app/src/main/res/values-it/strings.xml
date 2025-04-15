@@ -44,4 +44,7 @@
     <string name="select_all">Seleziona tutto</string>
     <string name="select_all_tip">Tocca %d più volte per abilitare la selezione di tutte le funzionalità.</string>
     <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="reset_to_factory_version">Reset to factory version</string>
 </resources>
