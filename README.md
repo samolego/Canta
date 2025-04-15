@@ -16,7 +16,7 @@ Powered by [Shizuku](https://shizuku.rikka.app/).
 [![](https://img.shields.io/github/v/release/samolego/canta?include_prereleases&style=for-the-badge&logo=GitHub&label=GitHub&color=blue)](https://github.com/samolego/Canta/releases/latest/)
 
 Wanna try get Canta to Google play?
-[Donate to purchase developer license (2.43€/25€ raised)](https://www.paypal.com/donate/?hosted_button_id=FD4R46ZZ5EWME)
+~~[Donate to purchase developer license](https://www.paypal.com/donate/?hosted_button_id=FD4R46ZZ5EWME)~~ DONE ✅
 
 ### Verification
 You can verify the authenticity of downloaded APKs using this SHA-256 certificate fingerprint:
