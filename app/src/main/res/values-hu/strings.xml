@@ -44,4 +44,7 @@
     <string name="select_all">Mind kijelölése</string>
     <string name="select_all_tip">Még %d alkalommal érintse meg az \"Mind kijelölése\" funkció engedélyezéséhez!</string>
     <string name="select_all_enabled">A \"Mind kijelölése\" engedélyezésre került az „Ajánlott” szűrőtípushoz. </string>
+    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="reset_to_factory_version">Reset to factory version</string>
 </resources>
