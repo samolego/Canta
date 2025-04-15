@@ -46,4 +46,7 @@
     <string name="select_all">בחר הכל</string>
     <string name="select_all_tip">הקש %d פעמים נוספות כדי להפעיל בחירת כל הפונקציונליות.</string>
     <string name="select_all_enabled">בחר הכל הופעל עבור סוג המסנן \"מומלץ\".</string>
+    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="reset_to_factory_version">Reset to factory version</string>
 </resources>
