@@ -46,7 +46,7 @@
     <string name="select_all">Выбрать всё</string>
     <string name="select_all_tip">Нажмите еще %d раз, чтобы включить выбор всех функций.</string>
     <string name="select_all_enabled">Для типа фильтра \"Рекомендовано\" включен параметр \"Выбрать все\".</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
-    <string name="uninstall_app">Uninstall app</string>
-    <string name="reset_to_factory_version">Reset to factory version</string>
+    <string name="uninstall_options_title">Опции удаления</string>
+    <string name="uninstall_app">Удалить приложение</string>
+    <string name="reset_to_factory_version">Сбросить до заводской версии</string>
 </resources>
