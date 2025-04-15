@@ -44,4 +44,7 @@
     <string name="select_all">Tümünü seç</string>
     <string name="select_all_tip">Tümünü seç işlevini etkinleştirmek için %d bir kez daha dokunun.</string>
     <string name="select_all_enabled">“Önerilen” filtre türü için tümünü seç etkinleştirildi.</string>
+    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="reset_to_factory_version">Reset to factory version</string>
 </resources>
