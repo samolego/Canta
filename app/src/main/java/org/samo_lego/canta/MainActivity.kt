@@ -53,11 +53,32 @@ class MainActivity : ComponentActivity() {
                         uninstallApp = { packageName, resetToFactory ->
                             uninstallApp(packageName, resetToFactory)
                         },
+                        canResetAppToFactory = { packageName ->
+                            checkIfCanResetToFactory(packageName)
+                        },
                         reinstallApp = { reinstallApp(it) },
                         closeApp =  { finishAndRemoveTask() },
                     )
                 }
             }
+        }
+    }
+
+    /**
+     * Checks if an app can be reset to factory version.
+     * @param packageName package name of the app to check
+     * @return true if the app is a system app with updates
+     */
+    private fun checkIfCanResetToFactory(packageName: String): Boolean {
+        return try {
+            val packageInfo = packageManager.getInfoForPackage(packageName)
+            val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+            val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+
+            isSystem && hasUpdates
+        } catch (e: Exception) {
+            LogUtils.e(APP_NAME, "Failed to check if app can be reset to factory: ${e.message}")
+            false
         }
     }
 
@@ -82,13 +103,13 @@ class MainActivity : ComponentActivity() {
             broadcastIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+        val packageInstaller = getPackageInstaller()
+        val flags = if (isSystem) 0x00000004 else 0x00000002
 
         if (shouldReset) {
             try {
                 LogUtils.i(APP_NAME, "Attempting to reset system app '$packageName' before uninstalling")
 
-                val packageInstaller = getPackageInstaller()
-                val flags = 0x00000002
 
                 HiddenApiBypass.invoke(
                     PackageInstaller::class.java,
@@ -116,9 +137,6 @@ class MainActivity : ComponentActivity() {
         }
 
 
-
-        val packageInstaller = getPackageInstaller()
-        val flags = if (isSystem) 0x00000004 else 0x00000002
 
         return try {
             HiddenApiBypass.invoke(

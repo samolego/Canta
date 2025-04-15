@@ -1,7 +1,6 @@
 package org.samo_lego.canta.ui
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -79,6 +78,7 @@ private const val secretTaps = 12
 @Composable
 fun CantaApp(
         launchShizuku: () -> Unit,
+        canResetAppToFactory: (String) -> Boolean,
         uninstallApp: (String, Boolean) -> Boolean,
         reinstallApp: (String) -> Boolean,
         closeApp: () -> Unit,
@@ -107,6 +107,7 @@ fun CantaApp(
         composable(Screen.Main.route) {
             MainContent(
                     launchShizuku = launchShizuku,
+                    canResetAppToFactory = canResetAppToFactory,
                     uninstallApp = uninstallApp,
                     reinstallApp = reinstallApp,
                     navigateToLogs = { navController.navigate(Screen.Logs.route) },
@@ -153,6 +154,7 @@ fun CantaApp(
 @Composable
 private fun MainContent(
         launchShizuku: () -> Unit,
+        canResetAppToFactory: (String) -> Boolean,
         uninstallApp: (String, Boolean) -> Boolean,
         reinstallApp: (String) -> Boolean,
         navigateToLogs: () -> Unit,
@@ -312,13 +314,12 @@ private fun MainContent(
                     ExplainBadgesDialog(onDismissRequest = { showBadgeInfoDialog = false })
                 } else if (showUninstallConfirmDialog) {
 
-                    val containsSystemApps = appListViewModel.selectedApps.keys.any { pkg ->
-                        isSystemAppWithUpdates(context, pkg)
-                    }
+                    val canResetAny = appListViewModel.selectedApps.keys
+                        .any { pkg -> canResetAppToFactory(pkg) }
+
                     UninstallAppsDialog(
                         appCount = appListViewModel.selectedApps.size,
-                        isSystemApp = containsSystemApps,
-                        hasUpdates = containsSystemApps,
+                        canResetToFactory = canResetAny,
                         onDismiss = { showUninstallConfirmDialog = false },
                         onAgree = { resetToFactory ->
                             showUninstallConfirmDialog = false
@@ -357,18 +358,6 @@ private fun MainContent(
                 )
             }
         }
-    }
-}
-
-private fun isSystemAppWithUpdates(context: Context, packageName: String): Boolean {
-    try {
-        val packageInfo = context.packageManager.getPackageInfo(packageName, 0)
-        val isSystem = ((packageInfo.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM) != 0
-        val hasUpdates = ((packageInfo.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
-        return isSystem && hasUpdates
-    } catch (e: Exception) {
-        LogUtils.e(APP_NAME, "Failed to check app status: ${e.message}")
-        return false
     }
 }
 

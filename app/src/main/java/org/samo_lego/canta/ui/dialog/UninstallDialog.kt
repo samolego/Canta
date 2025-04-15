@@ -28,8 +28,7 @@ import org.samo_lego.canta.R
 @Composable
 fun UninstallAppsDialog(
     appCount: Int,
-    isSystemApp: Boolean = false,
-    hasUpdates: Boolean = false,
+    canResetToFactory: Boolean = false,
     onDismiss: () -> Unit,
     onAgree: (resetToFactory: Boolean) -> Unit,
 ) {
@@ -46,7 +45,7 @@ fun UninstallAppsDialog(
         ) {
             Text(stringResource(R.string.are_you_sure_to_uninstall_apps, appCount))
 
-            if (isSystemApp && hasUpdates) {
+            if (canResetToFactory) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -89,8 +88,7 @@ fun UninstallAppsDialog(
 fun UninstallAppsDialogPreview() {
     UninstallAppsDialog(
         appCount = 5,
-        isSystemApp = true,
-        hasUpdates = true,
+        canResetToFactory = true,
         onDismiss = {},
         onAgree = {}
     )
@@ -101,8 +99,7 @@ fun UninstallAppsDialogPreview() {
 fun UninstallAppsDialogRegularAppPreview() {
     UninstallAppsDialog(
         appCount = 1,
-        isSystemApp = false,
-        hasUpdates = false,
+        canResetToFactory = false,
         onDismiss = {},
         onAgree = {}
     )
