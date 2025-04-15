@@ -38,21 +38,26 @@ class MainActivity : ComponentActivity() {
         setContent {
             CantaTheme {
                 Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     CantaApp(
-                            launchShizuku = {
-                                // Open shizuku app
-                                val launchIntent =
-                                        packageManager.getLaunchIntentForPackage(
-                                                SHIZUKU_PACKAGE_NAME
-                                        )
-                                startActivity(launchIntent)
-                            },
-                            uninstallApp = { uninstallApp(it) },
-                            reinstallApp = { reinstallApp(it) },
-                            closeApp =  { finishAndRemoveTask() },
+                        launchShizuku = {
+                            // Open shizuku app
+                            val launchIntent =
+                                packageManager.getLaunchIntentForPackage(
+                                    SHIZUKU_PACKAGE_NAME
+                                )
+                            startActivity(launchIntent)
+                        },
+                        uninstallApp = { packageName, resetToFactory ->
+                            uninstallApp(packageName, resetToFactory)
+                        },
+                        canResetAppToFactory = { packageName ->
+                            checkIfCanResetToFactory(packageName)
+                        },
+                        reinstallApp = { reinstallApp(it) },
+                        closeApp =  { finishAndRemoveTask() },
                     )
                 }
             }
@@ -60,53 +65,88 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Uninstalls app using Shizuku. See <a
-     * href="https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerShellCommand.java;drc=bcb2b436bde55ee40050400783a9c083e77ce2fe;l=2144">PackageManagerShellCommand.java</a>
-     * @param packageName package name of the app to uninstall
+     * Checks if an app can be reset to factory version.
+     * @param packageName package name of the app to check
+     * @return true if the app is a system app with updates
      */
-    private fun uninstallApp(packageName: String): Boolean {
-        val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
-        val intent =
-                PendingIntent.getBroadcast(
-                        applicationContext,
-                        0,
-                        broadcastIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
+    private fun checkIfCanResetToFactory(packageName: String): Boolean {
+        return try {
+            val packageInfo = packageManager.getInfoForPackage(packageName)
+            val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+            val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
 
-        val packageInstaller = getPackageInstaller()
+            isSystem && hasUpdates
+        } catch (e: Exception) {
+            LogUtils.e(APP_NAME, "Failed to check if app can be reset to factory: ${e.message}")
+            false
+        }
+    }
+
+    /**
+     * Uninstalls app using Shizuku.
+     * @param packageName package name of the app to uninstall
+     * @param resetToFactory whether to reset system app to factory version before uninstall
+     */
+    private fun uninstallApp(packageName: String, resetToFactory: Boolean = false): Boolean {
         val packageInfo = packageManager.getInfoForPackage(packageName)
-
         val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+        val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
 
-        LogUtils.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem]")
-
+        val shouldReset = resetToFactory && isSystem && hasUpdates
         // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
         // 0x00000002 = PackageManager.DELETE_ALL_USERS
+        LogUtils.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem, hasUpdates: $hasUpdates, resetFirst: $shouldReset]")
+        val broadcastIntent = Intent("org.samo_lego.canta.UNINSTALL_RESULT_ACTION")
+        val intent = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            broadcastIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val packageInstaller = getPackageInstaller()
         val flags = if (isSystem) 0x00000004 else 0x00000002
 
-        return try {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-                PackageInstaller::class
-                        .java
-                        .getDeclaredMethod(
-                                "uninstall",
-                                String::class.java,
-                                Int::class.javaPrimitiveType,
-                                PendingIntent::class.java
-                        )
-                        .invoke(packageInstaller, packageName, flags, intent)
-                // packageInstaller.uninstall(packageName, flags, intent.intentSender)
-            } else {
+        if (shouldReset) {
+            try {
+                LogUtils.i(APP_NAME, "Attempting to reset system app '$packageName' before uninstalling")
+
+
                 HiddenApiBypass.invoke(
-                        PackageInstaller::class.java,
-                        packageInstaller,
-                        "uninstall",
-                        packageName,
-                        flags,
-                        intent.intentSender
+                    PackageInstaller::class.java,
+                    packageInstaller,
+                    "uninstall",
+                    packageName,
+                    flags,
+                    intent.intentSender
                 )
+
+                LogUtils.i(APP_NAME, "Successfully reset system app '$packageName'")
+
+                try {
+                    val updatedPackageInfo = packageManager.getInfoForPackage(packageName)
+                    val stillHasUpdates = (updatedPackageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+                    LogUtils.i(APP_NAME, "After reset: Package still has updates: $stillHasUpdates")
+                } catch (e: Exception) {
+                    LogUtils.e(APP_NAME, "Failed to check update status after reset: ${e.message}")
+                }
+
+            } catch (e: Exception) {
+                LogUtils.e(APP_NAME, "Failed to reset system app: ${e.message}")
+                LogUtils.w(APP_NAME, "Falling back to user uninstall")
             }
+        }
+
+
+
+        return try {
+            HiddenApiBypass.invoke(
+                PackageInstaller::class.java,
+                packageInstaller,
+                "uninstall",
+                packageName,
+                flags,
+                intent.intentSender
+            )
             true
         } catch (e: Exception) {
             LogUtils.e(APP_NAME, "Failed to uninstall '$packageName'")
@@ -125,12 +165,12 @@ class MainActivity : ComponentActivity() {
         val installReason = PackageManager.INSTALL_REASON_UNKNOWN
         val broadcastIntent = Intent("org.samo_lego.canta.INSTALL_RESULT_ACTION")
         val intent =
-                PendingIntent.getBroadcast(
-                        applicationContext,
-                        0,
-                        broadcastIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                )
+            PendingIntent.getBroadcast(
+                applicationContext,
+                0,
+                broadcastIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
 
         LogUtils.i(APP_NAME, "Reinstalling '$packageName'")
 
@@ -139,15 +179,15 @@ class MainActivity : ComponentActivity() {
 
         return try {
             HiddenApiBypass.invoke(
-                    IPackageInstaller::class.java,
-                    ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller(),
-                    "installExistingPackage",
-                    packageName,
-                    installFlags,
-                    installReason,
-                    intent.intentSender,
-                    0,
-                    null
+                IPackageInstaller::class.java,
+                ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller(),
+                "installExistingPackage",
+                packageName,
+                installFlags,
+                installReason,
+                intent.intentSender,
+                0,
+                null
             )
             true
         } catch (e: Exception) {
@@ -166,10 +206,10 @@ class MainActivity : ComponentActivity() {
         // The reason for use "com.android.shell" as installer package under adb is that
         // getMySessions will check installer package's owner
         return ShizukuPackageInstallerUtils.createPackageInstaller(
-                iPackageInstaller,
-                "com.android.shell",
-                userId,
-                this
+            iPackageInstaller,
+            "com.android.shell",
+            userId,
+            this
         )
     }
 }

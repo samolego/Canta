@@ -52,6 +52,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.samo_lego.canta.APP_NAME
 import org.samo_lego.canta.R
 import org.samo_lego.canta.packageName
 import org.samo_lego.canta.ui.component.AppIconImage
@@ -77,7 +78,8 @@ private const val secretTaps = 12
 @Composable
 fun CantaApp(
         launchShizuku: () -> Unit,
-        uninstallApp: (String) -> Boolean,
+        canResetAppToFactory: (String) -> Boolean,
+        uninstallApp: (String, Boolean) -> Boolean,
         reinstallApp: (String) -> Boolean,
         closeApp: () -> Unit,
 ) {
@@ -105,6 +107,7 @@ fun CantaApp(
         composable(Screen.Main.route) {
             MainContent(
                     launchShizuku = launchShizuku,
+                    canResetAppToFactory = canResetAppToFactory,
                     uninstallApp = uninstallApp,
                     reinstallApp = reinstallApp,
                     navigateToLogs = { navController.navigate(Screen.Logs.route) },
@@ -151,7 +154,8 @@ fun CantaApp(
 @Composable
 private fun MainContent(
         launchShizuku: () -> Unit,
-        uninstallApp: (String) -> Boolean,
+        canResetAppToFactory: (String) -> Boolean,
+        uninstallApp: (String, Boolean) -> Boolean,
         reinstallApp: (String) -> Boolean,
         navigateToLogs: () -> Unit,
         navigateToSettings: () -> Unit,
@@ -160,6 +164,7 @@ private fun MainContent(
         showWarning: MutableState<Boolean>,
         enableSelectAll: Boolean,
 ) {
+
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -233,6 +238,7 @@ private fun MainContent(
                                             appListViewModel.selectedApps.isNotEmpty()
                                     return@FloatingActionButton
                                 }
+                                // Trigger uninstall
                                 uninstallOrReinstall(
                                         context = context,
                                         coroutineScope = coroutineScope,
@@ -307,23 +313,28 @@ private fun MainContent(
                 if (showBadgeInfoDialog) {
                     ExplainBadgesDialog(onDismissRequest = { showBadgeInfoDialog = false })
                 } else if (showUninstallConfirmDialog) {
-                    UninstallAppsDialog(
-                            appCount = appListViewModel.selectedApps.size,
-                            onDismiss = { showUninstallConfirmDialog = false },
-                            onAgree = {
-                                showUninstallConfirmDialog = false
 
-                                // Trigger uninstall
-                                uninstallOrReinstall(
-                                        context = context,
-                                        coroutineScope = coroutineScope,
-                                        launchShizuku = launchShizuku,
-                                        uninstallApp = uninstallApp,
-                                        reinstallApp = reinstallApp,
-                                        selectedAppsType = selectedAppsType,
-                                        appListViewModel = appListViewModel,
-                                )
-                            }
+                    val canResetAny = appListViewModel.selectedApps.keys
+                        .any { pkg -> canResetAppToFactory(pkg) }
+
+                    UninstallAppsDialog(
+                        appCount = appListViewModel.selectedApps.size,
+                        canResetToFactory = canResetAny,
+                        onDismiss = { showUninstallConfirmDialog = false },
+                        onAgree = { resetToFactory ->
+                            showUninstallConfirmDialog = false
+
+                            uninstallOrReinstall(
+                                context = context,
+                                coroutineScope = coroutineScope,
+                                launchShizuku = launchShizuku,
+                                uninstallApp = uninstallApp,
+                                reinstallApp = reinstallApp,
+                                selectedAppsType = selectedAppsType,
+                                appListViewModel = appListViewModel,
+                                resetToFactory = resetToFactory
+                            )
+                        }
                     )
                 } else if (showWarning.value) {
                     NoWarrantyDialog(
@@ -354,10 +365,11 @@ fun uninstallOrReinstall(
         context: Context,
         coroutineScope: CoroutineScope,
         launchShizuku: () -> Unit,
-        uninstallApp: (String) -> Boolean,
+        uninstallApp: (String, Boolean) -> Boolean,
         reinstallApp: (String) -> Boolean,
         selectedAppsType: AppsType,
         appListViewModel: AppListViewModel,
+        resetToFactory: Boolean = false,
 ) {
     coroutineScope.launch {
         when (ShizukuData.checkShizukuActive(context.packageManager)) {
@@ -401,7 +413,7 @@ fun uninstallOrReinstall(
                         when (selectedAppsType) {
                             AppsType.INSTALLED -> {
                                 appListViewModel.selectedApps.forEach {
-                                    val uninstalled = uninstallApp(it.key)
+                                    val uninstalled = uninstallApp(it.key, resetToFactory)
                                     if (uninstalled) {
                                         appListViewModel.changeAppStatus(it.key)
                                         appListViewModel.selectedApps.remove(it.key)
