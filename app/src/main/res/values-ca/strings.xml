@@ -44,7 +44,7 @@
     <string name="select_all">Selecciona-ho tot</string>
     <string name="select_all_tip">Pitja %d vegades més per activar la funció \"Selecciona-ho tot\"</string>
     <string name="select_all_enabled">\"Selecciona-ho tot\" s\'ha activat per al filtre \"Recomanat\"</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
-    <string name="uninstall_app">Uninstall app</string>
-    <string name="reset_to_factory_version">Reset to factory version</string>
+    <string name="uninstall_options_title">Opcions de desinstal·lació</string>
+    <string name="uninstall_app">Desinstal·la l\'aplicació</string>
+    <string name="reset_to_factory_version">Restableix la versió de fàbrica</string>
 </resources>
