@@ -45,4 +45,7 @@
     <string name="select_all">Selectați tot</string>
     <string name="select_all_tip">Apăsați %d de mai multe ori pentru a activa toate funcționalitățile.</string>
     <string name="select_all_enabled">Selectați tot ce a fost activat pentru tipul de filtru \"Recomandat\".</string>
+    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="reset_to_factory_version">Reset to factory version</string>
 </resources>
