@@ -1,0 +1,47 @@
+<!-- translatedBy Ghost ide -->
+<resources>
+    <string name="app_name">نمونه</string>
+    <string name="cancel">لغو کردن</string>
+    <string name="ok">خوب</string>
+    <string name="are_you_sure_to_uninstall_apps">آیا مطمئناً برنامه های 1 $ S را حذف نصب کرده اید؟</string>
+    <string name="copy_package_name_to_clipboard">نام بسته را در کلیپ بورد کپی کنید</string>
+    <string name="no_description_available">هیچ توضیحی در دسترس نیست</string>
+    <string name="uninstall">حذف کردن</string>
+    <string name="reinstall">دوباره نصب کردن</string>
+    <string name="please_start_shizuku">لطفا Shizuku را شروع کنید.</string>
+    <string name="please_install_shizuku_and_authorise_canta">لطفاً Shizuku را نصب کرده و کانتا را مجوز دهید.</string>
+    <string name="please_allow_shizuku_access_for_canta">لطفاً به شیزوکو دسترسی به کانتا اجازه دهید.</string>
+    <string name="only_system">فقط سیستم</string>
+    <string name="no_apps_found">هیچ برنامه ای پیدا نشده است</string>
+    <string name="loading_apps">برنامه های بارگیری</string>
+    <string name="badge_info">اطلاعات نشان</string>
+    <string name="got_it">آن را</string>
+    <string name="loading_badges">در حال بارگیری نشان ...</string>
+    <string name="logs">سیاهه ها</string>
+    <string name="back">پشت</string>
+    <string name="copy_logs">سیاهههای مربوطه</string>
+    <string name="log_copied">ورود به سیستم در کلیپ بورد</string>
+    <string name="copy">کپی کردن</string>
+    <string name="app_settings">اطلاعات برنامه</string>
+    <string name="close">نزدیک</string>
+    <string name="canta_description">کانتا یک برنامه حذف نصب منبع باز است که از Shizuku برای حذف سیستم و برنامه های کاربر استفاده می کند. این امکان را به شما می دهد تا دستگاه خود را همانطور که می خواهید ، از طریق رایانه شخصی مورد نیاز خود قرار دهید. \ n \ n special به لطف ٪ s.</string>
+    <string name="search_apps">برنامه های جستجو</string>
+    <string name="auto_update_bloat_list">لیست بروزرسانی خودکار</string>
+    <string name="auto_update_bloat_list_description">به طور خودکار نسخه جدید اطلاعات Bloat App را بدست آورید. این نشان می دهد که نشان های به روز و توضیحات برنامه.</string>
+    <string name="settings">تنظیمات</string>
+    <string name="confirm_uninstall">حذف را تأیید کنید</string>
+    <string name="app_version">نسخه برنامه: ٪ s</string>
+    <string name="bloatware_list_version">آخرین لیست Bloatware</string>
+    <string name="no_warranty_content">این برنامه توصیه های حذف برنامه را بر اساس اطلاعات شخص ثالث ارائه می دهد. این توصیه ها از نظر ماهیت اطلاعاتی هستند و ایمنی یا سازگاری با دستگاه خاص شما را تضمین نمی کنند. حذف برنامه های سیستم می تواند باعث ایجاد مشکلات غیر منتظره ای شود ، از جمله اما محدود به این موارد نیست: از دست دادن عملکرد ، ناپایداری سیستم ، بوت لوپ های دستگاه ، از دست دادن داده ها و غیره. توسعه دهنده این برنامه مسئولیتی در مورد خسارت وارده به دستگاه شما ناشی از پیروی از توصیه های ارائه شده ندارد.</string>
+    <string name="disclaimer">سلب مسئولیت - بدون ضمانت</string>
+    <string name="proceed_at_own_risk">با کلیک روی \ "ادامه \" ، شما موافقت می کنید از این برنامه در معرض خطر خود استفاده کنید.</string>
+    <string name="never_show_again">دوباره این پیام را نشان ندهید</string>
+    <string name="proceed">ادامه دادن</string>
+    <string name="confirm_uninstall_description">اینکه آیا می توان گفتگوی را برای تأیید عملکرد حذف نشان داد.</string>
+    <string name="select_all">همه را انتخاب کنید</string>
+    <string name="select_all_tip">برای فعال کردن همه قابلیت ها ، به ٪ d بیشتر ضربه بزنید.</string>
+    <string name="select_all_enabled">انتخاب همه برای نوع فیلتر \ "توصیه شده" فعال شده است.</string>
+    <string name="uninstall_options_title">گزینه های حذف را حذف کنید</string>
+    <string name="uninstall_app">حذف برنامه</string>
+    <string name="reset_to_factory_version">بازنشانی به نسخه کارخانه</string>
+</resources>
