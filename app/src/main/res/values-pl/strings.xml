@@ -2,13 +2,13 @@
 <resources>
     <string name="cancel">Anuluj</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Czy na pewno chcesz odinstalować %1$s aplikację/aplikacje?</string>
+    <string name="are_you_sure_to_uninstall_apps">Czy na pewno chcesz odinstalować %1$s aplikacje(-i)?</string>
     <string name="copy_package_name_to_clipboard">Skopiuj nazwę pakietu do schowka</string>
     <string name="no_description_available">Opis niedostępny</string>
     <string name="uninstall">Odinstaluj</string>
     <string name="reinstall">Zainstaluj ponownie</string>
     <string name="please_start_shizuku">Uruchom Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Proszę zainstalować Shizuku i upoważnić Canta.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Zainstaluj Shizuku i autoryzuj Canta.</string>
     <string name="please_allow_shizuku_access_for_canta">Proszę zezwolić Canta na dostęp do Shizuku.</string>
     <string name="only_system">Tylko systemowe</string>
     <string name="no_apps_found">Nie znaleziono aplikacji</string>
