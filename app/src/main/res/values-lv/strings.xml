@@ -2,19 +2,19 @@
 <resources>
     <string name="cancel">Atcelt</string>
     <string name="ok">Labi</string>
-    <string name="are_you_sure_to_uninstall_apps">Are you sure to uninstall %1$s apps?</string>
+    <string name="are_you_sure_to_uninstall_apps">Vai tiešām vēlaties noņemt %1$s lietotnes?</string>
     <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
     <string name="no_description_available">No description available</string>
     <string name="uninstall">Noņemt</string>
     <string name="reinstall">ReInstall</string>
-    <string name="please_start_shizuku">Please start Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Please install Shizuku and authorise Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Please allow Shizuku access for Canta.</string>
-    <string name="only_system">Only system</string>
+    <string name="please_start_shizuku">Lūdzu, palaidiet Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Lūdzu, uzstādiet Shizuku un autorizējiet Canta piekļuvi.</string>
+    <string name="please_allow_shizuku_access_for_canta">Lūdzu, piešķiriet Shizuku piekļuvi Canta lietotnei.</string>
+    <string name="only_system">Tikai sistēmas</string>
     <string name="no_apps_found">No apps found</string>
-    <string name="loading_apps">Loading apps</string>
+    <string name="loading_apps">Ielādē lietotnes</string>
     <string name="badge_info">Badge info</string>
-    <string name="got_it">Got it</string>
+    <string name="got_it">Skaidrs</string>
     <string name="loading_badges">Loading badges ...</string>
     <string name="logs">Logs</string>
     <string name="back">Atpakaļ</string>
@@ -42,7 +42,7 @@
     <string name="never_show_again">Don\'t show this message again</string>
     <string name="proceed">Proceed</string>
     <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
-    <string name="select_all">Select all</string>
+    <string name="select_all">Atlasīt visas</string>
     <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
     <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
     <string name="uninstall_options_title">Uninstall Options</string>
