@@ -44,7 +44,7 @@
     <string name="select_all">Seleccionar todo</string>
     <string name="select_all_tip">Pulse %d veces más para activar seleccionar todo.</string>
     <string name="select_all_enabled">Seleccionar todo se ha activado para «Recomendado».</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
-    <string name="uninstall_app">Uninstall app</string>
-    <string name="reset_to_factory_version">Reset to factory version</string>
+    <string name="uninstall_options_title">Opciones de desinstalación</string>
+    <string name="uninstall_app">Desinstalar la aplicación</string>
+    <string name="reset_to_factory_version">Reiniciar a la versión de fábrica</string>
 </resources>
