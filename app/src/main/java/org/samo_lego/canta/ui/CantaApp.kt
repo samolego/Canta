@@ -66,7 +66,6 @@ import org.samo_lego.canta.ui.screen.LogsPage
 import org.samo_lego.canta.ui.screen.SettingsScreen
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.ui.viewmodel.SettingsViewModel
-import org.samo_lego.canta.util.LogUtils
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.SettingsStore
 import org.samo_lego.canta.util.ShizukuData
@@ -216,10 +215,8 @@ private fun MainContent(
                             onClick = {
                                 // Check if only Canta is selected
                                 // Super secret don't tell anyone you saw this
-                                if (selectedAppsType == AppsType.INSTALLED &&
-                                                appListViewModel.selectedApps.size == 1 &&
-                                                appListViewModel.selectedApps.contains(packageName)
-                                ) {
+                                // since this is an easter egg :P
+                                if (appListViewModel.selectedApps.contains(packageName)) {
                                     // Show easter egg toast
                                     Toast.makeText(context, "Can'ta ouch this!", Toast.LENGTH_SHORT)
                                             .show()
@@ -250,30 +247,27 @@ private fun MainContent(
                                 )
                             },
                     ) {
-                        // Show Canta icon if only Canta is selected
-                        if (selectedAppsType == AppsType.INSTALLED &&
-                                        appListViewModel.selectedApps.size == 1 &&
-                                        appListViewModel.selectedApps.contains(packageName)
-                        ) {
-                            AppIconImage(
-                                    appIconImage = cantaIcon,
-                                    contentDescription = stringResource(R.string.app_name)
-                            )
-                        } else {
-                            when (selectedAppsType) {
-                                AppsType.INSTALLED ->
-                                        Icon(
-                                                Icons.Default.Delete,
-                                                contentDescription =
-                                                        stringResource(R.string.uninstall)
-                                        )
-                                AppsType.UNINSTALLED ->
-                                        Icon(
-                                                Icons.Default.InstallMobile,
-                                                contentDescription =
-                                                        stringResource(R.string.reinstall)
-                                        )
-                            }
+                        when (selectedAppsType) {
+                            AppsType.INSTALLED ->
+                                // Show Canta icon if only Canta is selected
+                                if (appListViewModel.selectedApps.contains(packageName)) {
+                                    AppIconImage(
+                                        appIconImage = cantaIcon,
+                                        contentDescription = stringResource(R.string.app_name)
+                                    )
+                                } else {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription =
+                                        stringResource(R.string.uninstall)
+                                    )
+                                }
+                            AppsType.UNINSTALLED ->
+                                    Icon(
+                                            Icons.Default.InstallMobile,
+                                            contentDescription =
+                                                    stringResource(R.string.reinstall)
+                                    )
                         }
                     }
                 }
