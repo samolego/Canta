@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cancel">Cancel</string>
+    <string name="cancel"></string>
     <string name="ok">OK</string>
     <string name="are_you_sure_to_uninstall_apps">Are you sure to uninstall %1$s apps?</string>
     <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
