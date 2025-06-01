@@ -71,4 +71,15 @@
     <string name="uninstall_options_title">Uninstall Options</string>
     <string name="uninstall_app">Uninstall app</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
+    
+    <!-- Configuration strings -->
+    <string name="edit_configuration">Edit Configuration</string>
+    <string name="configuration_name">Configuration Name</string>
+    <string name="description_optional">Description (Optional)</string>
+    <string name="name_required">Name is required</string>
+    <string name="save">Save</string>
+    <string name="add_apps_to_configuration">Add Apps to Configuration</string>
+    <string name="no_apps_available">No apps available</string>
+    <string name="add_selected">Add Selected (%d)</string>
+    <string name="system_app">System App</string>
 </resources>

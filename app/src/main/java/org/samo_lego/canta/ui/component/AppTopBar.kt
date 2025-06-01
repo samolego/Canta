@@ -48,6 +48,7 @@ fun CantaTopBar(
     openBadgesInfoDialog: () -> Unit,
     openLogsScreen: () -> Unit,
     openSettingsScreen: () -> Unit,
+    openConfigurationsScreen: () -> Unit,
 ) {
     var showMoreOptionsMenu by remember { mutableStateOf(false) }
     var showFiltersMenu by remember { mutableStateOf(false) }
@@ -169,6 +170,9 @@ fun CantaTopBar(
                 },
                 openSettingsScreen = {
                     openSettingsScreen()
+                },
+                openConfigurationsScreen = {
+                    openConfigurationsScreen()
                 },
                 onDismiss = { showMoreOptionsMenu = false },
             )

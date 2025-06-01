@@ -20,6 +20,7 @@ fun MoreOptionsMenu(
         showBadgeInfoDialog: () -> Unit,
         openLogsScreen: () -> Unit,
         openSettingsScreen: () -> Unit,
+        openConfigurationsScreen: () -> Unit,
         onDismiss: () -> Unit,
 ) {
     val appListViewModel = viewModel<AppListViewModel>()
@@ -54,6 +55,15 @@ fun MoreOptionsMenu(
                 text = { Text(stringResource(R.string.badge_info)) },
                 onClick = {
                     showBadgeInfoDialog()
+                    onDismiss()
+                }
+        )
+
+        // Configurations page
+        DropdownMenuItem(
+                text = { Text("Configurations") },
+                onClick = {
+                    openConfigurationsScreen()
                     onDismiss()
                 }
         )

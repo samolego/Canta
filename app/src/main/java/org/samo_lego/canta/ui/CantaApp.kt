@@ -62,10 +62,14 @@ import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
 import org.samo_lego.canta.ui.dialog.NoWarrantyDialog
 import org.samo_lego.canta.ui.dialog.UninstallAppsDialog
 import org.samo_lego.canta.ui.navigation.Screen
+import org.samo_lego.canta.ui.screen.ConfigurationAppsScreen
+import org.samo_lego.canta.ui.screen.ConfigurationScreen
 import org.samo_lego.canta.ui.screen.LogsPage
 import org.samo_lego.canta.ui.screen.SettingsScreen
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.ui.viewmodel.SettingsViewModel
+import org.samo_lego.canta.ui.viewmodel.ConfigurationViewModel
+import org.samo_lego.canta.util.CantaConfiguration
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.SettingsStore
 import org.samo_lego.canta.util.ShizukuData
@@ -111,6 +115,7 @@ fun CantaApp(
                     reinstallApp = reinstallApp,
                     navigateToLogs = { navController.navigate(Screen.Logs.route) },
                     navigateToSettings = { navController.navigate(Screen.Settings.route) },
+                    navigateToConfigurations = { navController.navigate(Screen.Configurations.route) },
                     closeApp = closeApp,
                     settingsStore = settingsStore,
                     showWarning = showDisclaimerWarning,
@@ -146,6 +151,64 @@ fun CantaApp(
                     }
             )
         }
+        composable(route = Screen.Configurations.route) {
+            val appListViewModel = viewModel<AppListViewModel>()
+            ConfigurationScreen(
+                onNavigateBack = { navController.navigateUp() },
+                onNavigateToConfigApps = { config ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set("configuration", config)
+                    navController.navigate(Screen.ConfigurationApps.route)
+                },
+                appListViewModel = appListViewModel
+            )
+        }
+        composable(route = Screen.ConfigurationApps.route) {
+            val configuration = navController.previousBackStackEntry?.savedStateHandle?.get<CantaConfiguration>("configuration")
+            if (configuration != null) {
+                ConfigurationAppsScreen(
+                    configuration = configuration,
+                    onNavigateBack = { navController.navigateUp() },
+                    onUninstallApps = { packageNames ->
+                        // Handle uninstalling the selected apps with error handling
+                        var successCount = 0
+                        var errorCount = 0
+                        
+                        packageNames.forEach { packageName ->
+                            try {
+                                // Check if package exists before trying to uninstall
+                                context.packageManager.getPackageInfo(packageName, 0)
+                                val success = uninstallApp(packageName, false)
+                                if (success) {
+                                    successCount++
+                                } else {
+                                    errorCount++
+                                }
+                            } catch (e: android.content.pm.PackageManager.NameNotFoundException) {
+                                // Package doesn't exist, skip it
+                                errorCount++
+                                android.util.Log.w("CantaApp", "Package $packageName not found, skipping uninstall")
+                            } catch (e: Exception) {
+                                // Other errors
+                                errorCount++
+                                android.util.Log.e("CantaApp", "Error uninstalling $packageName: ${e.message}")
+                            }
+                        }
+                        
+                        navController.navigateUp()
+                        
+                        // Show appropriate message based on results
+                        val message = when {
+                            successCount > 0 && errorCount == 0 -> "Successfully uninstalled $successCount app(s)"
+                            successCount > 0 && errorCount > 0 -> "Uninstalled $successCount app(s), $errorCount failed or not found"
+                            errorCount > 0 -> "$errorCount app(s) failed to uninstall or not found"
+                            else -> "No apps were uninstalled"
+                        }
+                        
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                    }
+                )
+            }
+        }
     }
 }
 
@@ -158,6 +221,7 @@ private fun MainContent(
         reinstallApp: (String) -> Boolean,
         navigateToLogs: () -> Unit,
         navigateToSettings: () -> Unit,
+        navigateToConfigurations: () -> Unit,
         closeApp: () -> Unit,
         settingsStore: SettingsStore,
         showWarning: MutableState<Boolean>,
@@ -172,11 +236,29 @@ private fun MainContent(
 
     val appListViewModel = viewModel<AppListViewModel>()
     val settingsViewModel = viewModel<SettingsViewModel>()
+    val configurationViewModel = viewModel<ConfigurationViewModel>()
 
     var showBadgeInfoDialog by remember { mutableStateOf(false) }
     var showUninstallConfirmDialog by remember { mutableStateOf(false) }
 
     val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
+
+    // Set up auto-sync callback
+    LaunchedEffect(Unit) {
+        configurationViewModel.initialize(context)
+        appListViewModel.onAppStatusChanged = { apps ->
+            if (configurationViewModel.isAutoSyncEnabled) {
+                configurationViewModel.syncConfigurationsWithUninstalledApps(
+                    uninstalledApps = apps,
+                    onSuccess = { updated ->
+                        if (updated) {
+                            Toast.makeText(context, "Configurations auto-synced", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                )
+            }
+        }
+    }
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { page ->
@@ -192,7 +274,8 @@ private fun MainContent(
                 CantaTopBar(
                         openBadgesInfoDialog = { showBadgeInfoDialog = true },
                         openLogsScreen = navigateToLogs,
-                        openSettingsScreen = navigateToSettings
+                        openSettingsScreen = navigateToSettings,
+                        openConfigurationsScreen = navigateToConfigurations
                 )
             },
             floatingActionButton = {
