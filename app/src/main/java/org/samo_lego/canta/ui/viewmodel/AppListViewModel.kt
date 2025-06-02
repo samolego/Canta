@@ -42,6 +42,9 @@ class AppListViewModel : ViewModel() {
         private set
 
     var selectedFilter by mutableStateOf(Filter.any)
+    
+    // Callback for when app status changes (for auto-sync)
+    var onAppStatusChanged: ((List<AppInfo>) -> Unit)? = null
 
     private val sortedList by derivedStateOf {
         isLoading = true
@@ -133,5 +136,8 @@ class AppListViewModel : ViewModel() {
                 it
             }
         }
+        
+        // Trigger callback for auto-sync
+        onAppStatusChanged?.invoke(apps)
     }
 }
