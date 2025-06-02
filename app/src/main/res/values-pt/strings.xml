@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Cancelar</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Tem certeza de que deseja desinstalar %1$s apps?</string>
+    <string name="are_you_sure_to_uninstall_apps">Tem certeza de que deseja desinstalar %1$s aplicativos?</string>
     <string name="copy_package_name_to_clipboard">Copiar nome do pacote para a área de transferência</string>
     <string name="no_description_available">Nenhuma descrição disponível</string>
     <string name="uninstall">Desinstalar</string>
@@ -19,7 +19,7 @@
     <string name="logs">Registros</string>
     <string name="back">Voltar</string>
     <string name="copy_logs">Copiar registros</string>
-    <string name="log_copied">Registro copiado para a área de trabalho</string>
+    <string name="log_copied">Registro copiado para a área de transferência</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Clear %d selected</item>
         <item quantity="other">Clear %d selected</item>
@@ -35,16 +35,16 @@
     <string name="confirm_uninstall">Confirmar Desinstalações</string>
     <string name="app_version">App version: %s</string>
     <string name="bloatware_list_version">Lista mais recente de bloatware</string>
-    <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
-    <string name="disclaimer">Disclaimer - No Warranty</string>
-    <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
-    <string name="never_show_again">Don\'t show this message again</string>
-    <string name="proceed">Proceed</string>
+    <string name="no_warranty_content">Esse aplicativo fornece recomendações de remoção de aplicativos baseado em informações de terceiros. Essas recomendações são, de natureza, informacionais e não garantem segurança ou compatibilidade com o seu dispositivo específico. Desinstalar aplicativos do sistema pode causar problemas inesperados, incluindo, mas não se limitando a: perda de funcionalidade, instabilidade do sistema, bootloops no dispositivo, perda de dados, etc. O desenvolvedor deste aplicativo não é responsável por quaisquer danos ao dispositivo resultando das recomendações fornecidas.</string>
+    <string name="disclaimer">Aviso — Sem garantia</string>
+    <string name="proceed_at_own_risk">Clicando em \"Prosseguir\", você concorda em usar este aplicativo sob sua própria responsabilidade.</string>
+    <string name="never_show_again">Não mostrar esta mensagem novamente</string>
+    <string name="proceed">Prosseguir</string>
     <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
-    <string name="select_all">Select all</string>
+    <string name="select_all">Selecionar tudo</string>
     <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
     <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
-    <string name="uninstall_app">Uninstall app</string>
+    <string name="uninstall_options_title">Opções de desinstalações</string>
+    <string name="uninstall_app">Desinstalar aplicativo</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
 </resources>
