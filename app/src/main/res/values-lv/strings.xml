@@ -26,7 +26,7 @@
         <item quantity="other">Clear %d selected</item>
     </plurals>
     <string name="copy">Kopēt</string>
-    <string name="app_settings">App info</string>
+    <string name="app_settings">Informācija par lietotni</string>
     <string name="close">Aizvērt</string>
     <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps. It allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Meklēt lietotnes</string>
