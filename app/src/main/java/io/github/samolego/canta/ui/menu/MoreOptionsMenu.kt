@@ -1,9 +1,9 @@
 package io.github.samolego.canta.ui.menu
 
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,14 +12,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.samolego.canta.R
+import io.github.samolego.canta.ui.navigation.Screen
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 
 @Composable
 fun MoreOptionsMenu(
         showMenu: Boolean,
         showBadgeInfoDialog: () -> Unit,
-        openLogsScreen: () -> Unit,
-        openSettingsScreen: () -> Unit,
+        navigateToPage: (route: String) -> Unit,
         onDismiss: () -> Unit,
 ) {
     val appListViewModel = viewModel<AppListViewModel>()
@@ -46,7 +46,7 @@ fun MoreOptionsMenu(
                         onDismiss()
                     }
             )
-            Divider()
+            HorizontalDivider()
         }
 
         // Badge info dialog
@@ -62,7 +62,7 @@ fun MoreOptionsMenu(
         DropdownMenuItem(
                 text = { Text(stringResource(R.string.logs)) },
                 onClick = {
-                    openLogsScreen()
+                    navigateToPage(Screen.Logs.route)
                     onDismiss()
                 }
         )
@@ -71,9 +71,17 @@ fun MoreOptionsMenu(
         DropdownMenuItem(
                 text = { Text(stringResource(R.string.settings)) },
                 onClick = {
-                    openSettingsScreen()
+                    navigateToPage(Screen.Settings.route)
                     onDismiss()
                 }
+        )
+
+        DropdownMenuItem(
+            text = { Text("Presets") },
+            onClick = {
+                navigateToPage(Screen.Presets.route)
+                onDismiss()
+            }
         )
     }
 }

@@ -50,8 +50,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import io.github.samolego.canta.R
 import io.github.samolego.canta.packageName
 import io.github.samolego.canta.ui.component.AppIconImage
@@ -62,6 +60,7 @@ import io.github.samolego.canta.ui.dialog.NoWarrantyDialog
 import io.github.samolego.canta.ui.dialog.UninstallAppsDialog
 import io.github.samolego.canta.ui.navigation.Screen
 import io.github.samolego.canta.ui.screen.LogsPage
+import io.github.samolego.canta.ui.screen.PresetsPage
 import io.github.samolego.canta.ui.screen.SettingsScreen
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
@@ -70,6 +69,8 @@ import io.github.samolego.canta.util.SettingsStore
 import io.github.samolego.canta.util.ShizukuData
 import io.github.samolego.canta.util.ShizukuInfo
 import io.github.samolego.canta.util.showFor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 private const val secretTaps = 12
 
@@ -83,9 +84,11 @@ fun CantaApp(
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
-    val settingsViewModel: SettingsViewModel = viewModel()
+
+    val appListViewModel = viewModel<AppListViewModel>()
+    val settingsViewModel = viewModel<SettingsViewModel>()
     val settingsStore = remember { SettingsStore(context) }
-    val showDisclaimerWarning = remember { mutableStateOf(true) }
+    val showDisclaimerWarning = remember { mutableStateOf(false) }
     var versionTapCounter by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -108,12 +111,12 @@ fun CantaApp(
                     canResetAppToFactory = canResetAppToFactory,
                     uninstallApp = uninstallApp,
                     reinstallApp = reinstallApp,
-                    navigateToLogs = { navController.navigate(Screen.Logs.route) },
-                    navigateToSettings = { navController.navigate(Screen.Settings.route) },
+                    navigateToPage = { navController.navigate(it) },
                     closeApp = closeApp,
                     settingsStore = settingsStore,
                     showWarning = showDisclaimerWarning,
                     enableSelectAll = versionTapCounter >= secretTaps,
+                    appListViewModel = appListViewModel,
             )
         }
         composable(route = Screen.Logs.route) {
@@ -133,16 +136,29 @@ fun CantaApp(
                             if (versionTapCounter > 6 && versionTapCounter < secretTaps) {
                                 // Show quick toast
                                 val remainingTaps = secretTaps - versionTapCounter
-                                val message = context.getString(R.string.select_all_tip, remainingTaps)
+                                val message =
+                                        context.getString(R.string.select_all_tip, remainingTaps)
                                 val toast = Toast.makeText(context, message, Toast.LENGTH_SHORT)
                                 toast.showFor(500)
                             } else if (versionTapCounter >= secretTaps) {
                                 // Enable select all functionality with quick toast
-                                val toast = Toast.makeText(context, context.getString(R.string.select_all_enabled), Toast.LENGTH_SHORT)
+                                val toast =
+                                        Toast.makeText(
+                                                context,
+                                                context.getString(R.string.select_all_enabled),
+                                                Toast.LENGTH_SHORT
+                                        )
                                 toast.showFor(500)
                             }
                         }
                     }
+            )
+        }
+
+        composable(route = Screen.Presets.route) {
+            PresetsPage(
+                    onNavigateBack = { navController.navigateUp() },
+                    appListViewModel = appListViewModel,
             )
         }
     }
@@ -155,25 +171,45 @@ private fun MainContent(
         canResetAppToFactory: (String) -> Boolean,
         uninstallApp: (String, Boolean) -> Boolean,
         reinstallApp: (String) -> Boolean,
-        navigateToLogs: () -> Unit,
-        navigateToSettings: () -> Unit,
+        navigateToPage: (route: String) -> Unit,
         closeApp: () -> Unit,
         settingsStore: SettingsStore,
         showWarning: MutableState<Boolean>,
         enableSelectAll: Boolean,
+        appListViewModel: AppListViewModel,
 ) {
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    // todo - if passed via parameter, it doesn't work
+    val appListViewModel = viewModel<AppListViewModel>()
 
     // Selected tab
     var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
 
-    val appListViewModel = viewModel<AppListViewModel>()
     val settingsViewModel = viewModel<SettingsViewModel>()
 
-    var showBadgeInfoDialog by remember { mutableStateOf(false) }
-    var showUninstallConfirmDialog by remember { mutableStateOf(false) }
+    // Current active dialog
+    var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+
+    if (showWarning.value) {
+        currentDialog = {
+            NoWarrantyDialog(
+                onProceed = { neverShowAgain ->
+                    showWarning.value = false
+                    currentDialog = null
+                    if (neverShowAgain) {
+                        settingsViewModel.disableRiskDialog = true
+                        settingsViewModel.saveDisableRiskDialog(settingsStore)
+                    }
+                },
+                onCancel = {
+                    // Close the app
+                    closeApp()
+                }
+            )
+        }
+    }
 
     val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
 
@@ -189,9 +225,12 @@ private fun MainContent(
     Scaffold(
             topBar = {
                 CantaTopBar(
-                        openBadgesInfoDialog = { showBadgeInfoDialog = true },
-                        openLogsScreen = navigateToLogs,
-                        openSettingsScreen = navigateToSettings
+                        openBadgesInfoDialog = {
+                            currentDialog = {
+                                ExplainBadgesDialog(onDismissRequest = { currentDialog = null })
+                            }
+                        },
+                        navigateToPage = navigateToPage,
                 )
             },
             floatingActionButton = {
@@ -230,8 +269,34 @@ private fun MainContent(
                                 if (selectedAppsType == AppsType.INSTALLED &&
                                                 settingsViewModel.confirmBeforeUninstall
                                 ) {
-                                    showUninstallConfirmDialog =
-                                            appListViewModel.selectedApps.isNotEmpty()
+                                    if (appListViewModel.selectedApps.isNotEmpty()) {
+                                        currentDialog = {
+                                            val canResetAny =
+                                                    appListViewModel.selectedApps.keys.any { pkg ->
+                                                        canResetAppToFactory(pkg)
+                                                    }
+
+                                            UninstallAppsDialog(
+                                                    appCount = appListViewModel.selectedApps.size,
+                                                    canResetToFactory = canResetAny,
+                                                    onDismiss = { currentDialog = null },
+                                                    onAgree = { resetToFactory ->
+                                                        currentDialog = null
+
+                                                        uninstallOrReinstall(
+                                                                context = context,
+                                                                coroutineScope = coroutineScope,
+                                                                launchShizuku = launchShizuku,
+                                                                uninstallApp = uninstallApp,
+                                                                reinstallApp = reinstallApp,
+                                                                selectedAppsType = selectedAppsType,
+                                                                appListViewModel = appListViewModel,
+                                                                resetToFactory = resetToFactory
+                                                        )
+                                                    }
+                                            )
+                                        }
+                                    }
                                     return@FloatingActionButton
                                 }
                                 // Trigger uninstall
@@ -248,24 +313,24 @@ private fun MainContent(
                     ) {
                         when (selectedAppsType) {
                             AppsType.INSTALLED ->
-                                // Show Canta icon if only Canta is selected
-                                if (appListViewModel.selectedApps.contains(packageName)) {
-                                    AppIconImage(
-                                        appIconImage = cantaIcon,
-                                        contentDescription = stringResource(R.string.app_name)
-                                    )
-                                } else {
-                                    Icon(
-                                        Icons.Default.Delete,
-                                        contentDescription =
-                                        stringResource(R.string.uninstall)
-                                    )
-                                }
+                                    // Show Canta icon if only Canta is selected
+                                    if (appListViewModel.selectedApps.contains(packageName)) {
+                                        AppIconImage(
+                                                appIconImage = cantaIcon,
+                                                contentDescription =
+                                                        stringResource(R.string.app_name)
+                                        )
+                                    } else {
+                                        Icon(
+                                                Icons.Default.Delete,
+                                                contentDescription =
+                                                        stringResource(R.string.uninstall)
+                                        )
+                                    }
                             AppsType.UNINSTALLED ->
                                     Icon(
                                             Icons.Default.InstallMobile,
-                                            contentDescription =
-                                                    stringResource(R.string.reinstall)
+                                            contentDescription = stringResource(R.string.reinstall)
                                     )
                         }
                     }
@@ -303,51 +368,13 @@ private fun MainContent(
                     state = pagerState,
                     modifier = Modifier.weight(1f).fillMaxWidth(),
             ) { page ->
-                if (showBadgeInfoDialog) {
-                    ExplainBadgesDialog(onDismissRequest = { showBadgeInfoDialog = false })
-                } else if (showUninstallConfirmDialog) {
+                // Show active dialog
+                currentDialog?.let { it() }
 
-                    val canResetAny = appListViewModel.selectedApps.keys
-                        .any { pkg -> canResetAppToFactory(pkg) }
-
-                    UninstallAppsDialog(
-                        appCount = appListViewModel.selectedApps.size,
-                        canResetToFactory = canResetAny,
-                        onDismiss = { showUninstallConfirmDialog = false },
-                        onAgree = { resetToFactory ->
-                            showUninstallConfirmDialog = false
-
-                            uninstallOrReinstall(
-                                context = context,
-                                coroutineScope = coroutineScope,
-                                launchShizuku = launchShizuku,
-                                uninstallApp = uninstallApp,
-                                reinstallApp = reinstallApp,
-                                selectedAppsType = selectedAppsType,
-                                appListViewModel = appListViewModel,
-                                resetToFactory = resetToFactory
-                            )
-                        }
-                    )
-                } else if (showWarning.value) {
-                    NoWarrantyDialog(
-                            onProceed = { neverShowAgain ->
-                                showWarning.value = false
-                                if (neverShowAgain) {
-                                    settingsViewModel.disableRiskDialog = true
-                                    settingsViewModel.saveDisableRiskDialog(settingsStore)
-                                }
-                            },
-                            onCancel = {
-                                // Close the app
-                                closeApp()
-                            }
-                    )
-                }
                 AppList(
-                    appType = AppsType.entries[page],
-                    appListModel = appListViewModel,
-                    enableSelectAll = enableSelectAll,
+                        appType = AppsType.entries[page],
+                        appListModel = appListViewModel,
+                        enableSelectAll = enableSelectAll,
                 )
             }
         }

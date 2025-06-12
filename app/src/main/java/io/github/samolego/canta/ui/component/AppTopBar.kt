@@ -46,8 +46,7 @@ import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 @Composable
 fun CantaTopBar(
     openBadgesInfoDialog: () -> Unit,
-    openLogsScreen: () -> Unit,
-    openSettingsScreen: () -> Unit,
+    navigateToPage: (route: String) -> Unit,
 ) {
     var showMoreOptionsMenu by remember { mutableStateOf(false) }
     var showFiltersMenu by remember { mutableStateOf(false) }
@@ -161,15 +160,8 @@ fun CantaTopBar(
 
             MoreOptionsMenu(
                 showMenu = showMoreOptionsMenu,
-                showBadgeInfoDialog = {
-                    openBadgesInfoDialog()
-                },
-                openLogsScreen = {
-                    openLogsScreen()
-                },
-                openSettingsScreen = {
-                    openSettingsScreen()
-                },
+                showBadgeInfoDialog = openBadgesInfoDialog,
+                navigateToPage = navigateToPage,
                 onDismiss = { showMoreOptionsMenu = false },
             )
         },
