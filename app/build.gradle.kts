@@ -16,7 +16,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "org.samo_lego.canta"
+    namespace = "io.github.samolego.canta"
     compileSdk = 35
 
     // For reproducible builds
@@ -28,7 +28,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "org.samo_lego.canta"
+        applicationId = namespace
         minSdk = 28  // todo - figure out a way to bypass hidden api methods on android < 9
         targetSdk = 35
         versionCode = project.property("version_code")?.toString()?.toInt() ?: 1
