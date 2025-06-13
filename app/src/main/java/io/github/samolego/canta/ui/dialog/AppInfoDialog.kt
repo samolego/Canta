@@ -1,15 +1,13 @@
 package io.github.samolego.canta.ui.dialog
 
-import androidx.compose.ui.viewinterop.AndroidView
-import android.text.Html
-import android.text.method.LinkMovementMethod
-import android.widget.TextView
-import io.github.samolego.canta.util.CustomTextSelectionCallback
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+import android.text.Html
 import android.text.format.Formatter.formatFileSize
+import android.text.method.LinkMovementMethod
+import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,11 +41,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.component.AppIconImage
 import io.github.samolego.canta.util.AppInfo
 import io.github.samolego.canta.util.BloatData
+import io.github.samolego.canta.util.CustomTextSelectionCallback
 import io.github.samolego.canta.util.InstallData
 import io.github.samolego.canta.util.RemovalRecommendation
 import java.io.File

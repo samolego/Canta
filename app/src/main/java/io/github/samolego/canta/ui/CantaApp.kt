@@ -51,6 +51,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.github.samolego.canta.R
+import io.github.samolego.canta.extension.addAll
 import io.github.samolego.canta.packageName
 import io.github.samolego.canta.ui.component.AppIconImage
 import io.github.samolego.canta.ui.component.AppList
@@ -89,6 +90,7 @@ fun CantaApp(
     val settingsViewModel = viewModel<SettingsViewModel>()
     val settingsStore = remember { SettingsStore(context) }
     val showDisclaimerWarning = remember { mutableStateOf(false) }
+    var presetEditMode by remember { mutableStateOf(false) }
     var versionTapCounter by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -117,6 +119,7 @@ fun CantaApp(
                     showWarning = showDisclaimerWarning,
                     enableSelectAll = versionTapCounter >= secretTaps,
                     appListViewModel = appListViewModel,
+                    settingsViewModel = settingsViewModel,
             )
         }
         composable(route = Screen.Logs.route) {
@@ -157,7 +160,18 @@ fun CantaApp(
 
         composable(route = Screen.Presets.route) {
             PresetsPage(
-                    onNavigateBack = { navController.navigateUp() },
+                    enterEditMode = { presetEditMode = true },
+                    onNavigateBack = { preset ->
+                        preset?.let {
+                            appListViewModel.selectedApps.clear()
+                            // Select apps in appListViewModel according to preset
+                            appListViewModel.selectedApps.addAll(
+                                    it.apps.map { app -> app.packageName }
+                            )
+                        }
+
+                        navController.navigateUp()
+                    },
                     appListViewModel = appListViewModel,
             )
         }
@@ -177,17 +191,14 @@ private fun MainContent(
         showWarning: MutableState<Boolean>,
         enableSelectAll: Boolean,
         appListViewModel: AppListViewModel,
+        settingsViewModel: SettingsViewModel,
 ) {
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    // todo - if passed via parameter, it doesn't work
-    val appListViewModel = viewModel<AppListViewModel>()
 
     // Selected tab
     var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
-
-    val settingsViewModel = viewModel<SettingsViewModel>()
 
     // Current active dialog
     var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
@@ -195,18 +206,18 @@ private fun MainContent(
     if (showWarning.value) {
         currentDialog = {
             NoWarrantyDialog(
-                onProceed = { neverShowAgain ->
-                    showWarning.value = false
-                    currentDialog = null
-                    if (neverShowAgain) {
-                        settingsViewModel.disableRiskDialog = true
-                        settingsViewModel.saveDisableRiskDialog(settingsStore)
+                    onProceed = { neverShowAgain ->
+                        showWarning.value = false
+                        currentDialog = null
+                        if (neverShowAgain) {
+                            settingsViewModel.disableRiskDialog = true
+                            settingsViewModel.saveDisableRiskDialog(settingsStore)
+                        }
+                    },
+                    onCancel = {
+                        // Close the app
+                        closeApp()
                     }
-                },
-                onCancel = {
-                    // Close the app
-                    closeApp()
-                }
             )
         }
     }
@@ -231,6 +242,7 @@ private fun MainContent(
                             }
                         },
                         navigateToPage = navigateToPage,
+                        appListViewModel = appListViewModel,
                 )
             },
             floatingActionButton = {

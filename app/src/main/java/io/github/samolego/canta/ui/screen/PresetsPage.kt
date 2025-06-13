@@ -1,16 +1,48 @@
 package io.github.samolego.canta.ui.screen
 
 import ScreenTopBar
+import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -19,195 +51,238 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import io.github.samolego.canta.ui.component.IconClickButton
-import io.github.samolego.canta.ui.dialog.ImportConfigurationDialog
+import io.github.samolego.canta.ui.component.ExpandableFAB
+import io.github.samolego.canta.ui.dialog.ImportPresetDialog
+import io.github.samolego.canta.ui.dialog.PresetCreateDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
-import io.github.samolego.canta.util.CantaConfiguration
+import io.github.samolego.canta.util.CantaPreset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresetsPage(
-    onNavigateBack: () -> Unit,
-    appListViewModel: AppListViewModel
+    enterEditMode: () -> Unit,
+    onNavigateBack: (appliedPreset: CantaPreset?) -> Unit,
+    appListViewModel: AppListViewModel,
 ) {
     val context = LocalContext.current
-    val configViewModel: PresetsViewModel = viewModel()
+    val presetViewModel = viewModel<PresetsViewModel>()
 
-    var showCreateDialog by remember { mutableStateOf(false) }
-    var showImportDialog by remember { mutableStateOf(false) }
+    var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
 
-    LaunchedEffect(Unit) {
-        configViewModel.initialize(context)
-    }
 
-    Scaffold(
-        topBar = {
-            ScreenTopBar(
-                onNavigateBack =  onNavigateBack,
-                title = {
-                    Text("Presets")
-                },
-                actions = {
-                    IconClickButton(
-                        onClick = { showImportDialog = true },
-                        icon = Icons.Default.Download,
-                        contentDescription = "Import Configuration"
-                    )
-                    IconClickButton(
-                        onClick = { showCreateDialog = true },
-                        icon = Icons.Default.Add,
-                        contentDescription = "Create Configuration"
-                    )
-                }
-            )
-        },
-        floatingActionButton = {
-            // Todo - once clicked, expand for import / create
-            FloatingActionButton(
-                onClick = {
+    val createConfigDialog = @Composable { name: String?, desc: String? ->
+        PresetCreateDialog(
+            appListViewModel = appListViewModel,
+            presetViewModel = presetViewModel,
+            closeDialog = { currentDialog = null },
+            onError = { error ->
 
-                }
-            ) {
-                Icon(
-                    Icons.Default.Add,
-                    contentDescription = "Add preset"
-                )
-            }
-        }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            if (configViewModel.isLoading) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else if (configViewModel.configurations.isEmpty()) {
-                EmptyConfigurationsState(
-                    onCreateClick = { showCreateDialog = true },
-                    onImportClick = { showImportDialog = true }
-                )
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(configViewModel.configurations) { config ->
-                        ConfigurationCard(
-                            configuration = config,
-                            onAddApps = {
-                                configViewModel.loadAvailableAppsForAdding(appListViewModel.appList)
-                            },
-                            formatDate = configViewModel::formatDate,
-                            onEdit = {},
-                            onApply = {},
-                            onDelete = {},
-                            onExport = {
-                                configViewModel.exportToClipboard(
-                                    context = context,
-                                    config = config,
-                                    onSuccess = {
-                                        Toast.makeText(
-                                            context,
-                                            "Configuration copied to clipboard",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    },
-                                    onError = { error ->
-                                        Toast.makeText(
-                                            context,
-                                            "Export failed: $error",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                )
-                            },
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    if (showImportDialog) {
-        ImportConfigurationDialog(
-            onDismiss = { showImportDialog = false },
-            onImportFromClipboard = {
-                configViewModel.importFromClipboard(
-                    context = context,
-                    onSuccess = { config ->
-                        showImportDialog = false
-                        configViewModel.saveImportedConfiguration(
-                            config = config,
-                            onSuccess = {
-                                Toast.makeText(context, "Configuration imported and saved", Toast.LENGTH_SHORT).show()
-                            },
-                            onError = { error ->
-                                Toast.makeText(context, "Failed to save imported configuration: $error", Toast.LENGTH_SHORT).show()
-                            }
-                        )
-                    },
-                    onError = { error ->
-                        Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT).show()
-                    }
-                )
-            },
-            onImportFromText = { jsonText ->
-                configViewModel.importFromJson(
-                    jsonString = jsonText,
-                    onSuccess = { config ->
-                        showImportDialog = false
-                        configViewModel.saveImportedConfiguration(
-                            config = config,
-                            onSuccess = {
-                                Toast.makeText(context, "Configuration imported and saved", Toast.LENGTH_SHORT).show()
-                            },
-                            onError = { error ->
-                                Toast.makeText(context, "Failed to save imported configuration: $error", Toast.LENGTH_SHORT).show()
-                            }
-                        )
-                    },
-                    onError = { error ->
-                        Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT).show()
-                    }
-                )
             }
         )
     }
+
+    LaunchedEffect(Unit) { presetViewModel.initialize(context) }
+    Scaffold(
+            topBar = {
+                ScreenTopBar(
+                        onNavigateBack = { onNavigateBack(null) },
+                        title = { Text("Presets") },
+                )
+            },
+            floatingActionButton = {
+                if (presetViewModel.presets.isNotEmpty()) {
+                    ExpandableFAB(
+                        onBottomClick = {
+                            currentDialog = {
+                                createConfigDialog(null, null)
+                            }
+                        },
+                        onTopClick = {
+                            currentDialog = {
+                                ImportDialog(
+                                    presetViewModel = presetViewModel,
+                                    hideDialog = { currentDialog = null },
+                                    context = context,
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+    ) { padding ->
+        Column(modifier = Modifier.fillMaxSize().padding(padding)) {
+            if (presetViewModel.isLoading) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else if (presetViewModel.presets.isEmpty()) {
+                EmptyPresetsState(
+                        onCreateClick = { currentDialog = {
+                            createConfigDialog(null, null)
+                        } },
+                        onImportClick = {
+                            currentDialog = {
+                                ImportDialog(
+                                    presetViewModel = presetViewModel,
+                                    hideDialog = { currentDialog = null },
+                                    context = context,
+                                )
+                            }
+                        }
+                )
+            } else {
+                LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(presetViewModel.presets) { preset ->
+                        PresetCard(
+                                preset = preset,
+                                onAddApps = {
+                                    enterEditMode()
+                                    onNavigateBack(preset)
+                                },
+                                formatDate = presetViewModel::formatDate,
+                                onEdit = {
+                                    currentDialog = {
+                                        createConfigDialog(preset.name, preset.description)
+                                    }
+                                },
+                                onApply = {
+                                    onNavigateBack(preset)
+                                },
+                                onDelete = {
+                                    presetViewModel.deletePreset(
+                                        config = preset,
+                                        onSuccess = {},
+                                        onError = {},
+                                    )
+                                },
+                                onExport = {
+                                    presetViewModel.exportToClipboard(
+                                            context = context,
+                                            config = preset,
+                                            onSuccess = {
+                                                Toast.makeText(
+                                                                context,
+                                                                "Preset copied to clipboard",
+                                                                Toast.LENGTH_SHORT
+                                                        )
+                                                        .show()
+                                            },
+                                            onError = { error ->
+                                                Toast.makeText(
+                                                                context,
+                                                                "Export failed: $error",
+                                                                Toast.LENGTH_SHORT
+                                                        )
+                                                        .show()
+                                            }
+                                    )
+                                },
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    currentDialog?.let { it() }
 }
 
 @Composable
-private fun EmptyConfigurationsState(
-    onCreateClick: () -> Unit,
-    onImportClick: () -> Unit
+private fun ImportDialog(
+    hideDialog: () -> Unit,
+    presetViewModel: PresetsViewModel,
+    context: Context
 ) {
+    ImportPresetDialog(
+        onDismiss = hideDialog,
+        onImportFromClipboard = {
+            presetViewModel.importFromClipboard(
+                context = context,
+                onSuccess = { config ->
+                    hideDialog()
+                    presetViewModel.saveImportedPreset(
+                        config = config,
+                        onSuccess = {
+                            Toast.makeText(
+                                context,
+                                "Preset imported and saved",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        },
+                        onError = { error ->
+                            Toast.makeText(
+                                context,
+                                "Failed to save imported configuration: $error",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    )
+                },
+                onError = { error ->
+                    Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            )
+        },
+        onImportFromText = { jsonText ->
+            presetViewModel.importFromJson(
+                jsonString = jsonText,
+                onSuccess = { config ->
+                    hideDialog()
+                    presetViewModel.saveImportedPreset(
+                        config = config,
+                        onSuccess = {
+                            Toast.makeText(
+                                context,
+                                "Preset imported and saved",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        },
+                        onError = { error ->
+                            Toast.makeText(
+                                context,
+                                "Failed to save imported configuration: $error",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    )
+                },
+                onError = { error ->
+                    Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            )
+        }
+    )
+}
+
+@Composable
+private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            modifier = Modifier.fillMaxSize().padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
     ) {
         Surface(
-            modifier = Modifier.size(80.dp),
-            shape = RoundedCornerShape(20.dp),
-            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                modifier = Modifier.size(80.dp),
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
         ) {
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
+            Box(contentAlignment = Alignment.Center) {
                 Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp),
-                    tint = MaterialTheme.colorScheme.primary
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp),
+                        tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -215,116 +290,107 @@ private fun EmptyConfigurationsState(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "No Configurations",
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold
+                text = "No Presets",
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Bold
         )
 
         Text(
-            text = "Create or import configurations to manage\napp uninstall lists across devices",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(top = 8.dp),
-            textAlign = TextAlign.Center
+                text =
+                        "Create or import configurations to manage\napp uninstall lists across devices",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 8.dp),
+                textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Button(
-                onClick = onCreateClick,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Button(onClick = onCreateClick, modifier = Modifier.fillMaxWidth()) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Create Configuration")
+                Text("Create Preset")
             }
 
-            OutlinedButton(
-                onClick = onImportClick,
-                modifier = Modifier.fillMaxWidth()
-            ) {
+            OutlinedButton(onClick = onImportClick, modifier = Modifier.fillMaxWidth()) {
                 Icon(Icons.Default.Download, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Import Configuration")
+                Text("Import Preset")
             }
         }
     }
 }
 
 @Composable
-private fun ConfigurationCard(
-    configuration: CantaConfiguration,
-    onEdit: (CantaConfiguration) -> Unit,
-    onAddApps: (CantaConfiguration) -> Unit,
+private fun PresetCard(
+    preset: CantaPreset,
+    onEdit: (CantaPreset) -> Unit,
+    onAddApps: (CantaPreset) -> Unit,
     onExport: () -> Unit,
     onDelete: () -> Unit,
     onApply: () -> Unit,
     formatDate: (Long) -> String
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            modifier = Modifier.fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Top
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = configuration.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                            text = preset.name,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                     )
 
-                    if (configuration.description.isNotEmpty()) {
+                    if (preset.description.isNotEmpty()) {
                         Text(
-                            text = configuration.description,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(top = 4.dp)
+                                text = preset.description,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.padding(top = 4.dp)
                         )
                     }
 
                     Row(
-                        modifier = Modifier.padding(top = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                            modifier = Modifier.padding(top = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            Icons.Default.Apps,
-                            contentDescription = null,
-                            modifier = Modifier.size(14.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                Icons.Default.Apps,
+                                contentDescription = null,
+                                modifier = Modifier.size(14.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = "${configuration.apps.size} apps",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                text = "${preset.apps.size} apps",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Icon(
-                            Icons.Default.Schedule,
-                            contentDescription = null,
-                            modifier = Modifier.size(14.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                Icons.Default.Schedule,
+                                contentDescription = null,
+                                modifier = Modifier.size(14.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = formatDate(configuration.createdDate),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                text = formatDate(preset.createdDate),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -334,62 +400,58 @@ private fun ConfigurationCard(
                 Box {
                     IconButton(onClick = { showMenu = true }) {
                         Icon(
-                            Icons.Default.MoreVert,
-                            contentDescription = "More options",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                Icons.Default.MoreVert,
+                                contentDescription = "More options",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
+                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                         DropdownMenuItem(
-                            text = { Text("Edit") },
-                            onClick = {
-                                showMenu = false
-                                onEdit(configuration)
-                            },
-                            leadingIcon = {
-                                Icon(Icons.Default.Edit, contentDescription = null)
-                            }
+                                text = { Text("Edit") },
+                                onClick = {
+                                    showMenu = false
+                                    onEdit(preset)
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Default.Edit, contentDescription = null)
+                                }
                         )
                         DropdownMenuItem(
-                            text = { Text("Add Apps") },
-                            onClick = {
-                                showMenu = false
-                                onAddApps(configuration)
-                            },
-                            leadingIcon = {
-                                Icon(Icons.Default.Add, contentDescription = null)
-                            }
+                                text = { Text("Add Apps") },
+                                onClick = {
+                                    showMenu = false
+                                    onAddApps(preset)
+                                },
+                                leadingIcon = { Icon(Icons.Default.Add, contentDescription = null) }
                         )
                         DropdownMenuItem(
-                            text = { Text("Export") },
-                            onClick = {
-                                showMenu = false
-                                onExport()
-                            },
-                            leadingIcon = {
-                                Icon(Icons.Default.Share, contentDescription = null)
-                            }
+                                text = { Text("Export") },
+                                onClick = {
+                                    showMenu = false
+                                    onExport()
+                                },
+                                leadingIcon = {
+                                    Icon(Icons.Default.Share, contentDescription = null)
+                                }
                         )
                         HorizontalDivider()
                         DropdownMenuItem(
-                            text = { Text("Delete") },
-                            onClick = {
-                                showMenu = false
-                                onDelete()
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Default.Delete,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.error
-                                )
-                            },
-                            colors = MenuDefaults.itemColors(
-                                textColor = MaterialTheme.colorScheme.error
-                            )
+                                text = { Text("Delete") },
+                                onClick = {
+                                    showMenu = false
+                                    onDelete()
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                            Icons.Default.Delete,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.error
+                                    )
+                                },
+                                colors =
+                                        MenuDefaults.itemColors(
+                                                textColor = MaterialTheme.colorScheme.error
+                                        )
                         )
                     }
                 }
@@ -399,19 +461,20 @@ private fun ConfigurationCard(
 
             // Primary action button
             Button(
-                onClick = { onApply() },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    onClick = { onApply() },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors =
+                            ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primary
+                            )
             ) {
                 Icon(
-                    Icons.Default.PlayArrow,
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp)
+                        Icons.Default.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Apply Configuration")
+                Text("Apply Preset")
             }
         }
     }

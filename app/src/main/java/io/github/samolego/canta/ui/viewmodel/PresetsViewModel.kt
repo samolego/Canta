@@ -11,9 +11,9 @@ import androidx.lifecycle.viewModelScope
 import io.github.samolego.canta.extension.add
 import io.github.samolego.canta.extension.addAll
 import io.github.samolego.canta.extension.mutableStateSetOf
-import io.github.samolego.canta.util.AppConfiguration
 import io.github.samolego.canta.util.AppInfo
-import io.github.samolego.canta.util.CantaConfiguration
+import io.github.samolego.canta.util.AppPresetEntry
+import io.github.samolego.canta.util.CantaPreset
 import io.github.samolego.canta.util.LogUtils
 import io.github.samolego.canta.util.PresetManager
 import kotlinx.coroutines.launch
@@ -24,7 +24,7 @@ class PresetsViewModel : ViewModel() {
         private const val TAG = "PresetsViewModel"
     }
 
-    var configurations by mutableStateOf<List<CantaConfiguration>>(emptyList())
+    var presets by mutableStateOf<List<CantaPreset>>(emptyList())
         private set
 
     var isLoading by mutableStateOf(false)
@@ -32,12 +32,12 @@ class PresetsViewModel : ViewModel() {
 
     var selectedAppsForConfig = mutableStateSetOf<String>()
 
-    var currentConfigApps by mutableStateOf<List<AppConfiguration>>(emptyList())
+    var currentConfigApps by mutableStateOf<List<AppPresetEntry>>(emptyList())
         private set
 
     var isAutoSyncEnabled by mutableStateOf(true)
 
-    var editingConfiguration by mutableStateOf<CantaConfiguration?>(null)
+    var editingPreset by mutableStateOf<CantaPreset?>(null)
         private set
 
     var availableAppsForAdding by mutableStateOf<List<AppInfo>>(emptyList())
@@ -47,15 +47,15 @@ class PresetsViewModel : ViewModel() {
 
     fun initialize(context: Context) {
         configManager = PresetManager(context)
-        loadConfigurations()
+        loadPresets()
     }
 
-    fun loadConfigurations() {
+    fun loadPresets() {
         viewModelScope.launch {
             isLoading = true
             try {
-                configurations = configManager.loadConfigurations()
-                LogUtils.i(TAG, "Loaded ${configurations.size} configurations")
+                presets = configManager.loadPresets()
+                LogUtils.i(TAG, "Loaded ${presets.size} configurations")
             } catch (e: Exception) {
                 LogUtils.e(TAG, "Failed to load configurations: ${e.message}")
             } finally {
@@ -64,7 +64,7 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun saveConfiguration(
+    fun savePreset(
         name: String,
         description: String,
         apps: List<AppInfo>,
@@ -73,13 +73,14 @@ class PresetsViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             try {
-                val config = configManager.createConfigurationFromUninstalledApps(apps, name, description)
-                val success = configManager.saveConfiguration(config)
+                val preset = configManager.createPresetFromUninstalledApps(apps, name, description)
+                val success = configManager.savePreset(preset)
                 if (success) {
-                    loadConfigurations() // Refresh the list
+                    loadPresets() // Refresh the list
                     onSuccess()
                 } else {
-                    onError("Failed to save configuration")
+                    onError("Failed to save preset ${preset.name}!")
+                    LogUtils.e(TAG, "Failed to save preset ${preset.name}!")
                 }
             } catch (e: Exception) {
                 LogUtils.e(TAG, "Error saving configuration: ${e.message}")
@@ -88,16 +89,16 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun deleteConfiguration(
-        config: CantaConfiguration,
+    fun deletePreset(
+        config: CantaPreset,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
         viewModelScope.launch {
             try {
-                val success = configManager.deleteConfiguration(config)
+                val success = configManager.deletePreset(config)
                 if (success) {
-                    loadConfigurations() // Refresh the list
+                    loadPresets() // Refresh the list
                     onSuccess()
                 } else {
                     onError("Failed to delete configuration")
@@ -111,14 +112,14 @@ class PresetsViewModel : ViewModel() {
 
     fun exportToClipboard(
         context: Context,
-        config: CantaConfiguration,
+        config: CantaPreset,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
         try {
             val jsonString = configManager.exportToJson(config)
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Canta Configuration", jsonString)
+            val clip = ClipData.newPlainText("Canta Preset", jsonString)
             clipboard.setPrimaryClip(clip)
             onSuccess()
         } catch (e: Exception) {
@@ -129,7 +130,7 @@ class PresetsViewModel : ViewModel() {
 
     fun importFromClipboard(
         context: Context,
-        onSuccess: (CantaConfiguration) -> Unit,
+        onSuccess: (CantaPreset) -> Unit,
         onError: (String) -> Unit
     ) {
         try {
@@ -156,7 +157,7 @@ class PresetsViewModel : ViewModel() {
 
     fun importFromJson(
         jsonString: String,
-        onSuccess: (CantaConfiguration) -> Unit,
+        onSuccess: (CantaPreset) -> Unit,
         onError: (String) -> Unit
     ) {
         try {
@@ -172,7 +173,7 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun loadConfigurationApps(apps: List<AppConfiguration>) {
+    fun loadPresetApps(apps: List<AppPresetEntry>) {
         currentConfigApps = apps
         selectedAppsForConfig.clear()
         selectedAppsForConfig.addAll(apps.map { it.packageName })
@@ -195,7 +196,7 @@ class PresetsViewModel : ViewModel() {
         selectedAppsForConfig.clear()
     }
 
-    fun getSelectedConfigApps(): List<AppConfiguration> {
+    fun getSelectedConfigApps(): List<AppPresetEntry> {
         return currentConfigApps.filter { selectedAppsForConfig.contains(it.packageName) }
     }
 
@@ -207,19 +208,19 @@ class PresetsViewModel : ViewModel() {
         isAutoSyncEnabled = enabled
     }
 
-    fun startEditingConfiguration(config: CantaConfiguration) {
-        editingConfiguration = config
-        loadConfigurationApps(config.apps)
+    fun startEditingPreset(config: CantaPreset) {
+        editingPreset = config
+        loadPresetApps(config.apps)
     }
 
-    fun stopEditingConfiguration() {
-        editingConfiguration = null
+    fun stopEditingPreset() {
+        editingPreset = null
         currentConfigApps = emptyList()
         selectedAppsForConfig.clear()
     }
 
-    fun updateConfiguration(
-        oldConfig: CantaConfiguration,
+    fun updatePreset(
+        oldConfig: CantaPreset,
         newName: String,
         newDescription: String,
         onSuccess: () -> Unit,
@@ -234,10 +235,10 @@ class PresetsViewModel : ViewModel() {
                     apps = selectedApps
                 )
 
-                val success = configManager.updateConfiguration(oldConfig, updatedConfig)
+                val success = configManager.updatePreset(oldConfig, updatedConfig)
                 if (success) {
-                    loadConfigurations() // Refresh the list
-                    stopEditingConfiguration()
+                    loadPresets() // Refresh the list
+                    stopEditingPreset()
                     onSuccess()
                 } else {
                     onError("Failed to update configuration")
@@ -249,17 +250,17 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun addAppsToConfiguration(
-        config: CantaConfiguration,
-        appsToAdd: List<AppConfiguration>,
+    fun addAppsToPreset(
+        config: CantaPreset,
+        appsToAdd: List<AppPresetEntry>,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
         viewModelScope.launch {
             try {
-                val success = configManager.addAppsToConfiguration(config, appsToAdd)
+                val success = configManager.addAppsToPreset(config, appsToAdd)
                 if (success) {
-                    loadConfigurations() // Refresh the list
+                    loadPresets() // Refresh the list
                     onSuccess()
                 } else {
                     LogUtils.e(TAG, "Failed to add apps to configuration")
@@ -272,17 +273,17 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun removeAppsFromConfiguration(
-        config: CantaConfiguration,
+    fun removeAppsFromPreset(
+        config: CantaPreset,
         appsToRemove: List<String>,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
         viewModelScope.launch {
             try {
-                val success = configManager.removeAppsFromConfiguration(config, appsToRemove)
+                val success = configManager.removeAppsFromPreset(config, appsToRemove)
                 if (success) {
-                    loadConfigurations() // Refresh the list
+                    loadPresets() // Refresh the list
                     onSuccess()
                 } else {
                     onError("Failed to remove apps from configuration")
@@ -294,7 +295,7 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun syncConfigurationsWithUninstalledApps(
+    fun syncPresetsWithUninstalledApps(
         uninstalledApps: List<AppInfo>,
         onSuccess: (Boolean) -> Unit = {},
         onError: (String) -> Unit = {}
@@ -303,9 +304,9 @@ class PresetsViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
-                val updated = configManager.syncConfigurationsWithUninstalledApps(uninstalledApps)
+                val updated = configManager.syncPresetsWithUninstalledApps(uninstalledApps)
                 if (updated) {
-                    loadConfigurations() // Refresh the list
+                    loadPresets() // Refresh the list
                 }
                 onSuccess(updated)
             } catch (e: Exception) {
@@ -322,8 +323,8 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun createAppConfigurationFromAppInfo(appInfo: AppInfo): AppConfiguration {
-        return AppConfiguration(
+    fun createAppPresetFromAppInfo(appInfo: AppInfo): AppPresetEntry {
+        return AppPresetEntry(
             packageName = appInfo.packageName,
             appName = appInfo.name,
             uninstallDate = System.currentTimeMillis(),
@@ -332,16 +333,16 @@ class PresetsViewModel : ViewModel() {
         )
     }
 
-    fun saveImportedConfiguration(
-        config: CantaConfiguration,
+    fun saveImportedPreset(
+        config: CantaPreset,
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
         viewModelScope.launch {
             try {
-                val success = configManager.saveConfiguration(config)
+                val success = configManager.savePreset(config)
                 if (success) {
-                    loadConfigurations() // Refresh the list
+                    loadPresets() // Refresh the list
                     onSuccess()
                 } else {
                     LogUtils.e(TAG, "Failed to save imported configuration")

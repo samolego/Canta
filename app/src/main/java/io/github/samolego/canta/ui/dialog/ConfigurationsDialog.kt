@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ImportConfigurationDialog(
+fun ImportPresetDialog(
     onDismiss: () -> Unit,
     onImportFromClipboard: () -> Unit,
     onImportFromText: (String) -> Unit
@@ -26,7 +26,7 @@ fun ImportConfigurationDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Import Configuration",
+                text = "Import Preset",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )

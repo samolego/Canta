@@ -13,7 +13,7 @@ import java.util.Date
 import java.util.Locale
 
 @Parcelize
-data class AppConfiguration(
+data class AppPresetEntry(
     val packageName: String,
     val appName: String,
     val uninstallDate: Long,
@@ -22,11 +22,11 @@ data class AppConfiguration(
 ) : Parcelable
 
 @Parcelize
-data class CantaConfiguration(
-    val name: String,
-    val description: String,
+data class CantaPreset(
+    var name: String,
+    var description: String,
     val createdDate: Long,
-    val apps: List<AppConfiguration>,
+    val apps: List<AppPresetEntry>,
     val version: String = "1.0"
 ) : Parcelable
 
@@ -46,12 +46,12 @@ class PresetManager(private val context: Context) {
     /**
      * Saves a configuration to local storage
      */
-    suspend fun saveConfiguration(config: CantaConfiguration): Boolean = withContext(Dispatchers.IO) {
+    suspend fun savePreset(config: CantaPreset): Boolean = withContext(Dispatchers.IO) {
         try {
             val fileName = "${config.name.replace("[^a-zA-Z0-9]".toRegex(), "_")}_${config.createdDate}.json"
             val file = File(configDir, fileName)
             file.writeText(configurationToJson(config).toString(2))
-            LogUtils.i(TAG, "Configuration saved: ${file.absolutePath}")
+            LogUtils.i(TAG, "Preset saved: ${file.absolutePath}")
             true
         } catch (e: Exception) {
             LogUtils.e(TAG, "Failed to save configuration: ${e.message}")
@@ -62,13 +62,13 @@ class PresetManager(private val context: Context) {
     /**
      * Loads all saved configurations
      */
-    suspend fun loadConfigurations(): List<CantaConfiguration> = withContext(Dispatchers.IO) {
+    suspend fun loadPresets(): List<CantaPreset> = withContext(Dispatchers.IO) {
         try {
             configDir.listFiles { _, name -> name.endsWith(".json") }
                 ?.mapNotNull { file ->
                     try {
                         val json = JSONObject(file.readText())
-                        jsonToConfiguration(json)
+                        jsonToPreset(json)
                     } catch (e: Exception) {
                         LogUtils.e(TAG, "Failed to parse configuration file ${file.name}: ${e.message}")
                         null
@@ -83,12 +83,12 @@ class PresetManager(private val context: Context) {
     /**
      * Deletes a configuration file
      */
-    suspend fun deleteConfiguration(config: CantaConfiguration): Boolean = withContext(Dispatchers.IO) {
+    suspend fun deletePreset(config: CantaPreset): Boolean = withContext(Dispatchers.IO) {
         try {
             val fileName = "${config.name.replace("[^a-zA-Z0-9]".toRegex(), "_")}_${config.createdDate}.json"
             val file = File(configDir, fileName)
             val deleted = file.delete()
-            LogUtils.i(TAG, "Configuration deleted: $deleted")
+            LogUtils.i(TAG, "Preset deleted: $deleted")
             deleted
         } catch (e: Exception) {
             LogUtils.e(TAG, "Failed to delete configuration: ${e.message}")
@@ -99,17 +99,17 @@ class PresetManager(private val context: Context) {
     /**
      * Exports configuration to JSON string
      */
-    fun exportToJson(config: CantaConfiguration): String {
+    fun exportToJson(config: CantaPreset): String {
         return configurationToJson(config).toString(2)
     }
 
     /**
      * Imports configuration from JSON string
      */
-    fun importFromJson(jsonString: String): CantaConfiguration? {
+    fun importFromJson(jsonString: String): CantaPreset? {
         return try {
             val json = JSONObject(jsonString)
-            jsonToConfiguration(json)
+            jsonToPreset(json)
         } catch (e: Exception) {
             LogUtils.e(TAG, "Failed to import configuration from JSON: ${e.message}")
             null
@@ -119,14 +119,14 @@ class PresetManager(private val context: Context) {
     /**
      * Creates a configuration from currently uninstalled apps
      */
-    fun createConfigurationFromUninstalledApps(
+    fun createPresetFromUninstalledApps(
         apps: List<AppInfo>,
         name: String,
         description: String
-    ): CantaConfiguration {
+    ): CantaPreset {
         val uninstalledApps = apps.filter { it.isUninstalled }
             .map { app ->
-                AppConfiguration(
+                AppPresetEntry(
                     packageName = app.packageName,
                     appName = app.name,
                     uninstallDate = System.currentTimeMillis(),
@@ -135,7 +135,7 @@ class PresetManager(private val context: Context) {
                 )
             }
 
-        return CantaConfiguration(
+        return CantaPreset(
             name = name,
             description = description,
             createdDate = System.currentTimeMillis(),
@@ -143,7 +143,7 @@ class PresetManager(private val context: Context) {
         )
     }
 
-    private fun configurationToJson(config: CantaConfiguration): JSONObject {
+    private fun configurationToJson(config: CantaPreset): JSONObject {
         val json = JSONObject()
         json.put("name", config.name)
         json.put("description", config.description)
@@ -165,14 +165,14 @@ class PresetManager(private val context: Context) {
         return json
     }
 
-    private fun jsonToConfiguration(json: JSONObject): CantaConfiguration {
-        val apps = mutableListOf<AppConfiguration>()
+    private fun jsonToPreset(json: JSONObject): CantaPreset {
+        val apps = mutableListOf<AppPresetEntry>()
         val appsArray = json.getJSONArray("apps")
 
         for (i in 0 until appsArray.length()) {
             val appJson = appsArray.getJSONObject(i)
             apps.add(
-                AppConfiguration(
+                AppPresetEntry(
                     packageName = appJson.getString("packageName"),
                     appName = appJson.getString("appName"),
                     uninstallDate = appJson.getLong("uninstallDate"),
@@ -182,7 +182,7 @@ class PresetManager(private val context: Context) {
             )
         }
 
-        return CantaConfiguration(
+        return CantaPreset(
             name = json.getString("name"),
             description = json.getString("description"),
             createdDate = json.getLong("createdDate"),
@@ -202,11 +202,11 @@ class PresetManager(private val context: Context) {
     /**
      * Updates all configurations by adding newly uninstalled apps
      */
-    suspend fun syncConfigurationsWithUninstalledApps(
+    suspend fun syncPresetsWithUninstalledApps(
         uninstalledApps: List<AppInfo>
     ): Boolean = withContext(Dispatchers.IO) {
         try {
-            val configurations = loadConfigurations()
+            val configurations = loadPresets()
             var updated = false
 
             configurations.forEach { config ->
@@ -217,7 +217,7 @@ class PresetManager(private val context: Context) {
 
                 if (newUninstalledApps.isNotEmpty()) {
                     val newAppConfigs = newUninstalledApps.map { app ->
-                        AppConfiguration(
+                        AppPresetEntry(
                             packageName = app.packageName,
                             appName = app.name,
                             uninstallDate = System.currentTimeMillis(),
@@ -230,7 +230,7 @@ class PresetManager(private val context: Context) {
                         apps = config.apps + newAppConfigs
                     )
 
-                    saveConfiguration(updatedConfig)
+                    savePreset(updatedConfig)
                     updated = true
                     LogUtils.i(TAG, "Auto-synced ${newAppConfigs.size} apps to configuration '${config.name}'")
                 }
@@ -246,16 +246,16 @@ class PresetManager(private val context: Context) {
     /**
      * Updates a specific configuration
      */
-    suspend fun updateConfiguration(
-        oldConfig: CantaConfiguration,
-        newConfig: CantaConfiguration
+    suspend fun updatePreset(
+        oldConfig: CantaPreset,
+        newConfig: CantaPreset
     ): Boolean = withContext(Dispatchers.IO) {
         try {
             // Delete old configuration
-            deleteConfiguration(oldConfig)
+            deletePreset(oldConfig)
             // Save new configuration
-            saveConfiguration(newConfig)
-            LogUtils.i(TAG, "Configuration updated: ${newConfig.name}")
+            savePreset(newConfig)
+            LogUtils.i(TAG, "Preset updated: ${newConfig.name}")
             true
         } catch (e: Exception) {
             LogUtils.e(TAG, "Failed to update configuration: ${e.message}")
@@ -266,9 +266,9 @@ class PresetManager(private val context: Context) {
     /**
      * Adds apps to an existing configuration
      */
-    suspend fun addAppsToConfiguration(
-        config: CantaConfiguration,
-        newApps: List<AppConfiguration>
+    suspend fun addAppsToPreset(
+        config: CantaPreset,
+        newApps: List<AppPresetEntry>
     ): Boolean = withContext(Dispatchers.IO) {
         try {
             val existingPackages = config.apps.map { it.packageName }.toSet()
@@ -278,7 +278,7 @@ class PresetManager(private val context: Context) {
                 val updatedConfig = config.copy(
                     apps = config.apps + uniqueNewApps
                 )
-                updateConfiguration(config, updatedConfig)
+                updatePreset(config, updatedConfig)
             } else {
                 true // No new apps to add
             }
@@ -291,14 +291,14 @@ class PresetManager(private val context: Context) {
     /**
      * Removes apps from an existing configuration
      */
-    suspend fun removeAppsFromConfiguration(
-        config: CantaConfiguration,
+    suspend fun removeAppsFromPreset(
+        config: CantaPreset,
         appsToRemove: List<String>
     ): Boolean = withContext(Dispatchers.IO) {
         try {
             val updatedApps = config.apps.filter { !appsToRemove.contains(it.packageName) }
             val updatedConfig = config.copy(apps = updatedApps)
-            updateConfiguration(config, updatedConfig)
+            updatePreset(config, updatedConfig)
         } catch (e: Exception) {
             LogUtils.e(TAG, "Failed to remove apps from configuration: ${e.message}")
             false

@@ -82,7 +82,7 @@ fun AppList(
             if (appListModel.isLoadingBadges) {
                 LoadingBadgesIndicator()
             }
-            if (appType == AppsType.UNINSTALLED || enableSelectAll && appListModel.selectedApps.isNotEmpty() && appListModel.selectedFilter.removalRecommendation == RemovalRecommendation.RECOMMENDED) {
+            if (appType == AppsType.UNINSTALLED || enableSelectAll && appListModel.selectedFilter.removalRecommendation == RemovalRecommendation.RECOMMENDED) {
                 SelectAllOption(
                     onCheckedChange = {
                         if (!it) {
