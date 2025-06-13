@@ -38,7 +38,7 @@ import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.component.IconClickButton
 import io.github.samolego.canta.ui.component.SettingsItem
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
-import io.github.samolego.canta.util.SettingsStore
+import io.github.samolego.canta.data.SettingsStore
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

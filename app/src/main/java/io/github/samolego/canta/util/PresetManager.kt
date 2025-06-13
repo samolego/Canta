@@ -13,20 +13,11 @@ import java.util.Date
 import java.util.Locale
 
 @Parcelize
-data class AppPresetEntry(
-    val packageName: String,
-    val appName: String,
-    val uninstallDate: Long,
-    val isSystemApp: Boolean,
-    val description: String? = null
-) : Parcelable
-
-@Parcelize
 data class CantaPreset(
-    var name: String,
-    var description: String,
+    val name: String,
+    val description: String,
     val createdDate: Long,
-    val apps: List<AppPresetEntry>,
+    val apps: Set<String>,
     val version: String = "1.0"
 ) : Parcelable
 
@@ -120,26 +111,15 @@ class PresetManager(private val context: Context) {
      * Creates a configuration from currently uninstalled apps
      */
     fun createPresetFromUninstalledApps(
-        apps: List<AppInfo>,
+        apps: Set<String>,
         name: String,
         description: String
     ): CantaPreset {
-        val uninstalledApps = apps.filter { it.isUninstalled }
-            .map { app ->
-                AppPresetEntry(
-                    packageName = app.packageName,
-                    appName = app.name,
-                    uninstallDate = System.currentTimeMillis(),
-                    isSystemApp = app.isSystemApp,
-                    description = app.bloatData?.description
-                )
-            }
-
         return CantaPreset(
             name = name,
             description = description,
             createdDate = System.currentTimeMillis(),
-            apps = uninstalledApps
+            apps = apps
         )
     }
 
@@ -153,11 +133,7 @@ class PresetManager(private val context: Context) {
         val appsArray = JSONArray()
         config.apps.forEach { app ->
             val appJson = JSONObject()
-            appJson.put("packageName", app.packageName)
-            appJson.put("appName", app.appName)
-            appJson.put("uninstallDate", app.uninstallDate)
-            appJson.put("isSystemApp", app.isSystemApp)
-            app.description?.let { appJson.put("description", it) }
+            appJson.put("packageName", app)
             appsArray.put(appJson)
         }
         json.put("apps", appsArray)
@@ -166,20 +142,12 @@ class PresetManager(private val context: Context) {
     }
 
     private fun jsonToPreset(json: JSONObject): CantaPreset {
-        val apps = mutableListOf<AppPresetEntry>()
+        val apps = mutableSetOf<String>()
         val appsArray = json.getJSONArray("apps")
 
         for (i in 0 until appsArray.length()) {
             val appJson = appsArray.getJSONObject(i)
-            apps.add(
-                AppPresetEntry(
-                    packageName = appJson.getString("packageName"),
-                    appName = appJson.getString("appName"),
-                    uninstallDate = appJson.getLong("uninstallDate"),
-                    isSystemApp = appJson.getBoolean("isSystemApp"),
-                    description = appJson.optString("description").takeIf { it.isNotEmpty() }
-                )
-            )
+            apps.add(appJson.getString("packageName"))
         }
 
         return CantaPreset(
@@ -197,50 +165,6 @@ class PresetManager(private val context: Context) {
     fun formatDate(timestamp: Long): String {
         val formatter = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
         return formatter.format(Date(timestamp))
-    }
-
-    /**
-     * Updates all configurations by adding newly uninstalled apps
-     */
-    suspend fun syncPresetsWithUninstalledApps(
-        uninstalledApps: List<AppInfo>
-    ): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val configurations = loadPresets()
-            var updated = false
-
-            configurations.forEach { config ->
-                val existingPackages = config.apps.map { it.packageName }.toSet()
-                val newUninstalledApps = uninstalledApps.filter { app ->
-                    app.isUninstalled && !existingPackages.contains(app.packageName)
-                }
-
-                if (newUninstalledApps.isNotEmpty()) {
-                    val newAppConfigs = newUninstalledApps.map { app ->
-                        AppPresetEntry(
-                            packageName = app.packageName,
-                            appName = app.name,
-                            uninstallDate = System.currentTimeMillis(),
-                            isSystemApp = app.isSystemApp,
-                            description = app.bloatData?.description
-                        )
-                    }
-
-                    val updatedConfig = config.copy(
-                        apps = config.apps + newAppConfigs
-                    )
-
-                    savePreset(updatedConfig)
-                    updated = true
-                    LogUtils.i(TAG, "Auto-synced ${newAppConfigs.size} apps to configuration '${config.name}'")
-                }
-            }
-
-            updated
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Failed to sync configurations: ${e.message}")
-            false
-        }
     }
 
     /**
@@ -266,26 +190,14 @@ class PresetManager(private val context: Context) {
     /**
      * Adds apps to an existing configuration
      */
-    suspend fun addAppsToPreset(
+    suspend fun setPresetApps(
         config: CantaPreset,
-        newApps: List<AppPresetEntry>
-    ): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val existingPackages = config.apps.map { it.packageName }.toSet()
-            val uniqueNewApps = newApps.filter { !existingPackages.contains(it.packageName) }
-
-            if (uniqueNewApps.isNotEmpty()) {
-                val updatedConfig = config.copy(
-                    apps = config.apps + uniqueNewApps
-                )
-                updatePreset(config, updatedConfig)
-            } else {
-                true // No new apps to add
-            }
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Failed to add apps to configuration: ${e.message}")
-            false
-        }
+        newApps: Set<String>
+    ) = withContext(Dispatchers.IO) {
+        val updatedConfig = config.copy(
+            apps = newApps
+        )
+        updatePreset(config, updatedConfig)
     }
 
     /**
@@ -296,7 +208,7 @@ class PresetManager(private val context: Context) {
         appsToRemove: List<String>
     ): Boolean = withContext(Dispatchers.IO) {
         try {
-            val updatedApps = config.apps.filter { !appsToRemove.contains(it.packageName) }
+            val updatedApps = config.apps.filter { !appsToRemove.contains(it) }.toSet()
             val updatedConfig = config.copy(apps = updatedApps)
             updatePreset(config, updatedConfig)
         } catch (e: Exception) {

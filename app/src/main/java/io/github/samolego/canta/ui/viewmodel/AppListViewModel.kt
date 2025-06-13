@@ -8,20 +8,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
+import io.github.samolego.canta.R
+import io.github.samolego.canta.data.SettingsStore
 import io.github.samolego.canta.extension.getAllPackagesInfo
 import io.github.samolego.canta.extension.mutableStateSetOf
 import io.github.samolego.canta.packageName
-import io.github.samolego.canta.ui.dialog.cantaBloatData
 import io.github.samolego.canta.util.AppInfo
 import io.github.samolego.canta.util.BloatData
 import io.github.samolego.canta.util.BloatUtils
 import io.github.samolego.canta.util.Filter
 import io.github.samolego.canta.util.LogUtils
-import io.github.samolego.canta.util.SettingsStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.File
 import java.util.Locale
 
@@ -134,4 +134,12 @@ class AppListViewModel : ViewModel() {
             }
         }
     }
+}
+
+private fun cantaBloatData(context: Context): BloatData {
+    return BloatData(
+        installData = null,
+        description = context.getString(R.string.canta_description, "Universal Debloater Alliance (https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation)"),
+        removal = null,
+    )
 }

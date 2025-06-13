@@ -103,7 +103,7 @@ fun PresetCreateDialog(
             presetViewModel.savePreset(
                 name = name,
                 description = description,
-                apps = appListViewModel.appList,
+                apps = appListViewModel.selectedApps.keys,
                 onSuccess = {
                     closeDialog()
                 },
@@ -116,6 +116,7 @@ fun PresetCreateDialog(
 @Composable
 fun PresetEditDialog(
     preset: CantaPreset,
+    presetViewModel: PresetsViewModel,
     closeDialog: () -> Unit,
 ) {
     PresetDialog(
@@ -123,8 +124,13 @@ fun PresetEditDialog(
         description = preset.description,
         onDismiss = closeDialog,
         onConfirm = { name, description ->
-            preset.name = name
-            preset.description = description
+            presetViewModel.updatePreset(
+                oldPreset = preset,
+                newName = name,
+                newDescription = description,
+                onSuccess = { },
+                onError = { },
+            )
         }
     )
 }

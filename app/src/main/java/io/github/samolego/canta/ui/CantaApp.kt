@@ -51,6 +51,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.github.samolego.canta.R
+import io.github.samolego.canta.data.SettingsStore
 import io.github.samolego.canta.extension.addAll
 import io.github.samolego.canta.packageName
 import io.github.samolego.canta.ui.component.AppIconImage
@@ -64,9 +65,9 @@ import io.github.samolego.canta.ui.screen.LogsPage
 import io.github.samolego.canta.ui.screen.PresetsPage
 import io.github.samolego.canta.ui.screen.SettingsScreen
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
+import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.util.Filter
-import io.github.samolego.canta.util.SettingsStore
 import io.github.samolego.canta.util.ShizukuData
 import io.github.samolego.canta.util.ShizukuInfo
 import io.github.samolego.canta.util.showFor
@@ -88,9 +89,9 @@ fun CantaApp(
 
     val appListViewModel = viewModel<AppListViewModel>()
     val settingsViewModel = viewModel<SettingsViewModel>()
+    val presetViewModel = viewModel<PresetsViewModel>()
     val settingsStore = remember { SettingsStore(context) }
     val showDisclaimerWarning = remember { mutableStateOf(false) }
-    var presetEditMode by remember { mutableStateOf(false) }
     var versionTapCounter by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -117,6 +118,13 @@ fun CantaApp(
                     closeApp = closeApp,
                     settingsStore = settingsStore,
                     showWarning = showDisclaimerWarning,
+                    presetEditMode = presetViewModel.editingPreset != null,
+                    onPresetEditFinish = {
+                        // Save all the selected apps to the preset
+                        presetViewModel.setPresetApps(presetViewModel.editingPreset!!, appListViewModel.selectedApps.keys)
+                        presetViewModel.editingPreset = null
+                        navController.navigate(Screen.Presets.route)
+                    },
                     enableSelectAll = versionTapCounter >= secretTaps,
                     appListViewModel = appListViewModel,
                     settingsViewModel = settingsViewModel,
@@ -160,14 +168,12 @@ fun CantaApp(
 
         composable(route = Screen.Presets.route) {
             PresetsPage(
-                    enterEditMode = { presetEditMode = true },
+                    presetViewModel = presetViewModel,
                     onNavigateBack = { preset ->
                         preset?.let {
                             appListViewModel.selectedApps.clear()
                             // Select apps in appListViewModel according to preset
-                            appListViewModel.selectedApps.addAll(
-                                    it.apps.map { app -> app.packageName }
-                            )
+                            appListViewModel.selectedApps.addAll(it.apps)
                         }
 
                         navController.navigateUp()
@@ -181,17 +187,19 @@ fun CantaApp(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
-        launchShizuku: () -> Unit,
-        canResetAppToFactory: (String) -> Boolean,
-        uninstallApp: (String, Boolean) -> Boolean,
-        reinstallApp: (String) -> Boolean,
-        navigateToPage: (route: String) -> Unit,
-        closeApp: () -> Unit,
-        settingsStore: SettingsStore,
-        showWarning: MutableState<Boolean>,
-        enableSelectAll: Boolean,
-        appListViewModel: AppListViewModel,
-        settingsViewModel: SettingsViewModel,
+    launchShizuku: () -> Unit,
+    canResetAppToFactory: (String) -> Boolean,
+    uninstallApp: (String, Boolean) -> Boolean,
+    reinstallApp: (String) -> Boolean,
+    onPresetEditFinish: () -> Unit,
+    navigateToPage: (route: String) -> Unit,
+    closeApp: () -> Unit,
+    settingsStore: SettingsStore,
+    showWarning: MutableState<Boolean>,
+    enableSelectAll: Boolean,
+    presetEditMode: Boolean,
+    appListViewModel: AppListViewModel,
+    settingsViewModel: SettingsViewModel,
 ) {
 
     val context = LocalContext.current
@@ -254,16 +262,16 @@ private fun MainContent(
                 ) {
                     FloatingActionButton(
                             containerColor =
-                                    when (selectedAppsType) {
-                                        AppsType.INSTALLED ->
-                                                MaterialTheme.colorScheme.errorContainer
-                                        AppsType.UNINSTALLED ->
-                                                MaterialTheme.colorScheme.tertiaryContainer
+                                    if (selectedAppsType == AppsType.UNINSTALLED || presetEditMode) {
+                                        MaterialTheme.colorScheme.tertiaryContainer
+                                    } else {
+
+                                        MaterialTheme.colorScheme.errorContainer
                                     },
                             shape = RoundedCornerShape(32.dp),
                             modifier = Modifier.padding(16.dp).navigationBarsPadding(),
                             onClick = {
-                                // Check if only Canta is selected
+                                // Check if Canta is selected too
                                 // Super secret don't tell anyone you saw this
                                 // since this is an easter egg :P
                                 if (appListViewModel.selectedApps.contains(packageName)) {
@@ -271,6 +279,11 @@ private fun MainContent(
                                     Toast.makeText(context, "Can'ta ouch this!", Toast.LENGTH_SHORT)
                                             .show()
 
+                                    return@FloatingActionButton
+                                }
+
+                                if (presetEditMode) {
+                                    onPresetEditFinish()
                                     return@FloatingActionButton
                                 }
 
@@ -283,10 +296,7 @@ private fun MainContent(
                                 ) {
                                     if (appListViewModel.selectedApps.isNotEmpty()) {
                                         currentDialog = {
-                                            val canResetAny =
-                                                    appListViewModel.selectedApps.keys.any { pkg ->
-                                                        canResetAppToFactory(pkg)
-                                                    }
+                                            val canResetAny = appListViewModel.selectedApps.keys.any { canResetAppToFactory(it) }
 
                                             UninstallAppsDialog(
                                                     appCount = appListViewModel.selectedApps.size,

@@ -1,4 +1,4 @@
-package io.github.samolego.canta.util
+package io.github.samolego.canta.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore

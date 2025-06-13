@@ -50,10 +50,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.samolego.canta.ui.component.ExpandableFAB
 import io.github.samolego.canta.ui.dialog.ImportPresetDialog
 import io.github.samolego.canta.ui.dialog.PresetCreateDialog
+import io.github.samolego.canta.ui.dialog.PresetEditDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.util.CantaPreset
@@ -61,12 +61,11 @@ import io.github.samolego.canta.util.CantaPreset
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresetsPage(
-    enterEditMode: () -> Unit,
+    presetViewModel: PresetsViewModel,
     onNavigateBack: (appliedPreset: CantaPreset?) -> Unit,
     appListViewModel: AppListViewModel,
 ) {
     val context = LocalContext.current
-    val presetViewModel = viewModel<PresetsViewModel>()
 
     var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
 
@@ -119,8 +118,9 @@ fun PresetsPage(
             } else if (presetViewModel.presets.isEmpty()) {
                 EmptyPresetsState(
                         onCreateClick = { currentDialog = {
-                            createConfigDialog(null, null)
-                        } },
+                                createConfigDialog(null, null)
+                            }
+                        },
                         onImportClick = {
                             currentDialog = {
                                 ImportDialog(
@@ -141,13 +141,17 @@ fun PresetsPage(
                         PresetCard(
                                 preset = preset,
                                 onAddApps = {
-                                    enterEditMode()
+                                    presetViewModel.editingPreset = preset
                                     onNavigateBack(preset)
                                 },
                                 formatDate = presetViewModel::formatDate,
                                 onEdit = {
                                     currentDialog = {
-                                        createConfigDialog(preset.name, preset.description)
+                                        PresetEditDialog(
+                                            preset = preset,
+                                            presetViewModel = presetViewModel,
+                                            closeDialog = { currentDialog = null }
+                                        )
                                     }
                                 },
                                 onApply = {
@@ -297,8 +301,7 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
         )
 
         Text(
-                text =
-                        "Create or import configurations to manage\napp uninstall lists across devices",
+                text = "Create or import configurations to manage\napp uninstall lists across devices",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),

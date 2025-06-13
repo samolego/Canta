@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.samolego.canta.data.SettingsStore
 import kotlinx.coroutines.launch
-import io.github.samolego.canta.util.SettingsStore
 
 class SettingsViewModel : ViewModel() {
 
