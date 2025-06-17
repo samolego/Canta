@@ -17,6 +17,7 @@ Powered by [Shizuku](https://shizuku.rikka.app/).
 
 Wanna try get Canta to Google play?
 ~~[Donate to purchase developer license](https://www.paypal.com/donate/?hosted_button_id=FD4R46ZZ5EWME)~~ DONE ✅, waiting for Google Play approval.
+Please help Canta get to Google Play by [becoming a tester](https://play.google.com/apps/testing/io.github.samolego.canta).
 
 ### Verification
 You can verify the authenticity of downloaded APKs using this SHA-256 certificate fingerprint:
