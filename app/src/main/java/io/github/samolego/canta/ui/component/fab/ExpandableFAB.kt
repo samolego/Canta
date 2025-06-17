@@ -1,4 +1,4 @@
-package io.github.samolego.canta.ui.component
+package io.github.samolego.canta.ui.component.fab
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
+import io.github.samolego.canta.ui.component.IconClickButton
 
 @Composable
 fun ExpandableFAB(
@@ -60,13 +61,13 @@ fun ExpandableFAB(
             // Import button
             if (isExpanded) {
                 IconClickButton(
-                        onClick = {
-                            onTopClick()
-                            isExpanded = false
-                        },
-                        icon = Icons.Default.Download,
-                        contentDescription = "Top click",
-                        scale = actionButtonScale
+                    onClick = {
+                        onTopClick()
+                        isExpanded = false
+                    },
+                    icon = Icons.Default.Download,
+                    contentDescription = "Top click",
+                    scale = actionButtonScale
                 )
             }
             // Main FAB

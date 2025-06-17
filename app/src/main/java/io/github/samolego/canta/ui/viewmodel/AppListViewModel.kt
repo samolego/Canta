@@ -43,10 +43,18 @@ class AppListViewModel : ViewModel() {
 
     var selectedFilter by mutableStateOf(Filter.any)
 
+
+    val selectedAppsSorted by derivedStateOf {
+        sortedList.filter { selectedApps.contains(it.packageName) }
+    }
+
+    private val nameComparator = compareBy(Collator.getInstance(Locale.getDefault()), AppInfo::name)
     private val sortedList by derivedStateOf {
         isLoading = true
-        val comparator = compareBy(Collator.getInstance(Locale.getDefault()), AppInfo::name)
-        apps.filter { selectedFilter.shouldShow(it) }.sortedWith(comparator).also {
+
+        apps.filter { selectedFilter.shouldShow(it) }
+            .sortedWith(nameComparator)
+            .also {
             isLoading = false
         }
     }

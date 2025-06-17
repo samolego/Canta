@@ -11,6 +11,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.InstallMobile
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -31,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -57,6 +60,7 @@ import io.github.samolego.canta.packageName
 import io.github.samolego.canta.ui.component.AppIconImage
 import io.github.samolego.canta.ui.component.AppList
 import io.github.samolego.canta.ui.component.CantaTopBar
+import io.github.samolego.canta.ui.component.fab.PresetEditFAB
 import io.github.samolego.canta.ui.dialog.ExplainBadgesDialog
 import io.github.samolego.canta.ui.dialog.NoWarrantyDialog
 import io.github.samolego.canta.ui.dialog.UninstallAppsDialog
@@ -122,6 +126,7 @@ fun CantaApp(
                     onPresetEditFinish = {
                         // Save all the selected apps to the preset
                         presetViewModel.setPresetApps(presetViewModel.editingPreset!!, appListViewModel.selectedApps.keys)
+                        appListViewModel.selectedApps.clear()
                         presetViewModel.editingPreset = null
                         navController.navigate(Screen.Presets.route)
                     },
@@ -260,14 +265,19 @@ private fun MainContent(
                         enter = fadeIn() + scaleIn(),
                         exit = fadeOut() + scaleOut()
                 ) {
-                    FloatingActionButton(
+                    if (presetEditMode) {
+                        PresetEditFAB(
+                            onPresetEditFinish = onPresetEditFinish,
+                        )
+                    } else {
+                        FloatingActionButton(
                             containerColor =
-                                    if (selectedAppsType == AppsType.UNINSTALLED || presetEditMode) {
-                                        MaterialTheme.colorScheme.tertiaryContainer
-                                    } else {
+                            if (selectedAppsType == AppsType.UNINSTALLED) {
+                                MaterialTheme.colorScheme.tertiaryContainer
+                            } else {
 
-                                        MaterialTheme.colorScheme.errorContainer
-                                    },
+                                MaterialTheme.colorScheme.errorContainer
+                            },
                             shape = RoundedCornerShape(32.dp),
                             modifier = Modifier.padding(16.dp).navigationBarsPadding(),
                             onClick = {
@@ -277,13 +287,8 @@ private fun MainContent(
                                 if (appListViewModel.selectedApps.contains(packageName)) {
                                     // Show easter egg toast
                                     Toast.makeText(context, "Can'ta ouch this!", Toast.LENGTH_SHORT)
-                                            .show()
+                                        .show()
 
-                                    return@FloatingActionButton
-                                }
-
-                                if (presetEditMode) {
-                                    onPresetEditFinish()
                                     return@FloatingActionButton
                                 }
 
@@ -292,30 +297,30 @@ private fun MainContent(
                                 // settings
                                 // or if we are on the "uninstalled" tab
                                 if (selectedAppsType == AppsType.INSTALLED &&
-                                                settingsViewModel.confirmBeforeUninstall
+                                    settingsViewModel.confirmBeforeUninstall
                                 ) {
                                     if (appListViewModel.selectedApps.isNotEmpty()) {
                                         currentDialog = {
                                             val canResetAny = appListViewModel.selectedApps.keys.any { canResetAppToFactory(it) }
 
                                             UninstallAppsDialog(
-                                                    appCount = appListViewModel.selectedApps.size,
-                                                    canResetToFactory = canResetAny,
-                                                    onDismiss = { currentDialog = null },
-                                                    onAgree = { resetToFactory ->
-                                                        currentDialog = null
+                                                appCount = appListViewModel.selectedApps.size,
+                                                canResetToFactory = canResetAny,
+                                                onDismiss = { currentDialog = null },
+                                                onAgree = { resetToFactory ->
+                                                    currentDialog = null
 
-                                                        uninstallOrReinstall(
-                                                                context = context,
-                                                                coroutineScope = coroutineScope,
-                                                                launchShizuku = launchShizuku,
-                                                                uninstallApp = uninstallApp,
-                                                                reinstallApp = reinstallApp,
-                                                                selectedAppsType = selectedAppsType,
-                                                                appListViewModel = appListViewModel,
-                                                                resetToFactory = resetToFactory
-                                                        )
-                                                    }
+                                                    uninstallOrReinstall(
+                                                        context = context,
+                                                        coroutineScope = coroutineScope,
+                                                        launchShizuku = launchShizuku,
+                                                        uninstallApp = uninstallApp,
+                                                        reinstallApp = reinstallApp,
+                                                        selectedAppsType = selectedAppsType,
+                                                        appListViewModel = appListViewModel,
+                                                        resetToFactory = resetToFactory
+                                                    )
+                                                }
                                             )
                                         }
                                     }
@@ -323,37 +328,39 @@ private fun MainContent(
                                 }
                                 // Trigger uninstall
                                 uninstallOrReinstall(
-                                        context = context,
-                                        coroutineScope = coroutineScope,
-                                        launchShizuku = launchShizuku,
-                                        uninstallApp = uninstallApp,
-                                        reinstallApp = reinstallApp,
-                                        selectedAppsType = selectedAppsType,
-                                        appListViewModel = appListViewModel,
+                                    context = context,
+                                    coroutineScope = coroutineScope,
+                                    launchShizuku = launchShizuku,
+                                    uninstallApp = uninstallApp,
+                                    reinstallApp = reinstallApp,
+                                    selectedAppsType = selectedAppsType,
+                                    appListViewModel = appListViewModel,
                                 )
                             },
-                    ) {
-                        when (selectedAppsType) {
-                            AppsType.INSTALLED ->
+                        ) {
+                            when (selectedAppsType) {
+                                AppsType.INSTALLED ->
                                     // Show Canta icon if only Canta is selected
                                     if (appListViewModel.selectedApps.contains(packageName)) {
                                         AppIconImage(
-                                                appIconImage = cantaIcon,
-                                                contentDescription =
-                                                        stringResource(R.string.app_name)
+                                            appIconImage = cantaIcon,
+                                            contentDescription =
+                                            stringResource(R.string.app_name)
                                         )
                                     } else {
                                         Icon(
-                                                Icons.Default.Delete,
-                                                contentDescription =
-                                                        stringResource(R.string.uninstall)
+                                            Icons.Default.Delete,
+                                            contentDescription =
+                                            stringResource(R.string.uninstall)
                                         )
                                     }
-                            AppsType.UNINSTALLED ->
+
+                                AppsType.UNINSTALLED ->
                                     Icon(
-                                            Icons.Default.InstallMobile,
-                                            contentDescription = stringResource(R.string.reinstall)
+                                        Icons.Default.InstallMobile,
+                                        contentDescription = stringResource(R.string.reinstall)
                                     )
+                            }
                         }
                     }
                 }

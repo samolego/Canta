@@ -56,18 +56,13 @@ class PresetsViewModel : ViewModel() {
         onError: (String) -> Unit
     ) {
         viewModelScope.launch {
-            try {
-                val preset = presetsStore.createPresetFromUninstalledApps(apps, name, description)
-                val success = presetsStore.savePreset(preset)
-                if (success) {
-                    onSuccess()
-                } else {
-                    onError("Failed to save preset ${preset.name}!")
-                    LogUtils.e(TAG, "Failed to save preset ${preset.name}!")
-                }
-            } catch (e: Exception) {
-                LogUtils.e(TAG, "Error saving configuration: ${e.message}")
-                onError(e.message ?: "Unknown error")
+            val preset = presetsStore.createPresetFromUninstalledApps(apps, name, description)
+            val success = presetsStore.savePreset(preset)
+            if (success) {
+                onSuccess()
+            } else {
+                onError("Failed to save preset ${preset.name}!")
+                LogUtils.e(TAG, "Failed to save preset ${preset.name}!")
             }
         }
     }
@@ -78,16 +73,11 @@ class PresetsViewModel : ViewModel() {
         onError: (String) -> Unit
     ) {
         viewModelScope.launch {
-            try {
-                val success = presetsStore.deletePreset(config)
-                if (success) {
-                    onSuccess()
-                } else {
-                    onError("Failed to delete configuration")
-                }
-            } catch (e: Exception) {
-                LogUtils.e(TAG, "Error deleting configuration: ${e.message}")
-                onError(e.message ?: "Unknown error")
+            val success = presetsStore.deletePreset(config)
+            if (success) {
+                onSuccess()
+            } else {
+                onError("Failed to delete configuration")
             }
         }
     }
@@ -95,19 +85,11 @@ class PresetsViewModel : ViewModel() {
     fun exportToClipboard(
         context: Context,
         config: CantaPreset,
-        onSuccess: () -> Unit,
-        onError: (String) -> Unit
     ) {
-        try {
-            val jsonString = presetsStore.exportToJson(config)
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Canta Preset", jsonString)
-            clipboard.setPrimaryClip(clip)
-            onSuccess()
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Error exporting to clipboard: ${e.message}")
-            onError(e.message ?: "Unknown error")
-        }
+        val jsonString = presetsStore.exportToJson(config)
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Canta Preset", jsonString)
+        clipboard.setPrimaryClip(clip)
     }
 
     fun importFromClipboard(
@@ -115,27 +97,22 @@ class PresetsViewModel : ViewModel() {
         onSuccess: (CantaPreset) -> Unit,
         onError: (String) -> Unit
     ) {
-        try {
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = clipboard.primaryClip
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = clipboard.primaryClip
 
-            if (clipData != null && clipData.itemCount > 0) {
-                val jsonString = clipData.getItemAt(0).text.toString()
-                val config = presetsStore.importFromJson(jsonString)
+        if (clipData != null && clipData.itemCount > 0) {
+            val jsonString = clipData.getItemAt(0).text.toString()
+            val config = presetsStore.importFromJson(jsonString)
 
-                if (config != null) {
-                    onSuccess(config)
-                } else {
-                    onError("Invalid configuration format")
-                }
+            if (config != null) {
+                onSuccess(config)
             } else {
-                onError("No data found in clipboard")
+                onError("Invalid configuration format")
             }
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Error importing from clipboard: ${e.message}")
-            onError(e.message ?: "Unknown error")
+        } else {
+            onError("No data found in clipboard")
         }
-    }
+}
 
     fun importFromJson(
         jsonString: String,
@@ -202,18 +179,12 @@ class PresetsViewModel : ViewModel() {
         onError: (String) -> Unit
     ) {
         viewModelScope.launch {
-            try {
-                val success = presetsStore.savePreset(config)
-                if (success) {
-                    loadPresets() // Refresh the list
-                    onSuccess()
-                } else {
-                    LogUtils.e(TAG, "Failed to save imported configuration")
-                    onError("Failed to save imported configuration")
-                }
-            } catch (e: Exception) {
-                LogUtils.e(TAG, "Error saving imported configuration: ${e.message}")
-                onError(e.message ?: "Unknown error")
+            val success = presetsStore.savePreset(config)
+            if (success) {
+                onSuccess()
+            } else {
+                LogUtils.e(TAG, "Failed to save imported configuration")
+                onError("Failed to save imported configuration")
             }
         }
     }

@@ -3,6 +3,7 @@ package io.github.samolego.canta.ui.component
 import android.content.pm.PackageManager.NameNotFoundException
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,135 +40,157 @@ import io.github.samolego.canta.util.RemovalRecommendation
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AppTile(
+    modifier: Modifier = Modifier.background(color = MaterialTheme.colorScheme.background),
     appInfo: AppInfo,
     isSelected: Boolean,
     onCheckChanged: (Boolean) -> Unit,
     onShowDialog: () -> Unit,
+    showBorder: Boolean = isSelected,
+    checkedColor: Color = MaterialTheme.colorScheme.primary,
+    checkedBackgroundColor: Color = MaterialTheme.colorScheme.primaryContainer.copy(
+        alpha = 0.2f
+    ),
 ) {
     Card(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = if (isSelected) 4.dp else 1.dp
-        ),
-        border = if (isSelected) {
-            BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
-        } else null
+            modifier = modifier,
+            elevation =
+                    CardDefaults.cardElevation(defaultElevation = if (isSelected) 4.dp else 1.dp),
+            border =
+                    if (showBorder) {
+                        BorderStroke(2.dp, checkedColor)
+                    } else null
     ) {
         ListItem(
-            colors = ListItemDefaults.colors(
-                containerColor = if (isSelected) {
-                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f)
-                } else {
-                    MaterialTheme.colorScheme.surface
-                }
-            ),
-            modifier = Modifier.clickable(
-                onClick = onShowDialog,
-            ),
-            headlineContent = {
-                Text(appInfo.name)
-            },
-            supportingContent = {
-                Column {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        Text(appInfo.packageName, modifier = Modifier.weight(9f))
+                colors =
+                        ListItemDefaults.colors(
+                                containerColor =
+                                        if (isSelected) {
+                                            checkedBackgroundColor
+                                        } else {
+                                            MaterialTheme.colorScheme.surface
+                                        }
+                        ),
+                modifier =
+                        Modifier.clickable(
+                                onClick = onShowDialog,
+                        ),
+                headlineContent = { Text(appInfo.name) },
+                supportingContent = {
+                    Column {
+                        Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                        ) { Text(appInfo.packageName, modifier = Modifier.weight(9f)) }
 
+                        FlowRow {
+                            if (appInfo.removalInfo != null) {
+                                RemovalBadge(type = appInfo.removalInfo!!)
+                            }
+                            if (appInfo.isSystemApp) {
+                                SystemBadge()
+                            }
+                            if (appInfo.isDisabled) {
+                                DisabledBadge()
+                            }
+                            if (appInfo.packageName == packageName) {
+                                CantaBadge()
+                            }
+                        }
                     }
-                    FlowRow {
-                        if (appInfo.removalInfo != null) {
-                            RemovalBadge(type = appInfo.removalInfo!!)
-                        }
-                        if (appInfo.isSystemApp) {
-                            SystemBadge()
-                        }
-                        if (appInfo.isDisabled) {
-                            DisabledBadge()
-                        }
-                        if (appInfo.packageName == packageName) {
-                            CantaBadge()
-                        }
-                    }
-                }
-            },
-            leadingContent = {
-                AppIconImage(appInfo)
-            },
-            trailingContent = {
-                Checkbox(
-                    checked = isSelected,
-                    onCheckedChange = onCheckChanged,
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = MaterialTheme.colorScheme.primary,
-                        uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant
+                },
+                leadingContent = { AppIconImage(appInfo) },
+                trailingContent = {
+                    Checkbox(
+                            checked = isSelected,
+                            onCheckedChange = onCheckChanged,
+                            colors =
+                                    CheckboxDefaults.colors(
+                                            checkedColor = checkedColor,
+                                            uncheckedColor =
+                                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
                     )
-                )
-            }
+                }
         )
     }
 }
 
+
 @Composable
-fun AppIconImage(
+fun SelectedAppTile(
+    modifier: Modifier = Modifier,
     appInfo: AppInfo,
+    onCheckChanged: (Boolean) -> Unit,
+    onShowDialog: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val appIcon = try {
-        context.packageManager.getApplicationIcon(appInfo.packageName)
-    } catch (e: NameNotFoundException) {
-        null
-    }
-
-    if (appIcon != null) {
-        AppIconImage(
-            appIconImage = appIcon,
-            contentDescription = appInfo.name,
-        )
-    }
-}
-
-@Composable
-fun AppIconImage(
-    appIconImage: Drawable,
-    contentDescription: String,
-) {
-    val context = LocalContext.current
-    AsyncImage(
-        model = ImageRequest.Builder(context)
-            .data(appIconImage)
-            .crossfade(true)
-            .build(),
-        contentDescription = contentDescription,
-        modifier = Modifier
-            .padding(4.dp)
-            .width(48.dp)
-            .height(48.dp)
+    AppTile(
+        modifier = modifier,
+        appInfo = appInfo,
+        isSelected = true,
+        showBorder = false,
+        onCheckChanged = onCheckChanged,
+        onShowDialog = onShowDialog,
+        checkedColor = MaterialTheme.colorScheme.error,
+        checkedBackgroundColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.4f),
     )
 }
 
+@Composable
+fun AppIconImage(
+        appInfo: AppInfo,
+) {
+    val context = LocalContext.current
+    val appIcon =
+            try {
+                context.packageManager.getApplicationIcon(appInfo.packageName)
+            } catch (_: NameNotFoundException) {
+                null
+            }
+
+    if (appIcon != null) {
+        AppIconImage(
+                appIconImage = appIcon,
+                contentDescription = appInfo.name,
+        )
+    }
+}
+
+@Composable
+fun AppIconImage(
+        appIconImage: Drawable,
+        contentDescription: String,
+) {
+    val context = LocalContext.current
+    AsyncImage(
+            model = ImageRequest.Builder(context).data(appIconImage).crossfade(true).build(),
+            contentDescription = contentDescription,
+            modifier = Modifier.padding(4.dp).width(48.dp).height(48.dp)
+    )
+}
 
 @Preview
 @Composable
 fun CantaAppTileDemo() {
     AppTile(
-        appInfo = AppInfo(
-            "Canta",
-            packageName = "io.github.samolego.canta",
-            isSystemApp = false,
-            isDisabled = false,
-            isUninstalled = false,
-            versionCode = 1,
-            versionName = "1.0",
-            bloatData = BloatData(
-                installData = InstallData.OEM,
-                description = "Canta is not a system app",
-                removal = RemovalRecommendation.RECOMMENDED,
-            ),
-        ),
-        isSelected = true,
-        onCheckChanged = {},
-        onShowDialog = {},
+            appInfo =
+                    AppInfo(
+                            "Canta",
+                            packageName = "io.github.samolego.canta",
+                            isSystemApp = false,
+                            isDisabled = false,
+                            isUninstalled = false,
+                            versionCode = 1,
+                            versionName = "1.0",
+                            bloatData =
+                                    BloatData(
+                                            installData = InstallData.OEM,
+                                            description = "Canta is not a system app",
+                                            removal = RemovalRecommendation.RECOMMENDED,
+                                    ),
+                    ),
+            isSelected = true,
+            onCheckChanged = {},
+            onShowDialog = {},
     )
 }
 
@@ -174,22 +198,25 @@ fun CantaAppTileDemo() {
 @Composable
 fun LongTileDemo() {
     AppTile(
-        appInfo = AppInfo(
-            "Canta",
-            packageName = "very.long.package.name.that.should.overflow.and.maybe.it.will.overflow.even.2.lines",
-            isSystemApp = true,
-            isUninstalled = false,
-            versionCode = 1,
-            versionName = "1.0",
-            isDisabled = true,
-            bloatData = BloatData(
-                installData = InstallData.OEM,
-                description = "Canta is a system app",
-                removal = RemovalRecommendation.RECOMMENDED,
-            ),
-        ),
-        isSelected = false,
-        onCheckChanged = {},
-        onShowDialog = {},
+            appInfo =
+                    AppInfo(
+                            "Canta",
+                            packageName =
+                                    "very.long.package.name.that.should.overflow.and.maybe.it.will.overflow.even.2.lines",
+                            isSystemApp = true,
+                            isUninstalled = false,
+                            versionCode = 1,
+                            versionName = "1.0",
+                            isDisabled = true,
+                            bloatData =
+                                    BloatData(
+                                            installData = InstallData.OEM,
+                                            description = "Canta is a system app",
+                                            removal = RemovalRecommendation.RECOMMENDED,
+                                    ),
+                    ),
+            isSelected = false,
+            onCheckChanged = {},
+            onShowDialog = {},
     )
 }

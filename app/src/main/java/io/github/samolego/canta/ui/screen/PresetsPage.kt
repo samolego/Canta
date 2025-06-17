@@ -50,7 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import io.github.samolego.canta.ui.component.ExpandableFAB
+import io.github.samolego.canta.ui.component.fab.ExpandableFAB
 import io.github.samolego.canta.ui.dialog.ImportPresetDialog
 import io.github.samolego.canta.ui.dialog.PresetCreateDialog
 import io.github.samolego.canta.ui.dialog.PresetEditDialog
@@ -168,23 +168,13 @@ fun PresetsPage(
                                     presetViewModel.exportToClipboard(
                                             context = context,
                                             config = preset,
-                                            onSuccess = {
-                                                Toast.makeText(
-                                                                context,
-                                                                "Preset copied to clipboard",
-                                                                Toast.LENGTH_SHORT
-                                                        )
-                                                        .show()
-                                            },
-                                            onError = { error ->
-                                                Toast.makeText(
-                                                                context,
-                                                                "Export failed: $error",
-                                                                Toast.LENGTH_SHORT
-                                                        )
-                                                        .show()
-                                            }
                                     )
+                                    Toast.makeText(
+                                        context,
+                                        "Preset copied to clipboard",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
                                 },
                         )
                     }

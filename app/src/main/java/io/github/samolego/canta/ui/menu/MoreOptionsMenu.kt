@@ -3,11 +3,9 @@ package io.github.samolego.canta.ui.menu
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.R
@@ -28,26 +26,6 @@ fun MoreOptionsMenu(
             onDismissRequest = onDismiss,
             modifier = Modifier.width(200.dp)
     ) {
-        // Clear selection (only shown when apps are selected)
-        if (appListViewModel.selectedApps.isNotEmpty()) {
-            DropdownMenuItem(
-                    text = {
-                        Text(
-                                pluralStringResource(
-                                        R.plurals.clear_selected_apps,
-                                        appListViewModel.selectedApps.size,
-                                        appListViewModel.selectedApps.size
-                                )
-                        )
-                    },
-                    onClick = {
-                        appListViewModel.selectedApps.clear()
-                        onDismiss()
-                    }
-            )
-            HorizontalDivider()
-        }
-
         // Badge info dialog
         DropdownMenuItem(
                 text = { Text(stringResource(R.string.badge_info)) },
