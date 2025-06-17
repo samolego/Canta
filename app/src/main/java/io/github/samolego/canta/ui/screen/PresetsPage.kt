@@ -61,25 +61,24 @@ import io.github.samolego.canta.util.CantaPreset
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresetsPage(
-    presetViewModel: PresetsViewModel,
-    onNavigateBack: (appliedPreset: CantaPreset?) -> Unit,
-    appListViewModel: AppListViewModel,
+        presetViewModel: PresetsViewModel,
+        onNavigateBack: (appliedPreset: CantaPreset?) -> Unit,
+        appListViewModel: AppListViewModel,
 ) {
     val context = LocalContext.current
 
     var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
 
-
-    val createConfigDialog = @Composable { name: String?, desc: String? ->
-        PresetCreateDialog(
-            appListViewModel = appListViewModel,
-            presetViewModel = presetViewModel,
-            closeDialog = { currentDialog = null },
-            onError = { error ->
-
+    val createConfigDialog =
+            @Composable
+            { _: String?, _: String? ->
+                PresetCreateDialog(
+                        appListViewModel = appListViewModel,
+                        presetViewModel = presetViewModel,
+                        closeDialog = { currentDialog = null },
+                        onError = { _ -> }
+                )
             }
-        )
-    }
 
     LaunchedEffect(Unit) { presetViewModel.initialize(context) }
     Scaffold(
@@ -92,20 +91,16 @@ fun PresetsPage(
             floatingActionButton = {
                 if (presetViewModel.presets.isNotEmpty()) {
                     ExpandableFAB(
-                        onBottomClick = {
-                            currentDialog = {
-                                createConfigDialog(null, null)
+                            onBottomClick = { currentDialog = { createConfigDialog(null, null) } },
+                            onTopClick = {
+                                currentDialog = {
+                                    ImportDialog(
+                                            presetViewModel = presetViewModel,
+                                            hideDialog = { currentDialog = null },
+                                            context = context,
+                                    )
+                                }
                             }
-                        },
-                        onTopClick = {
-                            currentDialog = {
-                                ImportDialog(
-                                    presetViewModel = presetViewModel,
-                                    hideDialog = { currentDialog = null },
-                                    context = context,
-                                )
-                            }
-                        }
                     )
                 }
             }
@@ -117,16 +112,13 @@ fun PresetsPage(
                 }
             } else if (presetViewModel.presets.isEmpty()) {
                 EmptyPresetsState(
-                        onCreateClick = { currentDialog = {
-                                createConfigDialog(null, null)
-                            }
-                        },
+                        onCreateClick = { currentDialog = { createConfigDialog(null, null) } },
                         onImportClick = {
                             currentDialog = {
                                 ImportDialog(
-                                    presetViewModel = presetViewModel,
-                                    hideDialog = { currentDialog = null },
-                                    context = context,
+                                        presetViewModel = presetViewModel,
+                                        hideDialog = { currentDialog = null },
+                                        context = context,
                                 )
                             }
                         }
@@ -148,20 +140,32 @@ fun PresetsPage(
                                 onEdit = {
                                     currentDialog = {
                                         PresetEditDialog(
-                                            preset = preset,
-                                            presetViewModel = presetViewModel,
-                                            closeDialog = { currentDialog = null }
+                                                preset = preset,
+                                                presetViewModel = presetViewModel,
+                                                closeDialog = { currentDialog = null }
                                         )
                                     }
                                 },
-                                onApply = {
-                                    onNavigateBack(preset)
-                                },
+                                onApply = { onNavigateBack(preset) },
                                 onDelete = {
                                     presetViewModel.deletePreset(
-                                        config = preset,
-                                        onSuccess = {},
-                                        onError = {},
+                                            config = preset,
+                                            onSuccess = {
+                                                Toast.makeText(
+                                                                context,
+                                                                "Preset deleted",
+                                                                Toast.LENGTH_SHORT
+                                                        )
+                                                        .show()
+                                            },
+                                            onError = { error ->
+                                                Toast.makeText(
+                                                                context,
+                                                                "Failed to delete preset: $error",
+                                                                Toast.LENGTH_SHORT
+                                                        )
+                                                        .show()
+                                            },
                                     )
                                 },
                                 onExport = {
@@ -170,11 +174,11 @@ fun PresetsPage(
                                             config = preset,
                                     )
                                     Toast.makeText(
-                                        context,
-                                        "Preset copied to clipboard",
-                                        Toast.LENGTH_SHORT
-                                    )
-                                        .show()
+                                                    context,
+                                                    "Preset copied to clipboard",
+                                                    Toast.LENGTH_SHORT
+                                            )
+                                            .show()
                                 },
                         )
                     }
@@ -188,74 +192,74 @@ fun PresetsPage(
 
 @Composable
 private fun ImportDialog(
-    hideDialog: () -> Unit,
-    presetViewModel: PresetsViewModel,
-    context: Context
+        hideDialog: () -> Unit,
+        presetViewModel: PresetsViewModel,
+        context: Context
 ) {
     ImportPresetDialog(
-        onDismiss = hideDialog,
-        onImportFromClipboard = {
-            presetViewModel.importFromClipboard(
-                context = context,
-                onSuccess = { config ->
-                    hideDialog()
-                    presetViewModel.saveImportedPreset(
-                        config = config,
-                        onSuccess = {
-                            Toast.makeText(
-                                context,
-                                "Preset imported and saved",
-                                Toast.LENGTH_SHORT
+            onDismiss = hideDialog,
+            onImportFromClipboard = {
+                presetViewModel.importFromClipboard(
+                        context = context,
+                        onSuccess = { config ->
+                            hideDialog()
+                            presetViewModel.saveImportedPreset(
+                                    config = config,
+                                    onSuccess = {
+                                        Toast.makeText(
+                                                        context,
+                                                        "Preset imported and saved",
+                                                        Toast.LENGTH_SHORT
+                                                )
+                                                .show()
+                                    },
+                                    onError = { error ->
+                                        Toast.makeText(
+                                                        context,
+                                                        "Failed to save imported configuration: $error",
+                                                        Toast.LENGTH_SHORT
+                                                )
+                                                .show()
+                                    }
                             )
-                                .show()
                         },
                         onError = { error ->
-                            Toast.makeText(
-                                context,
-                                "Failed to save imported configuration: $error",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
+                                    .show()
                         }
-                    )
-                },
-                onError = { error ->
-                    Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            )
-        },
-        onImportFromText = { jsonText ->
-            presetViewModel.importFromJson(
-                jsonString = jsonText,
-                onSuccess = { config ->
-                    hideDialog()
-                    presetViewModel.saveImportedPreset(
-                        config = config,
-                        onSuccess = {
-                            Toast.makeText(
-                                context,
-                                "Preset imported and saved",
-                                Toast.LENGTH_SHORT
+                )
+            },
+            onImportFromText = { jsonText ->
+                presetViewModel.importFromJson(
+                        jsonString = jsonText,
+                        onSuccess = { config ->
+                            hideDialog()
+                            presetViewModel.saveImportedPreset(
+                                    config = config,
+                                    onSuccess = {
+                                        Toast.makeText(
+                                                        context,
+                                                        "Preset imported and saved",
+                                                        Toast.LENGTH_SHORT
+                                                )
+                                                .show()
+                                    },
+                                    onError = { error ->
+                                        Toast.makeText(
+                                                        context,
+                                                        "Failed to save imported configuration: $error",
+                                                        Toast.LENGTH_SHORT
+                                                )
+                                                .show()
+                                    }
                             )
-                                .show()
                         },
                         onError = { error ->
-                            Toast.makeText(
-                                context,
-                                "Failed to save imported configuration: $error",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
+                                    .show()
                         }
-                    )
-                },
-                onError = { error ->
-                    Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            )
-        }
+                )
+            }
     )
 }
 
@@ -291,7 +295,8 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
         )
 
         Text(
-                text = "Create or import configurations to manage\napp uninstall lists across devices",
+                text =
+                        "Create or import configurations to manage\napp uninstall lists across devices",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),
@@ -318,13 +323,13 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
 
 @Composable
 private fun PresetCard(
-    preset: CantaPreset,
-    onEdit: (CantaPreset) -> Unit,
-    onAddApps: (CantaPreset) -> Unit,
-    onExport: () -> Unit,
-    onDelete: () -> Unit,
-    onApply: () -> Unit,
-    formatDate: (Long) -> String
+        preset: CantaPreset,
+        onEdit: (CantaPreset) -> Unit,
+        onAddApps: (CantaPreset) -> Unit,
+        onExport: () -> Unit,
+        onDelete: () -> Unit,
+        onApply: () -> Unit,
+        formatDate: (Long) -> String
 ) {
     Card(
             modifier = Modifier.fillMaxWidth(),

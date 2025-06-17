@@ -2,23 +2,23 @@ package io.github.samolego.canta.util
 
 import android.content.Context
 import android.os.Parcelable
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.parcelize.Parcelize
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Parcelize
 data class CantaPreset(
-    val name: String,
-    val description: String,
-    val createdDate: Long,
-    val apps: Set<String>,
-    val version: String = "1.0"
+        val name: String,
+        val description: String,
+        val createdDate: Long,
+        val apps: Set<String>,
+        val version: String = "1.0"
 ) : Parcelable
 
 class PresetManager(private val context: Context) {
@@ -29,74 +29,70 @@ class PresetManager(private val context: Context) {
     }
 
     private val configDir: File by lazy {
-        File(context.filesDir, PRESETS_DIR).apply {
-            if (!exists()) mkdirs()
-        }
+        File(context.filesDir, PRESETS_DIR).apply { if (!exists()) mkdirs() }
     }
 
-    /**
-     * Saves a configuration to local storage
-     */
-    suspend fun savePreset(config: CantaPreset): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val fileName = "${config.name.replace("[^a-zA-Z0-9]".toRegex(), "_")}_${config.createdDate}.json"
-            val file = File(configDir, fileName)
-            file.writeText(configurationToJson(config).toString(2))
-            LogUtils.i(TAG, "Preset saved: ${file.absolutePath}")
-            true
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Failed to save configuration: ${e.message}")
-            false
-        }
-    }
+    /** Saves a configuration to local storage */
+    suspend fun savePreset(config: CantaPreset): Boolean =
+            withContext(Dispatchers.IO) {
+                try {
+                    val fileName =
+                            "${config.name.replace("[^a-zA-Z0-9]".toRegex(), "_")}_${config.createdDate}.json"
+                    val file = File(configDir, fileName)
+                    file.writeText(configurationToJson(config).toString(2))
+                    LogUtils.i(TAG, "Preset saved: ${file.absolutePath}")
+                    true
+                } catch (e: Exception) {
+                    LogUtils.e(TAG, "Failed to save configuration: ${e.message}")
+                    false
+                }
+            }
 
-    /**
-     * Loads all saved configurations
-     */
-    suspend fun loadPresets(): List<CantaPreset> = withContext(Dispatchers.IO) {
-        try {
-            configDir.listFiles { _, name -> name.endsWith(".json") }
-                ?.mapNotNull { file ->
-                    try {
-                        val json = JSONObject(file.readText())
-                        jsonToPreset(json)
-                    } catch (e: Exception) {
-                        LogUtils.e(TAG, "Failed to parse configuration file ${file.name}: ${e.message}")
-                        null
+    /** Loads all saved configurations */
+    suspend fun loadPresets(): List<CantaPreset> =
+            withContext(Dispatchers.IO) {
+                try {
+                    configDir.listFiles { _, name -> name.endsWith(".json") }?.mapNotNull { file ->
+                        try {
+                            val json = JSONObject(file.readText())
+                            jsonToPreset(json)
+                        } catch (e: Exception) {
+                            LogUtils.e(
+                                    TAG,
+                                    "Failed to parse configuration file ${file.name}: ${e.message}"
+                            )
+                            null
+                        }
                     }
-                } ?: emptyList()
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Failed to load configurations: ${e.message}")
-            emptyList()
-        }
-    }
+                            ?: emptyList()
+                } catch (e: Exception) {
+                    LogUtils.e(TAG, "Failed to load configurations: ${e.message}")
+                    emptyList()
+                }
+            }
 
-    /**
-     * Deletes a configuration file
-     */
-    suspend fun deletePreset(config: CantaPreset): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val fileName = "${config.name.replace("[^a-zA-Z0-9]".toRegex(), "_")}_${config.createdDate}.json"
-            val file = File(configDir, fileName)
-            val deleted = file.delete()
-            LogUtils.i(TAG, "Preset deleted: $deleted")
-            deleted
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Failed to delete configuration: ${e.message}")
-            false
-        }
-    }
+    /** Deletes a configuration file */
+    suspend fun deletePreset(config: CantaPreset): Boolean =
+            withContext(Dispatchers.IO) {
+                try {
+                    val fileName =
+                            "${config.name.replace("[^a-zA-Z0-9]".toRegex(), "_")}_${config.createdDate}.json"
+                    val file = File(configDir, fileName)
+                    val deleted = file.delete()
+                    LogUtils.i(TAG, "Preset deleted: $deleted")
+                    deleted
+                } catch (e: Exception) {
+                    LogUtils.e(TAG, "Failed to delete configuration: ${e.message}")
+                    false
+                }
+            }
 
-    /**
-     * Exports configuration to JSON string
-     */
+    /** Exports configuration to JSON string */
     fun exportToJson(config: CantaPreset): String {
         return configurationToJson(config).toString(2)
     }
 
-    /**
-     * Imports configuration from JSON string
-     */
+    /** Imports configuration from JSON string */
     fun importFromJson(jsonString: String): CantaPreset? {
         return try {
             val json = JSONObject(jsonString)
@@ -107,19 +103,17 @@ class PresetManager(private val context: Context) {
         }
     }
 
-    /**
-     * Creates a configuration from currently uninstalled apps
-     */
+    /** Creates a configuration from currently uninstalled apps */
     fun createPresetFromUninstalledApps(
-        apps: Set<String>,
-        name: String,
-        description: String
+            apps: Set<String>,
+            name: String,
+            description: String
     ): CantaPreset {
         return CantaPreset(
-            name = name,
-            description = description,
-            createdDate = System.currentTimeMillis(),
-            apps = apps
+                name = name,
+                description = description,
+                createdDate = System.currentTimeMillis(),
+                apps = apps
         )
     }
 
@@ -151,69 +145,40 @@ class PresetManager(private val context: Context) {
         }
 
         return CantaPreset(
-            name = json.getString("name"),
-            description = json.getString("description"),
-            createdDate = json.getLong("createdDate"),
-            apps = apps,
-            version = json.optString("version", "1.0")
+                name = json.getString("name"),
+                description = json.getString("description"),
+                createdDate = json.getLong("createdDate"),
+                apps = apps,
+                version = json.optString("version", "1.0")
         )
     }
 
-    /**
-     * Formats date for display
-     */
+    /** Formats date for display */
     fun formatDate(timestamp: Long): String {
         val formatter = SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault())
         return formatter.format(Date(timestamp))
     }
 
-    /**
-     * Updates a specific configuration
-     */
-    suspend fun updatePreset(
-        oldConfig: CantaPreset,
-        newConfig: CantaPreset
-    ): Boolean = withContext(Dispatchers.IO) {
-        try {
-            // Delete old configuration
-            deletePreset(oldConfig)
-            // Save new configuration
-            savePreset(newConfig)
-            LogUtils.i(TAG, "Preset updated: ${newConfig.name}")
-            true
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Failed to update configuration: ${e.message}")
-            false
-        }
-    }
+    /** Updates a specific configuration */
+    suspend fun updatePreset(oldConfig: CantaPreset, newConfig: CantaPreset): Boolean =
+            withContext(Dispatchers.IO) {
+                try {
+                    // Delete old configuration
+                    deletePreset(oldConfig)
+                    // Save new configuration
+                    savePreset(newConfig)
+                    LogUtils.i(TAG, "Preset updated: ${newConfig.name}")
+                    true
+                } catch (e: Exception) {
+                    LogUtils.e(TAG, "Failed to update configuration: ${e.message}")
+                    false
+                }
+            }
 
-    /**
-     * Adds apps to an existing configuration
-     */
-    suspend fun setPresetApps(
-        config: CantaPreset,
-        newApps: Set<String>
-    ) = withContext(Dispatchers.IO) {
-        val updatedConfig = config.copy(
-            apps = newApps
-        )
-        updatePreset(config, updatedConfig)
-    }
-
-    /**
-     * Removes apps from an existing configuration
-     */
-    suspend fun removeAppsFromPreset(
-        config: CantaPreset,
-        appsToRemove: List<String>
-    ): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val updatedApps = config.apps.filter { !appsToRemove.contains(it) }.toSet()
-            val updatedConfig = config.copy(apps = updatedApps)
-            updatePreset(config, updatedConfig)
-        } catch (e: Exception) {
-            LogUtils.e(TAG, "Failed to remove apps from configuration: ${e.message}")
-            false
-        }
-    }
+    /** Adds apps to an existing configuration */
+    suspend fun setPresetApps(config: CantaPreset, newApps: Set<String>) =
+            withContext(Dispatchers.IO) {
+                val updatedConfig = config.copy(apps = newApps)
+                updatePreset(config, updatedConfig)
+            }
 }

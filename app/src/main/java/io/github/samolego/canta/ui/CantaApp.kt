@@ -11,7 +11,6 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +24,6 @@ import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.InstallMobile
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -33,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -125,10 +122,21 @@ fun CantaApp(
                     presetEditMode = presetViewModel.editingPreset != null,
                     onPresetEditFinish = {
                         // Save all the selected apps to the preset
-                        presetViewModel.setPresetApps(presetViewModel.editingPreset!!, appListViewModel.selectedApps.keys)
-                        appListViewModel.selectedApps.clear()
-                        presetViewModel.editingPreset = null
-                        navController.navigate(Screen.Presets.route)
+                        presetViewModel.setPresetApps(
+                                preset = presetViewModel.editingPreset!!,
+                                newApps = appListViewModel.selectedApps.keys,
+                                onSuccess = {
+                                    appListViewModel.selectedApps.clear()
+                                    presetViewModel.editingPreset = null
+                                    navController.navigate(Screen.Presets.route)
+                                },
+                                onError = { _ ->
+                                    // Handle error - could show a toast or snackbar
+                                    appListViewModel.selectedApps.clear()
+                                    presetViewModel.editingPreset = null
+                                    navController.navigate(Screen.Presets.route)
+                                }
+                        )
                     },
                     enableSelectAll = versionTapCounter >= secretTaps,
                     appListViewModel = appListViewModel,
@@ -192,19 +200,19 @@ fun CantaApp(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
-    launchShizuku: () -> Unit,
-    canResetAppToFactory: (String) -> Boolean,
-    uninstallApp: (String, Boolean) -> Boolean,
-    reinstallApp: (String) -> Boolean,
-    onPresetEditFinish: () -> Unit,
-    navigateToPage: (route: String) -> Unit,
-    closeApp: () -> Unit,
-    settingsStore: SettingsStore,
-    showWarning: MutableState<Boolean>,
-    enableSelectAll: Boolean,
-    presetEditMode: Boolean,
-    appListViewModel: AppListViewModel,
-    settingsViewModel: SettingsViewModel,
+        launchShizuku: () -> Unit,
+        canResetAppToFactory: (String) -> Boolean,
+        uninstallApp: (String, Boolean) -> Boolean,
+        reinstallApp: (String) -> Boolean,
+        onPresetEditFinish: () -> Unit,
+        navigateToPage: (route: String) -> Unit,
+        closeApp: () -> Unit,
+        settingsStore: SettingsStore,
+        showWarning: MutableState<Boolean>,
+        enableSelectAll: Boolean,
+        presetEditMode: Boolean,
+        appListViewModel: AppListViewModel,
+        settingsViewModel: SettingsViewModel,
 ) {
 
     val context = LocalContext.current
@@ -267,99 +275,110 @@ private fun MainContent(
                 ) {
                     if (presetEditMode) {
                         PresetEditFAB(
-                            onPresetEditFinish = onPresetEditFinish,
+                                onPresetEditFinish = onPresetEditFinish,
                         )
                     } else {
                         FloatingActionButton(
-                            containerColor =
-                            if (selectedAppsType == AppsType.UNINSTALLED) {
-                                MaterialTheme.colorScheme.tertiaryContainer
-                            } else {
+                                containerColor =
+                                        if (selectedAppsType == AppsType.UNINSTALLED) {
+                                            MaterialTheme.colorScheme.tertiaryContainer
+                                        } else {
 
-                                MaterialTheme.colorScheme.errorContainer
-                            },
-                            shape = RoundedCornerShape(32.dp),
-                            modifier = Modifier.padding(16.dp).navigationBarsPadding(),
-                            onClick = {
-                                // Check if Canta is selected too
-                                // Super secret don't tell anyone you saw this
-                                // since this is an easter egg :P
-                                if (appListViewModel.selectedApps.contains(packageName)) {
-                                    // Show easter egg toast
-                                    Toast.makeText(context, "Can'ta ouch this!", Toast.LENGTH_SHORT)
-                                        .show()
+                                            MaterialTheme.colorScheme.errorContainer
+                                        },
+                                shape = RoundedCornerShape(32.dp),
+                                modifier = Modifier.padding(16.dp).navigationBarsPadding(),
+                                onClick = {
+                                    // Check if Canta is selected too
+                                    // Super secret don't tell anyone you saw this
+                                    // since this is an easter egg :P
+                                    if (appListViewModel.selectedApps.contains(packageName)) {
+                                        // Show easter egg toast
+                                        Toast.makeText(
+                                                        context,
+                                                        "Can'ta ouch this!",
+                                                        Toast.LENGTH_SHORT
+                                                )
+                                                .show()
 
-                                    return@FloatingActionButton
-                                }
-
-                                // Show dialog before uninstalling if we are on the "instelled" tab
-                                // However, do not show it if user has disabled the dialog in
-                                // settings
-                                // or if we are on the "uninstalled" tab
-                                if (selectedAppsType == AppsType.INSTALLED &&
-                                    settingsViewModel.confirmBeforeUninstall
-                                ) {
-                                    if (appListViewModel.selectedApps.isNotEmpty()) {
-                                        currentDialog = {
-                                            val canResetAny = appListViewModel.selectedApps.keys.any { canResetAppToFactory(it) }
-
-                                            UninstallAppsDialog(
-                                                appCount = appListViewModel.selectedApps.size,
-                                                canResetToFactory = canResetAny,
-                                                onDismiss = { currentDialog = null },
-                                                onAgree = { resetToFactory ->
-                                                    currentDialog = null
-
-                                                    uninstallOrReinstall(
-                                                        context = context,
-                                                        coroutineScope = coroutineScope,
-                                                        launchShizuku = launchShizuku,
-                                                        uninstallApp = uninstallApp,
-                                                        reinstallApp = reinstallApp,
-                                                        selectedAppsType = selectedAppsType,
-                                                        appListViewModel = appListViewModel,
-                                                        resetToFactory = resetToFactory
-                                                    )
-                                                }
-                                            )
-                                        }
+                                        return@FloatingActionButton
                                     }
-                                    return@FloatingActionButton
-                                }
-                                // Trigger uninstall
-                                uninstallOrReinstall(
-                                    context = context,
-                                    coroutineScope = coroutineScope,
-                                    launchShizuku = launchShizuku,
-                                    uninstallApp = uninstallApp,
-                                    reinstallApp = reinstallApp,
-                                    selectedAppsType = selectedAppsType,
-                                    appListViewModel = appListViewModel,
-                                )
-                            },
+
+                                    // Show dialog before uninstalling if we are on the "instelled"
+                                    // tab
+                                    // However, do not show it if user has disabled the dialog in
+                                    // settings
+                                    // or if we are on the "uninstalled" tab
+                                    if (selectedAppsType == AppsType.INSTALLED &&
+                                                    settingsViewModel.confirmBeforeUninstall
+                                    ) {
+                                        if (appListViewModel.selectedApps.isNotEmpty()) {
+                                            currentDialog = {
+                                                val canResetAny =
+                                                        appListViewModel.selectedApps.keys.any {
+                                                            canResetAppToFactory(it)
+                                                        }
+
+                                                UninstallAppsDialog(
+                                                        appCount =
+                                                                appListViewModel.selectedApps.size,
+                                                        canResetToFactory = canResetAny,
+                                                        onDismiss = { currentDialog = null },
+                                                        onAgree = { resetToFactory ->
+                                                            currentDialog = null
+
+                                                            uninstallOrReinstall(
+                                                                    context = context,
+                                                                    coroutineScope = coroutineScope,
+                                                                    launchShizuku = launchShizuku,
+                                                                    uninstallApp = uninstallApp,
+                                                                    reinstallApp = reinstallApp,
+                                                                    selectedAppsType =
+                                                                            selectedAppsType,
+                                                                    appListViewModel =
+                                                                            appListViewModel,
+                                                                    resetToFactory = resetToFactory
+                                                            )
+                                                        }
+                                                )
+                                            }
+                                        }
+                                        return@FloatingActionButton
+                                    }
+                                    // Trigger uninstall
+                                    uninstallOrReinstall(
+                                            context = context,
+                                            coroutineScope = coroutineScope,
+                                            launchShizuku = launchShizuku,
+                                            uninstallApp = uninstallApp,
+                                            reinstallApp = reinstallApp,
+                                            selectedAppsType = selectedAppsType,
+                                            appListViewModel = appListViewModel,
+                                    )
+                                },
                         ) {
                             when (selectedAppsType) {
                                 AppsType.INSTALLED ->
-                                    // Show Canta icon if only Canta is selected
-                                    if (appListViewModel.selectedApps.contains(packageName)) {
-                                        AppIconImage(
-                                            appIconImage = cantaIcon,
-                                            contentDescription =
-                                            stringResource(R.string.app_name)
-                                        )
-                                    } else {
-                                        Icon(
-                                            Icons.Default.Delete,
-                                            contentDescription =
-                                            stringResource(R.string.uninstall)
-                                        )
-                                    }
-
+                                        // Show Canta icon if only Canta is selected
+                                        if (appListViewModel.selectedApps.contains(packageName)) {
+                                            AppIconImage(
+                                                    appIconImage = cantaIcon,
+                                                    contentDescription =
+                                                            stringResource(R.string.app_name)
+                                            )
+                                        } else {
+                                            Icon(
+                                                    Icons.Default.Delete,
+                                                    contentDescription =
+                                                            stringResource(R.string.uninstall)
+                                            )
+                                        }
                                 AppsType.UNINSTALLED ->
-                                    Icon(
-                                        Icons.Default.InstallMobile,
-                                        contentDescription = stringResource(R.string.reinstall)
-                                    )
+                                        Icon(
+                                                Icons.Default.InstallMobile,
+                                                contentDescription =
+                                                        stringResource(R.string.reinstall)
+                                        )
                             }
                         }
                     }
