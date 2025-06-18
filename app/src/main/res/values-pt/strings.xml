@@ -40,11 +40,11 @@
     <string name="proceed_at_own_risk">Ao clicar em \"Continuar\", você concorda em usar este aplicativo por sua conta e risco.</string>
     <string name="never_show_again">Não mostre esta mensagem novamente</string>
     <string name="proceed">Proceder</string>
-    <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
-    <string name="select_all">Select all</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
-    <string name="uninstall_app">Uninstall app</string>
-    <string name="reset_to_factory_version">Reset to factory version</string>
+    <string name="confirm_uninstall_description">Se deve ou não mostrar a caixa de diálogo para confirmar a ação de desinstalação.</string>
+    <string name="select_all">Seleccionar todos</string>
+    <string name="select_all_tip">Toque em %d mais vezes para habilitar a funcionalidade selecionar tudo.</string>
+    <string name="select_all_enabled">Selecionar tudo foi habilitado para o tipo de filtro \"Recomendado\".</string>
+    <string name="uninstall_options_title">Opções de desinstalação</string>
+    <string name="uninstall_app">Desinstalar o aplicativo</string>
+    <string name="reset_to_factory_version">Resetar para a versão de fábrica</string>
 </resources>
