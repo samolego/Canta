@@ -45,7 +45,7 @@
     <string name="select_all">Select all</string>
     <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
     <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_options_title">Opcije za deinstalaciju</string>
     <string name="uninstall_app">Uninstall app</string>
-    <string name="reset_to_factory_version">Reset to factory version</string>
+    <string name="reset_to_factory_version">Vrati na tvorničku verziju</string>
 </resources>
