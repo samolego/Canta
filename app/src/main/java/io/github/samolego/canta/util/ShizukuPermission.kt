@@ -6,12 +6,12 @@ import io.github.samolego.canta.packageName
 import rikka.shizuku.Shizuku
 import rikka.sui.Sui
 
-class ShizukuData {
+class ShizukuPermission {
     companion object {
         private const val SHIZUKU_CODE = 0xCA07A
 
         private val isSui: Boolean = Sui.init(packageName)
-        private val TAG: String = ShizukuData::class.java.simpleName
+        private val TAG: String = ShizukuPermission::class.java.simpleName
         private var binderStatus = Shizuku.pingBinder()
 
         init {

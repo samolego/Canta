@@ -76,7 +76,7 @@ private fun PresetDialog(
                             }
                         },
                         enabled = name.isNotBlank()
-                ) { Text("Create") }
+                ) { Text("Save") }
             },
             dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
     )
@@ -87,7 +87,6 @@ fun PresetCreateDialog(
         appListViewModel: AppListViewModel,
         presetViewModel: PresetsViewModel,
         closeDialog: () -> Unit,
-        onError: (String) -> Unit,
 ) {
     PresetDialog(
             initialName = "",
@@ -97,9 +96,11 @@ fun PresetCreateDialog(
                 presetViewModel.savePreset(
                         name = name,
                         description = description,
-                        apps = appListViewModel.selectedApps.keys,
+                        apps = appListViewModel.appList.filter { it.isUninstalled }.map { it.packageName }.toSet(),
                         onSuccess = { closeDialog() },
-                        onError = onError,
+                        onError = {
+                            // todo: show error toast
+                        },
                 )
             }
     )
@@ -121,8 +122,8 @@ fun PresetEditDialog(
                         newName = name,
                         newDescription = description,
                         onSuccess = { closeDialog() },
-                        onError = { _ ->
-                            // Error is already logged in the ViewModel
+                        onError = { e ->
+                            // Show toast with error todo
                         },
                 )
             }

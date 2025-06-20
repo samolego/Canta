@@ -8,9 +8,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.samolego.canta.data.PresetStore
 import io.github.samolego.canta.util.CantaPreset
 import io.github.samolego.canta.util.LogUtils
-import io.github.samolego.canta.util.PresetManager
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PresetsViewModel : ViewModel() {
@@ -19,27 +21,30 @@ class PresetsViewModel : ViewModel() {
         private const val TAG = "PresetsViewModel"
     }
 
-    var presets by mutableStateOf<List<CantaPreset>>(emptyList())
-        private set
+    var editingPreset by mutableStateOf<CantaPreset?>(null)
+
+    private lateinit var presetStore: PresetStore
+
+    private val _presets = mutableStateOf<List<CantaPreset>>(emptyList())
+    val presets: List<CantaPreset>
+        get() = _presets.value
 
     var isLoading by mutableStateOf(false)
         private set
 
-    var editingPreset by mutableStateOf<CantaPreset?>(null)
-
-    private lateinit var presetsStore: PresetManager
-
     fun initialize(context: Context) {
-        presetsStore = PresetManager(context)
-        loadPresets()
-    }
-
-    fun loadPresets() {
+        presetStore = PresetStore(context)
+        // Collect presets flow and update state
         viewModelScope.launch {
-            isLoading = true
-            presets = presetsStore.loadPresets()
-            LogUtils.i(TAG, "Loaded ${presets.size} configurations")
-            isLoading = false
+            presetStore.presetsFlow.stateIn(
+                            scope = viewModelScope,
+                            started = SharingStarted.WhileSubscribed(5000),
+                            initialValue = emptyList()
+                    )
+                    .collect { presetsList ->
+                        _presets.value = presetsList
+                        LogUtils.i(TAG, "Loaded ${presetsList.size} presets")
+                    }
         }
     }
 
@@ -51,10 +56,9 @@ class PresetsViewModel : ViewModel() {
             onError: (String) -> Unit
     ) {
         viewModelScope.launch {
-            val preset = presetsStore.createPresetFromUninstalledApps(apps, name, description)
-            val success = presetsStore.savePreset(preset)
+            val preset = presetStore.createPresetFromUninstalledApps(apps, name, description)
+            val success = presetStore.savePreset(preset)
             if (success) {
-                loadPresets()
                 onSuccess()
             } else {
                 onError("Failed to save preset ${preset.name}!")
@@ -65,9 +69,8 @@ class PresetsViewModel : ViewModel() {
 
     fun deletePreset(config: CantaPreset, onSuccess: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
-            val success = presetsStore.deletePreset(config)
+            val success = presetStore.deletePreset(config)
             if (success) {
-                loadPresets()
                 onSuccess()
             } else {
                 onError("Failed to delete configuration")
@@ -79,7 +82,7 @@ class PresetsViewModel : ViewModel() {
             context: Context,
             config: CantaPreset,
     ) {
-        val jsonString = presetsStore.exportToJson(config)
+        val jsonString = presetStore.exportToJson(config)
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Canta Preset", jsonString)
         clipboard.setPrimaryClip(clip)
@@ -95,7 +98,7 @@ class PresetsViewModel : ViewModel() {
 
         if (clipData != null && clipData.itemCount > 0) {
             val jsonString = clipData.getItemAt(0).text.toString()
-            val config = presetsStore.importFromJson(jsonString)
+            val config = presetStore.importFromJson(jsonString)
 
             if (config != null) {
                 onSuccess(config)
@@ -112,7 +115,7 @@ class PresetsViewModel : ViewModel() {
             onSuccess: (CantaPreset) -> Unit,
             onError: (String) -> Unit
     ) {
-        val config = presetsStore.importFromJson(jsonString)
+        val config = presetStore.importFromJson(jsonString)
         if (config != null) {
             onSuccess(config)
         } else {
@@ -121,7 +124,7 @@ class PresetsViewModel : ViewModel() {
     }
 
     fun formatDate(timestamp: Long): String {
-        return presetsStore.formatDate(timestamp)
+        return presetStore.formatDate(timestamp)
     }
 
     fun updatePreset(
@@ -139,9 +142,8 @@ class PresetsViewModel : ViewModel() {
                             apps = oldPreset.apps
                     )
 
-            val success = presetsStore.updatePreset(oldPreset, updatedPreset)
+            val success = presetStore.updatePreset(oldPreset, updatedPreset)
             if (success) {
-                loadPresets()
                 onSuccess()
             } else {
                 onError("Failed to update configuration")
@@ -156,9 +158,8 @@ class PresetsViewModel : ViewModel() {
             onError: (String) -> Unit
     ) {
         viewModelScope.launch {
-            val success = presetsStore.setPresetApps(preset, newApps)
+            val success = presetStore.setPresetApps(preset, newApps)
             if (success) {
-                loadPresets()
                 onSuccess()
             } else {
                 onError("Failed to update preset apps")
@@ -168,9 +169,8 @@ class PresetsViewModel : ViewModel() {
 
     fun saveImportedPreset(config: CantaPreset, onSuccess: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {
-            val success = presetsStore.savePreset(config)
+            val success = presetStore.savePreset(config)
             if (success) {
-                loadPresets()
                 onSuccess()
             } else {
                 LogUtils.e(TAG, "Failed to save imported configuration")

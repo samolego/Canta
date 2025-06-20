@@ -13,15 +13,21 @@ material3Android = "1.3.1"
 materialIconsExtended = "1.7.8"
 navigationRuntimeKtx = "2.8.7"
 navigationCompose = "2.8.7"
+protobuf = "4.28.3"
+protobufPlugin = "0.9.4"
 provider = "13.1.5"
 kotlin = "2.1.10"
 
 [plugins]
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 
 [libraries]
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.0.0" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version = "1.0.0" }
+protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }

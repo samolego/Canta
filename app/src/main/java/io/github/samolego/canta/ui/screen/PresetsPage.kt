@@ -75,8 +75,7 @@ fun PresetsPage(
                 PresetCreateDialog(
                         appListViewModel = appListViewModel,
                         presetViewModel = presetViewModel,
-                        closeDialog = { currentDialog = null },
-                        onError = { _ -> }
+                        closeDialog = { currentDialog = null }
                 )
             }
 

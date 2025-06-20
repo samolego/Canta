@@ -69,8 +69,8 @@ import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.util.Filter
-import io.github.samolego.canta.util.ShizukuData
 import io.github.samolego.canta.util.ShizukuInfo
+import io.github.samolego.canta.util.ShizukuPermission
 import io.github.samolego.canta.util.showFor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -440,7 +440,7 @@ fun uninstallOrReinstall(
         resetToFactory: Boolean = false,
 ) {
     coroutineScope.launch {
-        when (ShizukuData.checkShizukuActive(context.packageManager)) {
+        when (ShizukuPermission.checkShizukuActive(context.packageManager)) {
             ShizukuInfo.NOT_INSTALLED -> {
                 Toast.makeText(
                                 context,
@@ -464,7 +464,7 @@ fun uninstallOrReinstall(
             }
             ShizukuInfo.ACTIVE -> {
                 // Check shizuku permission
-                ShizukuData.checkShizukuPermission { permResult ->
+                ShizukuPermission.checkShizukuPermission { permResult ->
                     val permission = permResult == PackageManager.PERMISSION_GRANTED
 
                     if (!permission) {
