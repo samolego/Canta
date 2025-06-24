@@ -1,6 +1,5 @@
 package io.github.samolego.canta.ui.screen
 
-import ScreenTopBar
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +52,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.R
+import io.github.samolego.canta.ui.component.ScreenTopBar
 import io.github.samolego.canta.ui.component.fab.ExpandableFAB
 import io.github.samolego.canta.ui.dialog.ImportPresetDialog
 import io.github.samolego.canta.ui.dialog.PresetCreateDialog
@@ -74,7 +74,7 @@ fun PresetsPage(
 
     val createConfigDialog =
             @Composable
-            { _: String?, _: String? ->
+            {
                 PresetCreateDialog(
                         appListViewModel = appListViewModel,
                         presetViewModel = presetViewModel,
@@ -87,13 +87,13 @@ fun PresetsPage(
             topBar = {
                 ScreenTopBar(
                         onNavigateBack = { onNavigateBack(null) },
-                        title = { Text("Presets") },
+                        title = { Text(stringResource(R.string.presets)) },
                 )
             },
             floatingActionButton = {
                 if (presetViewModel.presets.isNotEmpty()) {
                     ExpandableFAB(
-                            onBottomClick = { currentDialog = { createConfigDialog(null, null) } },
+                            onBottomClick = { currentDialog = { createConfigDialog() } },
                             onTopClick = {
                                 currentDialog = {
                                     ImportDialog(
@@ -114,7 +114,7 @@ fun PresetsPage(
                 }
             } else if (presetViewModel.presets.isEmpty()) {
                 EmptyPresetsState(
-                        onCreateClick = { currentDialog = { createConfigDialog(null, null) } },
+                        onCreateClick = { currentDialog = { createConfigDialog() } },
                         onImportClick = {
                             currentDialog = {
                                 ImportDialog(
@@ -252,7 +252,7 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
             Box(contentAlignment = Alignment.Center) {
                 Icon(
                         imageVector = Icons.Default.Settings,
-                        contentDescription = stringResource(R.string.presets_menu),
+                        contentDescription = stringResource(R.string.presets),
                         modifier = Modifier.size(40.dp),
                         tint = MaterialTheme.colorScheme.primary
                 )

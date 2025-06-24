@@ -74,7 +74,7 @@
     <string name="preset_description_placeholder">Describe what this preset removes...</string>
     <string name="save">Save</string>
     <string name="import_preset_clipboard">Import from clipboard</string>
-    <string name="presets_menu">Presets</string>
+    <string name="presets">Presets</string>
     <string name="preset_deleted">Preset deleted</string>
     <string name="preset_delete_error">Failed to delete preset</string>
     <string name="preset_copied">Preset copied to clipboard</string>
