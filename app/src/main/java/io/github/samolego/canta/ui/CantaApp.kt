@@ -492,23 +492,24 @@ fun uninstallOrReinstall(
                             .show()
                     } else {
                         // Proceed with the action
+                        val appsToProcess = appListViewModel.selectedApps.keys.toList()
                         when (selectedAppsType) {
                             AppsType.INSTALLED -> {
-                                appListViewModel.selectedApps.forEach {
-                                    val uninstalled = uninstallApp(it.key, resetToFactory)
+                               appsToProcess.forEach { app ->
+                                   val uninstalled = uninstallApp(app, resetToFactory)
                                     if (uninstalled) {
-                                        appListViewModel.changeAppStatus(it.key)
-                                        appListViewModel.selectedApps.remove(it.key)
+                                        appListViewModel.changeAppStatus(app)
+                                        appListViewModel.selectedApps.remove(app)
                                     }
                                 }
                             }
 
                             AppsType.UNINSTALLED -> {
-                                appListViewModel.selectedApps.forEach {
-                                    val installed = reinstallApp(it.key)
+                                appsToProcess.forEach { app ->
+                                    val installed = reinstallApp(app)
                                     if (installed) {
-                                        appListViewModel.changeAppStatus(it.key)
-                                        appListViewModel.selectedApps.remove(it.key)
+                                        appListViewModel.changeAppStatus(app)
+                                        appListViewModel.selectedApps.remove(app)
                                     }
                                 }
                             }
