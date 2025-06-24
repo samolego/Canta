@@ -1,16 +1,37 @@
 package io.github.samolego.canta.ui.dialog
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import io.github.samolego.canta.R
 
 @Composable
 fun ImportPresetDialog(
@@ -18,7 +39,7 @@ fun ImportPresetDialog(
     onImportFromClipboard: () -> Unit,
     onImportFromText: (String) -> Unit
 ) {
-    var selectedTab by remember { mutableStateOf(0) }
+    var selectedTab by remember { mutableStateOf(Tab.CLIPBOARD) }
     var jsonText by remember { mutableStateOf("") }
     var textError by remember { mutableStateOf(false) }
 
@@ -26,7 +47,7 @@ fun ImportPresetDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "Import Preset",
+                text = stringResource(R.string.import_preset),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
@@ -38,25 +59,25 @@ fun ImportPresetDialog(
                     .height(400.dp)
             ) {
                 Text(
-                    text = "Import a configuration from clipboard or paste JSON text directly.",
+                    text = stringResource(R.string.import_preset_description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
                 TabRow(
-                    selectedTabIndex = selectedTab,
+                    selectedTabIndex = selectedTab.ordinal,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Tab(
-                        selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
-                        text = { Text("Clipboard") },
+                        selected = selectedTab == Tab.CLIPBOARD,
+                        onClick = { selectedTab = Tab.CLIPBOARD },
+                        text = { Text(stringResource(R.string.clipboard)) },
                         icon = { Icon(Icons.Default.ContentPaste, contentDescription = null) }
                     )
                     Tab(
-                        selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
+                        selected = selectedTab == Tab.TEXT,
+                        onClick = { selectedTab = Tab.TEXT },
                         text = { Text("Text") },
                         icon = { Icon(Icons.Default.Download, contentDescription = null) }
                     )
@@ -65,13 +86,13 @@ fun ImportPresetDialog(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 when (selectedTab) {
-                    0 -> {
+                    Tab.CLIPBOARD -> {
                         // Clipboard import
                         Column(
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             Text(
-                                text = "Import configuration from clipboard. Make sure you have copied a valid Canta configuration JSON.",
+                                text = stringResource(R.string.import_preset_clipboard_description),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -82,18 +103,18 @@ fun ImportPresetDialog(
                             ) {
                                 Icon(Icons.Default.ContentPaste, contentDescription = null)
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Import from Clipboard")
+                                Text(stringResource(R.string.import_preset_clipboard))
                             }
                         }
                     }
-                    1 -> {
+                    Tab.TEXT -> {
                         // Text import
                         Column(
                             modifier = Modifier.fillMaxSize(),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(
-                                text = "Paste configuration JSON:",
+                                text = stringResource(R.string.paste_preset_json),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.Medium
                             )
@@ -104,10 +125,10 @@ fun ImportPresetDialog(
                                     jsonText = it
                                     textError = false
                                 },
-                                placeholder = { Text("Paste JSON configuration here...") },
+                                placeholder = { Text(stringResource(R.string.paste_preset_json_here)) },
                                 isError = textError,
                                 supportingText = if (textError) {
-                                    { Text("Please enter valid JSON") }
+                                    { Text(stringResource(R.string.enter_valid_json)) }
                                 } else null,
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -121,10 +142,10 @@ fun ImportPresetDialog(
         },
         confirmButton = {
             when (selectedTab) {
-                0 -> {
+                Tab.CLIPBOARD -> {
                     // No confirm button for clipboard tab, handled by the button inside
                 }
-                1 -> {
+                Tab.TEXT -> {
                     Button(
                         onClick = {
                             if (jsonText.isNotBlank()) {
@@ -135,15 +156,20 @@ fun ImportPresetDialog(
                         },
                         enabled = jsonText.isNotBlank()
                     ) {
-                        Text("Import")
+                        Text(stringResource(R.string.import_button))
                     }
                 }
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         }
     )
+}
+
+enum class Tab {
+    CLIPBOARD,
+    TEXT,
 }

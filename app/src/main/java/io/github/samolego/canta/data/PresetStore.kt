@@ -22,7 +22,7 @@ object PresetsListSerializer : Serializer<PresetsList> {
         try {
             return PresetsList.parseFrom(input)
         } catch (exception: InvalidProtocolBufferException) {
-            throw CorruptionException("Cannot read proto.", exception)
+            throw CorruptionException("Cannot read files.", exception)
         }
     }
 
@@ -148,7 +148,7 @@ class PresetStore(private val context: Context) {
     fun exportToJson(preset: io.github.samolego.canta.util.CantaPreset): String {
         // Keep the same JSON format for compatibility with import/export
         val jsonObject =
-                org.json.JSONObject().apply {
+                JSONObject().apply {
                     put("name", preset.name)
                     put("description", preset.description)
                     put("createdDate", preset.createdDate)
@@ -167,7 +167,7 @@ class PresetStore(private val context: Context) {
 
     fun importFromJson(jsonString: String): io.github.samolego.canta.util.CantaPreset? {
         return try {
-            val json = org.json.JSONObject(jsonString)
+            val json = JSONObject(jsonString)
             val apps = mutableSetOf<String>()
             val appsArray = json.getJSONArray("apps")
 

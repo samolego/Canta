@@ -1,4 +1,4 @@
-package io.github.samolego.canta.util
+package io.github.samolego.canta.extension
 
 import android.os.Handler
 import android.os.Looper

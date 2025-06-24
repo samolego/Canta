@@ -151,8 +151,8 @@ fun AppInfoDialog(
                 }
             }
             Spacer(modifier = Modifier.size(8.dp))
-            val configuration = LocalConfiguration.current
-            val screenHeight = configuration.screenHeightDp.dp
+            val preset = LocalConfiguration.current
+            val screenHeight = preset.screenHeightDp.dp
             val maxScrollableHeight = (screenHeight * 0.6f)
             Column(
                 modifier = Modifier

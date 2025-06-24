@@ -71,7 +71,7 @@ import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.util.Filter
 import io.github.samolego.canta.util.ShizukuInfo
 import io.github.samolego.canta.util.ShizukuPermission
-import io.github.samolego.canta.util.showFor
+import io.github.samolego.canta.extension.showFor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -130,7 +130,7 @@ fun CantaApp(
                                     presetViewModel.editingPreset = null
                                     navController.navigate(Screen.Presets.route)
                                 },
-                                onError = { _ ->
+                                onError = {
                                     // Handle error - could show a toast or snackbar
                                     appListViewModel.selectedApps.clear()
                                     presetViewModel.editingPreset = null

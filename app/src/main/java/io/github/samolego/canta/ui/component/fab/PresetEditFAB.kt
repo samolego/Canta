@@ -11,7 +11,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import io.github.samolego.canta.R
 
 @Composable
 fun PresetEditFAB(
@@ -24,11 +26,11 @@ fun PresetEditFAB(
         icon = {
             Icon(
                 Icons.Default.Save,
-                contentDescription = "Save preset",
+                contentDescription = stringResource(R.string.save),
             )
         },
         text = {
-            Text("Save preset")
+            Text(stringResource(R.string.save))
         },
         onClick = onPresetEditFinish,
     )

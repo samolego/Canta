@@ -24,6 +24,7 @@
         <item quantity="one">Limpar %d seleccionado</item>
         <item quantity="other">Limpar %d seleccionados</item>
     </plurals>
+    <plurals name="num_selected_apps">%d apps selected</plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Informações do aplicativo</string>
     <string name="close">Fechar</string>
@@ -47,4 +48,36 @@
     <string name="uninstall_options_title">Opções de desinstalação</string>
     <string name="uninstall_app">Desinstalar o aplicativo</string>
     <string name="reset_to_factory_version">Resetar para a versão de fábrica</string>
+    <string name="import_preset">Import preset</string>
+    <string name="import_preset_description">Import a configuration from clipboard or paste JSON text directly.</string>
+    <string name="clipboard">Clipboard</string>
+    <string name="import_preset_clipboard_description">Import configuration from clipboard. Make sure you have copied a valid Canta configuration JSON.</string>
+    <string name="paste_preset_json">Paste preset JSON</string>
+    <string name="paste_preset_json_here">Paste JSON configuration here ...</string>
+    <string name="enter_valid_json">Please enter valid JSON</string>
+    <string name="import_button">Import</string>
+    <string name="create_preset">Create preset</string>
+    <string name="create_preset_description">Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
+    <string name="preset_name">Preset name</string>
+    <string name="preset_name_missing_error">Name is required</string>
+    <string name="preset_name_placeholder">e.g., Samsung Bloatware</string>
+    <string name="optional_description">Description (Optional)</string>
+    <string name="preset_description_placeholder">Describe what this preset removes...</string>
+    <string name="save">Save</string>
+    <string name="import_preset_clipboard">Import from clipboard</string>
+    <string name="presets_menu">Presets</string>
+    <string name="preset_deleted">Preset deleted</string>
+    <string name="preset_delete_error">Failed to delete preset</string>
+    <string name="preset_copied">Preset copied to clipboard</string>
+    <string name="import_failed">Import failed</string>
+    <string name="no_presets">No presets</string>
+    <string name="presets_description">Create or import configurations to manage app uninstall lists across devices</string>
+    <string name="more_options">More options</string>
+    <string name="edit">Edit</string>
+    <string name="add_apps">Add apps</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="apply_preset">Apply Preset</string>
+    <string name="preset_save_error">Error saving preset</string>
+    <string name="selected_apps">Selected apps</string>
 </resources>

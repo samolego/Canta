@@ -54,7 +54,7 @@ fun MoreOptionsMenu(
         )
 
         DropdownMenuItem(
-            text = { Text("Presets") },
+            text = { Text(stringResource(R.string.presets_menu)) },
             onClick = {
                 navigateToPage(Screen.Presets.route)
                 onDismiss()

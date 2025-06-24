@@ -46,10 +46,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.component.fab.ExpandableFAB
 import io.github.samolego.canta.ui.dialog.ImportPresetDialog
 import io.github.samolego.canta.ui.dialog.PresetCreateDialog
@@ -123,6 +126,9 @@ fun PresetsPage(
                         }
                 )
             } else {
+                val presetDeletedText = stringResource(R.string.preset_deleted)
+                val presetDeleteErrorText = stringResource(R.string.preset_delete_error)
+                val presetCopiedText = stringResource(R.string.preset_copied)
                 LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = PaddingValues(16.dp),
@@ -152,15 +158,15 @@ fun PresetsPage(
                                             onSuccess = {
                                                 Toast.makeText(
                                                                 context,
-                                                                "Preset deleted",
+                                                                presetDeletedText,
                                                                 Toast.LENGTH_SHORT
                                                         )
                                                         .show()
                                             },
-                                            onError = { error ->
+                                            onError = {
                                                 Toast.makeText(
                                                                 context,
-                                                                "Failed to delete preset: $error",
+                                                                presetDeleteErrorText,
                                                                 Toast.LENGTH_SHORT
                                                         )
                                                         .show()
@@ -174,7 +180,7 @@ fun PresetsPage(
                                     )
                                     Toast.makeText(
                                                     context,
-                                                    "Preset copied to clipboard",
+                                                    presetCopiedText,
                                                     Toast.LENGTH_SHORT
                                             )
                                             .show()
@@ -195,6 +201,7 @@ private fun ImportDialog(
         presetViewModel: PresetsViewModel,
         context: Context
 ) {
+    val importFailedText = stringResource(R.string.import_failed)
     ImportPresetDialog(
             onDismiss = hideDialog,
             onImportFromClipboard = {
@@ -203,27 +210,11 @@ private fun ImportDialog(
                         onSuccess = { config ->
                             hideDialog()
                             presetViewModel.saveImportedPreset(
-                                    config = config,
-                                    onSuccess = {
-                                        Toast.makeText(
-                                                        context,
-                                                        "Preset imported and saved",
-                                                        Toast.LENGTH_SHORT
-                                                )
-                                                .show()
-                                    },
-                                    onError = { error ->
-                                        Toast.makeText(
-                                                        context,
-                                                        "Failed to save imported configuration: $error",
-                                                        Toast.LENGTH_SHORT
-                                                )
-                                                .show()
-                                    }
+                                    config = config
                             )
                         },
-                        onError = { error ->
-                            Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
+                        onError = {
+                            Toast.makeText(context, importFailedText, Toast.LENGTH_SHORT)
                                     .show()
                         }
                 )
@@ -234,27 +225,11 @@ private fun ImportDialog(
                         onSuccess = { config ->
                             hideDialog()
                             presetViewModel.saveImportedPreset(
-                                    config = config,
-                                    onSuccess = {
-                                        Toast.makeText(
-                                                        context,
-                                                        "Preset imported and saved",
-                                                        Toast.LENGTH_SHORT
-                                                )
-                                                .show()
-                                    },
-                                    onError = { error ->
-                                        Toast.makeText(
-                                                        context,
-                                                        "Failed to save imported configuration: $error",
-                                                        Toast.LENGTH_SHORT
-                                                )
-                                                .show()
-                                    }
+                                    config = config
                             )
                         },
-                        onError = { error ->
-                            Toast.makeText(context, "Import failed: $error", Toast.LENGTH_SHORT)
+                        onError = {
+                            Toast.makeText(context, importFailedText, Toast.LENGTH_SHORT)
                                     .show()
                         }
                 )
@@ -287,15 +262,14 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-                text = "No Presets",
+                text = stringResource(R.string.no_presets),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
         )
 
         Text(
-                text =
-                        "Create or import configurations to manage\napp uninstall lists across devices",
+                text = stringResource(R.string.presets_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),
@@ -308,13 +282,13 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
             Button(onClick = onCreateClick, modifier = Modifier.fillMaxWidth()) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Create Preset")
+                Text(stringResource(R.string.create_preset))
             }
 
             OutlinedButton(onClick = onImportClick, modifier = Modifier.fillMaxWidth()) {
                 Icon(Icons.Default.Download, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Import Preset")
+                Text(stringResource(R.string.import_preset))
             }
         }
     }
@@ -372,7 +346,7 @@ private fun PresetCard(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                                text = "${preset.apps.size} apps",
+                                text = pluralStringResource(R.plurals.num_selected_apps, preset.apps.size, preset.apps.size),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -398,13 +372,13 @@ private fun PresetCard(
                     IconButton(onClick = { showMenu = true }) {
                         Icon(
                                 Icons.Default.MoreVert,
-                                contentDescription = "More options",
+                                contentDescription = stringResource(R.string.more_options),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                         DropdownMenuItem(
-                                text = { Text("Edit") },
+                                text = { Text(stringResource(R.string.edit)) },
                                 onClick = {
                                     showMenu = false
                                     onEdit(preset)
@@ -414,7 +388,7 @@ private fun PresetCard(
                                 }
                         )
                         DropdownMenuItem(
-                                text = { Text("Add Apps") },
+                                text = { Text(stringResource(R.string.add_apps)) },
                                 onClick = {
                                     showMenu = false
                                     onAddApps(preset)
@@ -422,7 +396,7 @@ private fun PresetCard(
                                 leadingIcon = { Icon(Icons.Default.Add, contentDescription = null) }
                         )
                         DropdownMenuItem(
-                                text = { Text("Export") },
+                                text = { Text(stringResource(R.string.share)) },
                                 onClick = {
                                     showMenu = false
                                     onExport()
@@ -433,7 +407,7 @@ private fun PresetCard(
                         )
                         HorizontalDivider()
                         DropdownMenuItem(
-                                text = { Text("Delete") },
+                                text = { Text(stringResource(R.string.delete)) },
                                 onClick = {
                                     showMenu = false
                                     onDelete()
@@ -471,7 +445,7 @@ private fun PresetCard(
                         modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Apply Preset")
+                Text(stringResource(R.string.apply_preset))
             }
         }
     }

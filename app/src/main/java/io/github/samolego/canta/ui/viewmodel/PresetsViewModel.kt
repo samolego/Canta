@@ -53,7 +53,7 @@ class PresetsViewModel : ViewModel() {
             description: String,
             apps: Set<String>,
             onSuccess: () -> Unit,
-            onError: (String) -> Unit
+            onError: () -> Unit
     ) {
         viewModelScope.launch {
             val preset = presetStore.createPresetFromUninstalledApps(apps, name, description)
@@ -61,19 +61,19 @@ class PresetsViewModel : ViewModel() {
             if (success) {
                 onSuccess()
             } else {
-                onError("Failed to save preset ${preset.name}!")
+                onError()
                 LogUtils.e(TAG, "Failed to save preset ${preset.name}!")
             }
         }
     }
 
-    fun deletePreset(config: CantaPreset, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun deletePreset(config: CantaPreset, onSuccess: () -> Unit, onError: () -> Unit) {
         viewModelScope.launch {
             val success = presetStore.deletePreset(config)
             if (success) {
                 onSuccess()
             } else {
-                onError("Failed to delete configuration")
+                onError()
             }
         }
     }
@@ -91,7 +91,7 @@ class PresetsViewModel : ViewModel() {
     fun importFromClipboard(
             context: Context,
             onSuccess: (CantaPreset) -> Unit,
-            onError: (String) -> Unit
+            onError: () -> Unit
     ) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = clipboard.primaryClip
@@ -103,23 +103,23 @@ class PresetsViewModel : ViewModel() {
             if (config != null) {
                 onSuccess(config)
             } else {
-                onError("Invalid configuration format")
+                onError()
             }
         } else {
-            onError("No data found in clipboard")
+            onError()
         }
     }
 
     fun importFromJson(
             jsonString: String,
             onSuccess: (CantaPreset) -> Unit,
-            onError: (String) -> Unit
+            onError: () -> Unit
     ) {
         val config = presetStore.importFromJson(jsonString)
         if (config != null) {
             onSuccess(config)
         } else {
-            onError("Invalid configuration format")
+            onError()
         }
     }
 
@@ -132,7 +132,7 @@ class PresetsViewModel : ViewModel() {
             newName: String,
             newDescription: String,
             onSuccess: () -> Unit,
-            onError: (String) -> Unit
+            onError: () -> Unit
     ) {
         viewModelScope.launch {
             val updatedPreset =
@@ -146,7 +146,7 @@ class PresetsViewModel : ViewModel() {
             if (success) {
                 onSuccess()
             } else {
-                onError("Failed to update configuration")
+                onError()
             }
         }
     }
@@ -155,26 +155,23 @@ class PresetsViewModel : ViewModel() {
             preset: CantaPreset,
             newApps: Set<String>,
             onSuccess: () -> Unit,
-            onError: (String) -> Unit
+            onError: () -> Unit
     ) {
         viewModelScope.launch {
             val success = presetStore.setPresetApps(preset, newApps)
             if (success) {
                 onSuccess()
             } else {
-                onError("Failed to update preset apps")
+                onError()
             }
         }
     }
 
-    fun saveImportedPreset(config: CantaPreset, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun saveImportedPreset(config: CantaPreset) {
         viewModelScope.launch {
             val success = presetStore.savePreset(config)
-            if (success) {
-                onSuccess()
-            } else {
-                LogUtils.e(TAG, "Failed to save imported configuration")
-                onError("Failed to save imported configuration")
+            if (!success) {
+                LogUtils.e(TAG, "Failed to save imported preset")
             }
         }
     }

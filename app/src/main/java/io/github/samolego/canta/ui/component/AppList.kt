@@ -125,8 +125,8 @@ fun AppList(
                     contentBackgroundColor = MaterialTheme.colorScheme.surfaceVariant,
                         header = {exp ->
                         DropdownHeader(
-                                title = "Selected Apps",
-                                subtitle = "${selectedAppList.size} apps selected",
+                                title = stringResource(R.string.selected_apps),
+                                subtitle = pluralStringResource(R.plurals.num_selected_apps, selectedAppList.size, selectedAppList.size),
                                 expanded = exp
                         )
                     },
