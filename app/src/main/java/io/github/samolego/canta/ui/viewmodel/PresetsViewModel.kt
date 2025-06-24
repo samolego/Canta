@@ -167,11 +167,12 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun saveImportedPreset(preset: CantaPreset) {
+    fun saveImportedPreset(preset: CantaPreset,onError: (() -> Unit)? = null) {
         viewModelScope.launch {
             val success = presetStore.savePreset(preset)
             if (!success) {
                 LogUtils.e(TAG, "Failed to save imported preset")
+                onError?.invoke()
             }
         }
     }

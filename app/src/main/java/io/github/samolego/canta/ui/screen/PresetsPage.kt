@@ -210,7 +210,11 @@ private fun ImportDialog(
                         onSuccess = { preset ->
                             hideDialog()
                             presetViewModel.saveImportedPreset(
-                                    preset = preset
+                                    preset = preset,
+                                    onError = {
+                                        Toast.makeText(context, importFailedText, Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
                             )
                         },
                         onError = {
@@ -225,7 +229,11 @@ private fun ImportDialog(
                         onSuccess = { preset ->
                             hideDialog()
                             presetViewModel.saveImportedPreset(
-                                    preset = preset
+                                preset = preset,
+                                onError = {
+                                    Toast.makeText(context, importFailedText, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                             )
                         },
                         onError = {
