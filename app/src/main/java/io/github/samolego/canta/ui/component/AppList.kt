@@ -139,7 +139,7 @@ fun AppList(
                                 ) {
                                     Button(
                                         onClick = {
-                                            appListModel.selectedApps.clear()
+                                            selectedAppList.forEach { appListModel.selectedApps.remove(it.packageName) }
                                         }
                                     ) {
                                         Text(
