@@ -25,9 +25,9 @@
         <item quantity="other">Ryd %d valg</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Kopiér</string>
     <string name="app_settings">App-info</string>
     <string name="close">Luk</string>
