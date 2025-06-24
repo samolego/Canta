@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "io.github.samolego.canta.data";
+option java_multiple_files = true;
+
+message CantaPreset {
+  string name = 1;
+  string description = 2;
+  int64 created_date = 3;
+  repeated string apps = 4;
+  string version = 5;
+}
+
+message PresetsList {
+  repeated CantaPreset presets = 1;
+}

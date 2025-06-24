@@ -1,4 +1,3 @@
-
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -7,16 +6,18 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.protobuf)
 }
 
 val keystoreProperties = Properties()
 val keystorePropertiesFile: File = rootProject.file("key.properties")
+
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
 android {
-    namespace = "org.samo_lego.canta"
+    namespace = "io.github.samolego.canta"
     compileSdk = 35
 
     // For reproducible builds
@@ -28,16 +29,14 @@ android {
     }
 
     defaultConfig {
-        applicationId = "org.samo_lego.canta"
-        minSdk = 28  // todo - figure out a way to bypass hidden api methods on android < 9
+        applicationId = namespace
+        minSdk = 28 // todo - figure out a way to bypass hidden api methods on android < 9
         targetSdk = 35
         versionCode = project.property("version_code")?.toString()?.toInt() ?: 1
         versionName = project.property("version_name")?.toString() ?: "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        vectorDrawables { useSupportLibrary = true }
 
         buildConfigField("String", "APP_VERSION", "\"${project.property("version_name")}\"")
         buildConfigField("int", "VERSION_CODE", "${project.property("version_code")}")
@@ -48,9 +47,9 @@ android {
             keyAlias = keystoreProperties["keyAlias"].toString()
             keyPassword = keystoreProperties["keyPassword"].toString()
             storeFile =
-                if (keystoreProperties["storeFile"] != null) keystoreProperties["storeFile"]?.let {
-                    file(it)
-                } else null
+                    if (keystoreProperties["storeFile"] != null)
+                            keystoreProperties["storeFile"]?.let { file(it) }
+                    else null
             storePassword = keystoreProperties["storePassword"].toString()
         }
     }
@@ -60,8 +59,8 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
         }
@@ -70,21 +69,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    kotlinOptions { jvmTarget = "1.8" }
     buildFeatures {
         compose = true
-        buildConfig= true
+        buildConfig = true
     }
-    //composeOptions {
+    // composeOptions {
     //    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    //}
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+    // }
+    packaging { resources { excludes += "/META-INF/{AL2.0,LGPL2.1}" } }
 }
 
 dependencies {
@@ -110,9 +103,25 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.material.icons.extended)
 
-
     implementation(libs.api)
     implementation(libs.provider)
 
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.protobuf.javalite)
     implementation(libs.hiddenapibypass)
+}
+
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc.get().toString()
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                create("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
