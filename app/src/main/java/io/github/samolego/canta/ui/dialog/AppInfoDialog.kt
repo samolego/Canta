@@ -151,67 +151,77 @@ fun AppInfoDialog(
                 }
             }
             Spacer(modifier = Modifier.size(8.dp))
-            val preset = LocalConfiguration.current
-            val screenHeight = preset.screenHeightDp.dp
+            val configuration = LocalConfiguration.current
+            val screenHeight = configuration.screenHeightDp.dp
             val maxScrollableHeight = (screenHeight * 0.6f)
             Column(
-                modifier = Modifier
-                    .heightIn(max = maxScrollableHeight)
-                    .verticalScroll(rememberScrollState())
+                    modifier =
+                            Modifier.heightIn(max = maxScrollableHeight)
+                                    .verticalScroll(rememberScrollState())
             ) {
                 if (bloatDescription != null) {
                     AndroidView(
-                        factory = { ctx ->
-                            TextView(ctx).apply {
-                                text =
-                                    Html.fromHtml(bloatDescription, Html.FROM_HTML_MODE_COMPACT)
+                            factory = { ctx ->
+                                TextView(ctx).apply {
+                                    text =
+                                            Html.fromHtml(
+                                                    bloatDescription,
+                                                    Html.FROM_HTML_MODE_COMPACT
+                                            )
 
-                                setTextIsSelectable(true)
+                                    setTextIsSelectable(true)
 
-                                autoLinkMask = android.text.util.Linkify.WEB_URLS
-                                movementMethod = LinkMovementMethod.getInstance()
+                                    autoLinkMask = android.text.util.Linkify.WEB_URLS
+                                    movementMethod = LinkMovementMethod.getInstance()
 
-                                setTextColor(androidx.core.content.ContextCompat.getColor(
-                                    context,
-                                    android.R.color.tab_indicator_text
-                                ))
-                                textSize = 14f
+                                    setTextColor(
+                                            androidx.core.content.ContextCompat.getColor(
+                                                    context,
+                                                    android.R.color.tab_indicator_text
+                                            )
+                                    )
+                                    textSize = 14f
 
-                                customSelectionActionModeCallback =
-                                    CustomTextSelectionCallback(context, this)
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth()
+                                    customSelectionActionModeCallback =
+                                            CustomTextSelectionCallback(context, this)
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth()
                     )
                 } else {
                     Text(
-                        text = context.getString(R.string.no_description_available),
-                        style = MaterialTheme.typography.bodySmall
+                            text = context.getString(R.string.no_description_available),
+                            style = MaterialTheme.typography.bodySmall
                     )
                 }
-        }
+            }
             if (!appInfo.isUninstalled) {
                 Row(modifier = Modifier.align(Alignment.End)) {
                     Button(
-                        onClick = {
-                            val intent =
-                                Intent(ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                    data = Uri.fromParts("package", appInfo.packageName, null)
-                                }
-                            context.startActivity(intent)
-                        },
-                        colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor =
-                            MaterialTheme.colorScheme.secondaryContainer,
-                            contentColor =
-                            MaterialTheme.colorScheme.onSecondaryContainer
-                        )
+                            onClick = {
+                                val intent =
+                                        Intent(ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                            data =
+                                                    Uri.fromParts(
+                                                            "package",
+                                                            appInfo.packageName,
+                                                            null
+                                                    )
+                                        }
+                                context.startActivity(intent)
+                            },
+                            colors =
+                                    ButtonDefaults.buttonColors(
+                                            containerColor =
+                                                    MaterialTheme.colorScheme.secondaryContainer,
+                                            contentColor =
+                                                    MaterialTheme.colorScheme.onSecondaryContainer
+                                    )
                     ) {
                         Icon(
-                            Icons.Default.Settings,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
+                                Icons.Default.Settings,
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(stringResource(R.string.app_settings))

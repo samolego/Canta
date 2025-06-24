@@ -252,7 +252,7 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
             Box(contentAlignment = Alignment.Center) {
                 Icon(
                         imageVector = Icons.Default.Settings,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.presets_menu),
                         modifier = Modifier.size(40.dp),
                         tint = MaterialTheme.colorScheme.primary
                 )
@@ -280,13 +280,13 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
 
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Button(onClick = onCreateClick, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Default.Add, contentDescription = null)
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.create_preset))
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(R.string.create_preset))
             }
 
             OutlinedButton(onClick = onImportClick, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Default.Download, contentDescription = null)
+                Icon(Icons.Default.Download, contentDescription = stringResource(R.string.import_preset))
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(R.string.import_preset))
             }
@@ -340,7 +340,7 @@ private fun PresetCard(
                     ) {
                         Icon(
                                 Icons.Default.Apps,
-                                contentDescription = null,
+                                contentDescription = stringResource(R.string.selected_apps),
                                 modifier = Modifier.size(14.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -384,7 +384,7 @@ private fun PresetCard(
                                     onEdit(preset)
                                 },
                                 leadingIcon = {
-                                    Icon(Icons.Default.Edit, contentDescription = null)
+                                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit))
                                 }
                         )
                         DropdownMenuItem(
@@ -393,7 +393,7 @@ private fun PresetCard(
                                     showMenu = false
                                     onAddApps(preset)
                                 },
-                                leadingIcon = { Icon(Icons.Default.Add, contentDescription = null) }
+                                leadingIcon = { Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_apps)) }
                         )
                         DropdownMenuItem(
                                 text = { Text(stringResource(R.string.share)) },
@@ -402,7 +402,7 @@ private fun PresetCard(
                                     onExport()
                                 },
                                 leadingIcon = {
-                                    Icon(Icons.Default.Share, contentDescription = null)
+                                    Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share))
                                 }
                         )
                         HorizontalDivider()
@@ -415,7 +415,7 @@ private fun PresetCard(
                                 leadingIcon = {
                                     Icon(
                                             Icons.Default.Delete,
-                                            contentDescription = null,
+                                            contentDescription = stringResource(R.string.delete),
                                             tint = MaterialTheme.colorScheme.error
                                     )
                                 },
@@ -441,7 +441,7 @@ private fun PresetCard(
             ) {
                 Icon(
                         Icons.Default.PlayArrow,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.apply_preset),
                         modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))

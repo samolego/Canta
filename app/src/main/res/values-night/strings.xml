@@ -62,5 +62,9 @@
     <string name="apply_preset">Apply Preset</string>
     <string name="preset_save_error">Error saving preset</string>
     <string name="selected_apps">Selected apps</string>
-    <plurals name="num_selected_apps">%d apps selected</plurals>
+    <string name="text">Text</string>
+    <plurals name="num_selected_apps">
+    <item quantity="one">%d app selected</item>
+    <item quantity="other">%d apps selected</item>
+</plurals>
 </resources>

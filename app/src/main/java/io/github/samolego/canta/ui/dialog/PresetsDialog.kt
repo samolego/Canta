@@ -73,13 +73,13 @@ fun ImportPresetDialog(
                         selected = selectedTab == Tab.CLIPBOARD,
                         onClick = { selectedTab = Tab.CLIPBOARD },
                         text = { Text(stringResource(R.string.clipboard)) },
-                        icon = { Icon(Icons.Default.ContentPaste, contentDescription = null) }
+                        icon = { Icon(Icons.Default.ContentPaste, contentDescription = stringResource(R.string.clipboard)) }
                     )
                     Tab(
                         selected = selectedTab == Tab.TEXT,
                         onClick = { selectedTab = Tab.TEXT },
-                        text = { Text("Text") },
-                        icon = { Icon(Icons.Default.Download, contentDescription = null) }
+                        text = { Text(stringResource(R.string.text)) },
+                        icon = { Icon(Icons.Default.Download, contentDescription = stringResource(R.string.text)) }
                     )
                 }
 
@@ -101,7 +101,7 @@ fun ImportPresetDialog(
                                 onClick = onImportFromClipboard,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Icon(Icons.Default.ContentPaste, contentDescription = null)
+                                Icon(Icons.Default.ContentPaste, contentDescription = stringResource(R.string.import_preset_clipboard))
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(stringResource(R.string.import_preset_clipboard))
                             }

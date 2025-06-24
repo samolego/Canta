@@ -24,7 +24,10 @@
         <item quantity="one"> %d चयनित साफ़करें</item>
         <item quantity="other"> %d चयनित साफ़करें</item>
     </plurals>
-    <plurals name="num_selected_apps">%d apps selected</plurals>
+    <plurals name="num_selected_apps">
+    <item quantity="one">%d app selected</item>
+    <item quantity="other">%d apps selected</item>
+</plurals>
     <string name="copy">कॉपी</string>
     <string name="app_settings">ऐप की जानकारी.</string>
     <string name="close">बंद करें</string>
@@ -80,4 +83,5 @@
     <string name="apply_preset">Apply Preset</string>
     <string name="preset_save_error">Error saving preset</string>
     <string name="selected_apps">Selected apps</string>
+    <string name="text">Text</string>
 </resources>

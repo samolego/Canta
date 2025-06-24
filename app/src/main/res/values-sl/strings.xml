@@ -26,7 +26,10 @@
         <item quantity="few">Počist %d izbrane</item>
         <item quantity="other">Počisti %d </item>
     </plurals>
-    <plurals name="num_selected_apps">%d apps selected</plurals>
+    <plurals name="num_selected_apps">
+    <item quantity="one">%d app selected</item>
+    <item quantity="other">%d apps selected</item>
+</plurals>
     <string name="copy">Kopiraj</string>
     <string name="app_settings">Podatki o aplikaciji</string>
     <string name="close">Zapri</string>
@@ -82,4 +85,5 @@
     <string name="apply_preset">Apply Preset</string>
     <string name="preset_save_error">Error saving preset</string>
     <string name="selected_apps">Selected apps</string>
+    <string name="text">Text</string>
 </resources>
