@@ -27,9 +27,11 @@
         <item quantity="other">Clear %d selected</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="two">%d apps selected</item>
+        <item quantity="many">%d apps selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">העתק</string>
     <string name="app_settings">פרטי יישום</string>
     <string name="close">סגור</string>
