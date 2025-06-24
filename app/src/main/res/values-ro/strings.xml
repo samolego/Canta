@@ -23,9 +23,10 @@
         <item quantity="other">Ștergeți %d selectat</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="few">%d apps selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Copiați</string>
     <string name="app_settings">Informaţii despre aplicație</string>
     <string name="close">Închideți</string>

@@ -22,9 +22,9 @@
         <item quantity="other">%d seçileni temizle</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Kopyala</string>
     <string name="app_settings">Uygulama bilgileri</string>
     <string name="close">Kapat</string>

@@ -24,9 +24,11 @@
         <item quantity="other">Zrušit označení %d vybraných</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="few">%d apps selected</item>
+        <item quantity="many">%d apps selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Zkopírovat</string>
     <string name="app_settings">Informace o aplikací</string>
     <string name="close">Zavřít</string>

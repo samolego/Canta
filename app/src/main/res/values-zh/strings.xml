@@ -21,9 +21,8 @@
         <item quantity="other">清除所選的 %d 個</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">複製</string>
     <string name="app_settings">應用程式資訊</string>
     <string name="close">關閉</string>

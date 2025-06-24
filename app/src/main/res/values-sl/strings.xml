@@ -24,9 +24,11 @@
         <item quantity="other">Počisti %d </item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="two">%d apps selected</item>
+        <item quantity="few">%d apps selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Kopiraj</string>
     <string name="app_settings">Podatki o aplikaciji</string>
     <string name="close">Zapri</string>
@@ -47,9 +49,9 @@
     <string name="select_all">Izberi vse</string>
     <string name="select_all_tip">Kliknite še %d-krat, da omogočite možnost izbora vseh aplikacij.</string>
     <string name="select_all_enabled">Za vrsto filtra \"Priporočeno\" je sedaj omogočena možnost \"Izberi vse\".</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
-    <string name="uninstall_app">Uninstall app</string>
-    <string name="reset_to_factory_version">Reset to factory version</string>
+    <string name="uninstall_options_title">Odstranitvene možnosti</string>
+    <string name="uninstall_app">Odstrani aplikacijo</string>
+    <string name="reset_to_factory_version">Ponastavi na tovarniško verzijo</string>
     <string name="import_preset">Import preset</string>
     <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
     <string name="clipboard">Clipboard</string>

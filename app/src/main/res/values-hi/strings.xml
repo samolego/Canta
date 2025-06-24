@@ -22,9 +22,9 @@
         <item quantity="other"> %d चयनित साफ़करें</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">कॉपी</string>
     <string name="app_settings">ऐप की जानकारी.</string>
     <string name="close">बंद करें</string>
