@@ -3,17 +3,17 @@
     <string name="cancel">Cancelar</string>
     <string name="ok">Ok</string>
     <string name="are_you_sure_to_uninstall_apps">Tem a certeza que deseja desinstalar os %1$saplicativos?</string>
-    <string name="copy_package_name_to_clipboard">Copiar nome do pacote para a área de transferência</string>
-    <string name="no_description_available">Nenhuma descrição disponível</string>
+    <string name="copy_package_name_to_clipboard">Copiar nomes do pacote para a área de transferência</string>
+    <string name="no_description_available">Sem descrição disponível</string>
     <string name="uninstall">Desinstalar</string>
     <string name="reinstall">Reinstalar</string>
-    <string name="please_start_shizuku">Por favor, inicie Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">Por favor, instale o Shizuku e autorize o Canta.</string>
-    <string name="please_allow_shizuku_access_for_canta">Por favor, permita que Shizuku acesse Canta.</string>
-    <string name="only_system">Apenas do sistema</string>
+    <string name="please_start_shizuku">Por Favor inicie Shizuku.</string>
+    <string name="please_install_shizuku_and_authorise_canta">Por Favor instale o Shizuku e autorize o Canta.</string>
+    <string name="please_allow_shizuku_access_for_canta">Por Favor permita o acesso do Shizuku para Canta.</string>
+    <string name="only_system">Apenas Sistema</string>
     <string name="no_apps_found">Nenhum aplicativo encontrado</string>
     <string name="loading_apps">Carregando aplicativos</string>
-    <string name="badge_info">Informações da etiqueta</string>
+    <string name="badge_info">Informações Do Sistema</string>
     <string name="got_it">Entendi</string>
     <string name="loading_badges">Carregando Distintivos...</string>
     <string name="logs">Registo</string>
@@ -25,9 +25,9 @@
         <item quantity="other">Limpar %d seleccionados</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Informações do aplicativo</string>
     <string name="close">Fechar</string>
