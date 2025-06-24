@@ -25,9 +25,9 @@
         <item quantity="other">Limpar %d seleccionados</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Informações do aplicativo</string>
     <string name="close">Fechar</string>

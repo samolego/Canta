@@ -27,9 +27,11 @@
         <item quantity="other">Очистить %d</item>
     </plurals>
     <plurals name="num_selected_apps">
-    <item quantity="one">%d app selected</item>
-    <item quantity="other">%d apps selected</item>
-</plurals>
+        <item quantity="one">%d app selected</item>
+        <item quantity="few">%d apps selected</item>
+        <item quantity="many">%d apps selected</item>
+        <item quantity="other">%d apps selected</item>
+    </plurals>
     <string name="copy">Скопировать</string>
     <string name="app_settings">Информация о приложении</string>
     <string name="close">Закрыть</string>
