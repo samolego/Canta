@@ -67,9 +67,9 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun deletePreset(config: CantaPreset, onSuccess: () -> Unit, onError: () -> Unit) {
+    fun deletePreset(preset: CantaPreset, onSuccess: () -> Unit, onError: () -> Unit) {
         viewModelScope.launch {
-            val success = presetStore.deletePreset(config)
+            val success = presetStore.deletePreset(preset)
             if (success) {
                 onSuccess()
             } else {
@@ -80,9 +80,9 @@ class PresetsViewModel : ViewModel() {
 
     fun exportToClipboard(
             context: Context,
-            config: CantaPreset,
+            preset: CantaPreset,
     ) {
-        val jsonString = presetStore.exportToJson(config)
+        val jsonString = presetStore.exportToJson(preset)
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Canta Preset", jsonString)
         clipboard.setPrimaryClip(clip)
@@ -98,10 +98,10 @@ class PresetsViewModel : ViewModel() {
 
         if (clipData != null && clipData.itemCount > 0) {
             val jsonString = clipData.getItemAt(0).text.toString()
-            val config = presetStore.importFromJson(jsonString)
+            val preset = presetStore.importFromJson(jsonString)
 
-            if (config != null) {
-                onSuccess(config)
+            if (preset != null) {
+                onSuccess(preset)
             } else {
                 onError()
             }
@@ -115,9 +115,9 @@ class PresetsViewModel : ViewModel() {
             onSuccess: (CantaPreset) -> Unit,
             onError: () -> Unit
     ) {
-        val config = presetStore.importFromJson(jsonString)
-        if (config != null) {
-            onSuccess(config)
+        val preset = presetStore.importFromJson(jsonString)
+        if (preset != null) {
+            onSuccess(preset)
         } else {
             onError()
         }
@@ -167,9 +167,9 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun saveImportedPreset(config: CantaPreset) {
+    fun saveImportedPreset(preset: CantaPreset) {
         viewModelScope.launch {
-            val success = presetStore.savePreset(config)
+            val success = presetStore.savePreset(preset)
             if (!success) {
                 LogUtils.e(TAG, "Failed to save imported preset")
             }

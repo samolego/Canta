@@ -154,7 +154,7 @@ fun PresetsPage(
                                 onApply = { onNavigateBack(preset) },
                                 onDelete = {
                                     presetViewModel.deletePreset(
-                                            config = preset,
+                                            preset = preset,
                                             onSuccess = {
                                                 Toast.makeText(
                                                                 context,
@@ -176,7 +176,7 @@ fun PresetsPage(
                                 onExport = {
                                     presetViewModel.exportToClipboard(
                                             context = context,
-                                            config = preset,
+                                            preset = preset,
                                     )
                                     Toast.makeText(
                                                     context,
@@ -207,10 +207,10 @@ private fun ImportDialog(
             onImportFromClipboard = {
                 presetViewModel.importFromClipboard(
                         context = context,
-                        onSuccess = { config ->
+                        onSuccess = { preset ->
                             hideDialog()
                             presetViewModel.saveImportedPreset(
-                                    config = config
+                                    preset = preset
                             )
                         },
                         onError = {
@@ -222,10 +222,10 @@ private fun ImportDialog(
             onImportFromText = { jsonText ->
                 presetViewModel.importFromJson(
                         jsonString = jsonText,
-                        onSuccess = { config ->
+                        onSuccess = { preset ->
                             hideDialog()
                             presetViewModel.saveImportedPreset(
-                                    config = config
+                                    preset = preset
                             )
                         },
                         onError = {
