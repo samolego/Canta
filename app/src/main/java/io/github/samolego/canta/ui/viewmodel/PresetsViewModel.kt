@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.samolego.canta.data.PresetStore
-import io.github.samolego.canta.util.CantaPreset
+import io.github.samolego.canta.util.CantaPresetData
 import io.github.samolego.canta.util.LogUtils
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -21,12 +21,12 @@ class PresetsViewModel : ViewModel() {
         private const val TAG = "PresetsViewModel"
     }
 
-    var editingPreset by mutableStateOf<CantaPreset?>(null)
+    var editingPreset by mutableStateOf<CantaPresetData?>(null)
 
     private lateinit var presetStore: PresetStore
 
-    private val _presets = mutableStateOf<List<CantaPreset>>(emptyList())
-    val presets: List<CantaPreset>
+    private val _presets = mutableStateOf<List<CantaPresetData>>(emptyList())
+    val presets: List<CantaPresetData>
         get() = _presets.value
 
     var isLoading by mutableStateOf(false)
@@ -67,7 +67,7 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun deletePreset(preset: CantaPreset, onSuccess: () -> Unit, onError: () -> Unit) {
+    fun deletePreset(preset: CantaPresetData, onSuccess: () -> Unit, onError: () -> Unit) {
         viewModelScope.launch {
             val success = presetStore.deletePreset(preset)
             if (success) {
@@ -79,8 +79,8 @@ class PresetsViewModel : ViewModel() {
     }
 
     fun exportToClipboard(
-            context: Context,
-            preset: CantaPreset,
+        context: Context,
+        preset: CantaPresetData,
     ) {
         val jsonString = presetStore.exportToJson(preset)
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -89,9 +89,9 @@ class PresetsViewModel : ViewModel() {
     }
 
     fun importFromClipboard(
-            context: Context,
-            onSuccess: (CantaPreset) -> Unit,
-            onError: () -> Unit
+        context: Context,
+        onSuccess: (CantaPresetData) -> Unit,
+        onError: () -> Unit
     ) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = clipboard.primaryClip
@@ -111,9 +111,9 @@ class PresetsViewModel : ViewModel() {
     }
 
     fun importFromJson(
-            jsonString: String,
-            onSuccess: (CantaPreset) -> Unit,
-            onError: () -> Unit
+        jsonString: String,
+        onSuccess: (CantaPresetData) -> Unit,
+        onError: () -> Unit
     ) {
         val preset = presetStore.importFromJson(jsonString)
         if (preset != null) {
@@ -128,11 +128,11 @@ class PresetsViewModel : ViewModel() {
     }
 
     fun updatePreset(
-            oldPreset: CantaPreset,
-            newName: String,
-            newDescription: String,
-            onSuccess: () -> Unit,
-            onError: () -> Unit
+        oldPreset: CantaPresetData,
+        newName: String,
+        newDescription: String,
+        onSuccess: () -> Unit,
+        onError: () -> Unit
     ) {
         viewModelScope.launch {
             val updatedPreset =
@@ -152,10 +152,10 @@ class PresetsViewModel : ViewModel() {
     }
 
     fun setPresetApps(
-            preset: CantaPreset,
-            newApps: Set<String>,
-            onSuccess: () -> Unit,
-            onError: () -> Unit
+        preset: CantaPresetData,
+        newApps: Set<String>,
+        onSuccess: () -> Unit,
+        onError: () -> Unit
     ) {
         viewModelScope.launch {
             val success = presetStore.setPresetApps(preset, newApps)
@@ -167,7 +167,7 @@ class PresetsViewModel : ViewModel() {
         }
     }
 
-    fun saveImportedPreset(preset: CantaPreset,onError: (() -> Unit)? = null) {
+    fun saveImportedPreset(preset: CantaPresetData, onError: (() -> Unit)? = null) {
         viewModelScope.launch {
             val success = presetStore.savePreset(preset)
             if (!success) {

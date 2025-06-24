@@ -6,6 +6,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
 import com.google.protobuf.InvalidProtocolBufferException
+import io.github.samolego.canta.data.proto.CantaPreset
+import io.github.samolego.canta.data.proto.PresetsList
+import io.github.samolego.canta.util.CantaPresetData
 import io.github.samolego.canta.util.LogUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -38,7 +41,7 @@ class PresetStore(private val context: Context) {
         private const val TAG = "PresetStore"
     }
 
-    val presetsFlow: Flow<List<io.github.samolego.canta.util.CantaPreset>> =
+    val presetsFlow: Flow<List<CantaPresetData>> =
             context.presetDataStore.data
                     .catch { exception ->
                         if (exception is IOException) {
@@ -50,7 +53,7 @@ class PresetStore(private val context: Context) {
                     }
                     .map { presetsList ->
                         presetsList.presetsList.map { protoPreset ->
-                            io.github.samolego.canta.util.CantaPreset(
+                            CantaPresetData(
                                     name = protoPreset.name,
                                     description = protoPreset.description,
                                     createdDate = protoPreset.createdDate,
@@ -60,7 +63,7 @@ class PresetStore(private val context: Context) {
                         }
                     }
 
-    suspend fun savePreset(preset: io.github.samolego.canta.util.CantaPreset): Boolean {
+    suspend fun savePreset(preset: CantaPresetData): Boolean {
         return try {
             context.presetDataStore.updateData { currentPresets ->
                 val protoPreset =
@@ -82,7 +85,7 @@ class PresetStore(private val context: Context) {
         }
     }
 
-    suspend fun deletePreset(preset: io.github.samolego.canta.util.CantaPreset): Boolean {
+    suspend fun deletePreset(preset: CantaPresetData): Boolean {
         return try {
             context.presetDataStore.updateData { currentPresets ->
                 currentPresets
@@ -105,8 +108,8 @@ class PresetStore(private val context: Context) {
     }
 
     suspend fun updatePreset(
-            oldPreset: io.github.samolego.canta.util.CantaPreset,
-            newPreset: io.github.samolego.canta.util.CantaPreset
+        oldPreset: CantaPresetData,
+        newPreset: CantaPresetData
     ): Boolean {
         return try {
             context.presetDataStore.updateData { currentPresets ->
@@ -138,14 +141,14 @@ class PresetStore(private val context: Context) {
     }
 
     suspend fun setPresetApps(
-            preset: io.github.samolego.canta.util.CantaPreset,
-            newApps: Set<String>
+        preset: CantaPresetData,
+        newApps: Set<String>
     ): Boolean {
         val updatedPreset = preset.copy(apps = newApps)
         return updatePreset(preset, updatedPreset)
     }
 
-    fun exportToJson(preset: io.github.samolego.canta.util.CantaPreset): String {
+    fun exportToJson(preset: CantaPresetData): String {
         // Keep the same JSON format for compatibility with import/export
         val jsonObject =
                 JSONObject().apply {
@@ -165,7 +168,7 @@ class PresetStore(private val context: Context) {
         return jsonObject.toString(2)
     }
 
-    fun importFromJson(jsonString: String): io.github.samolego.canta.util.CantaPreset? {
+    fun importFromJson(jsonString: String): CantaPresetData? {
         return try {
             val json = JSONObject(jsonString)
             val apps = mutableSetOf<String>()
@@ -176,7 +179,7 @@ class PresetStore(private val context: Context) {
                 apps.add(appJson.getString("packageName"))
             }
 
-            io.github.samolego.canta.util.CantaPreset(
+            CantaPresetData(
                     name = json.getString("name"),
                     description = json.getString("description"),
                     createdDate = json.getLong("createdDate"),
@@ -193,8 +196,8 @@ class PresetStore(private val context: Context) {
             apps: Set<String>,
             name: String,
             description: String
-    ): io.github.samolego.canta.util.CantaPreset {
-        return io.github.samolego.canta.util.CantaPreset(
+    ): CantaPresetData {
+        return CantaPresetData(
                 name = name,
                 description = description,
                 createdDate = System.currentTimeMillis(),

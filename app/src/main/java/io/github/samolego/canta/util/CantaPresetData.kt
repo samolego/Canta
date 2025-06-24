@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CantaPreset(
+data class CantaPresetData(
         val name: String,
         val description: String,
         val createdDate: Long,

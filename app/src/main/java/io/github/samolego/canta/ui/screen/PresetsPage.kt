@@ -59,14 +59,14 @@ import io.github.samolego.canta.ui.dialog.PresetCreateDialog
 import io.github.samolego.canta.ui.dialog.PresetEditDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
-import io.github.samolego.canta.util.CantaPreset
+import io.github.samolego.canta.util.CantaPresetData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresetsPage(
-        presetViewModel: PresetsViewModel,
-        onNavigateBack: (appliedPreset: CantaPreset?) -> Unit,
-        appListViewModel: AppListViewModel,
+    presetViewModel: PresetsViewModel,
+    onNavigateBack: (appliedPreset: CantaPresetData?) -> Unit,
+    appListViewModel: AppListViewModel,
 ) {
     val context = LocalContext.current
 
@@ -304,13 +304,13 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
 
 @Composable
 private fun PresetCard(
-        preset: CantaPreset,
-        onEdit: (CantaPreset) -> Unit,
-        onAddApps: (CantaPreset) -> Unit,
-        onExport: () -> Unit,
-        onDelete: () -> Unit,
-        onApply: () -> Unit,
-        formatDate: (Long) -> String
+    preset: CantaPresetData,
+    onEdit: (CantaPresetData) -> Unit,
+    onAddApps: (CantaPresetData) -> Unit,
+    onExport: () -> Unit,
+    onDelete: () -> Unit,
+    onApply: () -> Unit,
+    formatDate: (Long) -> String
 ) {
     Card(
             modifier = Modifier.fillMaxWidth(),

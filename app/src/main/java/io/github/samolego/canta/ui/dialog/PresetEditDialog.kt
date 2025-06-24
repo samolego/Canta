@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
-import io.github.samolego.canta.util.CantaPreset
+import io.github.samolego.canta.util.CantaPresetData
 
 @Composable
 private fun PresetDialog(
@@ -123,7 +123,7 @@ fun PresetCreateDialog(
 
 @Composable
 fun PresetEditDialog(
-    preset: CantaPreset,
+    preset: CantaPresetData,
     presetViewModel: PresetsViewModel,
     closeDialog: () -> Unit,
 ) {
