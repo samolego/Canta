@@ -21,7 +21,7 @@ fun IconClickButton(
         modifier = modifier.size((48 * scale).dp),
     ) {
         Icon(
-            modifier = modifier.size((24 * scale).dp).then(Modifier.size(48.dp)),
+            modifier = modifier.size((24 * scale).dp),
             imageVector = icon,
             contentDescription = contentDescription
         )
