@@ -1,7 +1,5 @@
 package io.github.samolego.canta.ui
 
-import android.content.Context
-import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -61,6 +59,7 @@ import io.github.samolego.canta.ui.component.CantaTopBar
 import io.github.samolego.canta.ui.component.fab.PresetEditFAB
 import io.github.samolego.canta.ui.dialog.ExplainBadgesDialog
 import io.github.samolego.canta.ui.dialog.NoWarrantyDialog
+import io.github.samolego.canta.ui.dialog.ShizukuRequirementDialog
 import io.github.samolego.canta.ui.dialog.UninstallAppsDialog
 import io.github.samolego.canta.ui.navigation.Screen
 import io.github.samolego.canta.ui.screen.LogsPage
@@ -70,16 +69,13 @@ import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.util.Filter
-import io.github.samolego.canta.util.ShizukuInfo
 import io.github.samolego.canta.util.ShizukuPermission
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 private const val secretTaps = 12
 
 @Composable
 fun CantaApp(
-    launchShizuku: () -> Unit,
     canResetAppToFactory: (String) -> Boolean,
     uninstallApp: (String, Boolean) -> Boolean,
     reinstallApp: (String) -> Boolean,
@@ -111,7 +107,6 @@ fun CantaApp(
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
             MainContent(
-                launchShizuku = launchShizuku,
                 canResetAppToFactory = canResetAppToFactory,
                 uninstallApp = uninstallApp,
                 reinstallApp = reinstallApp,
@@ -205,7 +200,6 @@ fun CantaApp(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MainContent(
-    launchShizuku: () -> Unit,
     canResetAppToFactory: (String) -> Boolean,
     uninstallApp: (String, Boolean) -> Boolean,
     reinstallApp: (String) -> Boolean,
@@ -311,57 +305,72 @@ private fun MainContent(
                                 return@FloatingActionButton
                             }
 
-                            // Show dialog before uninstalling if we are on the "instelled"
+                            val uninstallApps =
+                                {
+                                    val uninstall = { resetToFactory: Boolean ->
+                                        uninstallOrReinstall(
+                                            uninstallApp = uninstallApp,
+                                            reinstallApp = reinstallApp,
+                                            selectedAppsType =
+                                            selectedAppsType,
+                                            appListViewModel =
+                                            appListViewModel,
+                                            resetToFactory = resetToFactory
+                                        )
+                                    }
+
+                                    if (selectedAppsType == AppsType.INSTALLED &&
+                                        settingsViewModel.confirmBeforeUninstall
+                                    ) {
+                                        if (appListViewModel.selectedApps.isNotEmpty()) {
+                                            currentDialog = {
+                                                val canResetAny =
+                                                    appListViewModel.selectedApps.keys.any {
+                                                        canResetAppToFactory(it)
+                                                    }
+
+                                                UninstallAppsDialog(
+                                                    appCount =
+                                                    appListViewModel.selectedApps.size,
+                                                    canResetToFactory = canResetAny,
+                                                    onDismiss = {
+                                                        currentDialog = null
+                                                    },
+                                                    onAgree = { resetToFactory ->
+                                                        currentDialog = null
+                                                        uninstall(resetToFactory)
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    } else {
+                                        // Trigger uninstall
+                                        uninstall(false)
+                                    }
+
+                                }
+
+                            // Show dialog before uninstalling if we are on the "installed"
                             // tab
                             // However, do not show it if user has disabled the dialog in
                             // settings
                             // or if we are on the "uninstalled" tab
-                            if (selectedAppsType == AppsType.INSTALLED &&
-                                settingsViewModel.confirmBeforeUninstall
-                            ) {
-                                if (appListViewModel.selectedApps.isNotEmpty()) {
-                                    currentDialog = {
-                                        val canResetAny =
-                                            appListViewModel.selectedApps.keys.any {
-                                                canResetAppToFactory(it)
-                                            }
+                            if (!ShizukuPermission.isCantaAuthorized()) {
+                                currentDialog = {
+                                    ShizukuRequirementDialog(
+                                        shizukuStatus = ShizukuPermission.checkShizukuActive(context.packageManager),
+                                        onClose = { proceed ->
+                                            currentDialog = null
 
-                                        UninstallAppsDialog(
-                                            appCount =
-                                            appListViewModel.selectedApps.size,
-                                            canResetToFactory = canResetAny,
-                                            onDismiss = { currentDialog = null },
-                                            onAgree = { resetToFactory ->
-                                                currentDialog = null
-
-                                                uninstallOrReinstall(
-                                                    context = context,
-                                                    coroutineScope = coroutineScope,
-                                                    launchShizuku = launchShizuku,
-                                                    uninstallApp = uninstallApp,
-                                                    reinstallApp = reinstallApp,
-                                                    selectedAppsType =
-                                                    selectedAppsType,
-                                                    appListViewModel =
-                                                    appListViewModel,
-                                                    resetToFactory = resetToFactory
-                                                )
+                                            if (proceed) {
+                                                uninstallApps()
                                             }
-                                        )
-                                    }
+                                        }
+                                    )
                                 }
-                                return@FloatingActionButton
+                            } else {
+                                uninstallApps()
                             }
-                            // Trigger uninstall
-                            uninstallOrReinstall(
-                                context = context,
-                                coroutineScope = coroutineScope,
-                                launchShizuku = launchShizuku,
-                                uninstallApp = uninstallApp,
-                                reinstallApp = reinstallApp,
-                                selectedAppsType = selectedAppsType,
-                                appListViewModel = appListViewModel,
-                            )
                         },
                     ) {
                         when (selectedAppsType) {
@@ -442,79 +451,30 @@ private fun MainContent(
 }
 
 fun uninstallOrReinstall(
-    context: Context,
-    coroutineScope: CoroutineScope,
-    launchShizuku: () -> Unit,
     uninstallApp: (String, Boolean) -> Boolean,
     reinstallApp: (String) -> Boolean,
     selectedAppsType: AppsType,
     appListViewModel: AppListViewModel,
     resetToFactory: Boolean = false,
 ) {
-    coroutineScope.launch {
-        when (ShizukuPermission.checkShizukuActive(context.packageManager)) {
-            ShizukuInfo.NOT_INSTALLED -> {
-                Toast.makeText(
-                    context,
-                    context.getString(
-                        R.string.please_install_shizuku_and_authorise_canta
-                    ),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                return@launch
+    val appsToProcess = appListViewModel.selectedApps.keys.toList()
+    when (selectedAppsType) {
+        AppsType.INSTALLED -> {
+            appsToProcess.forEach { app ->
+                val uninstalled = uninstallApp(app, resetToFactory)
+                if (uninstalled) {
+                    appListViewModel.changeAppStatus(app)
+                    appListViewModel.selectedApps.remove(app)
+                }
             }
+        }
 
-            ShizukuInfo.NOT_ACTIVE -> {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.please_start_shizuku),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                launchShizuku()
-                return@launch
-            }
-
-            ShizukuInfo.ACTIVE -> {
-                // Check shizuku permission
-                ShizukuPermission.checkShizukuPermission { permResult ->
-                    val permission = permResult == PackageManager.PERMISSION_GRANTED
-
-                    if (!permission) {
-                        Toast.makeText(
-                            context,
-                            context.getString(
-                                R.string.please_allow_shizuku_access_for_canta
-                            ),
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                    } else {
-                        // Proceed with the action
-                        val appsToProcess = appListViewModel.selectedApps.keys.toList()
-                        when (selectedAppsType) {
-                            AppsType.INSTALLED -> {
-                               appsToProcess.forEach { app ->
-                                   val uninstalled = uninstallApp(app, resetToFactory)
-                                    if (uninstalled) {
-                                        appListViewModel.changeAppStatus(app)
-                                        appListViewModel.selectedApps.remove(app)
-                                    }
-                                }
-                            }
-
-                            AppsType.UNINSTALLED -> {
-                                appsToProcess.forEach { app ->
-                                    val installed = reinstallApp(app)
-                                    if (installed) {
-                                        appListViewModel.changeAppStatus(app)
-                                        appListViewModel.selectedApps.remove(app)
-                                    }
-                                }
-                            }
-                        }
-                    }
+        AppsType.UNINSTALLED -> {
+            appsToProcess.forEach { app ->
+                val installed = reinstallApp(app)
+                if (installed) {
+                    appListViewModel.changeAppStatus(app)
+                    appListViewModel.selectedApps.remove(app)
                 }
             }
         }

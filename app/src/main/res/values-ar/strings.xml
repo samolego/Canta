@@ -7,9 +7,6 @@
     <string name="no_description_available">لا توجد وصف متاح</string>
     <string name="uninstall">إلغاء التثبيت</string>
     <string name="reinstall">إعادة التثبيت</string>
-    <string name="please_start_shizuku">يرجى بدء Shizuku.</string>
-    <string name="please_install_shizuku_and_authorise_canta">يرجى تثبيت Shizuku ومنح الإذن لـCanta.</string>
-    <string name="please_allow_shizuku_access_for_canta">يرجى السماح لـShizuku بالوصول إلى Canta.</string>
     <string name="only_system">نظام فقط</string>
     <string name="no_apps_found">لم يتم العثور على تطبيقات</string>
     <string name="loading_apps">جارٍ تحميل التطبيقات</string>
@@ -88,4 +85,9 @@
     <string name="preset_save_error">Error saving preset</string>
     <string name="selected_apps">Selected apps</string>
     <string name="text">Text</string>
+    <string name="install_shizuku">Install Shizuku app</string>
+    <string name="start_shizuku_service">Start Shizuku service</string>
+    <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
+    <string name="shizuku_required">Shizuku Required</string>
+    <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
 </resources>

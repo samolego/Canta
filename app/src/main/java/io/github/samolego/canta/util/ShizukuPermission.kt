@@ -20,25 +20,14 @@ class ShizukuPermission {
         }
 
         /** Checks if the shizuku permission is granted. Call from main thread only! */
-        fun checkShizukuPermission(onPermissionResult: (Int) -> Unit) {
-            if (!binderStatus ||
-                            Shizuku.isPreV11() ||
-                            Shizuku.shouldShowRequestPermissionRationale()
-            ) {
-                val shouldShow =
-                        try {
-                            Shizuku.shouldShowRequestPermissionRationale()
-                        } catch (e: Exception) {
-                            LogUtils.e(TAG, "Error while checking shizuku permission", e)
-                            false
-                        }
+        fun requestShizukuPermission(onPermissionResult: (Int) -> Unit) {
+            if (!checkRequirements()) {
                 LogUtils.i(
                         TAG,
-                        "Shizuku permission result: ping: ${Shizuku.pingBinder()}, preV11: ${Shizuku.isPreV11()}, shouldShowRequestPermissionRationale: $shouldShow"
+                        "Shizuku permission result: ping: ${Shizuku.pingBinder()}, preV11: ${Shizuku.isPreV11()}"
                 )
                 onPermissionResult(PackageManager.PERMISSION_DENIED)
-            } else if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED || isSui
-            ) {
+            } else if (isPermissionGranted()) {
                 LogUtils.i(
                         TAG,
                         "Shizuku permission result: ${Shizuku.checkSelfPermission()}, sui status: $isSui"
@@ -55,25 +44,37 @@ class ShizukuPermission {
             }
         }
 
-        fun checkShizukuActive(packageManager: PackageManager): ShizukuInfo {
+        private fun checkRequirements(): Boolean {
+            return binderStatus && !Shizuku.isPreV11() && !Shizuku.shouldShowRequestPermissionRationale()
+        }
+
+        private fun isPermissionGranted(): Boolean {
+            return isSui || Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED
+        }
+
+        fun isCantaAuthorized(): Boolean {
+            return checkRequirements() && isPermissionGranted()
+        }
+
+        fun checkShizukuActive(packageManager: PackageManager): ShizukuStatus {
             if (isSui) {
-                return ShizukuInfo.ACTIVE
+                return ShizukuStatus.ACTIVE
             }
             try {
                 packageManager.getPackageInfo(SHIZUKU_PACKAGE_NAME, 0)
                 if (Shizuku.pingBinder() && !Shizuku.isPreV11()) {
-                    return ShizukuInfo.ACTIVE
+                    return ShizukuStatus.ACTIVE
                 }
-                return ShizukuInfo.NOT_ACTIVE
+                return ShizukuStatus.NOT_ACTIVE
             } catch (e: PackageManager.NameNotFoundException) {
-                return ShizukuInfo.NOT_INSTALLED
+                return ShizukuStatus.NOT_INSTALLED
             }
         }
     }
 }
 
 /** Enum class to represent Shizuku status. */
-enum class ShizukuInfo {
+enum class ShizukuStatus {
     ACTIVE,
     NOT_ACTIVE,
     NOT_INSTALLED,

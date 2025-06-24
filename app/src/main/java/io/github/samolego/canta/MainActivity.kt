@@ -42,14 +42,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     CantaApp(
-                        launchShizuku = {
-                            // Open shizuku app
-                            val launchIntent =
-                                packageManager.getLaunchIntentForPackage(
-                                    SHIZUKU_PACKAGE_NAME
-                                )
-                            startActivity(launchIntent)
-                        },
                         uninstallApp = { packageName, resetToFactory ->
                             uninstallApp(packageName, resetToFactory)
                         },

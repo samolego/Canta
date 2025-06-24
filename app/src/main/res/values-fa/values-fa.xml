@@ -8,9 +8,6 @@
     <string name="no_description_available">هیچ توضیحی در دسترس نیست</string>
     <string name="uninstall">حذف کردن</string>
     <string name="reinstall">دوباره نصب کردن</string>
-    <string name="please_start_shizuku">لطفا Shizuku را شروع کنید.</string>
-    <string name="please_install_shizuku_and_authorise_canta">لطفاً Shizuku را نصب کرده و کانتا را مجوز دهید.</string>
-    <string name="please_allow_shizuku_access_for_canta">لطفاً به شیزوکو دسترسی به کانتا اجازه دهید.</string>
     <string name="only_system">فقط سیستم</string>
     <string name="no_apps_found">هیچ برنامه ای پیدا نشده است</string>
     <string name="loading_apps">برنامه های بارگیری</string>
@@ -39,7 +36,7 @@
     <string name="proceed">ادامه دادن</string>
     <string name="confirm_uninstall_description">اینکه آیا می توان گفتگوی را برای تأیید عملکرد حذف نشان داد.</string>
     <string name="select_all">همه را انتخاب کنید</string>
-    <string name="select_all_tip">برای فعال کردن همه قابلیت ها ، به ٪ d بیشتر ضربه بزنید.</string>
+    <string name="select_all_tip">برای فعال کردن همه قابلیت ها ، به d% بیشتر ضربه بزنید.</string>
     <string name="select_all_enabled">انتخاب همه برای نوع فیلتر \ "توصیه شده" فعال شده است.</string>
     <string name="uninstall_options_title">گزینه های حذف را حذف کنید</string>
     <string name="uninstall_app">حذف برنامه</string>
