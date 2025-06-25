@@ -1,3 +1,6 @@
+<b>Warning</b> This is a deprecated version of Canta.
+Please install new one with package name with package name <a href="https://f-droid.org/packages/io.github.samolego.canta">io.github.samolego.canta</a>
+
 Canta allows you to uninstall <b>any(*)</b> app
 from your device, even if you don't have root access.
 

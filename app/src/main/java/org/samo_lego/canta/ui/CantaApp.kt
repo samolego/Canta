@@ -53,10 +53,12 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.samo_lego.canta.R
+import org.samo_lego.canta.extension.add
 import org.samo_lego.canta.packageName
 import org.samo_lego.canta.ui.component.AppIconImage
 import org.samo_lego.canta.ui.component.AppList
 import org.samo_lego.canta.ui.component.CantaTopBar
+import org.samo_lego.canta.ui.dialog.CantaMigrationDialog
 import org.samo_lego.canta.ui.dialog.ExplainBadgesDialog
 import org.samo_lego.canta.ui.dialog.NoWarrantyDialog
 import org.samo_lego.canta.ui.dialog.UninstallAppsDialog
@@ -65,7 +67,6 @@ import org.samo_lego.canta.ui.screen.LogsPage
 import org.samo_lego.canta.ui.screen.SettingsScreen
 import org.samo_lego.canta.ui.viewmodel.AppListViewModel
 import org.samo_lego.canta.ui.viewmodel.SettingsViewModel
-import org.samo_lego.canta.util.LogUtils
 import org.samo_lego.canta.util.Filter
 import org.samo_lego.canta.util.SettingsStore
 import org.samo_lego.canta.util.ShizukuData
@@ -171,6 +172,7 @@ private fun MainContent(
 
     var showBadgeInfoDialog by remember { mutableStateOf(false) }
     var showUninstallConfirmDialog by remember { mutableStateOf(false) }
+    var showMigration by remember { mutableStateOf(true) }
 
     val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
 
@@ -338,6 +340,27 @@ private fun MainContent(
                                 // Close the app
                                 closeApp()
                             }
+                    )
+                } else if (showMigration) {
+                    CantaMigrationDialog(
+                        onClose = {
+                            showMigration = false
+                        },
+                        uninstallCanta = {
+                            appListViewModel.selectedApps.clear()
+                            // Select Canta
+                            appListViewModel.selectedApps.add(packageName)
+
+                            uninstallOrReinstall(
+                                context = context,
+                                coroutineScope = coroutineScope,
+                                launchShizuku = launchShizuku,
+                                uninstallApp = uninstallApp,
+                                reinstallApp = reinstallApp,
+                                selectedAppsType = AppsType.INSTALLED,
+                                appListViewModel = appListViewModel,
+                            )
+                        }
                     )
                 }
                 AppList(
