@@ -22,8 +22,8 @@
         <item quantity="other">%d seçileni temizle</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">%d app selected</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="one">%d uygulaması seçildi</item>
+        <item quantity="other">%d adet uygulama seçildi</item>
     </plurals>
     <string name="copy">Kopyala</string>
     <string name="app_settings">Uygulama bilgileri</string>
@@ -48,7 +48,7 @@
     <string name="uninstall_options_title">Kaldırma Seçenekleri</string>
     <string name="uninstall_app">Uygulamayı kaldır</string>
     <string name="reset_to_factory_version">Fabrika sürümüne sıfırla</string>
-    <string name="import_preset">Import preset</string>
+    <string name="import_preset">Ön ayarı içe aktar</string>
     <string name="import_preset_description">Panodan bir ön ayarı içe aktarın veya doğrudan JSON metnini yapıştırın.</string>
     <string name="clipboard">Pano</string>
     <string name="import_preset_clipboard_description">Panodan ön ayarı içe aktarın. Geçerli bir Canta ön ayar JSON\'u kopyaladığınızdan emin olun.</string>
