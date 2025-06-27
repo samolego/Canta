@@ -6,7 +6,7 @@
     <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
     <string name="no_description_available">Apraksts nav pieejams</string>
     <string name="uninstall">Noņemt</string>
-    <string name="reinstall">ReInstall</string>
+    <string name="reinstall">Uzstādīt pa jaunu</string>
     <string name="only_system">Tikai sistēmas</string>
     <string name="no_apps_found">No apps found</string>
     <string name="loading_apps">Ielādē lietotnes</string>
