@@ -87,5 +87,5 @@
     <string name="start_shizuku_service">Palaist Shizuku pakalpojumu</string>
     <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Nepieciešams Shizuku</string>
-    <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
+    <string name="shizuku_requirement_description">Canta izmanto Shizuku, lai noņemtu lietotnes, bez root piekļuves tiesībām. Shizuku nodrošina piekļuvi sistēmas līmeņa SDK.</string>
 </resources>
