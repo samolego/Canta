@@ -18,9 +18,9 @@
     <string name="copy_logs">Copy logs</string>
     <string name="log_copied">Žurnāla notikums kopēts starpliktuvē</string>
     <plurals name="clear_selected_apps">
-        <item quantity="zero">Clear %d selected</item>
-        <item quantity="one">Clear %d selected</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="zero">Notīrīt %d atlasītās</item>
+        <item quantity="one">Notīrīt %d atlasīto</item>
+        <item quantity="other">Notīrīt %d atlasītās</item>
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="zero">Atlasītas %d lietotnes</item>
