@@ -38,7 +38,7 @@
     <string name="confirm_uninstall">Confirm uninstallations</string>
     <string name="app_version">Lietotnes versija: %s</string>
     <string name="bloatware_list_version">Jaunākais nevēlamo surogātlietotņu saraksts</string>
-    <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
+    <string name="no_warranty_content">Šī lietotne sniedz trešās puses ieteikumus, uz kā pamata noteikt lietotnes turpmāko likteni - noņemt vai atstāt. Šiem ieteikumiem ir informatīvs raksturs un tie negarantē drošību vai saderību ar jūsu konkrēto ierīci. Sistēmas lietotņu noņemšana var radīt neparedzamas problēmas, tostarp, bet ne tikai: funkcionalitātes zudumu, sistēmas nestabilitāti, ierīces ciklisku atsāknēšanos, datu zudumu utt. Lietotnes izstrādātājs nav atbildīgs par jebkādiem nodarītajiem zaudējumiem jūsu ierīcei, kas radušies, pamatojoties uz sniegtajiem ieteikumiem.</string>
     <string name="disclaimer">Disclaimer - No Warranty</string>
     <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
     <string name="never_show_again">Vairs nerādīt šo paziņojumu</string>
@@ -56,10 +56,10 @@
     <string name="import_preset_clipboard_description">Ievieto priekšiestatījumu no starpliktuves. Pārliecinieties, ka esiet nokopējuši derīgu Canta priekšiestatījumu JSON.</string>
     <string name="paste_preset_json">Ielīmēt priekšiestatījumu JSON</string>
     <string name="paste_preset_json_here">Ielīmēt JSON priekšiestatījumu šeit …</string>
-    <string name="enter_valid_json">Please enter valid JSON</string>
+    <string name="enter_valid_json">Lūdzu, ievadiet derīgu JSON</string>
     <string name="import_button">Ievietot</string>
     <string name="create_preset">Izveidot priekšiestatījumu</string>
-    <string name="create_preset_description">Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
+    <string name="create_preset_description">Izveido priekšiestatījumu no pašlaik noņemtajām lietotnēm. Tas ir saglabā noņemtās lietotnes sarakstā, kuru var koplietot un pielietot citās identiskās ierīcēs.</string>
     <string name="preset_name">Priekšiestatījuma nosaukums</string>
     <string name="preset_name_missing_error">Ir nepieciešams nosaukums</string>
     <string name="preset_name_placeholder">piemēram, Samsung nevēlamā surogātlietotne</string>
@@ -80,9 +80,9 @@
     <string name="share">Share</string>
     <string name="delete">Dzēst</string>
     <string name="apply_preset">Apply Preset</string>
-    <string name="preset_save_error">Error saving preset</string>
+    <string name="preset_save_error">Saglabājot priekšiestatījumu, radās kļūda</string>
     <string name="selected_apps">Selected apps</string>
-    <string name="text">Text</string>
+    <string name="text">Teksts</string>
     <string name="install_shizuku">Uzstādīt Shizuku lietotni</string>
     <string name="start_shizuku_service">Palaist Shizuku pakalpojumu</string>
     <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
