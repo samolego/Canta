@@ -31,7 +31,7 @@
     <string name="app_settings">Informācija par lietotni</string>
     <string name="close">Aizvērt</string>
     <string name="canta_description">Canta — atvērtā pirmkoda lietotne, kas izmanto Shizuku, lai noņemtu sistēmas un lietotāju lietotnes.\nĻauj attīrīt ierīci no nevēlamām surogātlietotnēm pēc saviem ieskatiem, neizmantojot datoru.\n\nĪpašs paldies %s.\nCanta būtu citādāka bez viņu devuma.</string>
-    <string name="search_apps">Meklēt lietotnes</string>
+    <string name="search_apps">Meklēt lietotni</string>
     <string name="auto_update_bloat_list">Automātiski atjaunināt nevēlamo surogātlietotņu sarakstu</string>
     <string name="auto_update_bloat_list_description">Automātiski iegūst jaunāko nevēlamo surogātlietotņu versijas informāciju. Nodrošina jaunākās nozīmītes un lietotņu aprakstus.</string>
     <string name="settings">Iestatījumi</string>
