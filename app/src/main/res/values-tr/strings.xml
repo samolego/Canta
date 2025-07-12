@@ -4,11 +4,11 @@
     <string name="ok">Tamam</string>
     <string name="are_you_sure_to_uninstall_apps">%1$s adet uygulamayı kaldırmak istediğinizden emin misiniz?</string>
     <string name="copy_package_name_to_clipboard">Uygulama paket adını panoya kopyala</string>
-    <string name="no_description_available">Açıklama bulunamadı</string>
+    <string name="no_description_available">Açıklama mevcut değil</string>
     <string name="uninstall">Kaldır</string>
     <string name="reinstall">Yeniden yükle</string>
     <string name="only_system">Sadece sistem</string>
-    <string name="no_apps_found">Uygulama bulunamadı</string>
+    <string name="no_apps_found">Hiç uygulama bulunamadı</string>
     <string name="loading_apps">Uygulamalar yükleniyor</string>
     <string name="badge_info">Rozet bilgisi</string>
     <string name="got_it">Anladım</string>
@@ -29,7 +29,7 @@
     <string name="app_settings">Uygulama bilgileri</string>
     <string name="close">Kapat</string>
     <string name="canta_description">Canta, sistem ve kullanıcı uygulamalarını kaldırmak için Shizuku kullanan açık kaynaklı bir kaldırıcı uygulamasıdır. PC gerektirmeden cihazınızı istediğiniz gibi debloat etmenizi sağlar.\n\n%s\'ye özel teşekkürler.\nCanta onların çalışmaları olmadan aynı olmazdı.</string>
-    <string name="search_apps">Uygulamala ara</string>
+    <string name="search_apps">Uygulamaları ara</string>
     <string name="auto_update_bloat_list">Bloat listesini otomatik güncelle</string>
     <string name="auto_update_bloat_list_description">Uygulama bloat bilgilerinin yeni sürümünü otomatik olarak getirin. Bu, güncel rozetleri ve uygulama açıklamalarını garanti eder.</string>
     <string name="settings">Ayarlar</string>
