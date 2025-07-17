@@ -82,12 +82,12 @@
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="apply_preset">Apply Preset</string>
-    <string name="preset_save_error">Error saving preset</string>
-    <string name="selected_apps">Selected apps</string>
+    <string name="preset_save_error">Chyba při ukládání předvolby</string>
+    <string name="selected_apps">Vybrané aplikace</string>
     <string name="text">Text</string>
-    <string name="install_shizuku">Install Shizuku app</string>
-    <string name="start_shizuku_service">Start Shizuku service</string>
-    <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
-    <string name="shizuku_required">Shizuku Required</string>
+    <string name="install_shizuku">Nainstaluj aplikaci Shizuku</string>
+    <string name="start_shizuku_service">Spusť službu Shizuku</string>
+    <string name="grant_shizuku_permission_to_canta">Uděl povolení Canta v Shizuku</string>
+    <string name="shizuku_required">Je vyžadováno Shizuku</string>
     <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
 </resources>
