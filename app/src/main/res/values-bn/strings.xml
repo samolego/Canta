@@ -25,9 +25,9 @@
         <item quantity="one">%d টি অ্যাপ সিলেক্টেড</item>
         <item quantity="other">%d টি অ্যাপ সিলেক্টেড</item>
     </plurals>
-    <string name="copy">কপি করুন</string>
+    <string name="copy">কপি</string>
     <string name="app_settings">অ্যাপ ইনফো</string>
-    <string name="close">বন্ধ করুন</string>
+    <string name="close">বন্ধ</string>
     <string name="canta_description">Canta একটি ওপেনসোর্স আনইনস্টলার অ্যাপ যা Shizuku অ্যাপ ব্যবহার করে সিস্টেম ও ইউজার অ্যাপ রিমুভ করে। এটি আপনার ডিভাইসকে আপনার ইচ্ছামতো ডিব্লোট করার সুযোগ দেয়। আর এতে পিসির প্রয়োজন হয় না। \n\n %s-কে বিশেষ ধন্যবাদ। \n তাদের অবদান ছাড়া Canta আগের মতো হতো না।</string>
     <string name="search_apps">অ্যাপ খুঁজুন</string>
     <string name="auto_update_bloat_list">ব্লোট লিস্ট অটো আপডেট</string>
@@ -56,7 +56,7 @@
     <string name="paste_preset_json_here">এখানে প্রিসেট JSON পেস্ট করুন</string>
     <string name="enter_valid_json">ভ্যালিড JSON দিন</string>
     <string name="import_button">ইমপোর্ট</string>
-    <string name="create_preset">প্রিসেট তৈরি</string>
+    <string name="create_preset">প্রিসেট বানান</string>
     <string name="create_preset_description">বর্তমানে আনইনস্টল করা অ্যাপগুলো থেকে একটি প্রিসেট তৈরি করুন। এটি এমন একটি অ্যাপের লিস্ট সেভ করবে যা শেয়ার এবং অন্যান্য ডিভাইসে অ্যপ্লাই করা যাবে।</string>
     <string name="preset_name">প্রিসেট নাম</string>
     <string name="preset_name_missing_error">নাম দিতেই হবে</string>
