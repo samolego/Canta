@@ -13,10 +13,10 @@
     <string name="badge_info">Informazioni badge</string>
     <string name="got_it">Ho capito</string>
     <string name="loading_badges">Caricamento badge ...</string>
-    <string name="logs">Logs</string>
+    <string name="logs">Log</string>
     <string name="back">Indietro</string>
-    <string name="copy_logs">Copy logs</string>
-    <string name="log_copied">Log copied to clipboard</string>
+    <string name="copy_logs">Copia i log</string>
+    <string name="log_copied">Log copiato negli appunti</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Cancella %d selezionato</item>
         <item quantity="other">Cancella %d selezionati</item>
