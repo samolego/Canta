@@ -23,9 +23,9 @@
         <item quantity="other">Ștergeți %d selectat</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">%d app selected</item>
-        <item quantity="few">%d apps selected</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="one">%d O aplicație selectată</item>
+        <item quantity="few">%d Câteva aplicații selectate</item>
+        <item quantity="other">%d Alte aplicații selectate</item>
     </plurals>
     <string name="copy">Copiați</string>
     <string name="app_settings">Informaţii despre aplicație</string>
@@ -47,10 +47,10 @@
     <string name="select_all">Selectați tot</string>
     <string name="select_all_tip">Apăsați %d de mai multe ori pentru a activa toate funcționalitățile.</string>
     <string name="select_all_enabled">Selectați tot ce a fost activat pentru tipul de filtru \"Recomandat\".</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
-    <string name="uninstall_app">Uninstall app</string>
-    <string name="reset_to_factory_version">Reset to factory version</string>
-    <string name="import_preset">Import preset</string>
+    <string name="uninstall_options_title">Opțiuni de dezinstalare</string>
+    <string name="uninstall_app">Dezinstalează aplicația</string>
+    <string name="reset_to_factory_version">Resetare la versiune din fabrică</string>
+    <string name="import_preset">Importează un preset</string>
     <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
     <string name="clipboard">Clipboard</string>
     <string name="import_preset_clipboard_description">Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
