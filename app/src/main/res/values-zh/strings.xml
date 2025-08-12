@@ -34,8 +34,8 @@
     <string name="confirm_uninstall">确认卸载</string>
     <string name="app_version">应用版本：%s</string>
     <string name="bloatware_list_version">最新应用列表</string>
-    <string name="no_warranty_content">此应用根据第三方来源提供应用卸载的相关建议，所以不会保证与您的特定设备的安全性或兼容性。卸载系统应用可能导致意外问题，包括但不限于：功能缺失、系统不稳定、设备无限重启、数据丢失等。此应用的开发者不会对因听从第三方提供的建议而导致的任何设备损坏负责。</string>
-    <string name="disclaimer">免责声明 - 无担保</string>
+    <string name="no_warranty_content">此应用根据第三方来源提供应用卸载的相关建议，所以不会保证与您的特定设备的安全性或兼容性。卸载系统应用可能导致意外问题，包括但不限于：功能缺失、系统不稳定、设备无限重启、数据丢失等。此应用的开发者不会对因听从第三方提供的建议而导致的任何设备损坏负任何责任。</string>
+    <string name="disclaimer">免责声明 - 无保障</string>
     <string name="proceed_at_own_risk">点击“继续”，即表示您同意自行承担使用此应用程序的风险。</string>
     <string name="never_show_again">不再提示此信息</string>
     <string name="proceed">继续</string>
@@ -83,5 +83,5 @@
     <string name="start_shizuku_service">激活 Shizuku 服务</string>
     <string name="grant_shizuku_permission_to_canta">在 Shizuku 应用中向 Canta 授予权限</string>
     <string name="shizuku_required">需要 Shizuku</string>
-    <string name="shizuku_requirement_description">Canta 使用 Shizuku 卸载应用程序，而无需 root 权限。因为 Shizuku 提供了一种访问系统级 SDK 的安全方法。</string>
+    <string name="shizuku_requirement_description">Canta 使用 Shizuku 来卸载应用而不需要 root 权限。Shizuku 提供了访问系统级SDK的安全途径。</string>
 </resources>
