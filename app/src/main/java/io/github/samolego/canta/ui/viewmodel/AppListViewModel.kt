@@ -88,21 +88,37 @@ class AppListViewModel : ViewModel() {
             val settingsStore = SettingsStore(context)
             val autoUpdate = settingsStore.autoUpdateBloatListFlow.first()
 
-            val uadLists =
+            val uadLists: JSONObject = try {
                 if (!uadList.exists() || (bloatFetcher.checkForUpdates(settingsStore.getLatestCommitHash()) && autoUpdate)) {
                     uadList.createNewFile()
-
                     val (json, hash) = bloatFetcher.fetchBloatList(uadList)
-
                     // Write the hash to settings
-                    settingsStore.setLatestCommitHash(hash)
-
+                    if (json.length() > 0 && hash.isNotEmpty()) {
+                        // in the case of exception the fetchBloatList stills -
+                        // returns the *empty json and empty hash
+                        // it should only store the hash when that's not empty.
+                        settingsStore.setLatestCommitHash(hash)
+                    }
                     json
-
                 } else {
                     // Just read the file
-                    JSONObject(uadList.readText())
+                    val fileContent = uadList.readText()
+                    if (fileContent.isBlank()) {
+                        LogUtils.e(TAG, "Local uad_lists.json is blank. Retrying fetch.")
+                        val (json, hash) = bloatFetcher.fetchBloatList(uadList) // Retry fetch
+                        if (json.length() > 0 && hash.isNotEmpty()) {
+                            settingsStore.setLatestCommitHash(hash)
+                        }
+                        json
+                    } else {
+                        // reading the file
+                        JSONObject(fileContent)
+                    }
                 }
+            } catch (e: Exception) {
+                LogUtils.e(TAG, "Exception while reading uad_lists.json .", e)
+                JSONObject()
+            }
 
             // Parse json to map
             val bloatMap = mutableMapOf<String, BloatData>()
