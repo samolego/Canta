@@ -37,6 +37,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
@@ -44,6 +45,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -68,6 +70,7 @@ import io.github.samolego.canta.ui.screen.SettingsScreen
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
+import io.github.samolego.canta.ui.viewmodel.SettingsViewModelFactory
 import io.github.samolego.canta.util.Filter
 import io.github.samolego.canta.util.ShizukuPermission
 import kotlinx.coroutines.launch
@@ -85,24 +88,11 @@ fun CantaApp(
     val context = LocalContext.current
 
     val appListViewModel = viewModel<AppListViewModel>()
-    val settingsViewModel = viewModel<SettingsViewModel>()
+    val settingsViewModel: SettingsViewModel = viewModel(factory = SettingsViewModelFactory())
     val presetViewModel = viewModel<PresetsViewModel>()
-    val settingsStore = remember { SettingsStore(context) }
-    val showDisclaimerWarning = remember { mutableStateOf(false) }
     var versionTapCounter by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
 
-    // Load settings when app starts and update the disclaimer warning state
-    LaunchedEffect(Unit) {
-        // First load settings
-        settingsViewModel.loadSettings(settingsStore)
-
-        // Create a collector for the disableRiskDialog flow
-        settingsStore.disableRiskDialogFlow.collect { disableRiskDialog ->
-            // Update the warning state based on the loaded setting
-            showDisclaimerWarning.value = !disableRiskDialog
-        }
-    }
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
@@ -112,8 +102,6 @@ fun CantaApp(
                 reinstallApp = reinstallApp,
                 navigateToPage = { navController.navigate(it) },
                 closeApp = closeApp,
-                settingsStore = settingsStore,
-                showWarning = showDisclaimerWarning,
                 presetEditMode = presetViewModel.editingPreset != null,
                 onPresetEditFinish = {
                     // Save all the selected apps to the preset
@@ -149,8 +137,6 @@ fun CantaApp(
         composable(route = Screen.Settings.route) {
             SettingsScreen(
                 onNavigateBack = {
-                    // Save settings when navigating back
-                    settingsViewModel.saveSettings(settingsStore)
                     navController.navigateUp()
                 },
                 settingsViewModel = settingsViewModel,
@@ -206,8 +192,6 @@ private fun MainContent(
     onPresetEditFinish: () -> Unit,
     navigateToPage: (route: String) -> Unit,
     closeApp: () -> Unit,
-    settingsStore: SettingsStore,
-    showWarning: MutableState<Boolean>,
     enableSelectAll: Boolean,
     presetEditMode: Boolean,
     appListViewModel: AppListViewModel,
@@ -220,26 +204,20 @@ private fun MainContent(
     // Selected tab
     var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
 
+    val disableRiskDialog by settingsViewModel.disableRiskDialog.collectAsStateWithLifecycle()
+
     // Current active dialog
     var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
 
-    if (showWarning.value) {
-        currentDialog = {
-            NoWarrantyDialog(
-                onProceed = { neverShowAgain ->
-                    showWarning.value = false
-                    currentDialog = null
-                    if (neverShowAgain) {
-                        settingsViewModel.disableRiskDialog = true
-                        settingsViewModel.saveDisableRiskDialog(settingsStore)
-                    }
-                },
-                onCancel = {
-                    // Close the app
-                    closeApp()
-                }
-            )
-        }
+    if (!disableRiskDialog) {
+        NoWarrantyDialog(
+            onProceed = { neverShowAgain ->
+                settingsViewModel.saveDisableRiskDialog(neverShowAgain)
+            },
+            onCancel = {
+                closeApp()
+            }
+        )
     }
 
     val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
@@ -253,17 +231,21 @@ private fun MainContent(
 
     val cantaIcon = remember(context) { context.packageManager.getApplicationIcon(packageName) }
 
+    var showExplainBadgeDialog by rememberSaveable { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             CantaTopBar(
                 openBadgesInfoDialog = {
-                    currentDialog = {
-                        ExplainBadgesDialog(onDismissRequest = { currentDialog = null })
-                    }
+                    showExplainBadgeDialog = true
                 },
                 navigateToPage = navigateToPage,
                 appListViewModel = appListViewModel,
             )
+
+            if (showExplainBadgeDialog) {
+                ExplainBadgesDialog(onDismissRequest = { showExplainBadgeDialog = false })
+            }
         },
         floatingActionButton = {
             AnimatedVisibility(
@@ -319,10 +301,14 @@ private fun MainContent(
                                         )
                                     }
 
+                                    // Show confirmation dialog.
                                     if (selectedAppsType == AppsType.INSTALLED &&
-                                        settingsViewModel.confirmBeforeUninstall
+                                        settingsViewModel.confirmBeforeUninstall.value
                                     ) {
                                         if (appListViewModel.selectedApps.isNotEmpty()) {
+                                            // TO-Do Consider refactoring dialog management. This `currentDialog`
+                                            // currentDialog(@Composable) could potentially be replaced by a simpler state
+                                            // Haven't touched it as for now due to its role in core uninstall flow.
                                             currentDialog = {
                                                 val canResetAny =
                                                     appListViewModel.selectedApps.keys.any {

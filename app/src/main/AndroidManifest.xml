@@ -34,6 +34,7 @@
         android:supportsRtl="true"
         android:localeConfig="@xml/locales_config"
         android:theme="@style/Theme.Canta"
+        android:name=".CantaApplication"
         tools:targetApi="35">
         <activity
             android:name=".MainActivity"
