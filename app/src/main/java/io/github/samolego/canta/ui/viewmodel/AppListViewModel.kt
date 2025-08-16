@@ -85,7 +85,10 @@ class AppListViewModel : ViewModel() {
             val bloatFetcher = BloatUtils()
 
             // Get the auto-update preference
-            val settingsStore = SettingsStore(context)
+            // ideally it should be injected using DI but for now here SettingsStore.getInstance() is used as it provides the singleton instance of SettingsStore
+            // earlier it was creating a new instance of SettingsStore every time loadInstalled was called
+            // which is a bad practice as there should only be one instance of the preferences in app
+            val settingsStore = SettingsStore.getInstance()
             val autoUpdate = settingsStore.autoUpdateBloatListFlow.first()
 
             val uadLists: JSONObject = try {

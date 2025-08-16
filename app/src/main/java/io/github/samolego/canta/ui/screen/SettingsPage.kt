@@ -24,6 +24,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.samolego.canta.BuildConfig
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.component.IconClickButton
@@ -49,15 +51,16 @@ fun SettingsScreen(
     onVersionTap: () -> Unit,
 ) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-    val settingsStore = remember { SettingsStore(context) }
+    val autoUpdateBloatList by settingsViewModel.autoUpdateBloatList.collectAsStateWithLifecycle()
+    val confirmBeforeUninstall by settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
+    //val latestCommitHash by settingsViewModel.latestCommitHash.collectAsStateWithLifecycle()
 
-    var latestCommitHash = remember { mutableStateOf("") }
-
-    // Fetch the latest commit hash
-    LaunchedEffect(Unit) {
-        latestCommitHash.value = settingsStore.getLatestCommitHash()
-    }
+    // Haven't saw any use of LaunchEffect & latestCommitHash here in this Screen so they are commented.
+    // so please check
+//    // Fetch the latest commit hash
+//    LaunchedEffect(Unit) {
+//        latestCommitHash.value = settingsStore.getLatestCommitHash()
+//    }
 
     Scaffold(
         topBar = {
@@ -88,12 +91,9 @@ fun SettingsScreen(
                 description = stringResource(R.string.auto_update_bloat_list_description),
                 icon = Icons.Default.Update,
                 isSwitch = true,
-                checked = settingsViewModel.autoUpdateBloatList,
+                checked = autoUpdateBloatList,
                 onCheckedChange = {
-                    settingsViewModel.autoUpdateBloatList = it
-                    coroutineScope.launch {
-                        settingsViewModel.saveAutoUpdateBloatList(settingsStore)
-                    }
+                    settingsViewModel.saveAutoUpdateBloatList(it)
                 }
             )
 
@@ -103,12 +103,9 @@ fun SettingsScreen(
                 description = stringResource(R.string.confirm_uninstall_description),
                 icon = Icons.Default.Delete,
                 isSwitch = true,
-                checked = settingsViewModel.confirmBeforeUninstall,
+                checked = confirmBeforeUninstall,
                 onCheckedChange = {
-                    settingsViewModel.confirmBeforeUninstall = it
-                    coroutineScope.launch {
-                        settingsViewModel.saveConfirmBeforeUninstall(settingsStore)
-                    }
+                    settingsViewModel.saveConfirmBeforeUninstall(it)
                 }
             )
 
