@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Cancelar</string>
-    <string name="ok">OK</string>
+    <string name="ok">Entendido</string>
     <string name="are_you_sure_to_uninstall_apps">¿Estás seguro que quieres desinstalar el %1$s programa?</string>
     <string name="copy_package_name_to_clipboard">Copiar el nombre del paquete al portapapeles</string>
     <string name="no_description_available">Sin descripción</string>
     <string name="uninstall">Desinstalar</string>
     <string name="reinstall">Reinstalar</string>
     <string name="only_system">Solo al sistema</string>
-    <string name="no_apps_found">No se han encontrado aplicaciones</string>
+    <string name="no_apps_found">No se encontraron aplicaciones</string>
     <string name="loading_apps">Cargando las aplicaciones</string>
     <string name="badge_info">Información del distintivo</string>
     <string name="got_it">Entendido</string>
@@ -33,7 +33,7 @@
     <string name="auto_update_bloat_list">Actualizar automáticamente las aplicaciones no deseadas</string>
     <string name="auto_update_bloat_list_description">Recibir automáticamente una nueva versión de la lista de aplicaciones. Esto garantiza que los iconos y las descripciones de las aplicaciones estén actualizados.</string>
     <string name="settings">Ajustes</string>
-    <string name="confirm_uninstall">Confirme las desinstalaciones</string>
+    <string name="confirm_uninstall">Confirma las desinstalaciones</string>
     <string name="app_version">Versión de la aplicación: %s</string>
     <string name="bloatware_list_version">Lista de programas no deseados más recientes</string>
     <string name="no_warranty_content">Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con su dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicio del dispositivo de forma continua, pérdida de datos, etc. El desarrollador de esta aplicación no es responsable de ningún daño causado a su dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
@@ -48,21 +48,21 @@
     <string name="uninstall_options_title">Opciones de desinstalación</string>
     <string name="uninstall_app">Desinstalar la aplicación</string>
     <string name="reset_to_factory_version">Reiniciar a la versión de fábrica</string>
-    <string name="import_preset">Importar ajustes preestablecidos</string>
-    <string name="import_preset_description">Importar los ajustes preestablecidos desde el portapapeles o inserte un JSON directamente.</string>
+    <string name="import_preset">Importar los ajustes preestablecidos</string>
+    <string name="import_preset_description">Importar los ajustes preestablecidos desde el portapapeles o inserta un archivo JSON directamente.</string>
     <string name="clipboard">Portapapeles</string>
-    <string name="import_preset_clipboard_description">Importar ajustes preestablecidos desde el portapapeles. Asegúrese de que ha copiado un JSON válido para Canta.</string>
-    <string name="paste_preset_json">Pegar JSON predeterminado</string>
-    <string name="paste_preset_json_here">Pegue los ajustes preestablecidos JSON aquí ...</string>
-    <string name="enter_valid_json">Por favor, introduzca un JSON válido</string>
+    <string name="import_preset_clipboard_description">Importar ajustes preestablecidos desde el portapapeles. Asegúrate de que has copiado un archivo JSON válido para Canta.</string>
+    <string name="paste_preset_json">Pegar un archivo JSON predeterminado</string>
+    <string name="paste_preset_json_here">Pega los ajustes preestablecidos del archivo JSON aquí ...</string>
+    <string name="enter_valid_json">Por favor, introduce un archivo JSON válido</string>
     <string name="import_button">Importar</string>
-    <string name="create_preset">Crear ajustes preestablecidos</string>
-    <string name="create_preset_description">Cree un preajuste a partir de las aplicaciones actualmente desinstaladas. Esto guardará una lista de aplicaciones que se pueden compartir y aplicar en otros dispositivos.</string>
-    <string name="preset_name">Nombre del preajuste</string>
-    <string name="preset_name_missing_error">Se requiere el nombre</string>
+    <string name="create_preset">Crear los ajustes preestablecidos</string>
+    <string name="create_preset_description">Crea un ajuste preestablecido a partir de las aplicaciones actualmente desinstaladas. Esto guardará una lista de aplicaciones que se pueden compartir y aplicar en otros dispositivos.</string>
+    <string name="preset_name">Nombre del ajuste preestablecido</string>
+    <string name="preset_name_missing_error">Es necesario un nombre</string>
     <string name="preset_name_placeholder">Por ejemplo, Samsung Bloatware</string>
     <string name="optional_description">Descripción (opcional)</string>
-    <string name="preset_description_placeholder">Describa lo que elimina estos ajustes preestablecidos...</string>
+    <string name="preset_description_placeholder">Describe lo que elimina estos ajustes preestablecidos...</string>
     <string name="save">Guardar</string>
     <string name="import_preset_clipboard">Importar desde el portapapeles</string>
     <string name="presets">Ajustes preestablecidos</string>
@@ -83,7 +83,7 @@
     <string name="text">Texto</string>
     <string name="install_shizuku">Instalar la aplicación Shizuku</string>
     <string name="start_shizuku_service">Iniciar el servicio Shizuku</string>
-    <string name="grant_shizuku_permission_to_canta">Conceder permiso a Canta en Shizuku</string>
-    <string name="shizuku_required">Shizuku requerido</string>
+    <string name="grant_shizuku_permission_to_canta">Conceder el permiso a Canta en Shizuku</string>
+    <string name="shizuku_required">Se requiere Shizuku</string>
     <string name="shizuku_requirement_description">Canta utiliza Shizuku para desinstalar aplicaciones sin necesidad de acceso root. Shizuku proporciona una forma segura de acceder a los SDK de nivel de sistema.</string>
 </resources>
