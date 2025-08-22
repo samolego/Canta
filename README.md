@@ -24,9 +24,9 @@ Wanna try get Canta to Google play? DONE ✅
 
 ### Verification
 You can verify the authenticity of downloaded APKs using this SHA-256 certificate fingerprint:
-```
+`
 0A:26:40:31:7C:43:27:21:88:C3:E1:31:94:C1:54:60:69:1F:12:C3:9E:A1:9B:BA:72:7D:D6:7F:B5:62:89:D4
-```
+`
 
 ## Info
 
