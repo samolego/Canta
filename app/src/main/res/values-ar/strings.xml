@@ -26,7 +26,11 @@
         <item quantity="other">تنظيف %d المحدد</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="zero">تم تحديد %d تطبيق</item>
+        <item quantity="zero">واحد
+%d تطبيق محدد
+
+اخرى
+%d تطبيقات محدده</item>
         <item quantity="one">تم تحديد %d تطبيق</item>
         <item quantity="two">تم تحديد %d تطبيق</item>
         <item quantity="few">%d apps selected</item>
