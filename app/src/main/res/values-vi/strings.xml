@@ -45,7 +45,7 @@
     <string name="select_all_enabled">Đã bật tùy chọn Chọn tất cả cho loại bộ lọc \"Đề xuất\".</string>
     <string name="uninstall_options_title">Tùy chọn gỡ cài đặt</string>
     <string name="uninstall_app">Gỡ cài đặt ứng dụng</string>
-    <string name="reset_to_factory_version">Gỡ cài đặt ứng dụng</string>
+    <string name="reset_to_factory_version">Gỡ cài đặt cập nhật</string>
     <string name="import_preset">Nhập cài đặt trước</string>
     <string name="import_preset_description">Nhập cài đặt trước từ bảng tạm hoặc dán trực tiếp văn bản JSON.</string>
     <string name="clipboard">Bảng tạm</string>
