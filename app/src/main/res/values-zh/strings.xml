@@ -42,7 +42,7 @@
     <string name="confirm_uninstall_description">是否顯示確認解除安裝的對話框。</string>
     <string name="select_all">全選</string>
     <string name="select_all_tip">點選 %d 更多次即可啟用全選功能。</string>
-    <string name="select_all_enabled">已啟用全選，過濾類型\"推薦\"。</string>
+    <string name="select_all_enabled">已啟用全選，過濾類型「推薦」。</string>
     <string name="uninstall_options_title">卸載選項</string>
     <string name="uninstall_app">卸載應用程式</string>
     <string name="reset_to_factory_version">重置應用程式為出廠版本</string>
