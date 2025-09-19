@@ -1,13 +1,11 @@
+<div align="center">
+
 # Canta
 
 [![](https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)](https://samolego.github.io/Canta/)
 
 Uninstall any\* app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/).
-
-
-> [!warning]
-> **DISCLAIMER**: Use at your own risk. I'm not responsible for any data loss or damage caused by this app.
 
 ## Download
 
@@ -18,25 +16,44 @@ Powered by [Shizuku](https://shizuku.rikka.app/).
   <img src="https://github.com/user-attachments/assets/b9628c34-797c-4760-94bb-57712fdef178" height="32" />
 </a>
 
-Wanna try get Canta to Google play? DONE ✅
-~~[Donate to purchase developer license](https://www.paypal.com/donate/?hosted_button_id=FD4R46ZZ5EWME), waiting for Google Play approval.~~
-~~Please help Canta get to Google Play by [becoming a tester](https://play.google.com/apps/testing/io.github.samolego.canta).~~
+
+[![GitHub all releases](https://img.shields.io/github/downloads/samolego/Canta/total?label=Downloads&logo=github)](https://github.com/samolego/Canta/releases/)
+[<img src="https://shields.rbtlog.dev/simple/io.github.samolego.canta" alt="badge">](https://shields.rbtlog.dev/io.github.samolego.canta)
+[![donate badge](https://img.shields.io/badge/Donate_via-Paypal-blue)](https://www.paypal.com/donate/?hosted_button_id=FD4R46ZZ5EWME)
+---
+
+</div>
+
+> [!Warning]
+> **DISCLAIMER:** ⛔ Use at your own risk. I am not responsible for any data loss or damage caused by this app ⛔.
+
+---
+
+## 📖 About
+
+Canta allows you to **uninstall pre-installed or user apps without root**, by leveraging [Shizuku](https://shizuku.rikka.app/).  
+It integrates with the [Universal Debloat List](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/) to provide safe recommendations.
+
+- ✅ No root required  
+- ✅ Detects previously uninstalled apps (even across reinstalls)  
+- ✅ Works on Android **9.0+ (SDK 28+)**
+- ⚠️ No *permanent* bricking (If you uninstall **critical apps**, you can experience bootloop and have to **factory reset**!)
+---
+
+## Screenshots
+
+| <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-main.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-search.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstall-dialog.png"> |
+|:---:|:---:|:---:|
+| Home | Search | Uninstall |
+| <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-app-description.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstalled-list.png"> |  |
+| [App descriptions](https://github.com/Universal-Debloater-Alliance/universal-android-preinstalled-lists/) | See uninstalled |  |
+
 
 ### Verification
 You can verify the authenticity of downloaded APKs using this SHA-256 certificate fingerprint:
-`
+```
 0A:26:40:31:7C:43:27:21:88:C3:E1:31:94:C1:54:60:69:1F:12:C3:9E:A1:9B:BA:72:7D:D6:7F:B5:62:89:D4
-`
-
-## Info
-
-Uses [universal debloat list](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/)
-for badges.
-Please read the guide
-on [how recommendations are chosen](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/wiki/FAQ#how-are-the-recommendations-chosen)
-.
-
-**Note**: Supports only Android >= 9.0 (SDK >= 28).
+```
 
 ## How-to
 
@@ -47,13 +64,6 @@ on [how recommendations are chosen](https://github.com/Universal-Debloater-Allia
 * install Canta
 * select an app and click the trash button
 
-## Features
-
-* no bricking - though if you remove essential
-  app and get stuck in a bootloop after reboot - you will still need to do factory reset!
-* auto detect previously uninstalled apps
-  if you've already removed any using adb
-    * uninstalled apps are found even if you uninstall and reinstall Canta!  
 
 ## Translations
 
@@ -65,15 +75,6 @@ Do you want to help translate Canta? You can help us at [Crowdin](https://crowdi
 </picture>
 
 https://crowdin.com/project/canta
-
-
-## Screenshots
-
-| <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-main.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-search.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstall-dialog.png"> |
-|:---:|:---:|:---:|
-| Home | Search | Uninstall |
-| <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-app-description.png"> | <img width="256" src="metadata/en-US/images/phoneScreenshots/screenshot-uninstalled-list.png"> |  |
-| [App descriptions](https://github.com/Universal-Debloater-Alliance/universal-android-preinstalled-lists/) | See uninstalled |  |
 
 ## Thanks
 
