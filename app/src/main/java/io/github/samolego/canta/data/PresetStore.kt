@@ -8,6 +8,7 @@ import androidx.datastore.dataStore
 import com.google.protobuf.InvalidProtocolBufferException
 import io.github.samolego.canta.data.proto.CantaPreset
 import io.github.samolego.canta.data.proto.PresetsList
+import io.github.samolego.canta.extension.getInfoForPackage
 import io.github.samolego.canta.util.CantaPresetData
 import io.github.samolego.canta.util.LogUtils
 import kotlinx.coroutines.flow.Flow
@@ -176,7 +177,11 @@ class PresetStore(private val context: Context) {
 
             for (i in 0 until appsArray.length()) {
                 val appJson = appsArray.getJSONObject(i)
-                apps.add(appJson.getString("packageName"))
+                val packageName = appJson.getString("packageName")
+
+                // Check if package exists on this device
+                context.packageManager.getInfoForPackage(packageName) ?: continue
+                apps.add(packageName)
             }
 
             CantaPresetData(
