@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                             checkIfCanResetToFactory(packageName)
                         },
                         reinstallApp = { reinstallApp(it) },
-                        closeApp =  { finishAndRemoveTask() },
+                        closeApp = { finishAndRemoveTask() },
                     )
                 }
             }
@@ -62,16 +62,10 @@ class MainActivity : ComponentActivity() {
      * @return true if the app is a system app with updates
      */
     private fun checkIfCanResetToFactory(packageName: String): Boolean {
-        return try {
-            val packageInfo = packageManager.getInfoForPackage(packageName)
-            val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-            val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
-
-            isSystem && hasUpdates
-        } catch (e: Exception) {
-            LogUtils.e(APP_NAME, "Failed to check if app can be reset to factory: ${e.message}")
-            false
-        }
+        val appInfo = packageManager.getInfoForPackage(packageName)?.applicationInfo ?: return false
+        val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+        val hasUpdates = (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+        return isSystem && hasUpdates
     }
 
     /**
@@ -80,14 +74,16 @@ class MainActivity : ComponentActivity() {
      * @param resetToFactory whether to reset system app to factory version before uninstall
      */
     private fun uninstallApp(packageName: String, resetToFactory: Boolean = false): Boolean {
-        val packageInfo = packageManager.getInfoForPackage(packageName)
+        val packageInfo = packageManager.getInfoForPackage(packageName) ?: return false
         val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-        val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+        val hasUpdates =
+            (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
 
         val shouldReset = resetToFactory && isSystem && hasUpdates
-        // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
-        // 0x00000002 = PackageManager.DELETE_ALL_USERS
-        LogUtils.i(APP_NAME, "Uninstalling '$packageName' [system: $isSystem, hasUpdates: $hasUpdates, resetFirst: $shouldReset]")
+        LogUtils.i(
+            APP_NAME,
+            "Uninstalling '$packageName' [system: $isSystem, hasUpdates: $hasUpdates, resetFirst: $shouldReset]"
+        )
         val broadcastIntent = Intent("io.github.samolego.canta.UNINSTALL_RESULT_ACTION")
         val intent = PendingIntent.getBroadcast(
             applicationContext,
@@ -96,11 +92,17 @@ class MainActivity : ComponentActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val packageInstaller = getPackageInstaller()
+
+        // 0x00000004 = PackageManager.DELETE_SYSTEM_APP
+        // 0x00000002 = PackageManager.DELETE_ALL_USERS
         val flags = if (isSystem) 0x00000004 else 0x00000002
 
         if (shouldReset) {
             try {
-                LogUtils.i(APP_NAME, "Attempting to reset system app '$packageName' before uninstalling")
+                LogUtils.i(
+                    APP_NAME,
+                    "Attempting to reset system app '$packageName' before uninstalling"
+                )
 
 
                 HiddenApiBypass.invoke(
@@ -115,8 +117,10 @@ class MainActivity : ComponentActivity() {
                 LogUtils.i(APP_NAME, "Successfully reset system app '$packageName'")
 
                 try {
-                    val updatedPackageInfo = packageManager.getInfoForPackage(packageName)
-                    val stillHasUpdates = (updatedPackageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+                    val updatedPackageInfo =
+                        packageManager.getInfoForPackage(packageName) ?: return false
+                    val stillHasUpdates =
+                        (updatedPackageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
                     LogUtils.i(APP_NAME, "After reset: Package still has updates: $stillHasUpdates")
                 } catch (e: Exception) {
                     LogUtils.e(APP_NAME, "Failed to check update status after reset: ${e.message}")

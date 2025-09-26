@@ -2,8 +2,10 @@ package io.github.samolego.canta.extension
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import io.github.samolego.canta.util.AppInfo
+import io.github.samolego.canta.util.LogUtils
 
 
 private fun PackageManager.getUninstalledPackages(installedPackages: List<PackageInfo>): List<PackageInfo> {
@@ -49,16 +51,21 @@ private fun PackageManager.getPackages(flags: Int): List<PackageInfo> {
 
 fun PackageManager.getInfoForPackage(
     packageName: String,
-): PackageInfo {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        this.getPackageInfo(
-            packageName,
-            PackageManager.PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
-        )
-    } else {
-        this.getPackageInfo(
-            packageName,
-            PackageManager.GET_META_DATA
-        )
+): PackageInfo? {
+    return try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            this.getPackageInfo(
+                packageName,
+                PackageManager.PackageInfoFlags.of(PackageManager.GET_META_DATA.toLong())
+            )
+        } else {
+            this.getPackageInfo(
+                packageName,
+                PackageManager.GET_META_DATA
+            )
+        }
+    } catch (e: NameNotFoundException) {
+        LogUtils.e("PackageManagerExt", "Failed to get package info", e)
+        null
     }
 }

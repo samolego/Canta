@@ -53,14 +53,6 @@ fun SettingsScreen(
     val context = LocalContext.current
     val autoUpdateBloatList by settingsViewModel.autoUpdateBloatList.collectAsStateWithLifecycle()
     val confirmBeforeUninstall by settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
-    //val latestCommitHash by settingsViewModel.latestCommitHash.collectAsStateWithLifecycle()
-
-    // Haven't saw any use of LaunchEffect & latestCommitHash here in this Screen so they are commented.
-    // so please check
-//    // Fetch the latest commit hash
-//    LaunchedEffect(Unit) {
-//        latestCommitHash.value = settingsStore.getLatestCommitHash()
-//    }
 
     Scaffold(
         topBar = {
