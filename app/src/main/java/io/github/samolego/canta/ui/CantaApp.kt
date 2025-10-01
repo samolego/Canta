@@ -73,7 +73,9 @@ import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModelFactory
 import io.github.samolego.canta.util.Filter
 import io.github.samolego.canta.util.ShizukuPermission
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val secretTaps = 12
 
@@ -92,7 +94,6 @@ fun CantaApp(
     val presetViewModel = viewModel<PresetsViewModel>()
     var versionTapCounter by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
-
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
@@ -118,13 +119,15 @@ fun CantaApp(
                                 // Show error message to user
                                 Toast.makeText(
                                     context,
-                                    context.getString(R.string.preset_save_error),
+                                    context.getString(
+                                        R.string.preset_save_error
+                                    ),
                                     Toast.LENGTH_LONG
-                                ).show()
+                                )
+                                    .show()
                             }
                         )
                     }
-
                 },
                 enableSelectAll = versionTapCounter >= secretTaps,
                 appListViewModel = appListViewModel,
@@ -136,9 +139,7 @@ fun CantaApp(
         }
         composable(route = Screen.Settings.route) {
             SettingsScreen(
-                onNavigateBack = {
-                    navController.navigateUp()
-                },
+                onNavigateBack = { navController.navigateUp() },
                 settingsViewModel = settingsViewModel,
                 onVersionTap = {
                     versionTapCounter += 1
@@ -214,9 +215,7 @@ private fun MainContent(
             onProceed = { neverShowAgain ->
                 settingsViewModel.saveDisableRiskDialog(neverShowAgain)
             },
-            onCancel = {
-                closeApp()
-            }
+            onCancel = { closeApp() }
         )
     }
 
@@ -236,9 +235,7 @@ private fun MainContent(
     Scaffold(
         topBar = {
             CantaTopBar(
-                openBadgesInfoDialog = {
-                    showExplainBadgeDialog = true
-                },
+                openBadgesInfoDialog = { showExplainBadgeDialog = true },
                 navigateToPage = navigateToPage,
                 appListViewModel = appListViewModel,
             )
@@ -287,54 +284,57 @@ private fun MainContent(
                                 return@FloatingActionButton
                             }
 
-                            val uninstallApps =
-                                {
-                                    val uninstall = { resetToFactory: Boolean ->
+                            val uninstallApps = {
+                                val uninstall = { resetToFactory: Boolean ->
+                                    coroutineScope.launch {
                                         uninstallOrReinstall(
                                             uninstallApp = uninstallApp,
                                             reinstallApp = reinstallApp,
-                                            selectedAppsType =
-                                            selectedAppsType,
-                                            appListViewModel =
-                                            appListViewModel,
+                                            selectedAppsType = selectedAppsType,
+                                            appListViewModel = appListViewModel,
                                             resetToFactory = resetToFactory
                                         )
                                     }
-
-                                    // Show confirmation dialog.
-                                    if (selectedAppsType == AppsType.INSTALLED &&
-                                        settingsViewModel.confirmBeforeUninstall.value
-                                    ) {
-                                        if (appListViewModel.selectedApps.isNotEmpty()) {
-                                            // TO-Do Consider refactoring dialog management. This `currentDialog`
-                                            // currentDialog(@Composable) could potentially be replaced by a simpler state
-                                            // Haven't touched it as for now due to its role in core uninstall flow.
-                                            currentDialog = {
-                                                val canResetAny =
-                                                    appListViewModel.selectedApps.keys.any {
-                                                        canResetAppToFactory(it)
-                                                    }
-
-                                                UninstallAppsDialog(
-                                                    appCount =
-                                                    appListViewModel.selectedApps.size,
-                                                    canResetToFactory = canResetAny,
-                                                    onDismiss = {
-                                                        currentDialog = null
-                                                    },
-                                                    onAgree = { resetToFactory ->
-                                                        currentDialog = null
-                                                        uninstall(resetToFactory)
-                                                    }
-                                                )
-                                            }
-                                        }
-                                    } else {
-                                        // Trigger uninstall
-                                        uninstall(false)
-                                    }
-
                                 }
+
+                                // Show confirmation dialog.
+                                if (selectedAppsType == AppsType.INSTALLED &&
+                                    settingsViewModel
+                                        .confirmBeforeUninstall
+                                        .value
+                                ) {
+                                    if (appListViewModel.selectedApps.isNotEmpty()) {
+                                        // TO-Do Consider refactoring dialog management.
+                                        // This `currentDialog`
+                                        // currentDialog(@Composable) could potentially be
+                                        // replaced by a simpler state
+                                        // Haven't touched it as for now due to its role in
+                                        // core uninstall flow.
+                                        currentDialog = {
+                                            val canResetAny =
+                                                appListViewModel.selectedApps.keys.any {
+                                                    canResetAppToFactory(it)
+                                                }
+
+                                            UninstallAppsDialog(
+                                                appCount =
+                                                appListViewModel
+                                                    .selectedApps
+                                                    .size,
+                                                canResetToFactory = canResetAny,
+                                                onDismiss = { currentDialog = null },
+                                                onAgree = { resetToFactory ->
+                                                    currentDialog = null
+                                                    uninstall(resetToFactory)
+                                                }
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    // Trigger uninstall
+                                    uninstall(false)
+                                }
+                            }
 
                             // Show dialog before uninstalling if we are on the "installed"
                             // tab
@@ -344,7 +344,10 @@ private fun MainContent(
                             if (!ShizukuPermission.isCantaAuthorized()) {
                                 currentDialog = {
                                     ShizukuRequirementDialog(
-                                        shizukuStatus = ShizukuPermission.checkShizukuActive(context.packageManager),
+                                        shizukuStatus =
+                                        ShizukuPermission.checkShizukuActive(
+                                            context.packageManager
+                                        ),
                                         onClose = { proceed ->
                                             currentDialog = null
 
@@ -452,7 +455,7 @@ private fun MainContent(
     }
 }
 
-fun uninstallOrReinstall(
+suspend fun uninstallOrReinstall(
     uninstallApp: (String, Boolean) -> Boolean,
     reinstallApp: (String) -> Boolean,
     selectedAppsType: AppsType,
@@ -460,23 +463,29 @@ fun uninstallOrReinstall(
     resetToFactory: Boolean = false,
 ) {
     val appsToProcess = appListViewModel.selectedApps.keys.toList()
-    when (selectedAppsType) {
-        AppsType.INSTALLED -> {
-            appsToProcess.forEach { app ->
-                val uninstalled = uninstallApp(app, resetToFactory)
-                if (uninstalled) {
-                    appListViewModel.changeAppStatus(app)
-                    appListViewModel.selectedApps.remove(app)
+    withContext(Dispatchers.IO) {
+        when (selectedAppsType) {
+            AppsType.INSTALLED -> {
+                appsToProcess.forEach { app ->
+                    val uninstalled = uninstallApp(app, resetToFactory)
+                    if (uninstalled) {
+                        with(Dispatchers.Main) {
+                            appListViewModel.changeAppStatus(app)
+                            appListViewModel.selectedApps.remove(app)
+                        }
+                    }
                 }
             }
-        }
 
-        AppsType.UNINSTALLED -> {
-            appsToProcess.forEach { app ->
-                val installed = reinstallApp(app)
-                if (installed) {
-                    appListViewModel.changeAppStatus(app)
-                    appListViewModel.selectedApps.remove(app)
+            AppsType.UNINSTALLED -> {
+                appsToProcess.forEach { app ->
+                    val installed = reinstallApp(app)
+                    if (installed) {
+                        with(Dispatchers.Main) {
+                            appListViewModel.changeAppStatus(app)
+                            appListViewModel.selectedApps.remove(app)
+                        }
+                    }
                 }
             }
         }
