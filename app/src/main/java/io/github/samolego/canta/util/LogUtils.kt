@@ -3,6 +3,10 @@ package io.github.samolego.canta.util
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,15 +35,16 @@ object LogUtils {
         addLog(LogLevel.ERROR, tag, message + (throwable?.message?.let { "\n$it" } ?: ""))
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun addLog(level: LogLevel, tag: String, message: String) {
-        logs.add(LogEntry(level, tag, message, System.currentTimeMillis()))
+        // We need to run in main thread due to the logs being
+        // a not thread-safe list
+        GlobalScope.launch(Dispatchers.Main) {
+            logs.add(LogEntry(level, tag, message, System.currentTimeMillis()))
+        }
     }
 
     fun getLogs(): List<LogEntry> = logs
-
-    fun clearLogs() {
-        logs.clear()
-    }
 
     data class LogEntry(
             val level: LogLevel,
