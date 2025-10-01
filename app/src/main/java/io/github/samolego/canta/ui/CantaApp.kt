@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.AutoDelete
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.InstallMobile
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -29,9 +30,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -51,7 +52,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.github.samolego.canta.R
-import io.github.samolego.canta.data.SettingsStore
 import io.github.samolego.canta.extension.addAll
 import io.github.samolego.canta.extension.showFor
 import io.github.samolego.canta.packageName
@@ -183,7 +183,7 @@ fun CantaApp(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun MainContent(
     canResetAppToFactory: (String) -> Boolean,
@@ -426,11 +426,27 @@ private fun MainContent(
                 // Show active dialog
                 currentDialog?.let { it() }
 
-                AppList(
-                    appType = AppsType.entries[page],
-                    appListModel = appListViewModel,
-                    enableSelectAll = enableSelectAll,
-                )
+                var isRefreshing by remember { mutableStateOf(false) }
+
+                PullToRefreshBox(
+                    isRefreshing = isRefreshing,
+                    onRefresh = {
+                        coroutineScope.launch {
+                            isRefreshing = true
+                            appListViewModel.loadInstalled(
+                                packageManager = context.packageManager,
+                                context = context,
+                            )
+                            isRefreshing = false
+                        }
+                    },
+                ) {
+                    AppList(
+                        appType = AppsType.entries[page],
+                        appListModel = appListViewModel,
+                        enableSelectAll = enableSelectAll,
+                    )
+                }
             }
         }
     }
