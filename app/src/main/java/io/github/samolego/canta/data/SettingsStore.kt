@@ -7,7 +7,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
@@ -68,12 +67,35 @@ class SettingsStore private constructor(private val context: Context) {
         return latestCommitHashFlow.firstOrNull() ?: ""
     }
 
+    // Bloat list URL preference
+    val bloatListUrlFlow: Flow<String> =
+            context.dataStore.data.map { preferences ->
+                preferences[KEY_BLOAT_LIST_URL]
+                        ?: "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
+            }
+
+    suspend fun setBloatListUrl(url: String) {
+        context.dataStore.edit { preferences -> preferences[KEY_BLOAT_LIST_URL] = url }
+    }
+
+    // Commits URL preference
+    val commitsUrlFlow: Flow<String> =
+            context.dataStore.data.map { preferences ->
+                preferences[KEY_COMMITS_URL]
+                        ?: "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
+            }
+
+    suspend fun setCommitsUrl(url: String) {
+        context.dataStore.edit { preferences -> preferences[KEY_COMMITS_URL] = url }
+    }
 
     companion object {
         private val KEY_AUTO_UPDATE_BLOAT_LIST = booleanPreferencesKey("auto_update_bloat_list")
         private val KEY_CONFIRM_BEFORE_UNINSTALL = booleanPreferencesKey("confirm_before_uninstall")
         private val KEY_DISABLE_RISK_DIALOG = booleanPreferencesKey("disable_risk_dialog")
         private val KEY_LATEST_BLOAT_COMMIT_HASH = stringPreferencesKey("latest_bloat_commit_hash")
+        private val KEY_BLOAT_LIST_URL = stringPreferencesKey("bloat_list_url")
+        private val KEY_COMMITS_URL = stringPreferencesKey("commits_url")
 
         @SuppressLint("StaticFieldLeak")
         @Volatile

@@ -94,12 +94,19 @@ class AppListViewModel : ViewModel() {
             val uadLists: JSONObject =
                     try {
                         if (!uadList.exists() ||
-                                (autoUpdate &&
-                                    bloatFetcher.checkForUpdates(settingsStore.getLatestCommitHash())
-                                )
+                                        (autoUpdate &&
+                                                bloatFetcher.checkForUpdates(
+                                                        settingsStore.getLatestCommitHash(),
+                                                        settingsStore.commitsUrlFlow.first()
+                                                ))
                         ) {
                             uadList.createNewFile()
-                            val (json, hash) = bloatFetcher.fetchBloatList(uadList)
+                            val (json, hash) =
+                                    bloatFetcher.fetchBloatList(
+                                            uadList,
+                                            settingsStore.bloatListUrlFlow.first(),
+                                            settingsStore.commitsUrlFlow.first()
+                                    )
                             // Write the hash to settings
                             if (json.length() > 0 && hash.isNotEmpty()) {
                                 // in the case of exception the fetchBloatList stills -
@@ -114,7 +121,11 @@ class AppListViewModel : ViewModel() {
                             if (fileContent.isBlank()) {
                                 LogUtils.e(TAG, "Local uad_lists.json is blank. Retrying fetch.")
                                 val (json, hash) =
-                                        bloatFetcher.fetchBloatList(uadList) // Retry fetch
+                                        bloatFetcher.fetchBloatList(
+                                                uadList,
+                                                settingsStore.bloatListUrlFlow.first(),
+                                                settingsStore.commitsUrlFlow.first()
+                                        ) // Retry fetch
                                 if (json.length() > 0 && hash.isNotEmpty()) {
                                     settingsStore.setLatestCommitHash(hash)
                                 }

@@ -34,6 +34,11 @@ class SettingsViewModel(
     private var _latestCommitHash = MutableStateFlow<String>("")
     val latestCommitHashFlow = _latestCommitHash.asStateFlow()
 
+    private val _bloatListUrl = MutableStateFlow<String>("")
+    val bloatListUrl = _bloatListUrl.asStateFlow()
+
+    private val _commitsUrl = MutableStateFlow<String>("")
+    val commitsUrl = _commitsUrl.asStateFlow()
 
     init {
         // here this will automatically starts observing and collecting values
@@ -46,6 +51,8 @@ class SettingsViewModel(
         observeLatestCommitHash()
         observeAutoUpdateBloatList()
         observeConfirmBeforeUninstall()
+        observeBloatListUrl()
+        observeCommitsUrl()
     }
 
     private fun observeSettings() {
@@ -62,48 +69,54 @@ class SettingsViewModel(
     }
 
     private fun observeAutoUpdateBloatList() {
-        settingsStore.autoUpdateBloatListFlow
-            .onEach {
-                // preferred way to update the value is using .update { it } as it is thread safe
-                // but
-                // this is also correct/acceptable using .value = it
-                _autoUpdateBloatList.value = it
-            }
-            .launchIn(viewModelScope)
+        settingsStore
+                .autoUpdateBloatListFlow
+                .onEach {
+                    _autoUpdateBloatList.update { it }
+                }
+                .launchIn(viewModelScope)
     }
 
     private fun observeConfirmBeforeUninstall() {
-        settingsStore.confirmBeforeUninstallFlow
-            .onEach {
-                _confirmBeforeUninstall.value = it
-            }
-            .launchIn(viewModelScope)
+        settingsStore
+                .confirmBeforeUninstallFlow
+                .onEach { _confirmBeforeUninstall.value = it }
+                .launchIn(viewModelScope)
     }
 
     private fun observeLatestCommitHash() {
-        settingsStore.latestCommitHashFlow
-            .onEach {
-                _latestCommitHash.value = it
-            }
-            .launchIn(viewModelScope)
+        settingsStore
+                .latestCommitHashFlow
+                .onEach { _latestCommitHash.value = it }
+                .launchIn(viewModelScope)
+    }
+
+    private fun observeBloatListUrl() {
+        settingsStore.bloatListUrlFlow.onEach { _bloatListUrl.value = it }.launchIn(viewModelScope)
+    }
+
+    private fun observeCommitsUrl() {
+        settingsStore.commitsUrlFlow.onEach { _commitsUrl.value = it }.launchIn(viewModelScope)
     }
 
     fun saveAutoUpdateBloatList(autoupdate: Boolean) {
-        viewModelScope.launch {
-            settingsStore.setAutoUpdateBloatList(autoupdate)
-        }
+        viewModelScope.launch { settingsStore.setAutoUpdateBloatList(autoupdate) }
     }
 
     fun saveConfirmBeforeUninstall(confirmBeforeUninstall: Boolean) {
-        viewModelScope.launch {
-            settingsStore.setConfirmBeforeUninstall(confirmBeforeUninstall)
-        }
+        viewModelScope.launch { settingsStore.setConfirmBeforeUninstall(confirmBeforeUninstall) }
     }
 
     fun saveLatestCommitHash(latestCommitHash: String) {
-        viewModelScope.launch {
-            settingsStore.setLatestCommitHash(latestCommitHash)
-        }
+        viewModelScope.launch { settingsStore.setLatestCommitHash(latestCommitHash) }
+    }
+
+    fun saveBloatListUrl(url: String) {
+        viewModelScope.launch { settingsStore.setBloatListUrl(url) }
+    }
+
+    fun saveCommitsUrl(url: String) {
+        viewModelScope.launch { settingsStore.setCommitsUrl(url) }
     }
 
     fun saveDisableRiskDialog(permanentlyHide: Boolean) {

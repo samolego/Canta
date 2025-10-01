@@ -9,15 +9,15 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import kotlinx.parcelize.Parcelize
-import org.json.JSONObject
 import java.io.File
 import java.net.URL
+import kotlinx.parcelize.Parcelize
+import org.json.JSONObject
 
-const val BLOAT_URL =
-    "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
-private const val BLOAT_COMMITS =
-    "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
+const val DEFAULT_BLOAT_URL =
+        "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
+const val DEFAULT_BLOAT_COMMITS =
+        "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
 
 /**
  * Parse commits to get latest commit hash
@@ -27,18 +27,21 @@ fun parseLatestHash(commits: String): String {
     return c.substringBefore("\"")
 }
 
-
 const val TAG = "BloatUtils"
 
 class BloatUtils {
-    fun fetchBloatList(uadList: File): Pair<JSONObject, String> {
+    fun fetchBloatList(
+            uadList: File,
+            bloatUrl: String = DEFAULT_BLOAT_URL,
+            commitsUrl: String = DEFAULT_BLOAT_COMMITS
+    ): Pair<JSONObject, String> {
         try {
-            // Fetch json from BLOAT_URL and parse it
-            val response = URL(BLOAT_URL).readText()
+            // Fetch json from bloatUrl and parse it
+            val response = URL(bloatUrl).readText()
             // Parse response to json
             val json = JSONObject(response)
 
-            val commits = URL(BLOAT_COMMITS).readText()
+            val commits = URL(commitsUrl).readText()
 
             val hash = parseLatestHash(commits)
 
@@ -54,11 +57,13 @@ class BloatUtils {
         }
     }
 
-    fun checkForUpdates(latestBloatHash: String): Boolean {
+    fun checkForUpdates(
+            latestBloatHash: String,
+            commitsUrl: String = DEFAULT_BLOAT_COMMITS
+    ): Boolean {
         return try {
-            val commits = URL(BLOAT_COMMITS).readText()
+            val commits = URL(commitsUrl).readText()
             val hash = parseLatestHash(commits)
-
 
             val needsUpdate = hash != latestBloatHash
             LogUtils.i(TAG, "Bloat list needs update: $needsUpdate (commit hash: $hash)")
