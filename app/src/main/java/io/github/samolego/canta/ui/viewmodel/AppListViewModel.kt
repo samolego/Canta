@@ -96,7 +96,7 @@ class AppListViewModel : ViewModel() {
                         if (!uadList.exists() ||
                                         (autoUpdate &&
                                                 bloatFetcher.checkForUpdates(
-                                                        settingsStore.getLatestCommitHash(),
+                                                        settingsStore.latestCommitHashFlow.first(),
                                                         settingsStore.commitsUrlFlow.first()
                                                 ))
                         ) {

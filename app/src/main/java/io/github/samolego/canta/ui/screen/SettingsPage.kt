@@ -138,7 +138,7 @@ fun SettingsScreen(
                             style = MaterialTheme.typography.titleMedium
                     )
                     Text(
-                            text = stringResource(R.string.advanced_settings_description),
+                            text = stringResource(R.string.click_to_expand),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

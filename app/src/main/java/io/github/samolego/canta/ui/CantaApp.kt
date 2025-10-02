@@ -206,6 +206,7 @@ private fun MainContent(
     var selectedAppsType by remember { mutableStateOf(AppsType.INSTALLED) }
 
     val disableRiskDialog by settingsViewModel.disableRiskDialog.collectAsStateWithLifecycle()
+    val confirmBeforeUninstall by settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
 
     // Current active dialog
     var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
@@ -298,11 +299,7 @@ private fun MainContent(
                                 }
 
                                 // Show confirmation dialog.
-                                if (selectedAppsType == AppsType.INSTALLED &&
-                                    settingsViewModel
-                                        .confirmBeforeUninstall
-                                        .value
-                                ) {
+                                if (selectedAppsType == AppsType.INSTALLED && confirmBeforeUninstall) {
                                     if (appListViewModel.selectedApps.isNotEmpty()) {
                                         // TO-Do Consider refactoring dialog management.
                                         // This `currentDialog`

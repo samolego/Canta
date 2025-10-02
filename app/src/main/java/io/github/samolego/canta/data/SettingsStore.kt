@@ -3,119 +3,67 @@ package io.github.samolego.canta.data
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.dataStore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
-// Create a DataStore instance at the top level
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "canta_settings")
+// Proto DataStore instance
+private val Context.dataStore: DataStore<AppSettings> by
+        dataStore(fileName = "app_settings.pb", serializer = AppSettingsSerializer)
 
-// SettingsStore should be a singleton, ideally created once per application and provided via DI
-class SettingsStore private constructor(private val context: Context) {
+class SettingsStore private constructor(context: Context) {
 
-    // Auto update bloat list preference
-    val autoUpdateBloatListFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
-        preferences[KEY_AUTO_UPDATE_BLOAT_LIST] != false
-    }
+    private val dataStore = context.dataStore
+    val autoUpdateBloatListFlow = dataStore.data.map { it.autoUpdateBloatList }
+    val confirmBeforeUninstallFlow = dataStore.data.map { it.confirmBeforeUninstall }
+    val disableRiskDialogFlow = dataStore.data.map { it.disableRiskDialog }
+    val latestCommitHashFlow = dataStore.data.map { it.latestBloatCommitHash }
+    val bloatListUrlFlow = dataStore.data.map { it.bloatListUrl }
+    val commitsUrlFlow = dataStore.data.map { it.commitsUrl }
+
 
     suspend fun setAutoUpdateBloatList(autoUpdate: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[KEY_AUTO_UPDATE_BLOAT_LIST] = autoUpdate
-        }
+        dataStore.updateData { it.toBuilder().setAutoUpdateBloatList(autoUpdate).build() }
     }
 
-    // Confirm before uninstall preference
-    val confirmBeforeUninstallFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
-        preferences[KEY_CONFIRM_BEFORE_UNINSTALL] != false
-    }
-
-    suspend fun setConfirmBeforeUninstall(confirm: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[KEY_CONFIRM_BEFORE_UNINSTALL] = confirm
-        }
-    }
-
-    // disable risk dialog preference
-    // false  == show, true == never show
-    val disableRiskDialogFlow: Flow<Boolean> = context.dataStore.data.map { preferences ->
-        preferences[KEY_DISABLE_RISK_DIALOG] ?: false
+    suspend fun setConfirmBeforeUninstall(needsConfirm: Boolean) {
+        dataStore.updateData { it.toBuilder().setConfirmBeforeUninstall(needsConfirm).build() }
     }
 
     suspend fun setDisableRiskDialog(disable: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[KEY_DISABLE_RISK_DIALOG] = disable
-        }
-    }
-
-    // Latest commit hash for bloat list
-    val latestCommitHashFlow: Flow<String> = context.dataStore.data.map { preferences ->
-        preferences[KEY_LATEST_BLOAT_COMMIT_HASH] ?: ""
+        dataStore.updateData { it.toBuilder().setDisableRiskDialog(disable).build() }
     }
 
     suspend fun setLatestCommitHash(hash: String) {
-        context.dataStore.edit { preferences ->
-            preferences[KEY_LATEST_BLOAT_COMMIT_HASH] = hash
-        }
+        dataStore.updateData { it.toBuilder().setLatestBloatCommitHash(hash).build() }
     }
-
-    suspend fun getLatestCommitHash(): String {
-        return latestCommitHashFlow.firstOrNull() ?: ""
-    }
-
-    // Bloat list URL preference
-    val bloatListUrlFlow: Flow<String> =
-            context.dataStore.data.map { preferences ->
-                preferences[KEY_BLOAT_LIST_URL]
-                        ?: "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
-            }
 
     suspend fun setBloatListUrl(url: String) {
-        context.dataStore.edit { preferences -> preferences[KEY_BLOAT_LIST_URL] = url }
+        dataStore.updateData { it.toBuilder().setBloatListUrl(url).build() }
     }
-
-    // Commits URL preference
-    val commitsUrlFlow: Flow<String> =
-            context.dataStore.data.map { preferences ->
-                preferences[KEY_COMMITS_URL]
-                        ?: "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
-            }
 
     suspend fun setCommitsUrl(url: String) {
-        context.dataStore.edit { preferences -> preferences[KEY_COMMITS_URL] = url }
+        dataStore.updateData { it.toBuilder().setCommitsUrl(url).build() }
     }
 
+
+
     companion object {
-        private val KEY_AUTO_UPDATE_BLOAT_LIST = booleanPreferencesKey("auto_update_bloat_list")
-        private val KEY_CONFIRM_BEFORE_UNINSTALL = booleanPreferencesKey("confirm_before_uninstall")
-        private val KEY_DISABLE_RISK_DIALOG = booleanPreferencesKey("disable_risk_dialog")
-        private val KEY_LATEST_BLOAT_COMMIT_HASH = stringPreferencesKey("latest_bloat_commit_hash")
-        private val KEY_BLOAT_LIST_URL = stringPreferencesKey("bloat_list_url")
-        private val KEY_COMMITS_URL = stringPreferencesKey("commits_url")
+        @SuppressLint("StaticFieldLeak") @Volatile private var INSTANCE: SettingsStore? = null
 
-        @SuppressLint("StaticFieldLeak")
-        @Volatile
-        private var INSTANCE: SettingsStore? = null
-
-        // Initializes the SettingsStore singleton.
-        // Must be called from MyApplication.onCreate() before any attempt to get the instance.
         fun initialize(appContext: Context) {
             synchronized(this) {
                 if (INSTANCE == null) {
-                    INSTANCE = SettingsStore(appContext) // appContext.applicationContext
+                    INSTANCE = SettingsStore(appContext)
                 }
             }
         }
 
-        // to get SettingsStore instance this method should be called
         fun getInstance(): SettingsStore {
-            return INSTANCE ?: throw IllegalStateException(
-                "SettingsStore has not been initialized. Call initialize() in MyApplication.onCreate()."
-            )
+            return INSTANCE
+                    ?: throw IllegalStateException(
+                            "SettingsStore has not been initialized. Call initialize() in MyApplication.onCreate()."
+                    )
         }
     }
 }
