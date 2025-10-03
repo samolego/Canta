@@ -88,4 +88,11 @@
     <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku Required</string>
     <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
+    <string name="commits_url">Commits URL</string>
+    <string name="commits_url_description">Where to get commit info for updates from</string>
+    <string name="reset_to_default">Reset to default</string>
+    <string name="advanced_settings">Advanced settings</string>
+    <string name="click_to_expand">Click to expand</string>
+    <string name="bloat_list_url">Bloat list URL</string>
+    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
 </resources>
