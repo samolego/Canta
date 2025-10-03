@@ -67,7 +67,6 @@ fun SettingsScreen(
             settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
 
     var advancedSettingsExpanded by remember { mutableStateOf(false) }
-    var userId by remember { mutableStateOf(settingsViewModel.userId.value.toString()) }
     var bloatListUrl by remember { mutableStateOf(settingsViewModel.bloatListUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_URL else it }) }
     var commitsUrl by remember { mutableStateOf(settingsViewModel.commitsUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_COMMITS else it }) }
 
