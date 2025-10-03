@@ -1,9 +1,11 @@
-package io.github.samolego.canta.util
+package io.github.samolego.canta.util.apps
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Parcelable
+import io.github.samolego.canta.util.BloatData
+import io.github.samolego.canta.util.RemovalRecommendation
 import kotlinx.parcelize.Parcelize
 
 /**

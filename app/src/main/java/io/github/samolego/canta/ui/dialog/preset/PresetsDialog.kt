@@ -1,4 +1,4 @@
-package io.github.samolego.canta.ui.dialog
+package io.github.samolego.canta.ui.dialog.preset
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

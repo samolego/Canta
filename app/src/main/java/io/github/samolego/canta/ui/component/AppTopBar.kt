@@ -153,7 +153,6 @@ fun CantaTopBar(
                         showBadgeInfoDialog = openBadgesInfoDialog,
                         navigateToPage = navigateToPage,
                         onDismiss = { showMoreOptionsMenu = false },
-                        appListViewModel = appListViewModel,
                 )
             },
             colors =

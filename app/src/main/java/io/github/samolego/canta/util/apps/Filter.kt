@@ -1,5 +1,6 @@
-package io.github.samolego.canta.util
+package io.github.samolego.canta.util.apps
 
+import io.github.samolego.canta.util.RemovalRecommendation
 import java.util.Locale
 
 /**

@@ -83,7 +83,7 @@
     <string name="start_shizuku_service">激活 Shizuku 服务</string>
     <string name="grant_shizuku_permission_to_canta">在 Shizuku 应用中向 Canta 授予权限</string>
     <string name="shizuku_required">需要 Shizuku</string>
-    <string name="shizuku_requirement_description">Canta 使用 Shizuku 来卸载应用而不需要 root 权限。Shizuku 提供了访问系统级SDK的安全途径。</string>
+    <string name="shizuku_requirement_description">Canta 使用 Shizuku 卸載應用程式，而無需 root 許可權。Shizuku 提供了一種訪問系統級 SDK 的安全方法。</string>
     <string name="commits_url">Commits URL</string>
     <string name="commits_url_description">Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>

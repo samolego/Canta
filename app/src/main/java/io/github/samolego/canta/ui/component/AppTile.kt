@@ -1,6 +1,5 @@
 package io.github.samolego.canta.ui.component
 
-import android.content.pm.PackageManager.NameNotFoundException
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -32,10 +31,11 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import io.github.samolego.canta.packageName
-import io.github.samolego.canta.util.AppInfo
 import io.github.samolego.canta.util.BloatData
 import io.github.samolego.canta.util.InstallData
+import io.github.samolego.canta.util.LogUtils
 import io.github.samolego.canta.util.RemovalRecommendation
+import io.github.samolego.canta.util.apps.AppInfo
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -143,7 +143,8 @@ fun AppIconImage(
     val appIcon =
             try {
                 context.packageManager.getApplicationIcon(appInfo.packageName)
-            } catch (_: NameNotFoundException) {
+            } catch (e: Exception) {
+                LogUtils.w("AppTile", "Cannot find app icon: ${e.stackTraceToString()}")
                 null
             }
 

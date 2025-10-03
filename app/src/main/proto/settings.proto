@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "io.github.samolego.canta.data";
+option java_multiple_files = true;
+
+message AppSettings {
+  bool auto_update_bloat_list = 1;
+  bool confirm_before_uninstall = 2;
+  bool disable_risk_dialog = 3;
+  string latest_bloat_commit_hash = 4;
+  string bloat_list_url = 5;
+  string commits_url = 6;
+}

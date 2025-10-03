@@ -19,7 +19,7 @@ import io.github.samolego.canta.extension.getInfoForPackage
 import io.github.samolego.canta.ui.CantaApp
 import io.github.samolego.canta.ui.theme.CantaTheme
 import io.github.samolego.canta.util.LogUtils
-import io.github.samolego.canta.util.ShizukuPackageInstallerUtils
+import io.github.samolego.canta.util.shizuku.ShizukuPackageInstallerUtils
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 

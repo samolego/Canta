@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
-import io.github.samolego.canta.util.Filter
+import io.github.samolego.canta.util.apps.Filter
 
 @Composable
 fun FiltersMenu(
