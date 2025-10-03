@@ -90,4 +90,11 @@
     <string name="grant_shizuku_permission_to_canta">Udělit oprávnění Canta v Shizuku</string>
     <string name="shizuku_required">Vyžaduje Shizuku</string>
     <string name="shizuku_requirement_description">Canta používá Shizuku k odinstalaci aplikací bez nutnosti root přístupu. Shizuku poskytuje bezpečný způsob přístupu k SDK.</string>
+    <string name="commits_url">Commits URL</string>
+    <string name="commits_url_description">Where to get commit info for updates from</string>
+    <string name="reset_to_default">Reset to default</string>
+    <string name="advanced_settings">Advanced settings</string>
+    <string name="click_to_expand">Click to expand</string>
+    <string name="bloat_list_url">Bloat list URL</string>
+    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
 </resources>
