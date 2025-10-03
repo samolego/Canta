@@ -4,8 +4,8 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
-import io.github.samolego.canta.util.AppInfo
 import io.github.samolego.canta.util.LogUtils
+import io.github.samolego.canta.util.apps.AppInfo
 
 
 private fun PackageManager.getUninstalledPackages(installedPackages: List<PackageInfo>): List<PackageInfo> {

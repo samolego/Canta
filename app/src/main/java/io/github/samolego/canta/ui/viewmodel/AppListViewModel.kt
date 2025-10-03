@@ -13,11 +13,11 @@ import io.github.samolego.canta.data.SettingsStore
 import io.github.samolego.canta.extension.getAllPackagesInfo
 import io.github.samolego.canta.extension.mutableStateSetOf
 import io.github.samolego.canta.packageName
-import io.github.samolego.canta.util.AppInfo
 import io.github.samolego.canta.util.BloatData
 import io.github.samolego.canta.util.BloatUtils
-import io.github.samolego.canta.util.Filter
 import io.github.samolego.canta.util.LogUtils
+import io.github.samolego.canta.util.apps.AppInfo
+import io.github.samolego.canta.util.apps.Filter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext

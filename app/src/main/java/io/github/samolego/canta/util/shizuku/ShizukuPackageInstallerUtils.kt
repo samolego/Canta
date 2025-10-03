@@ -1,4 +1,4 @@
-package io.github.samolego.canta.util
+package io.github.samolego.canta.util.shizuku
 
 import android.app.Activity
 import android.content.Context

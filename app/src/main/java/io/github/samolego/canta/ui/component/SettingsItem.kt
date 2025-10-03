@@ -85,7 +85,8 @@ fun SettingsTextItem(
         icon: ImageVector? = null,
         value: String,
         onValueChange: (String) -> Unit,
-        placeholder: String? = null
+        placeholder: String? = null,
+        keyboardType: KeyboardType = KeyboardType.Text,
 ) {
     Row(modifier = Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.Top) {
         if (icon != null) {
@@ -115,8 +116,8 @@ fun SettingsTextItem(
                     value = value,
                     onValueChange = onValueChange,
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = placeholder?.let { { Text(it) } },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
+                    placeholder = placeholder?.let { { Text(it, softWrap = false) } },
+                    keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                     singleLine = true,
             )
         }

@@ -10,7 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.navigation.Screen
-import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 
 @Composable
 fun MoreOptionsMenu(
@@ -18,7 +17,6 @@ fun MoreOptionsMenu(
         showBadgeInfoDialog: () -> Unit,
         navigateToPage: (route: String) -> Unit,
         onDismiss: () -> Unit,
-        appListViewModel: AppListViewModel,
 ) {
 
     DropdownMenu(

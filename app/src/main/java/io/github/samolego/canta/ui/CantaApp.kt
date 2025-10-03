@@ -71,8 +71,8 @@ import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModelFactory
-import io.github.samolego.canta.util.Filter
-import io.github.samolego.canta.util.ShizukuPermission
+import io.github.samolego.canta.util.apps.Filter
+import io.github.samolego.canta.util.shizuku.ShizukuPermission
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -293,7 +293,7 @@ private fun MainContent(
                                             reinstallApp = reinstallApp,
                                             selectedAppsType = selectedAppsType,
                                             appListViewModel = appListViewModel,
-                                            resetToFactory = resetToFactory
+                                            resetToFactory = resetToFactory,
                                         )
                                     }
                                 }

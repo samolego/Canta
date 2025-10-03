@@ -32,10 +32,10 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import io.github.samolego.canta.packageName
-import io.github.samolego.canta.util.AppInfo
 import io.github.samolego.canta.util.BloatData
 import io.github.samolego.canta.util.InstallData
 import io.github.samolego.canta.util.RemovalRecommendation
+import io.github.samolego.canta.util.apps.AppInfo
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

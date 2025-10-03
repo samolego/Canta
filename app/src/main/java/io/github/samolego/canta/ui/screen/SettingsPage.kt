@@ -30,7 +30,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -42,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,6 +51,8 @@ import io.github.samolego.canta.ui.component.IconClickButton
 import io.github.samolego.canta.ui.component.SettingsItem
 import io.github.samolego.canta.ui.component.SettingsTextItem
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
+import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS
+import io.github.samolego.canta.util.DEFAULT_BLOAT_URL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,10 +65,11 @@ fun SettingsScreen(
     val autoUpdateBloatList by settingsViewModel.autoUpdateBloatList.collectAsStateWithLifecycle()
     val confirmBeforeUninstall by
             settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
-    val bloatListUrl by settingsViewModel.bloatListUrl.collectAsStateWithLifecycle()
-    val commitsUrl by settingsViewModel.commitsUrl.collectAsStateWithLifecycle()
 
     var advancedSettingsExpanded by remember { mutableStateOf(false) }
+    var userId by remember { mutableStateOf(settingsViewModel.userId.value.toString()) }
+    var bloatListUrl by remember { mutableStateOf(settingsViewModel.bloatListUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_URL else it }) }
+    var commitsUrl by remember { mutableStateOf(settingsViewModel.commitsUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_COMMITS else it }) }
 
     Scaffold(
         topBar = {
@@ -164,9 +167,12 @@ fun SettingsScreen(
                             title = stringResource(R.string.bloat_list_url),
                             description = stringResource(R.string.bloat_list_url_description),
                             icon = Icons.Default.Link,
+                            keyboardType = KeyboardType.Uri,
                             value = bloatListUrl,
-                            onValueChange = { settingsViewModel.saveBloatListUrl(it) },
-                            placeholder = "https://..."
+                            onValueChange = {
+                                bloatListUrl = it
+                                settingsViewModel.saveBloatListUrl(it)
+                            },
                     )
 
                     // Commits URL
@@ -174,30 +180,13 @@ fun SettingsScreen(
                             title = stringResource(R.string.commits_url),
                             description = stringResource(R.string.commits_url_description),
                             icon = Icons.Default.Link,
+                            keyboardType = KeyboardType.Uri,
                             value = commitsUrl,
-                            onValueChange = { settingsViewModel.saveCommitsUrl(it) },
-                            placeholder = "https://..."
+                            onValueChange = {
+                                commitsUrl = it
+                                settingsViewModel.saveCommitsUrl(it)
+                            },
                     )
-
-                    // Reset to default button
-                    Row(
-                            modifier =
-                                    Modifier.fillMaxWidth()
-                                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                            horizontalArrangement = Arrangement.End
-                    ) {
-                        TextButton(
-                                onClick = {
-                                    // Reset to default URLs
-                                    val defaultBloatUrl =
-                                            "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
-                                    val defaultCommitsUrl =
-                                            "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
-                                    settingsViewModel.saveBloatListUrl(defaultBloatUrl)
-                                    settingsViewModel.saveCommitsUrl(defaultCommitsUrl)
-                                }
-                        ) { Text(stringResource(R.string.reset_to_default)) }
-                    }
                 }
             }
 

@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import kotlinx.coroutines.flow.Flow
+import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS
+import io.github.samolego.canta.util.DEFAULT_BLOAT_URL
 import kotlinx.coroutines.flow.map
 
 // Proto DataStore instance
@@ -18,8 +19,22 @@ class SettingsStore private constructor(context: Context) {
     val confirmBeforeUninstallFlow = dataStore.data.map { it.confirmBeforeUninstall }
     val disableRiskDialogFlow = dataStore.data.map { it.disableRiskDialog }
     val latestCommitHashFlow = dataStore.data.map { it.latestBloatCommitHash }
-    val bloatListUrlFlow = dataStore.data.map { it.bloatListUrl }
-    val commitsUrlFlow = dataStore.data.map { it.commitsUrl }
+    val bloatListUrlFlow = dataStore.data.map {
+        it.bloatListUrl.let {
+            if (it.isEmpty()) {
+                DEFAULT_BLOAT_URL
+            }
+            it
+        }
+    }
+    val commitsUrlFlow = dataStore.data.map {
+        it.commitsUrl.let {
+            if (it.isEmpty()) {
+                DEFAULT_BLOAT_COMMITS
+            }
+            it
+        }
+    }
 
 
     suspend fun setAutoUpdateBloatList(autoUpdate: Boolean) {

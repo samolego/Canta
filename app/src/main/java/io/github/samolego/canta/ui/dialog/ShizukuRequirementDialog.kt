@@ -36,8 +36,8 @@ import io.github.samolego.canta.R
 import io.github.samolego.canta.SHIZUKU_PACKAGE_NAME
 import io.github.samolego.canta.ui.theme.GreenOk
 import io.github.samolego.canta.ui.theme.Orange
-import io.github.samolego.canta.util.ShizukuPermission
-import io.github.samolego.canta.util.ShizukuStatus
+import io.github.samolego.canta.util.shizuku.ShizukuPermission
+import io.github.samolego.canta.util.shizuku.ShizukuStatus
 
 const val SHIZUKU_PLAY_STORE_URL =
     "https://play.google.com/store/apps/details?id=$SHIZUKU_PACKAGE_NAME"

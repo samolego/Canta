@@ -45,7 +45,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.component.AppIconImage
-import io.github.samolego.canta.util.AppInfo
+import io.github.samolego.canta.util.apps.AppInfo
 import io.github.samolego.canta.util.BloatData
 import io.github.samolego.canta.util.CustomTextSelectionCallback
 import io.github.samolego.canta.util.InstallData

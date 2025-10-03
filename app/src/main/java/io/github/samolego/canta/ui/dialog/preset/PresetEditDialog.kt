@@ -1,4 +1,4 @@
-package io.github.samolego.canta.ui.dialog
+package io.github.samolego.canta.ui.dialog.preset
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*

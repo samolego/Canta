@@ -54,9 +54,9 @@ import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.component.ScreenTopBar
 import io.github.samolego.canta.ui.component.fab.ExpandableFAB
-import io.github.samolego.canta.ui.dialog.ImportPresetDialog
-import io.github.samolego.canta.ui.dialog.PresetCreateDialog
-import io.github.samolego.canta.ui.dialog.PresetEditDialog
+import io.github.samolego.canta.ui.dialog.preset.ImportPresetDialog
+import io.github.samolego.canta.ui.dialog.preset.PresetCreateDialog
+import io.github.samolego.canta.ui.dialog.preset.PresetEditDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.util.CantaPresetData

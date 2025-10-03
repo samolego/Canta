@@ -41,7 +41,7 @@ import io.github.samolego.canta.extension.add
 import io.github.samolego.canta.ui.AppsType
 import io.github.samolego.canta.ui.dialog.AppInfoDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
-import io.github.samolego.canta.util.AppInfo
+import io.github.samolego.canta.util.apps.AppInfo
 import io.github.samolego.canta.util.RemovalRecommendation
 
 @OptIn(ExperimentalFoundationApi::class)

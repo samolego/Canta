@@ -1,8 +1,9 @@
-package io.github.samolego.canta.util
+package io.github.samolego.canta.util.shizuku
 
 import android.content.pm.PackageManager
 import io.github.samolego.canta.SHIZUKU_PACKAGE_NAME
 import io.github.samolego.canta.packageName
+import io.github.samolego.canta.util.LogUtils
 import rikka.shizuku.Shizuku
 import rikka.sui.Sui
 
