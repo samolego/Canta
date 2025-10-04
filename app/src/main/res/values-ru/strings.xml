@@ -90,11 +90,11 @@
     <string name="grant_shizuku_permission_to_canta">Предоставить разрешение Canta в Shizuku</string>
     <string name="shizuku_required">Требуется Shizuku</string>
     <string name="shizuku_requirement_description">Canta использует Shizuku для удаления приложений без необходимости получения прав суперпользователя. Shizuku обеспечивает безопасный доступ к SDK системного уровня.</string>
-    <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
-    <string name="reset_to_default">Reset to default</string>
-    <string name="advanced_settings">Advanced settings</string>
-    <string name="click_to_expand">Click to expand</string>
-    <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
+    <string name="commits_url">URL коммита</string>
+    <string name="commits_url_description">Где получать информацию о коммитах</string>
+    <string name="reset_to_default">Сбросить к стандартным</string>
+    <string name="advanced_settings">Расширенные настройки</string>
+    <string name="click_to_expand">Нажмите, чтобы раскрыть</string>
+    <string name="bloat_list_url">URL-адрес списка блоков</string>
+    <string name="bloat_list_url_description">Где взять значки и описания.</string>
 </resources>
