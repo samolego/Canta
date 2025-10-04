@@ -95,6 +95,6 @@
     <string name="reset_to_default">Скинути до типових</string>
     <string name="advanced_settings">Розширені налаштування</string>
     <string name="click_to_expand">Клацніть, щоб розгорнути</string>
-    <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
+    <string name="bloat_list_url">URL списку непотрібних елементів</string>
+    <string name="bloat_list_url_description">Де отримати значки та описи.</string>
 </resources>
