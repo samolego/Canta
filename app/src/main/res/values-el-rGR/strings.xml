@@ -22,8 +22,8 @@
         <item quantity="other">Εκκαθάριση %d επιλεγμένων</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">%d app selected</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="one">Έχει επιλεγεί %d εφαρμογή</item>
+        <item quantity="other">Έχουν επιλεγεί %d εφαρμογές</item>
     </plurals>
     <string name="copy">Αντιγραφή</string>
     <string name="app_settings">Πληρ. εφαρμογής</string>
