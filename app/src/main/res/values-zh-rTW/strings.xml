@@ -91,4 +91,6 @@
     <string name="click_to_expand">點擊以展開</string>
     <string name="bloat_list_url">膨脹清單 URL</string>
     <string name="bloat_list_url_description">從哪裡取得徽章與描述</string>
+    <string name="allow_unsafe_selections">Allow unsafe selections</string>
+    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
 </resources>
