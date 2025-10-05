@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,14 +42,16 @@ import io.github.samolego.canta.extension.add
 import io.github.samolego.canta.ui.AppsType
 import io.github.samolego.canta.ui.dialog.AppInfoDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
-import io.github.samolego.canta.util.apps.AppInfo
+import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.util.RemovalRecommendation
+import io.github.samolego.canta.util.apps.AppInfo
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AppList(
         appType: AppsType = AppsType.INSTALLED,
         appListModel: AppListViewModel,
+        settingsViewModel: SettingsViewModel,
         enableSelectAll: Boolean = false,
 ) {
     val context = LocalContext.current
@@ -184,6 +187,7 @@ fun AppList(
                                 appInfo = appInfo,
                                 isSelected =
                                         appListModel.selectedApps.contains(appInfo.packageName),
+                                enabled = appInfo.removalInfo != RemovalRecommendation.UNSAFE || settingsViewModel.allowUnsafeUninstall.collectAsState().value,
                                 onCheckChanged = { checked ->
                                     if (checked) {
                                         appListModel.selectedApps.add(appInfo.packageName)

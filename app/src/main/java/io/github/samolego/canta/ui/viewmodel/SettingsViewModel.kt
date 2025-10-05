@@ -33,13 +33,15 @@ class SettingsViewModel(
     val disableRiskDialog = _disableRiskDialog.asStateFlow()
 
     private var _latestCommitHash = MutableStateFlow<String>("")
-    val latestCommitHashFlow = _latestCommitHash.asStateFlow()
 
     private val _bloatListUrl = MutableStateFlow<String>("")
     val bloatListUrl = _bloatListUrl.asStateFlow()
 
     private val _commitsUrl = MutableStateFlow<String>("")
     val commitsUrl = _commitsUrl.asStateFlow()
+
+    private val _allowUnsafeUninstalls = MutableStateFlow<Boolean>(false)
+    val allowUnsafeUninstall = _allowUnsafeUninstalls.asStateFlow()
 
     init {
         // here this will automatically starts observing and collecting values
@@ -54,14 +56,16 @@ class SettingsViewModel(
         observeConfirmBeforeUninstall()
         observeBloatListUrl()
         observeCommitsUrl()
+        observeAllowUnsafeUninstalls()
     }
 
     private fun observeSettings() {
-        settingsStore.disableRiskDialogFlow
+        settingsStore
+            .disableRiskDialogFlow
             .onEach { neverShowRiskDialog ->
                 if (!neverShowRiskDialog) {
                     val riskDialogSavedState =
-                        savedStateHandle.get<Boolean>(DISABLE_RISK_DIALOG_KEY) ?: false
+                        savedStateHandle.get<Boolean>(DISABLE_RISK_DIALOG_KEY) == true
                     if (!riskDialogSavedState)
                         _disableRiskDialog.value = false
                 }
@@ -92,6 +96,13 @@ class SettingsViewModel(
                 .launchIn(viewModelScope)
     }
 
+    private fun observeAllowUnsafeUninstalls() {
+        settingsStore
+            .allowUnsafeUninstalls
+            .onEach { _allowUnsafeUninstalls.value = it }
+            .launchIn(viewModelScope)
+    }
+
     private fun observeBloatListUrl() {
         settingsStore.bloatListUrlFlow.onEach { _bloatListUrl.value = it }.launchIn(viewModelScope)
     }
@@ -106,10 +117,6 @@ class SettingsViewModel(
 
     fun saveConfirmBeforeUninstall(confirmBeforeUninstall: Boolean) {
         viewModelScope.launch { settingsStore.setConfirmBeforeUninstall(confirmBeforeUninstall) }
-    }
-
-    fun saveLatestCommitHash(latestCommitHash: String) {
-        viewModelScope.launch { settingsStore.setLatestCommitHash(latestCommitHash) }
     }
 
     fun saveBloatListUrl(url: String) {
@@ -128,6 +135,10 @@ class SettingsViewModel(
             _disableRiskDialog.value = true
             savedStateHandle[DISABLE_RISK_DIALOG_KEY] = true
         }
+    }
+
+    fun saveAllowUnsafeUninstalls(allow: Boolean) {
+        viewModelScope.launch { settingsStore.setAllowUnsafeUninstalls(allow) }
     }
 
     private companion object {

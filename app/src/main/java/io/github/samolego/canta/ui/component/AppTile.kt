@@ -43,6 +43,7 @@ fun AppTile(
     modifier: Modifier = Modifier.background(color = MaterialTheme.colorScheme.background),
     appInfo: AppInfo,
     isSelected: Boolean,
+    enabled: Boolean = true,
     onCheckChanged: (Boolean) -> Unit,
     onShowDialog: () -> Unit,
     showBorder: Boolean = isSelected,
@@ -67,7 +68,9 @@ fun AppTile(
                                         if (isSelected) {
                                             checkedBackgroundColor
                                         } else {
-                                            MaterialTheme.colorScheme.surface
+                                            MaterialTheme.colorScheme
+                                                .surface
+                                                .copy(alpha = if (enabled) 1f else 0.5f)
                                         }
                         ),
                 modifier =
@@ -103,6 +106,7 @@ fun AppTile(
                     Checkbox(
                             checked = isSelected,
                             onCheckedChange = onCheckChanged,
+                            enabled = enabled,
                             colors =
                                     CheckboxDefaults.colors(
                                             checkedColor = checkedColor,
@@ -189,7 +193,8 @@ fun CantaAppTileDemo() {
                                             removal = RemovalRecommendation.RECOMMENDED,
                                     ),
                     ),
-            isSelected = true,
+            isSelected = false,
+            enabled = false,
             onCheckChanged = {},
             onShowDialog = {},
     )

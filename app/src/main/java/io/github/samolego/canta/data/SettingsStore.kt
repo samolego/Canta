@@ -35,6 +35,7 @@ class SettingsStore private constructor(context: Context) {
             it
         }
     }
+    val allowUnsafeUninstalls = dataStore.data.map { it.allowUnsafeUninstalls }
 
 
     suspend fun setAutoUpdateBloatList(autoUpdate: Boolean) {
@@ -59,6 +60,10 @@ class SettingsStore private constructor(context: Context) {
 
     suspend fun setCommitsUrl(url: String) {
         dataStore.updateData { it.toBuilder().setCommitsUrl(url).build() }
+    }
+
+    suspend fun setAllowUnsafeUninstalls(allow: Boolean) {
+        dataStore.updateData { it.toBuilder().setAllowUnsafeUninstalls(allow).build() }
     }
 
 

@@ -127,4 +127,6 @@
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
     <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
+    <string name="allow_unsafe_selections">Allow unsafe selections</string>
+    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
 </resources>

@@ -444,6 +444,7 @@ private fun MainContent(
                     AppList(
                         appType = AppsType.entries[page],
                         appListModel = appListViewModel,
+                        settingsViewModel = settingsViewModel,
                         enableSelectAll = enableSelectAll,
                     )
                 }

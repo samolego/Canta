@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -69,6 +70,7 @@ fun SettingsScreen(
     var advancedSettingsExpanded by remember { mutableStateOf(false) }
     var bloatListUrl by remember { mutableStateOf(settingsViewModel.bloatListUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_URL else it }) }
     var commitsUrl by remember { mutableStateOf(settingsViewModel.commitsUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_COMMITS else it }) }
+    val allowUnsafe by settingsViewModel.allowUnsafeUninstall.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -117,6 +119,8 @@ fun SettingsScreen(
                 }
             )
 
+            HorizontalDivider(modifier = Modifier.padding(16.dp))
+
             // Advanced Settings Section
             Row(
                     modifier =
@@ -161,6 +165,17 @@ fun SettingsScreen(
                     exit = shrinkVertically()
             ) {
                 Column {
+                    SettingsItem(
+                        title = stringResource(R.string.allow_unsafe_selections),
+                        description = stringResource(R.string.allow_unsafe_uninstalls_description),
+                        icon = Icons.Default.Close,
+                        isSwitch = true,
+                        checked = allowUnsafe,
+                        onCheckedChange = {
+                            settingsViewModel.saveAllowUnsafeUninstalls(it)
+                        }
+                    )
+
                     // Bloat List URL
                     SettingsTextItem(
                             title = stringResource(R.string.bloat_list_url),
