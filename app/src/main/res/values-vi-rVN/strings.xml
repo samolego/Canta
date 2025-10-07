@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Hủy</string>
     <string name="ok">OK</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Bạn có chắc muốn xóa %1$s app?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >Copy tên gói vào bảng nhớ tạm</string>
+    <string name="are_you_sure_to_uninstall_apps">Bạn có chắc muốn xóa %1$s app?</string>
+    <string name="copy_package_name_to_clipboard">Copy tên gói vào bảng nhớ tạm</string>
     <string name="no_description_available">Không có mô tả</string>
     <string name="uninstall">Gỡ cài đặt</string>
     <string name="reinstall">Tải lại</string>
@@ -17,7 +13,7 @@
     <string name="badge_info">Thông tin nhãn</string>
     <string name="got_it">Đã hiểu</string>
     <string name="loading_badges">Đang tải nhãn...</string>
-    <string name="logs" />
+    <string name="logs"></string>
     <string name="back">Quay lại</string>
     <string name="copy_logs">Sao chép bộ nhớ tạm</string>
     <string name="log_copied">Sao chép ghi nhớ vào bảng nhớ tạm</string>
@@ -28,81 +24,49 @@
         <item quantity="other">Đã chọn %d ứng dụng</item>
     </plurals>
     <plurals name="success_uninstalled">
-    <item quantity="one">You have successfully uninstalled %d app!</item>
-    <item quantity="other">You have successfully uninstalled %d apps!</item>
-</plurals>
-<plurals name="success_reinstalled">
-    <item quantity="one">You have successfully reinstalled %d app!</item>
-    <item quantity="other">You have successfully reinstalled %d apps!</item>
-</plurals>
+        <item quantity="other">You have successfully uninstalled %d apps!</item>
+    </plurals>
+    <plurals name="success_reinstalled">
+        <item quantity="other">You have successfully reinstalled %d apps!</item>
+    </plurals>
     <string name="copy">Sao chép</string>
     <string name="app_settings">Thông tin ứng dụng</string>
     <string name="close">Đóng</string>
-    <string
-        name="canta_description"
-    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Tìm kiếm ứng dụng</string>
-    <string
-        name="auto_update_bloat_list"
-    >Tự động cập nhật danh sách ứng dụng rác</string>
-    <string
-        name="auto_update_bloat_list_description"
-    >Tự động lấy phiên bản mới nhất của thông tin ứng dụng rác tệ hại. Điều này đảm bảo huy hiệu thông tin mô tả ứng dụng được cập nhật. </string>
+    <string name="auto_update_bloat_list">Tự động cập nhật danh sách ứng dụng rác</string>
+    <string name="auto_update_bloat_list_description">Tự động lấy phiên bản mới nhất của thông tin ứng dụng rác tệ hại. Điều này đảm bảo huy hiệu thông tin mô tả ứng dụng được cập nhật. </string>
     <string name="settings">Cài đặt</string>
     <string name="confirm_uninstall">Xác nhận gỡ cài đặt</string>
     <string name="app_version">Phiên bản ứng dụng: %s</string>
-    <string
-        name="bloatware_list_version"
-    >Danh sách ứng dụng rác mới nhất</string>
-    <string
-        name="no_warranty_content"
-    >Ứng dụng này cung cấp các đề xuất gỡ bỏ ứng dụng dựa trên thông tin của bên thứ ba. Những đề xuất này chỉ mang tính chất tham khảo và không đảm bảo tính an toàn hoặc khả năng tương thích với thiết bị cụ thể của bạn. Việc gỡ cài đặt ứng dụng hệ thống có thể gây ra các sự cố không mong muốn, bao gồm nhưng không giới hạn ở: mất chức năng, hệ thống không ổn định, vòng lặp khởi động thiết bị, mất dữ liệu, v.v. Nhà phát triển ứng dụng này không chịu trách nhiệm cho bất kỳ thiệt hại nào gây ra cho thiết bị của bạn do làm theo các đề xuất được cung cấp.</string>
-    <string
-        name="disclaimer"
-    >Tuyên bố từ chối trách nhiệm - Không bảo hành</string>
-    <string
-        name="proceed_at_own_risk"
-    >Khi nhấp vào \"Tiếp tục\", bạn đồng ý sử dụng ứng dụng này theo rủi ro của riêng bạn.</string>
+    <string name="bloatware_list_version">Danh sách ứng dụng rác mới nhất</string>
+    <string name="no_warranty_content">Ứng dụng này cung cấp các đề xuất gỡ bỏ ứng dụng dựa trên thông tin của bên thứ ba. Những đề xuất này chỉ mang tính chất tham khảo và không đảm bảo tính an toàn hoặc khả năng tương thích với thiết bị cụ thể của bạn. Việc gỡ cài đặt ứng dụng hệ thống có thể gây ra các sự cố không mong muốn, bao gồm nhưng không giới hạn ở: mất chức năng, hệ thống không ổn định, vòng lặp khởi động thiết bị, mất dữ liệu, v.v. Nhà phát triển ứng dụng này không chịu trách nhiệm cho bất kỳ thiệt hại nào gây ra cho thiết bị của bạn do làm theo các đề xuất được cung cấp.</string>
+    <string name="disclaimer">Tuyên bố từ chối trách nhiệm - Không bảo hành</string>
+    <string name="proceed_at_own_risk">Khi nhấp vào \"Tiếp tục\", bạn đồng ý sử dụng ứng dụng này theo rủi ro của riêng bạn.</string>
     <string name="never_show_again">Không hiển thị thông báo này nữa</string>
     <string name="proceed">Tiếp tục </string>
-    <string
-        name="confirm_uninstall_description"
-    >Có hiển thị hộp thoại để xác nhận hành động gỡ cài đặt hay không.</string>
+    <string name="confirm_uninstall_description">Có hiển thị hộp thoại để xác nhận hành động gỡ cài đặt hay không.</string>
     <string name="select_all">Chọn tất cả</string>
-    <string
-        name="select_all_tip"
-    >Chạm %d lần nữa để bật chức năng chọn tất cả.</string>
-    <string
-        name="select_all_enabled"
-    >Đã bật tùy chọn Chọn tất cả cho loại bộ lọc \"Đề xuất\".</string>
+    <string name="select_all_tip">Chạm %d lần nữa để bật chức năng chọn tất cả.</string>
+    <string name="select_all_enabled">Đã bật tùy chọn Chọn tất cả cho loại bộ lọc \"Đề xuất\".</string>
     <string name="uninstall_options_title">Tùy chọn gỡ cài đặt</string>
     <string name="uninstall_app">Gỡ cài đặt ứng dụng</string>
     <string name="reset_to_factory_version">Gỡ cài đặt cập nhật</string>
     <string name="import_preset">Nhập cài đặt trước</string>
-    <string
-        name="import_preset_description"
-    >Nhập cài đặt trước từ bảng tạm hoặc dán trực tiếp văn bản JSON.</string>
+    <string name="import_preset_description">Nhập cài đặt trước từ bảng tạm hoặc dán trực tiếp văn bản JSON.</string>
     <string name="clipboard">Bảng tạm</string>
-    <string
-        name="import_preset_clipboard_description"
-    >Nhập cài đặt trước từ bảng tạm. Đảm bảo bạn đã sao chép JSON cài đặt trước Canta hợp lệ.</string>
+    <string name="import_preset_clipboard_description">Nhập cài đặt trước từ bảng tạm. Đảm bảo bạn đã sao chép JSON cài đặt trước Canta hợp lệ.</string>
     <string name="paste_preset_json">Dán JSON cài đặt sẵn</string>
-    <string
-        name="paste_preset_json_here"
-    >Dán JSON cài đặt trước vào đây ...</string>
+    <string name="paste_preset_json_here">Dán JSON cài đặt trước vào đây ...</string>
     <string name="enter_valid_json">Please enter valid JSON</string>
     <string name="import_button">Import</string>
     <string name="create_preset">Create preset</string>
-    <string
-        name="create_preset_description"
-    >Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
+    <string name="create_preset_description">Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
     <string name="preset_name">Preset name</string>
     <string name="preset_name_missing_error">Name is required</string>
     <string name="preset_name_placeholder">e.g., Samsung Bloatware</string>
     <string name="optional_description">Description (Optional)</string>
-    <string
-        name="preset_description_placeholder"
-    >Describe what this preset removes...</string>
+    <string name="preset_description_placeholder">Describe what this preset removes...</string>
     <string name="save">Save</string>
     <string name="import_preset_clipboard">Import from clipboard</string>
     <string name="presets">Presets</string>
@@ -111,9 +75,7 @@
     <string name="preset_copied">Preset copied to clipboard</string>
     <string name="import_failed">Import failed</string>
     <string name="no_presets">No presets</string>
-    <string
-        name="presets_description"
-    >Create or import presets to manage app uninstall lists across devices</string>
+    <string name="presets_description">Create or import presets to manage app uninstall lists across devices</string>
     <string name="more_options">More options</string>
     <string name="edit">Edit</string>
     <string name="add_apps">Add apps</string>
@@ -125,31 +87,19 @@
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
-    <string
-        name="grant_shizuku_permission_to_canta"
-    >Grant permission to Canta in Shizuku</string>
+    <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku Required</string>
-    <string
-        name="shizuku_requirement_description"
-    >Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
+    <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
     <string name="commits_url">Commits URL</string>
-    <string
-        name="commits_url_description"
-    >Where to get commit info for updates from</string>
+    <string name="commits_url_description">Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
-    <string
-        name="bloat_list_url_description"
-    >Where to get badges and descriptions from.</string>
+    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string
-        name="allow_unsafe_uninstalls_description"
-    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
     <string name="donate">Donate</string>
-    <string
-        name="canta_donate_request"
-    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
     <string name="success">Success %1$s!</string>
 </resources>
