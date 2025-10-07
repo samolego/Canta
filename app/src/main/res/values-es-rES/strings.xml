@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Cancelar</string>
     <string name="ok">Entendido</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >¿Estás seguro que quieres desinstalar el %1$s programa?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >Copiar el nombre del paquete al portapapeles</string>
+    <string name="are_you_sure_to_uninstall_apps">¿Estás seguro que quieres desinstalar el %1$s programa?</string>
+    <string name="copy_package_name_to_clipboard">Copiar el nombre del paquete al portapapeles</string>
     <string name="no_description_available">Sin descripción</string>
     <string name="uninstall">Desinstalar</string>
     <string name="reinstall">Reinstalar</string>
@@ -30,146 +26,84 @@
         <item quantity="other">%d aplicaciones seleccionadas</item>
     </plurals>
     <plurals name="success_uninstalled">
-    <item quantity="one">You have successfully uninstalled %d app!</item>
-    <item quantity="other">You have successfully uninstalled %d apps!</item>
-</plurals>
-<plurals name="success_reinstalled">
-    <item quantity="one">You have successfully reinstalled %d app!</item>
-    <item quantity="other">You have successfully reinstalled %d apps!</item>
-</plurals>
+        <item quantity="one">¡Has desinstalado con éxito la aplicación %d!</item>
+        <item quantity="other">¡Has desinstalado con éxito las aplicaciones %d!</item>
+    </plurals>
+    <plurals name="success_reinstalled">
+        <item quantity="one">¡Has desinstalado correctamente la aplicación %d!</item>
+        <item quantity="other">¡Has desinstalado correctamente las aplicaciones %d!</item>
+    </plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Información de la aplicación</string>
     <string name="close">Cerrar</string>
-    <string
-        name="canta_description"
-    >Canta es una aplicación de desinstalación de código abierto que utiliza Shizuku para eliminar aplicaciones del sistema y del usuario. Te permite desinstalar aplicaciones de tu dispositivo como quieras, sin necesidad de un ordenador.\n\nUn agradecimiento especial a %s.\nCanta no sería lo mismo sin su trabajo.</string>
+    <string name="canta_description">Canta es una aplicación de desinstalación de código abierto que utiliza Shizuku para eliminar aplicaciones del sistema y del usuario. Te permite desinstalar aplicaciones de tu dispositivo como quieras, sin necesidad de un ordenador.\n\nUn agradecimiento especial a %s.\nCanta no sería lo mismo sin su trabajo.</string>
     <string name="search_apps">Buscar aplicaciones</string>
-    <string
-        name="auto_update_bloat_list"
-    >Actualizar automáticamente las aplicaciones no deseadas</string>
-    <string
-        name="auto_update_bloat_list_description"
-    >Recibir automáticamente una nueva versión de la lista de aplicaciones. Esto garantiza que los iconos y las descripciones de las aplicaciones estén actualizados.</string>
+    <string name="auto_update_bloat_list">Actualizar automáticamente las aplicaciones no deseadas</string>
+    <string name="auto_update_bloat_list_description">Recibir automáticamente una nueva versión de la lista de aplicaciones. Esto garantiza que los iconos y las descripciones de las aplicaciones estén actualizados.</string>
     <string name="settings">Ajustes</string>
     <string name="confirm_uninstall">Confirma las desinstalaciones</string>
     <string name="app_version">Versión de la aplicación: %s</string>
-    <string
-        name="bloatware_list_version"
-    >Lista de programas no deseados más recientes</string>
-    <string
-        name="no_warranty_content"
-    >Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con su dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicio del dispositivo de forma continua, pérdida de datos, etc. El desarrollador de esta aplicación no es responsable de ningún daño causado a su dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
-    <string
-        name="disclaimer"
-    >Descargo de responsabilidad - Sin garantía</string>
-    <string
-        name="proceed_at_own_risk"
-    >Al hacer clic en «Continuar», acepta utilizar esta aplicación bajo su propia responsabilidad.</string>
+    <string name="bloatware_list_version">Lista de programas no deseados más recientes</string>
+    <string name="no_warranty_content">Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con su dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicio del dispositivo de forma continua, pérdida de datos, etc. El desarrollador de esta aplicación no es responsable de ningún daño causado a su dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
+    <string name="disclaimer">Descargo de responsabilidad - Sin garantía</string>
+    <string name="proceed_at_own_risk">Al hacer clic en «Continuar», acepta utilizar esta aplicación bajo su propia responsabilidad.</string>
     <string name="never_show_again">No volver a mostrar este mensaje</string>
     <string name="proceed">Continuar</string>
-    <string
-        name="confirm_uninstall_description"
-    >Indicar si se debe mostrar el diálogo para confirmar la desinstalación.</string>
+    <string name="confirm_uninstall_description">Indicar si se debe mostrar el diálogo para confirmar la desinstalación.</string>
     <string name="select_all">Seleccionar todo</string>
-    <string
-        name="select_all_tip"
-    >Pulse %d veces más para activar seleccionar todo.</string>
-    <string
-        name="select_all_enabled"
-    >Seleccionar todo se ha activado para «Recomendado».</string>
+    <string name="select_all_tip">Pulse %d veces más para activar seleccionar todo.</string>
+    <string name="select_all_enabled">Seleccionar todo se ha activado para «Recomendado».</string>
     <string name="uninstall_options_title">Opciones de desinstalación</string>
     <string name="uninstall_app">Desinstalar la aplicación</string>
-    <string
-        name="reset_to_factory_version"
-    >Reiniciar a la versión de fábrica</string>
+    <string name="reset_to_factory_version">Reiniciar a la versión de fábrica</string>
     <string name="import_preset">Importar los ajustes preestablecidos</string>
-    <string
-        name="import_preset_description"
-    >Importar los ajustes preestablecidos desde el portapapeles o inserta un archivo JSON directamente.</string>
+    <string name="import_preset_description">Importar los ajustes preestablecidos desde el portapapeles o inserta un archivo JSON directamente.</string>
     <string name="clipboard">Portapapeles</string>
-    <string
-        name="import_preset_clipboard_description"
-    >Importar ajustes preestablecidos desde el portapapeles. Asegúrate de que has copiado un archivo JSON válido para Canta.</string>
-    <string
-        name="paste_preset_json"
-    >Pegar un archivo JSON predeterminado</string>
-    <string
-        name="paste_preset_json_here"
-    >Pega los ajustes preestablecidos del archivo JSON aquí ...</string>
-    <string
-        name="enter_valid_json"
-    >Por favor, introduce un archivo JSON válido</string>
+    <string name="import_preset_clipboard_description">Importar ajustes preestablecidos desde el portapapeles. Asegúrate de que has copiado un archivo JSON válido para Canta.</string>
+    <string name="paste_preset_json">Pegar un archivo JSON predeterminado</string>
+    <string name="paste_preset_json_here">Pega los ajustes preestablecidos del archivo JSON aquí ...</string>
+    <string name="enter_valid_json">Por favor, introduce un archivo JSON válido</string>
     <string name="import_button">Importar</string>
     <string name="create_preset">Crear los ajustes preestablecidos</string>
-    <string
-        name="create_preset_description"
-    >Crea un ajuste preestablecido a partir de las aplicaciones actualmente desinstaladas. Esto guardará una lista de aplicaciones que se pueden compartir y aplicar en otros dispositivos.</string>
+    <string name="create_preset_description">Crea un ajuste preestablecido a partir de las aplicaciones actualmente desinstaladas. Esto guardará una lista de aplicaciones que se pueden compartir y aplicar en otros dispositivos.</string>
     <string name="preset_name">Nombre del ajuste preestablecido</string>
     <string name="preset_name_missing_error">Es necesario un nombre</string>
-    <string
-        name="preset_name_placeholder"
-    >Por ejemplo, Samsung Bloatware</string>
+    <string name="preset_name_placeholder">Por ejemplo, Samsung Bloatware</string>
     <string name="optional_description">Descripción (opcional)</string>
-    <string
-        name="preset_description_placeholder"
-    >Describe lo que elimina estos ajustes preestablecidos...</string>
+    <string name="preset_description_placeholder">Describe lo que elimina estos ajustes preestablecidos...</string>
     <string name="save">Guardar</string>
-    <string
-        name="import_preset_clipboard"
-    >Importar desde el portapapeles</string>
+    <string name="import_preset_clipboard">Importar desde el portapapeles</string>
     <string name="presets">Ajustes preestablecidos</string>
     <string name="preset_deleted">Ajustes preestablecidos eliminados</string>
-    <string
-        name="preset_delete_error"
-    >Error al eliminar el ajuste predefinido</string>
-    <string
-        name="preset_copied"
-    >Ajustes preestablecidos copiados al portapapeles</string>
+    <string name="preset_delete_error">Error al eliminar el ajuste predefinido</string>
+    <string name="preset_copied">Ajustes preestablecidos copiados al portapapeles</string>
     <string name="import_failed">Importación fallida</string>
     <string name="no_presets">Sin ajustes preestablecidos</string>
-    <string
-        name="presets_description"
-    >Crear o importar ajustes preestablecidos para administrar listas de desinstalación de aplicaciones en dispositivos</string>
+    <string name="presets_description">Crear o importar ajustes preestablecidos para administrar listas de desinstalación de aplicaciones en dispositivos</string>
     <string name="more_options">Más opciones</string>
     <string name="edit">Editar</string>
     <string name="add_apps">Añadir aplicaciones</string>
     <string name="share">Compartir</string>
     <string name="delete">Borrar</string>
     <string name="apply_preset">Aplicar los ajustes preestablecidos</string>
-    <string
-        name="preset_save_error"
-    >Error al guardar los ajustes preestablecidos</string>
+    <string name="preset_save_error">Error al guardar los ajustes preestablecidos</string>
     <string name="selected_apps">Aplicaciones seleccionadas</string>
     <string name="text">Texto</string>
     <string name="install_shizuku">Instalar la aplicación Shizuku</string>
     <string name="start_shizuku_service">Iniciar el servicio Shizuku</string>
-    <string
-        name="grant_shizuku_permission_to_canta"
-    >Conceder el permiso a Canta en Shizuku</string>
+    <string name="grant_shizuku_permission_to_canta">Conceder el permiso a Canta en Shizuku</string>
     <string name="shizuku_required">Se requiere Shizuku</string>
-    <string
-        name="shizuku_requirement_description"
-    >Canta utiliza Shizuku para desinstalar aplicaciones sin necesidad de acceso root. Shizuku proporciona una forma segura de acceder a los SDK de nivel de sistema.</string>
+    <string name="shizuku_requirement_description">Canta utiliza Shizuku para desinstalar aplicaciones sin necesidad de acceso root. Shizuku proporciona una forma segura de acceder a los SDK de nivel de sistema.</string>
     <string name="commits_url">URL del Commits</string>
-    <string
-        name="commits_url_description"
-    >Dónde obtener información de los commits para las actualizaciones</string>
-    <string
-        name="reset_to_default"
-    >Restablecer a los valores predeterminados</string>
+    <string name="commits_url_description">Dónde obtener información de los commits para las actualizaciones</string>
+    <string name="reset_to_default">Restablecer a los valores predeterminados</string>
     <string name="advanced_settings">Configuración avanzada</string>
     <string name="click_to_expand">Haz clic para expandir</string>
     <string name="bloat_list_url">URL de la lista de Bloat</string>
-    <string
-        name="bloat_list_url_description"
-    >Dónde conseguir insignias y descripciones.</string>
-    <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string
-        name="allow_unsafe_uninstalls_description"
-    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string
-        name="canta_donate_request"
-    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
+    <string name="bloat_list_url_description">Dónde conseguir insignias y descripciones.</string>
+    <string name="allow_unsafe_selections">Permitir selecciones no seguras</string>
+    <string name="allow_unsafe_uninstalls_description">Se permite seleccionar aplicaciones marcadas como inseguras (los ajustes predeterminados de la aplicación omite esto).</string>
+    <string name="donate">Donar</string>
+    <string name="canta_donate_request">¿Te gusta Canta? Lo he creado en mi tiempo libre pensando en la privacidad: sin anuncios ni seguimiento. Si te resulta útil, ¡considera apoyar el desarrollo!</string>
+    <string name="success">¡Correctamente %1$ss!</string>
 </resources>

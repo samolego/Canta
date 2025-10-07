@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">取消</string>
     <string name="ok">是的</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >您確定要解除安裝 %1$s 個應用程式嗎？</string>
+    <string name="are_you_sure_to_uninstall_apps">您確定要解除安裝 %1$s 個應用程式嗎？</string>
     <string name="copy_package_name_to_clipboard">將包名複製到剪貼簿</string>
     <string name="no_description_available">沒有可用的描述</string>
     <string name="uninstall">解除安裝</string>
@@ -26,40 +24,28 @@
         <item quantity="other">已選擇 %d 個應用程式</item>
     </plurals>
     <plurals name="success_uninstalled">
-    <item quantity="one">You have successfully uninstalled %d app!</item>
-    <item quantity="other">You have successfully uninstalled %d apps!</item>
-</plurals>
-<plurals name="success_reinstalled">
-    <item quantity="one">You have successfully reinstalled %d app!</item>
-    <item quantity="other">You have successfully reinstalled %d apps!</item>
-</plurals>
+        <item quantity="other">You have successfully uninstalled %d apps!</item>
+    </plurals>
+    <plurals name="success_reinstalled">
+        <item quantity="other">You have successfully reinstalled %d apps!</item>
+    </plurals>
     <string name="copy">複製</string>
     <string name="app_settings">應用程式資訊</string>
     <string name="close">關閉</string>
-    <string
-        name="canta_description"
-    >Canta 是一個用於卸載應用的開源應用，它可憑藉 Shizuku 刪除系統和用戶應用程序。讓您無需電腦，隨心所欲地爲設備減負。\n\n特別感謝 %s。\n沒有他們的協助，Canta 就不會是現在這樣。</string>
+    <string name="canta_description">Canta 是一個用於卸載應用的開源應用，它可憑藉 Shizuku 刪除系統和用戶應用程序。讓您無需電腦，隨心所欲地爲設備減負。\n\n特別感謝 %s。\n沒有他們的協助，Canta 就不會是現在這樣。</string>
     <string name="search_apps">搜尋應用</string>
     <string name="auto_update_bloat_list">自動更新膨脹軟體列表</string>
-    <string
-        name="auto_update_bloat_list_description"
-    >自動取得新版本的應用程式的膨脹資訊，這保證了最新的徽章和應用程式描述。</string>
+    <string name="auto_update_bloat_list_description">自動取得新版本的應用程式的膨脹資訊，這保證了最新的徽章和應用程式描述。</string>
     <string name="settings">設定</string>
     <string name="confirm_uninstall">確認解除安裝</string>
     <string name="app_version">應用程式版本: %s</string>
     <string name="bloatware_list_version">最新膨脹軟體列表</string>
-    <string
-        name="no_warranty_content"
-    >此應用程式根據第三方資訊提供應用程式刪除建議。這些建議僅供參考，並不保證您的特定設備的安全性或相容性。解除安裝系統應用程式可能會導致意外問題，包括但不限於：功能喪失、系統不穩定、裝置循環啟動、資料遺失等。</string>
+    <string name="no_warranty_content">此應用程式根據第三方資訊提供應用程式刪除建議。這些建議僅供參考，並不保證您的特定設備的安全性或相容性。解除安裝系統應用程式可能會導致意外問題，包括但不限於：功能喪失、系統不穩定、裝置循環啟動、資料遺失等。</string>
     <string name="disclaimer">免責聲明 不負責任</string>
-    <string
-        name="proceed_at_own_risk"
-    >點擊“繼續”，您同意自行承擔使用此應用程式的風險。</string>
+    <string name="proceed_at_own_risk">點擊“繼續”，您同意自行承擔使用此應用程式的風險。</string>
     <string name="never_show_again">不要再顯示此訊息</string>
     <string name="proceed">繼續</string>
-    <string
-        name="confirm_uninstall_description"
-    >是否顯示確認解除安裝的對話框。</string>
+    <string name="confirm_uninstall_description">是否顯示確認解除安裝的對話框。</string>
     <string name="select_all">全選</string>
     <string name="select_all_tip">點選 %d 更多次即可啟用全選功能。</string>
     <string name="select_all_enabled">已啟用全選，過濾類型「推薦」。</string>
@@ -67,28 +53,20 @@
     <string name="uninstall_app">卸載應用程式</string>
     <string name="reset_to_factory_version">重置應用程式為出廠版本</string>
     <string name="import_preset">導入預設</string>
-    <string
-        name="import_preset_description"
-    >從剪貼簿導入預設或直接粘貼 JSON 文字。</string>
+    <string name="import_preset_description">從剪貼簿導入預設或直接粘貼 JSON 文字。</string>
     <string name="clipboard">剪貼簿</string>
-    <string
-        name="import_preset_clipboard_description"
-    >從剪貼簿導入預設，確保您已複製有效的 JSON 文字的 Canta 預設。</string>
+    <string name="import_preset_clipboard_description">從剪貼簿導入預設，確保您已複製有效的 JSON 文字的 Canta 預設。</string>
     <string name="paste_preset_json">粘貼預設 JSON</string>
     <string name="paste_preset_json_here">將 JSON 預設貼到此處……</string>
     <string name="enter_valid_json">請輸入有效的 JSON</string>
     <string name="import_button">導入</string>
     <string name="create_preset">建立預設</string>
-    <string
-        name="create_preset_description"
-    >從當前卸載的應用程式創建預設，這將保存可在其他設備上共用和應用的應用程式清單。</string>
+    <string name="create_preset_description">從當前卸載的應用程式創建預設，這將保存可在其他設備上共用和應用的應用程式清單。</string>
     <string name="preset_name">預設名稱</string>
     <string name="preset_name_missing_error">必須填寫名稱</string>
     <string name="preset_name_placeholder">例如三星設備</string>
     <string name="optional_description">描述（可選）</string>
-    <string
-        name="preset_description_placeholder"
-    >描述此預設刪除的內容……</string>
+    <string name="preset_description_placeholder">描述此預設刪除的內容……</string>
     <string name="save">儲存</string>
     <string name="import_preset_clipboard">從剪貼簿導入</string>
     <string name="presets">預設</string>
@@ -97,9 +75,7 @@
     <string name="preset_copied">預設已複製到剪貼板</string>
     <string name="import_failed">匯入失敗</string>
     <string name="no_presets">無預設</string>
-    <string
-        name="presets_description"
-    >創建或導入預設以跨設備管理應用程式卸載清單</string>
+    <string name="presets_description">創建或導入預設以跨設備管理應用程式卸載清單</string>
     <string name="more_options">更多選項</string>
     <string name="edit">編輯</string>
     <string name="add_apps">添加應用程式</string>
@@ -111,13 +87,9 @@
     <string name="text">文本</string>
     <string name="install_shizuku">安裝 Shizuku 應用程式</string>
     <string name="start_shizuku_service">啟動 Shizuku 服務</string>
-    <string
-        name="grant_shizuku_permission_to_canta"
-    >在 Shizuku 中向 Canta 授予許可權</string>
+    <string name="grant_shizuku_permission_to_canta">在 Shizuku 中向 Canta 授予許可權</string>
     <string name="shizuku_required">需要 Shizuku</string>
-    <string
-        name="shizuku_requirement_description"
-    >Canta 使用 Shizuku 卸載應用程式，而無需 root 許可權。Shizuku 提供了一種訪問系統級 SDK 的安全方法。</string>
+    <string name="shizuku_requirement_description">Canta 使用 Shizuku 卸載應用程式，而無需 root 許可權。Shizuku 提供了一種訪問系統級 SDK 的安全方法。</string>
     <string name="commits_url">提交紀錄 URL</string>
     <string name="commits_url_description">從哪裡取得更新的提交資訊</string>
     <string name="reset_to_default">  重設為預設值</string>
@@ -127,4 +99,7 @@
     <string name="bloat_list_url_description">從哪裡取得徽章與描述</string>
     <string name="allow_unsafe_selections">允許不安全的選取</string>
     <string name="allow_unsafe_uninstalls_description">是否允許選取被標記為不安全的應用程式（套用預設時已自動略過此限制）。</string>
+    <string name="donate">Donate</string>
+    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="success">Success %1$s!</string>
 </resources>

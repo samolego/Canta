@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">キャンセル</string>
     <string name="ok">OK</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >%1$s個のアプリをアンインストールしますか？</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >クリップボードにコピーしました</string>
+    <string name="are_you_sure_to_uninstall_apps">%1$s個のアプリをアンインストールしますか？</string>
+    <string name="copy_package_name_to_clipboard">クリップボードにコピーしました</string>
     <string name="no_description_available">説明はありません</string>
     <string name="uninstall">アンインストール</string>
     <string name="reinstall">再インストール</string>
@@ -28,73 +24,49 @@
         <item quantity="other">%d apps selected</item>
     </plurals>
     <plurals name="success_uninstalled">
-    <item quantity="one">You have successfully uninstalled %d app!</item>
-    <item quantity="other">You have successfully uninstalled %d apps!</item>
-</plurals>
-<plurals name="success_reinstalled">
-    <item quantity="one">You have successfully reinstalled %d app!</item>
-    <item quantity="other">You have successfully reinstalled %d apps!</item>
-</plurals>
+        <item quantity="other">You have successfully uninstalled %d apps!</item>
+    </plurals>
+    <plurals name="success_reinstalled">
+        <item quantity="other">You have successfully reinstalled %d apps!</item>
+    </plurals>
     <string name="copy">Copy</string>
     <string name="app_settings">App info</string>
     <string name="close">Close</string>
-    <string
-        name="canta_description"
-    >Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">Search apps</string>
     <string name="auto_update_bloat_list">Auto update bloat list</string>
-    <string
-        name="auto_update_bloat_list_description"
-    >Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
+    <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
     <string name="settings">Settings</string>
     <string name="confirm_uninstall">Confirm uninstallations</string>
     <string name="app_version">App version: %s</string>
     <string name="bloatware_list_version">Latest bloatware list</string>
-    <string
-        name="no_warranty_content"
-    >This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
+    <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
     <string name="disclaimer">Disclaimer - No Warranty</string>
-    <string
-        name="proceed_at_own_risk"
-    >By clicking \"Proceed\", you agree to use this app at your own risk.</string>
+    <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
     <string name="never_show_again">Don\'t show this message again</string>
     <string name="proceed">Proceed</string>
-    <string
-        name="confirm_uninstall_description"
-    >Whether to show the dialog for confirming uninstall action.</string>
+    <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
     <string name="select_all">Select all</string>
-    <string
-        name="select_all_tip"
-    >Tap %d more times to enable select all functionality.</string>
-    <string
-        name="select_all_enabled"
-    >Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
+    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
     <string name="uninstall_options_title">Uninstall Options</string>
     <string name="uninstall_app">Uninstall app</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
     <string name="import_preset">Import preset</string>
-    <string
-        name="import_preset_description"
-    >Import a preset from clipboard or paste JSON text directly.</string>
+    <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
     <string name="clipboard">Clipboard</string>
-    <string
-        name="import_preset_clipboard_description"
-    >Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
+    <string name="import_preset_clipboard_description">Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
     <string name="paste_preset_json">Paste preset JSON</string>
     <string name="paste_preset_json_here">Paste JSON preset here ...</string>
     <string name="enter_valid_json">Please enter valid JSON</string>
     <string name="import_button">Import</string>
     <string name="create_preset">Create preset</string>
-    <string
-        name="create_preset_description"
-    >Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
+    <string name="create_preset_description">Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
     <string name="preset_name">Preset name</string>
     <string name="preset_name_missing_error">Name is required</string>
     <string name="preset_name_placeholder">e.g., Samsung Bloatware</string>
     <string name="optional_description">Description (Optional)</string>
-    <string
-        name="preset_description_placeholder"
-    >Describe what this preset removes...</string>
+    <string name="preset_description_placeholder">Describe what this preset removes...</string>
     <string name="save">Save</string>
     <string name="import_preset_clipboard">Import from clipboard</string>
     <string name="presets">Presets</string>
@@ -103,9 +75,7 @@
     <string name="preset_copied">Preset copied to clipboard</string>
     <string name="import_failed">Import failed</string>
     <string name="no_presets">No presets</string>
-    <string
-        name="presets_description"
-    >Create or import presets to manage app uninstall lists across devices</string>
+    <string name="presets_description">Create or import presets to manage app uninstall lists across devices</string>
     <string name="more_options">More options</string>
     <string name="edit">Edit</string>
     <string name="add_apps">Add apps</string>
@@ -117,31 +87,19 @@
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
-    <string
-        name="grant_shizuku_permission_to_canta"
-    >Grant permission to Canta in Shizuku</string>
+    <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku Required</string>
-    <string
-        name="shizuku_requirement_description"
-    >Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
+    <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
     <string name="commits_url">Commits URL</string>
-    <string
-        name="commits_url_description"
-    >Where to get commit info for updates from</string>
+    <string name="commits_url_description">Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
-    <string
-        name="bloat_list_url_description"
-    >Where to get badges and descriptions from.</string>
+    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string
-        name="allow_unsafe_uninstalls_description"
-    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
     <string name="donate">Donate</string>
-    <string
-        name="canta_donate_request"
-    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
     <string name="success">Success %1$s!</string>
 </resources>
