@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Prekliči</string>
     <string name="ok">V redu</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >Ste prepričani, da želite odstraniti %1$s aplikacij?</string>
+    <string name="are_you_sure_to_uninstall_apps">Ste prepričani, da želite odstraniti %1$s aplikacij?</string>
     <string name="copy_package_name_to_clipboard">Kopiraj ime paketa</string>
     <string name="no_description_available">Opis ni na voljo</string>
     <string name="uninstall">Odstrani</string>
@@ -32,81 +30,55 @@
         <item quantity="other">Izbranih %d aplikacij</item>
     </plurals>
     <plurals name="success_uninstalled">
-    <item quantity="one">You have successfully uninstalled %d app!</item>
-    <item quantity="other">You have successfully uninstalled %d apps!</item>
-</plurals>
-<plurals name="success_reinstalled">
-    <item quantity="one">You have successfully reinstalled %d app!</item>
-    <item quantity="other">You have successfully reinstalled %d apps!</item>
-</plurals>
+        <item quantity="one">You have successfully uninstalled %d app!</item>
+        <item quantity="two">You have successfully uninstalled %d apps!</item>
+        <item quantity="few">You have successfully uninstalled %d apps!</item>
+        <item quantity="other">You have successfully uninstalled %d apps!</item>
+    </plurals>
+    <plurals name="success_reinstalled">
+        <item quantity="one">You have successfully reinstalled %d app!</item>
+        <item quantity="two">You have successfully reinstalled %d apps!</item>
+        <item quantity="few">You have successfully reinstalled %d apps!</item>
+        <item quantity="other">You have successfully reinstalled %d apps!</item>
+    </plurals>
     <string name="copy">Kopiraj</string>
     <string name="app_settings">Podatki o aplikaciji</string>
     <string name="close">Zapri</string>
-    <string
-        name="canta_description"
-    >Canta je odprtokodna aplikacija, ki uporablja Shizuku, da lahko odstrani sistemske in uporabniške aplikacije.\nOmogoča vam da razbremenite svojo napravo navlake, ne da bi potrebovali računalnik.\n\nZahvala gre tudi %s.\nCanta brez njih ne bi bila enaka.</string>
+    <string name="canta_description">Canta je odprtokodna aplikacija, ki uporablja Shizuku, da lahko odstrani sistemske in uporabniške aplikacije.\nOmogoča vam da razbremenite svojo napravo navlake, ne da bi potrebovali računalnik.\n\nZahvala gre tudi %s.\nCanta brez njih ne bi bila enaka.</string>
     <string name="search_apps">Poišči aplikacije</string>
-    <string
-        name="auto_update_bloat_list"
-    >Samodejno posodobi seznam navlake</string>
-    <string
-        name="auto_update_bloat_list_description"
-    >Samodejno pridobi nov seznam z navlako. Ta zagotavlja najnovejše opise in značke aplikacij.</string>
+    <string name="auto_update_bloat_list">Samodejno posodobi seznam navlake</string>
+    <string name="auto_update_bloat_list_description">Samodejno pridobi nov seznam z navlako. Ta zagotavlja najnovejše opise in značke aplikacij.</string>
     <string name="settings">Nastavitve</string>
     <string name="confirm_uninstall">Potrdi odstranitve</string>
     <string name="app_version">Verzija: %s</string>
     <string name="bloatware_list_version">Zadnji seznam navlake</string>
-    <string
-        name="no_warranty_content"
-    >Ta aplikacija zagotavlja priporočila za odstranitev aplikacij na podlagi informacij tretjih oseb. Ta priporočila so informativne narave in ne zagotavljajo varnosti ali združljivosti z vašo napravo. Odstranjevanje sistemskih aplikacij lahko povzroči nepričakovane težave, med drugim: izgubo funkcionalnosti, nestabilnost sistema, nezmožnost zagona naprave - bootloop, izgubo podatkov itd. Razvijalec te aplikacije ni odgovoren za morebitno škodo, ki bi nastala na vaši napravi zaradi upoštevanja navedenih priporočil oz. opisov.</string>
-    <string
-        name="disclaimer"
-    >Izjava o omejitvi odgovornosti - ni garancije</string>
-    <string
-        name="proceed_at_own_risk"
-    >S klikom na gumb \"Nadaljuj\" se strinjate z uporabo aplikacije na lastno odgovornost.</string>
-    <string
-        name="never_show_again"
-    >Nikoli več ne prikaži tega obvestila</string>
+    <string name="no_warranty_content">Ta aplikacija zagotavlja priporočila za odstranitev aplikacij na podlagi informacij tretjih oseb. Ta priporočila so informativne narave in ne zagotavljajo varnosti ali združljivosti z vašo napravo. Odstranjevanje sistemskih aplikacij lahko povzroči nepričakovane težave, med drugim: izgubo funkcionalnosti, nestabilnost sistema, nezmožnost zagona naprave - bootloop, izgubo podatkov itd. Razvijalec te aplikacije ni odgovoren za morebitno škodo, ki bi nastala na vaši napravi zaradi upoštevanja navedenih priporočil oz. opisov.</string>
+    <string name="disclaimer">Izjava o omejitvi odgovornosti - ni garancije</string>
+    <string name="proceed_at_own_risk">S klikom na gumb \"Nadaljuj\" se strinjate z uporabo aplikacije na lastno odgovornost.</string>
+    <string name="never_show_again">Nikoli več ne prikaži tega obvestila</string>
     <string name="proceed">Nadaljuj</string>
-    <string
-        name="confirm_uninstall_description"
-    >Ali naj se prikaže pogovorno okno za potrditev odstranjevanja.</string>
+    <string name="confirm_uninstall_description">Ali naj se prikaže pogovorno okno za potrditev odstranjevanja.</string>
     <string name="select_all">Izberi vse</string>
-    <string
-        name="select_all_tip"
-    >Kliknite še %d-krat, da omogočite možnost izbora vseh aplikacij.</string>
-    <string
-        name="select_all_enabled"
-    >Za vrsto filtra \"Priporočeno\" je sedaj omogočena možnost \"Izberi vse\".</string>
+    <string name="select_all_tip">Kliknite še %d-krat, da omogočite možnost izbora vseh aplikacij.</string>
+    <string name="select_all_enabled">Za vrsto filtra \"Priporočeno\" je sedaj omogočena možnost \"Izberi vse\".</string>
     <string name="uninstall_options_title">Odstranitvene možnosti</string>
     <string name="uninstall_app">Odstrani aplikacijo</string>
-    <string
-        name="reset_to_factory_version"
-    >Ponastavi na tovarniško verzijo</string>
+    <string name="reset_to_factory_version">Ponastavi na tovarniško verzijo</string>
     <string name="import_preset">Uvozi predlogo</string>
-    <string
-        name="import_preset_description"
-    >Import a preset from clipboard or paste JSON text directly.</string>
+    <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
     <string name="clipboard">Odložišče</string>
-    <string
-        name="import_preset_clipboard_description"
-    >Uvozi predlogo iz odložišča. Pred tem morate kopirati veljavno predlogo za Canto v JSON obliki.</string>
+    <string name="import_preset_clipboard_description">Uvozi predlogo iz odložišča. Pred tem morate kopirati veljavno predlogo za Canto v JSON obliki.</string>
     <string name="paste_preset_json">Prilepi JSON predlogo</string>
     <string name="paste_preset_json_here">Tu prilepi JSON predlogo ...</string>
     <string name="enter_valid_json">Prosimo, vnesite veljaven JSON</string>
     <string name="import_button">Uvozi</string>
     <string name="create_preset">Ustvari predlogo</string>
-    <string
-        name="create_preset_description"
-    >Ustvarite predlogo iz trenutno odstranjenih aplikacij. Tako boste shranili seznam aplikacij, ki ga lahko delite in uporabite v drugih napravah.</string>
+    <string name="create_preset_description">Ustvarite predlogo iz trenutno odstranjenih aplikacij. Tako boste shranili seznam aplikacij, ki ga lahko delite in uporabite v drugih napravah.</string>
     <string name="preset_name">Ime predloge</string>
     <string name="preset_name_missing_error">Ime je obvezno</string>
     <string name="preset_name_placeholder">npr. Samsungova nesnaga</string>
     <string name="optional_description">Opis (opcijsko)</string>
-    <string
-        name="preset_description_placeholder"
-    >Opišite, kaj ta predloga odstrani ...</string>
+    <string name="preset_description_placeholder">Opišite, kaj ta predloga odstrani ...</string>
     <string name="save">Shrani</string>
     <string name="import_preset_clipboard">Uvozi iz odložišča</string>
     <string name="presets">Predloge</string>
@@ -115,9 +87,7 @@
     <string name="preset_copied">Predloga skopirana v odložišče</string>
     <string name="import_failed">Uvoz ni uspel</string>
     <string name="no_presets">Ni predlog</string>
-    <string
-        name="presets_description"
-    >Ustvarite ali uvozite predloge za upravljanje seznamov navlake v različnih napravah</string>
+    <string name="presets_description">Ustvarite ali uvozite predloge za upravljanje seznamov navlake v različnih napravah</string>
     <string name="more_options">Več možnosti</string>
     <string name="edit">Uredi</string>
     <string name="add_apps">Dodaj aplikacije</string>
@@ -129,31 +99,19 @@
     <string name="text">Besedilo</string>
     <string name="install_shizuku">Namesti aplikacijo Shizuku</string>
     <string name="start_shizuku_service">Zaženi storitev Shizuku</string>
-    <string
-        name="grant_shizuku_permission_to_canta"
-    >Odobri dovoljenje Canti v Shizukuju</string>
+    <string name="grant_shizuku_permission_to_canta">Odobri dovoljenje Canti v Shizukuju</string>
     <string name="shizuku_required">Potreben je Shizuku</string>
-    <string
-        name="shizuku_requirement_description"
-    >Canta za odstranjevanje aplikacij uporablja Shizuku, da ne potrebuje korenskega dostopa. Shizuku zagotavlja varen način dostopa do SDK-ja na sistemski ravni.</string>
+    <string name="shizuku_requirement_description">Canta za odstranjevanje aplikacij uporablja Shizuku, da ne potrebuje korenskega dostopa. Shizuku zagotavlja varen način dostopa do SDK-ja na sistemski ravni.</string>
     <string name="commits_url">URL za commite</string>
-    <string
-        name="commits_url_description"
-    >Od kod aplikacija pridobi informacije o commitih za posodobitve</string>
+    <string name="commits_url_description">Od kod aplikacija pridobi informacije o commitih za posodobitve</string>
     <string name="reset_to_default">Ponastavi na privzeto</string>
     <string name="advanced_settings">Napredne nastavitve</string>
     <string name="click_to_expand">Kliknite za razširitev</string>
     <string name="bloat_list_url">URL seznama navlake</string>
-    <string
-        name="bloat_list_url_description"
-    >Od kod aplikacija pridobi značke in opise.</string>
+    <string name="bloat_list_url_description">Od kod aplikacija pridobi značke in opise.</string>
     <string name="allow_unsafe_selections">Dovoli nevarne izbire</string>
-    <string
-        name="allow_unsafe_uninstalls_description"
-    >Ali dovoliti izbiranje aplikacij, označenih kot unsafe (uporaba predlog obide to nastavitev).</string>
+    <string name="allow_unsafe_uninstalls_description">Ali dovoliti izbiranje aplikacij, označenih kot unsafe (uporaba predlog obide to nastavitev).</string>
     <string name="donate">Donate</string>
-    <string
-        name="canta_donate_request"
-    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
     <string name="success">Success %1$s!</string>
 </resources>
