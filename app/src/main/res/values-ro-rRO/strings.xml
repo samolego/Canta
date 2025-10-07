@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">Anulați</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Sunteţi sigur că doriţi să dezinstalaţi aplicaţiile %1$s?</string>
-    <string name="copy_package_name_to_clipboard">Copiați numele pachetului în clipboard</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >Sunteţi sigur că doriţi să dezinstalaţi aplicaţiile %1$s?</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >Copiați numele pachetului în clipboard</string>
     <string name="no_description_available">Nicio descriere disponibilă</string>
     <string name="uninstall">Dezinstalați</string>
     <string name="reinstall">Reinstalaţi</string>
@@ -27,44 +31,78 @@
         <item quantity="few">%d Câteva aplicații selectate</item>
         <item quantity="other">%d Alte aplicații selectate</item>
     </plurals>
+    <plurals name="success_uninstalled">
+    <item quantity="one">You have successfully uninstalled %d app!</item>
+    <item quantity="other">You have successfully uninstalled %d apps!</item>
+</plurals>
+<plurals name="success_reinstalled">
+    <item quantity="one">You have successfully reinstalled %d app!</item>
+    <item quantity="other">You have successfully reinstalled %d apps!</item>
+</plurals>
     <string name="copy">Copiați</string>
     <string name="app_settings">Informaţii despre aplicație</string>
     <string name="close">Închideți</string>
-    <string name="canta_description">CANTA este o aplicație open source de dezinstalare care folosește Shizuku pentru a elimina aplicațiile de sistem și utilizator. Îți permite să îți deblochezi dispozitivul așa cum dorești, nu este necesar un calculator.\n\nMulțumiri speciale %s.\nCANTA nu ar fi la fel fără munca lor.</string>
+    <string
+        name="canta_description"
+    >CANTA este o aplicație open source de dezinstalare care folosește Shizuku pentru a elimina aplicațiile de sistem și utilizator. Îți permite să îți deblochezi dispozitivul așa cum dorești, nu este necesar un calculator.\n\nMulțumiri speciale %s.\nCANTA nu ar fi la fel fără munca lor.</string>
     <string name="search_apps">Căutați aplicații</string>
-    <string name="auto_update_bloat_list">Auto-actualizare lista applicații nedorite</string>
-    <string name="auto_update_bloat_list_description">Preluați automat informațiile despre aplicațiile nedorite. Acest lucru garantează existența actualizării insignelor si a descrierii aplicațiilor.</string>
+    <string
+        name="auto_update_bloat_list"
+    >Auto-actualizare lista applicații nedorite</string>
+    <string
+        name="auto_update_bloat_list_description"
+    >Preluați automat informațiile despre aplicațiile nedorite. Acest lucru garantează existența actualizării insignelor si a descrierii aplicațiilor.</string>
     <string name="settings">Setări</string>
     <string name="confirm_uninstall">Confirmați dezinstalarea</string>
     <string name="app_version">Versiunea aplicației: %s</string>
     <string name="bloatware_list_version">Ultima lista de bloatware</string>
-    <string name="no_warranty_content">Această aplicație oferă recomandări de eliminare a aplicațiilor bazate pe informații despre terți. Aceste recomandări sunt de natură informativă și nu garantează siguranța sau compatibilitatea cu dispozitivul dvs. specific. Dezinstalarea aplicațiilor de sistem poate cauza probleme neașteptate, inclusiv, dar nelimitându-se la: pierderea funcționalității, instabilitatea sistemului, bootloop-uri ale dispozitivului, pierderea datelor etc. Dezvoltatorul acestei aplicații nu este responsabil pentru nicio defecțiune efectuată pe dispozitiv ca urmare a recomandărilor furnizate.</string>
+    <string
+        name="no_warranty_content"
+    >Această aplicație oferă recomandări de eliminare a aplicațiilor bazate pe informații despre terți. Aceste recomandări sunt de natură informativă și nu garantează siguranța sau compatibilitatea cu dispozitivul dvs. specific. Dezinstalarea aplicațiilor de sistem poate cauza probleme neașteptate, inclusiv, dar nelimitându-se la: pierderea funcționalității, instabilitatea sistemului, bootloop-uri ale dispozitivului, pierderea datelor etc. Dezvoltatorul acestei aplicații nu este responsabil pentru nicio defecțiune efectuată pe dispozitiv ca urmare a recomandărilor furnizate.</string>
     <string name="disclaimer">Avertisment - Fără garanție</string>
-    <string name="proceed_at_own_risk">Apăsând pe \"Proceed\", sunteți de acord să folosiți această aplicație pe propriul risc.</string>
+    <string
+        name="proceed_at_own_risk"
+    >Apăsând pe \"Proceed\", sunteți de acord să folosiți această aplicație pe propriul risc.</string>
     <string name="never_show_again">Nu mai arăta acest mesaj</string>
     <string name="proceed">Continuați</string>
-    <string name="confirm_uninstall_description">Dacă se afişează dialogul pentru confirmarea acțiunii de dezinstalare.</string>
+    <string
+        name="confirm_uninstall_description"
+    >Dacă se afişează dialogul pentru confirmarea acțiunii de dezinstalare.</string>
     <string name="select_all">Selectați tot</string>
-    <string name="select_all_tip">Apăsați %d de mai multe ori pentru a activa toate funcționalitățile.</string>
-    <string name="select_all_enabled">Selectați tot ce a fost activat pentru tipul de filtru \"Recomandat\".</string>
+    <string
+        name="select_all_tip"
+    >Apăsați %d de mai multe ori pentru a activa toate funcționalitățile.</string>
+    <string
+        name="select_all_enabled"
+    >Selectați tot ce a fost activat pentru tipul de filtru \"Recomandat\".</string>
     <string name="uninstall_options_title">Opțiuni de dezinstalare</string>
     <string name="uninstall_app">Dezinstalează aplicația</string>
-    <string name="reset_to_factory_version">Resetare la versiune din fabrică</string>
+    <string
+        name="reset_to_factory_version"
+    >Resetare la versiune din fabrică</string>
     <string name="import_preset">Importează un preset</string>
-    <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
+    <string
+        name="import_preset_description"
+    >Import a preset from clipboard or paste JSON text directly.</string>
     <string name="clipboard">Clipboard</string>
-    <string name="import_preset_clipboard_description">Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
+    <string
+        name="import_preset_clipboard_description"
+    >Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
     <string name="paste_preset_json">Paste preset JSON</string>
     <string name="paste_preset_json_here">Paste JSON preset here ...</string>
     <string name="enter_valid_json">Please enter valid JSON</string>
     <string name="import_button">Import</string>
     <string name="create_preset">Create preset</string>
-    <string name="create_preset_description">Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
+    <string
+        name="create_preset_description"
+    >Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
     <string name="preset_name">Preset name</string>
     <string name="preset_name_missing_error">Name is required</string>
     <string name="preset_name_placeholder">e.g., Samsung Bloatware</string>
     <string name="optional_description">Description (Optional)</string>
-    <string name="preset_description_placeholder">Describe what this preset removes...</string>
+    <string
+        name="preset_description_placeholder"
+    >Describe what this preset removes...</string>
     <string name="save">Save</string>
     <string name="import_preset_clipboard">Import from clipboard</string>
     <string name="presets">Presets</string>
@@ -73,7 +111,9 @@
     <string name="preset_copied">Preset copied to clipboard</string>
     <string name="import_failed">Import failed</string>
     <string name="no_presets">No presets</string>
-    <string name="presets_description">Create or import presets to manage app uninstall lists across devices</string>
+    <string
+        name="presets_description"
+    >Create or import presets to manage app uninstall lists across devices</string>
     <string name="more_options">More options</string>
     <string name="edit">Edit</string>
     <string name="add_apps">Add apps</string>
@@ -85,16 +125,31 @@
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
-    <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
+    <string
+        name="grant_shizuku_permission_to_canta"
+    >Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku Required</string>
-    <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
+    <string
+        name="shizuku_requirement_description"
+    >Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
     <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
+    <string
+        name="commits_url_description"
+    >Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
+    <string
+        name="bloat_list_url_description"
+    >Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string
+        name="allow_unsafe_uninstalls_description"
+    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="donate">Donate</string>
+    <string
+        name="canta_donate_request"
+    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="success">Success %1$s!</string>
 </resources>

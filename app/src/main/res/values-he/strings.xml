@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">ביטול</string>
     <string name="ok">בסדר</string>
-    <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח שברצונך להסיר את ההתקנה של אפליקציות %1$s?</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >האם אתה בטוח שברצונך להסיר את ההתקנה של אפליקציות %1$s?</string>
     <string name="copy_package_name_to_clipboard">שם חבילה הועתק ללוח</string>
     <string name="no_description_available">אין תיאור זמין</string>
     <string name="uninstall">הסר התקנה</string>
@@ -29,44 +31,76 @@
         <item quantity="many">%d apps selected</item>
         <item quantity="other">%d apps selected</item>
     </plurals>
+    <plurals name="success_uninstalled">
+    <item quantity="one">You have successfully uninstalled %d app!</item>
+    <item quantity="other">You have successfully uninstalled %d apps!</item>
+</plurals>
+<plurals name="success_reinstalled">
+    <item quantity="one">You have successfully reinstalled %d app!</item>
+    <item quantity="other">You have successfully reinstalled %d apps!</item>
+</plurals>
     <string name="copy">העתק</string>
     <string name="app_settings">פרטי יישום</string>
     <string name="close">סגור</string>
-    <string name="canta_description">Canta היא אפליקציית הסרת יישומים בקוד פתוח המשתמשת ב- Shizuku כדי להסיר אפליקציות מערכת ומשתמשים. זה מאפשר לך לנהל את המכשיר שלך כרצונך, ללא צורך במחשב.\n\nתודה מיוחדת ל-%s.\nCanta לא יהיה אותו דבר בלי העבודה שלהם.</string>
+    <string
+        name="canta_description"
+    >Canta היא אפליקציית הסרת יישומים בקוד פתוח המשתמשת ב- Shizuku כדי להסיר אפליקציות מערכת ומשתמשים. זה מאפשר לך לנהל את המכשיר שלך כרצונך, ללא צורך במחשב.\n\nתודה מיוחדת ל-%s.\nCanta לא יהיה אותו דבר בלי העבודה שלהם.</string>
     <string name="search_apps">חיפוש יישומים</string>
     <string name="auto_update_bloat_list">עידכון אוטומטי רשימת נפח</string>
-    <string name="auto_update_bloat_list_description">אחזר אוטומטית גרסה חדשה של מידע על נפח היישום זה מבטיח תגים ותיאורי יישום עדכניים.</string>
+    <string
+        name="auto_update_bloat_list_description"
+    >אחזר אוטומטית גרסה חדשה של מידע על נפח היישום זה מבטיח תגים ותיאורי יישום עדכניים.</string>
     <string name="settings">הגדרות</string>
     <string name="confirm_uninstall">אימות הסרת יישומים</string>
     <string name="app_version">גרסת היישום: %s</string>
-    <string name="bloatware_list_version">רשימת ה-bloatware העדכנית ביותר</string>
-    <string name="no_warranty_content">אפליקציה זו מספקת המלצות להסרת אפליקציות על סמך מידע של צד שלישי. המלצות אלו הן אינפורמטיביות במהותן ואינן מבטיחות בטיחות או תאימות למכשיר הספציפי שלך. הסרת ההתקנה של אפליקציות מערכת עלולה לגרום לבעיות בלתי צפויות, לרבות, בין היתר,: אובדן פונקציונליות, חוסר יציבות של המערכת, לולאות אתחול המכשיר, אובדן נתונים וכו\'. מפתח האפליקציה אינו אחראי לכל נזק שייגרם למכשיר שלך כתוצאה מביצוע ההמלצות שסופקו.</string>
+    <string
+        name="bloatware_list_version"
+    >רשימת ה-bloatware העדכנית ביותר</string>
+    <string
+        name="no_warranty_content"
+    >אפליקציה זו מספקת המלצות להסרת אפליקציות על סמך מידע של צד שלישי. המלצות אלו הן אינפורמטיביות במהותן ואינן מבטיחות בטיחות או תאימות למכשיר הספציפי שלך. הסרת ההתקנה של אפליקציות מערכת עלולה לגרום לבעיות בלתי צפויות, לרבות, בין היתר,: אובדן פונקציונליות, חוסר יציבות של המערכת, לולאות אתחול המכשיר, אובדן נתונים וכו\'. מפתח האפליקציה אינו אחראי לכל נזק שייגרם למכשיר שלך כתוצאה מביצוע ההמלצות שסופקו.</string>
     <string name="disclaimer">כתב ויתור - אין אחריות</string>
-    <string name="proceed_at_own_risk">בלחיצה על \"המשך\", אתה מסכים להשתמש באפליקציה זו על אחריותך בלבד.</string>
+    <string
+        name="proceed_at_own_risk"
+    >בלחיצה על \"המשך\", אתה מסכים להשתמש באפליקציה זו על אחריותך בלבד.</string>
     <string name="never_show_again">אל תציג הודעה זו שנית</string>
     <string name="proceed">המשך</string>
-    <string name="confirm_uninstall_description">האם להציג את תיבת הדו-שיח לאישור פעולת הסרת ההתקנה.</string>
+    <string
+        name="confirm_uninstall_description"
+    >האם להציג את תיבת הדו-שיח לאישור פעולת הסרת ההתקנה.</string>
     <string name="select_all">בחר הכל</string>
-    <string name="select_all_tip">הקש %d פעמים נוספות כדי להפעיל בחירת כל הפונקציונליות.</string>
-    <string name="select_all_enabled">בחר הכל הופעל עבור סוג המסנן \"מומלץ\".</string>
+    <string
+        name="select_all_tip"
+    >הקש %d פעמים נוספות כדי להפעיל בחירת כל הפונקציונליות.</string>
+    <string
+        name="select_all_enabled"
+    >בחר הכל הופעל עבור סוג המסנן \"מומלץ\".</string>
     <string name="uninstall_options_title">Uninstall Options</string>
     <string name="uninstall_app">Uninstall app</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
     <string name="import_preset">Import preset</string>
-    <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
+    <string
+        name="import_preset_description"
+    >Import a preset from clipboard or paste JSON text directly.</string>
     <string name="clipboard">Clipboard</string>
-    <string name="import_preset_clipboard_description">Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
+    <string
+        name="import_preset_clipboard_description"
+    >Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
     <string name="paste_preset_json">Paste preset JSON</string>
     <string name="paste_preset_json_here">Paste JSON preset here ...</string>
     <string name="enter_valid_json">Please enter valid JSON</string>
     <string name="import_button">Import</string>
     <string name="create_preset">Create preset</string>
-    <string name="create_preset_description">Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
+    <string
+        name="create_preset_description"
+    >Create a preset from currently uninstalled apps. This will save a list of apps that can be shared and applied on other devices.</string>
     <string name="preset_name">Preset name</string>
     <string name="preset_name_missing_error">Name is required</string>
     <string name="preset_name_placeholder">e.g., Samsung Bloatware</string>
     <string name="optional_description">Description (Optional)</string>
-    <string name="preset_description_placeholder">Describe what this preset removes...</string>
+    <string
+        name="preset_description_placeholder"
+    >Describe what this preset removes...</string>
     <string name="save">Save</string>
     <string name="import_preset_clipboard">Import from clipboard</string>
     <string name="presets">Presets</string>
@@ -75,7 +109,9 @@
     <string name="preset_copied">Preset copied to clipboard</string>
     <string name="import_failed">Import failed</string>
     <string name="no_presets">No presets</string>
-    <string name="presets_description">Create or import presets to manage app uninstall lists across devices</string>
+    <string
+        name="presets_description"
+    >Create or import presets to manage app uninstall lists across devices</string>
     <string name="more_options">More options</string>
     <string name="edit">Edit</string>
     <string name="add_apps">Add apps</string>
@@ -87,16 +123,31 @@
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
-    <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
+    <string
+        name="grant_shizuku_permission_to_canta"
+    >Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku Required</string>
-    <string name="shizuku_requirement_description">Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
+    <string
+        name="shizuku_requirement_description"
+    >Canta uses Shizuku to uninstall apps without requiring root access. Shizuku provides a secure way to access system-level SDKs.</string>
     <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
+    <string
+        name="commits_url_description"
+    >Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
+    <string
+        name="bloat_list_url_description"
+    >Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string
+        name="allow_unsafe_uninstalls_description"
+    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="donate">Donate</string>
+    <string
+        name="canta_donate_request"
+    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="success">Success %1$s!</string>
 </resources>

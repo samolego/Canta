@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">İptal</string>
     <string name="ok">Tamam</string>
-    <string name="are_you_sure_to_uninstall_apps">%1$s adet uygulamayı kaldırmak istediğinizden emin misiniz?</string>
-    <string name="copy_package_name_to_clipboard">Uygulama paket adını panoya kopyala</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >%1$s adet uygulamayı kaldırmak istediğinizden emin misiniz?</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >Uygulama paket adını panoya kopyala</string>
     <string name="no_description_available">Açıklama mevcut değil</string>
     <string name="uninstall">Kaldır</string>
     <string name="reinstall">Yeniden yükle</string>
@@ -25,44 +29,78 @@
         <item quantity="one">%d uygulaması seçildi</item>
         <item quantity="other">%d adet uygulama seçildi</item>
     </plurals>
+    <plurals name="success_uninstalled">
+    <item quantity="one">You have successfully uninstalled %d app!</item>
+    <item quantity="other">You have successfully uninstalled %d apps!</item>
+</plurals>
+<plurals name="success_reinstalled">
+    <item quantity="one">You have successfully reinstalled %d app!</item>
+    <item quantity="other">You have successfully reinstalled %d apps!</item>
+</plurals>
     <string name="copy">Kopyala</string>
     <string name="app_settings">Uygulama bilgileri</string>
     <string name="close">Kapat</string>
-    <string name="canta_description">Canta, sistem ve kullanıcı uygulamalarını kaldırmak için Shizuku kullanan açık kaynaklı bir kaldırıcı uygulamasıdır. PC gerektirmeden cihazınızı istediğiniz gibi debloat etmenizi sağlar.\n\n%s\'ye özel teşekkürler.\nCanta onların çalışmaları olmadan aynı olmazdı.</string>
+    <string
+        name="canta_description"
+    >Canta, sistem ve kullanıcı uygulamalarını kaldırmak için Shizuku kullanan açık kaynaklı bir kaldırıcı uygulamasıdır. PC gerektirmeden cihazınızı istediğiniz gibi debloat etmenizi sağlar.\n\n%s\'ye özel teşekkürler.\nCanta onların çalışmaları olmadan aynı olmazdı.</string>
     <string name="search_apps">Uygulamaları ara</string>
-    <string name="auto_update_bloat_list">Bloat listesini otomatik güncelle</string>
-    <string name="auto_update_bloat_list_description">Uygulama bloat bilgilerinin yeni sürümünü otomatik olarak getirin. Bu, güncel rozetleri ve uygulama açıklamalarını garanti eder.</string>
+    <string
+        name="auto_update_bloat_list"
+    >Bloat listesini otomatik güncelle</string>
+    <string
+        name="auto_update_bloat_list_description"
+    >Uygulama bloat bilgilerinin yeni sürümünü otomatik olarak getirin. Bu, güncel rozetleri ve uygulama açıklamalarını garanti eder.</string>
     <string name="settings">Ayarlar</string>
     <string name="confirm_uninstall">Kaldırma işlemlerini onaylayın</string>
     <string name="app_version">Uygulama sürümü: %s</string>
     <string name="bloatware_list_version">Güncel bloatware listesi</string>
-    <string name="no_warranty_content">Bu uygulama, üçüncü taraf bilgilerine dayalı olarak uygulama kaldırma önerileri sunar. Bu öneriler doğası gereği bilgi amaçlıdır ve belirli cihazınızla güvenlik veya uyumluluğu garanti etmez. Sistem uygulamalarının kaldırılması, işlevsellik kaybı, sistem kararsızlığı, cihaz önyüklemeleri, veri kaybı vb. dahil ancak bunlarla sınırlı olmamak üzere beklenmedik sorunlara neden olabilir. Bu uygulamanın geliştiricisi, verilen tavsiyelere uyulması sonucunda cihazınızda meydana gelen herhangi bir hasardan sorumlu değildir.</string>
+    <string
+        name="no_warranty_content"
+    >Bu uygulama, üçüncü taraf bilgilerine dayalı olarak uygulama kaldırma önerileri sunar. Bu öneriler doğası gereği bilgi amaçlıdır ve belirli cihazınızla güvenlik veya uyumluluğu garanti etmez. Sistem uygulamalarının kaldırılması, işlevsellik kaybı, sistem kararsızlığı, cihaz önyüklemeleri, veri kaybı vb. dahil ancak bunlarla sınırlı olmamak üzere beklenmedik sorunlara neden olabilir. Bu uygulamanın geliştiricisi, verilen tavsiyelere uyulması sonucunda cihazınızda meydana gelen herhangi bir hasardan sorumlu değildir.</string>
     <string name="disclaimer">Sorumluluk Reddi - Garanti Yok</string>
-    <string name="proceed_at_own_risk">“Devam Et” seçeneğine tıklayarak, bu uygulamayı riski size ait olmak üzere kullanmayı kabul etmiş olursunuz.</string>
+    <string
+        name="proceed_at_own_risk"
+    >“Devam Et” seçeneğine tıklayarak, bu uygulamayı riski size ait olmak üzere kullanmayı kabul etmiş olursunuz.</string>
     <string name="never_show_again">Bu mesajı bir daha gösterme</string>
     <string name="proceed">Devam Et</string>
-    <string name="confirm_uninstall_description">Kaldırma eylemini onaylamak için iletişim kutusunun gösterilip gösterilmeyeceği.</string>
+    <string
+        name="confirm_uninstall_description"
+    >Kaldırma eylemini onaylamak için iletişim kutusunun gösterilip gösterilmeyeceği.</string>
     <string name="select_all">Tümünü seç</string>
-    <string name="select_all_tip">Tümünü seç işlevini etkinleştirmek için %d bir kez daha dokunun.</string>
-    <string name="select_all_enabled">“Önerilen” filtre türü için tümünü seç etkinleştirildi.</string>
+    <string
+        name="select_all_tip"
+    >Tümünü seç işlevini etkinleştirmek için %d bir kez daha dokunun.</string>
+    <string
+        name="select_all_enabled"
+    >“Önerilen” filtre türü için tümünü seç etkinleştirildi.</string>
     <string name="uninstall_options_title">Kaldırma Seçenekleri</string>
     <string name="uninstall_app">Uygulamayı kaldır</string>
     <string name="reset_to_factory_version">Fabrika sürümüne sıfırla</string>
     <string name="import_preset">Ön ayarı içe aktar</string>
-    <string name="import_preset_description">Panodan bir ön ayarı içe aktarın veya doğrudan JSON metnini yapıştırın.</string>
+    <string
+        name="import_preset_description"
+    >Panodan bir ön ayarı içe aktarın veya doğrudan JSON metnini yapıştırın.</string>
     <string name="clipboard">Pano</string>
-    <string name="import_preset_clipboard_description">Panodan ön ayarı içe aktarın. Geçerli bir Canta ön ayar JSON\'u kopyaladığınızdan emin olun.</string>
+    <string
+        name="import_preset_clipboard_description"
+    >Panodan ön ayarı içe aktarın. Geçerli bir Canta ön ayar JSON\'u kopyaladığınızdan emin olun.</string>
     <string name="paste_preset_json">Ön ayarlı JSON\'u yapıştır</string>
-    <string name="paste_preset_json_here">JSON ön ayarını buraya yapıştırın...</string>
+    <string
+        name="paste_preset_json_here"
+    >JSON ön ayarını buraya yapıştırın...</string>
     <string name="enter_valid_json">Lütfen geçerli JSON girin</string>
     <string name="import_button">İçe aktar</string>
     <string name="create_preset">Ön ayar oluştur</string>
-    <string name="create_preset_description">Şu anda kaldırılmış uygulamalardan bir ön ayar oluşturun. Bu, diğer cihazlarda paylaşılabilen ve uygulanabilen uygulamaların bir listesini kaydedecektir.</string>
+    <string
+        name="create_preset_description"
+    >Şu anda kaldırılmış uygulamalardan bir ön ayar oluşturun. Bu, diğer cihazlarda paylaşılabilen ve uygulanabilen uygulamaların bir listesini kaydedecektir.</string>
     <string name="preset_name">Ön ayar ismi</string>
     <string name="preset_name_missing_error">İsim gerekli</string>
     <string name="preset_name_placeholder">örneğin, Samsung Bloatware</string>
     <string name="optional_description">Açıklama (İsteğe bağlı)</string>
-    <string name="preset_description_placeholder">Bu ön ayarın neyi kaldırdığını açıklayın...</string>
+    <string
+        name="preset_description_placeholder"
+    >Bu ön ayarın neyi kaldırdığını açıklayın...</string>
     <string name="save">Kaydet</string>
     <string name="import_preset_clipboard">Panodan içe aktar</string>
     <string name="presets">Ön Ayarlar</string>
@@ -71,7 +109,9 @@
     <string name="preset_copied">Ön ayar panoya kopyalandı</string>
     <string name="import_failed">İçe aktarma başarısız oldu</string>
     <string name="no_presets">Ön ayar yok</string>
-    <string name="presets_description">Cihazlar arasında uygulama kaldırma listelerini yönetmek için ön ayarlar oluşturun veya içe aktarın</string>
+    <string
+        name="presets_description"
+    >Cihazlar arasında uygulama kaldırma listelerini yönetmek için ön ayarlar oluşturun veya içe aktarın</string>
     <string name="more_options">Daha fazla seçenek</string>
     <string name="edit">Düzenle</string>
     <string name="add_apps">Uygulamaları ekle</string>
@@ -83,16 +123,31 @@
     <string name="text">Metin</string>
     <string name="install_shizuku">Shizuku uygulamasını yükleyin</string>
     <string name="start_shizuku_service">Shizuku hizmetini başlat</string>
-    <string name="grant_shizuku_permission_to_canta">Shizuku\'dan Canta\'ya izin verin</string>
+    <string
+        name="grant_shizuku_permission_to_canta"
+    >Shizuku\'dan Canta\'ya izin verin</string>
     <string name="shizuku_required">Shizuku Gerekli</string>
-    <string name="shizuku_requirement_description">Canta, kök erişimi gerektirmeden uygulamaları kaldırmak için Shizuku\'yu kullanır. Shizuku, sistem düzeyindeki SDK\'lara erişmek için güvenli bir yol sağlar.</string>
+    <string
+        name="shizuku_requirement_description"
+    >Canta, kök erişimi gerektirmeden uygulamaları kaldırmak için Shizuku\'yu kullanır. Shizuku, sistem düzeyindeki SDK\'lara erişmek için güvenli bir yol sağlar.</string>
     <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
+    <string
+        name="commits_url_description"
+    >Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
+    <string
+        name="bloat_list_url_description"
+    >Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string
+        name="allow_unsafe_uninstalls_description"
+    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="donate">Donate</string>
+    <string
+        name="canta_donate_request"
+    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="success">Success %1$s!</string>
 </resources>

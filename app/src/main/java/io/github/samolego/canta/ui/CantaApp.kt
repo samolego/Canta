@@ -62,6 +62,7 @@ import io.github.samolego.canta.ui.component.fab.PresetEditFAB
 import io.github.samolego.canta.ui.dialog.ExplainBadgesDialog
 import io.github.samolego.canta.ui.dialog.NoWarrantyDialog
 import io.github.samolego.canta.ui.dialog.ShizukuRequirementDialog
+import io.github.samolego.canta.ui.dialog.SuccessDialog
 import io.github.samolego.canta.ui.dialog.UninstallAppsDialog
 import io.github.samolego.canta.ui.navigation.Screen
 import io.github.samolego.canta.ui.screen.LogsPage
@@ -288,13 +289,25 @@ private fun MainContent(
                             val uninstallApps = {
                                 val uninstall = { resetToFactory: Boolean ->
                                     coroutineScope.launch {
-                                        uninstallOrReinstall(
+                                        val uninstalled = uninstallOrReinstall(
                                             uninstallApp = uninstallApp,
                                             reinstallApp = reinstallApp,
                                             selectedAppsType = selectedAppsType,
                                             appListViewModel = appListViewModel,
                                             resetToFactory = resetToFactory,
                                         )
+
+                                        if (uninstalled > 0) {
+                                            currentDialog = {
+                                                SuccessDialog(
+                                                    count = uninstalled,
+                                                    isReinstall = selectedAppsType == AppsType.UNINSTALLED,
+                                                    onDismissRequest = {
+                                                        currentDialog = null
+                                                    }
+                                                )
+                                            }
+                                        }
                                     }
                                 }
 
@@ -459,8 +472,9 @@ suspend fun uninstallOrReinstall(
     selectedAppsType: AppsType,
     appListViewModel: AppListViewModel,
     resetToFactory: Boolean = false,
-) {
+): Int {
     val appsToProcess = appListViewModel.selectedApps.keys.toList()
+    var count = 0
     withContext(Dispatchers.IO) {
         when (selectedAppsType) {
             AppsType.INSTALLED -> {
@@ -468,6 +482,7 @@ suspend fun uninstallOrReinstall(
                     val uninstalled = uninstallApp(app, resetToFactory)
                     if (uninstalled) {
                         with(Dispatchers.Main) {
+                            count += 1
                             appListViewModel.changeAppStatus(app)
                             appListViewModel.selectedApps.remove(app)
                         }
@@ -480,6 +495,7 @@ suspend fun uninstallOrReinstall(
                     val installed = reinstallApp(app)
                     if (installed) {
                         with(Dispatchers.Main) {
+                            count += 1
                             appListViewModel.changeAppStatus(app)
                             appListViewModel.selectedApps.remove(app)
                         }
@@ -488,6 +504,8 @@ suspend fun uninstallOrReinstall(
             }
         }
     }
+
+    return count
 }
 
 enum class AppsType(val icon: ImageVector) {

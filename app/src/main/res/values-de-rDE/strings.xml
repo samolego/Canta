@@ -1,10 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">Abbrechen</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Bist du dir sicher, dass du %1$s apps deinstallieren möchtest?</string>
-    <string name="copy_package_name_to_clipboard">Appnamen in die Zwischenablage kopieren</string>
-    <string name="no_description_available">Keine Beschreibung verfügbar</string>
+    <string
+        name="are_you_sure_to_uninstall_apps"
+    >Bist du dir sicher, dass du %1$s apps deinstallieren möchtest?</string>
+    <string
+        name="copy_package_name_to_clipboard"
+    >Appnamen in die Zwischenablage kopieren</string>
+    <string
+        name="no_description_available"
+    >Keine Beschreibung verfügbar</string>
     <string name="uninstall">Deinstallieren</string>
     <string name="reinstall">Neu installieren</string>
     <string name="only_system">Nur Systemapps</string>
@@ -25,74 +31,133 @@
         <item quantity="one">%d App ausgewählt</item>
         <item quantity="other">%d Apps ausgewählt</item>
     </plurals>
+    <plurals name="success_uninstalled">
+    <item quantity="one">You have successfully uninstalled %d app!</item>
+    <item quantity="other">You have successfully uninstalled %d apps!</item>
+</plurals>
+<plurals name="success_reinstalled">
+    <item quantity="one">You have successfully reinstalled %d app!</item>
+    <item quantity="other">You have successfully reinstalled %d apps!</item>
+</plurals>
     <string name="copy">Kopieren</string>
     <string name="app_settings">App-Infos</string>
     <string name="close">Schließen</string>
-    <string name="canta_description">Canta ist eine Open-Source-Deinstallations-App, die Shizuku nutzt, um System- und Nutzer-Apps zu entfernen. Sie ermöglicht dir, dein Gerät ganz nach Wunsch zu entbloaten, ganz ohne PC.\n\nBesonderer Dank gilt %s.\n Canta wäre ohne deren Arbeit nicht dasselbe.</string>
+    <string
+        name="canta_description"
+    >Canta ist eine Open-Source-Deinstallations-App, die Shizuku nutzt, um System- und Nutzer-Apps zu entfernen. Sie ermöglicht dir, dein Gerät ganz nach Wunsch zu entbloaten, ganz ohne PC.\n\nBesonderer Dank gilt %s.\n Canta wäre ohne deren Arbeit nicht dasselbe.</string>
     <string name="search_apps">Apps suchen</string>
-    <string name="auto_update_bloat_list">Bloat-liste automatisch aktualisieren</string>
-    <string name="auto_update_bloat_list_description">Automatisch neue App-Bloat-Info abrufen. Dies garantiert aktuelle Abzeichen und App Beschreibungen.</string>
+    <string
+        name="auto_update_bloat_list"
+    >Bloat-liste automatisch aktualisieren</string>
+    <string
+        name="auto_update_bloat_list_description"
+    >Automatisch neue App-Bloat-Info abrufen. Dies garantiert aktuelle Abzeichen und App Beschreibungen.</string>
     <string name="settings">Einstellungen</string>
     <string name="confirm_uninstall">Deinstallationen bestätigen</string>
     <string name="app_version">App-Version: %s</string>
     <string name="bloatware_list_version">Neueste Bloatware-Liste</string>
-    <string name="no_warranty_content">Diese App bietet App-Entfernungs-Empfehlungen basierend auf Informationen Dritter. Diese Empfehlungen sind rein informativer Natur und garantieren keine Sicherheit oder Kompatibilität mit deinem spezifischen Gerät. Das Deinstallieren von Systemapps kann unerwartete Probleme verursachen, einschließlich aber nicht beschränkt auf: Funktionsverlust, Systeminstabilität, Bootloops des Geräts, Datenverlust usw. Der Entwickler dieser App ist nicht verantwortlich für Schäden an deinem Gerät, die durch das Befolgen der bereitgestellten Empfehlungen entstehen.</string>
+    <string
+        name="no_warranty_content"
+    >Diese App bietet App-Entfernungs-Empfehlungen basierend auf Informationen Dritter. Diese Empfehlungen sind rein informativer Natur und garantieren keine Sicherheit oder Kompatibilität mit deinem spezifischen Gerät. Das Deinstallieren von Systemapps kann unerwartete Probleme verursachen, einschließlich aber nicht beschränkt auf: Funktionsverlust, Systeminstabilität, Bootloops des Geräts, Datenverlust usw. Der Entwickler dieser App ist nicht verantwortlich für Schäden an deinem Gerät, die durch das Befolgen der bereitgestellten Empfehlungen entstehen.</string>
     <string name="disclaimer">Haftungsausschluss – Keine Gewährleistung</string>
-    <string name="proceed_at_own_risk">Durch Klicken auf „Weiter“ erklärst du dich einverstanden, die App auf eigene Verantwortung zu nutzen.</string>
+    <string
+        name="proceed_at_own_risk"
+    >Durch Klicken auf „Weiter“ erklärst du dich einverstanden, die App auf eigene Verantwortung zu nutzen.</string>
     <string name="never_show_again">Diese Nachricht nicht mehr anzeigen</string>
     <string name="proceed">Weiter</string>
-    <string name="confirm_uninstall_description">Ob der Dialog zur Bestätigung der Deinstallationsaktion angezeigt werden soll.</string>
+    <string
+        name="confirm_uninstall_description"
+    >Ob der Dialog zur Bestätigung der Deinstallationsaktion angezeigt werden soll.</string>
     <string name="select_all">Alle auswählen</string>
-    <string name="select_all_tip">Tippe noch %d Mal, um die „Alle auswählen“-Funktion zu aktivieren.</string>
-    <string name="select_all_enabled">„Alle auswählen“ wurde für Filtertyp „Empfohlen“ aktiviert.</string>
+    <string
+        name="select_all_tip"
+    >Tippe noch %d Mal, um die „Alle auswählen“-Funktion zu aktivieren.</string>
+    <string
+        name="select_all_enabled"
+    >„Alle auswählen“ wurde für Filtertyp „Empfohlen“ aktiviert.</string>
     <string name="uninstall_options_title">Deinstallationsoptionen</string>
     <string name="uninstall_app">App deinstallieren</string>
-    <string name="reset_to_factory_version">Auf Werksversion zurücksetzen</string>
+    <string
+        name="reset_to_factory_version"
+    >Auf Werksversion zurücksetzen</string>
     <string name="import_preset">Vorlage importieren</string>
-    <string name="import_preset_description">Vorlage aus der Zwischenablage importieren oder JSON-Text direkt einfügen.</string>
+    <string
+        name="import_preset_description"
+    >Vorlage aus der Zwischenablage importieren oder JSON-Text direkt einfügen.</string>
     <string name="clipboard">Zwischenablage</string>
-    <string name="import_preset_clipboard_description">Vorlage aus Zwischenablage importieren. Stelle sicher, dass du eine gültige Canta JSON-Vorlage kopiert hast.</string>
+    <string
+        name="import_preset_clipboard_description"
+    >Vorlage aus Zwischenablage importieren. Stelle sicher, dass du eine gültige Canta JSON-Vorlage kopiert hast.</string>
     <string name="paste_preset_json">JSON-Vorlage einfügen</string>
-    <string name="paste_preset_json_here">JSON-Vorlage hier einfügen ...</string>
+    <string
+        name="paste_preset_json_here"
+    >JSON-Vorlage hier einfügen ...</string>
     <string name="enter_valid_json">Bitte gültiges JSON eingeben</string>
     <string name="import_button">Importieren</string>
     <string name="create_preset">Vorlage erstellen</string>
-    <string name="create_preset_description">Erstelle eine Vorlage von aktuell deinstallierten Apps. Dies wird eine Liste von Apps speichern die geteilt und auf anderen Geräten verwendet werden kann.</string>
+    <string
+        name="create_preset_description"
+    >Erstelle eine Vorlage von aktuell deinstallierten Apps. Dies wird eine Liste von Apps speichern die geteilt und auf anderen Geräten verwendet werden kann.</string>
     <string name="preset_name">Vorlagenname</string>
     <string name="preset_name_missing_error">Name ist erforderlich</string>
     <string name="preset_name_placeholder">z. B. Samsung-Bloatware</string>
     <string name="optional_description">Beschreibung (Optional)</string>
-    <string name="preset_description_placeholder">Beschreibe, was diese Vorlage entfernt...</string>
+    <string
+        name="preset_description_placeholder"
+    >Beschreibe, was diese Vorlage entfernt...</string>
     <string name="save">Speichern</string>
-    <string name="import_preset_clipboard">Aus Zwischenablage importieren</string>
+    <string
+        name="import_preset_clipboard"
+    >Aus Zwischenablage importieren</string>
     <string name="presets">Vorlagen</string>
     <string name="preset_deleted">Vorlage gelöscht</string>
-    <string name="preset_delete_error">Vorlage konnte nicht gelöscht werden</string>
+    <string
+        name="preset_delete_error"
+    >Vorlage konnte nicht gelöscht werden</string>
     <string name="preset_copied">Vorlage in Zwischenablage kopiert</string>
     <string name="import_failed">Import fehlgeschlagen</string>
     <string name="no_presets">Keine Vorlagen</string>
-    <string name="presets_description">Erstelle oder importiere Vorlagen, um App-Deinstallationslisten auf mehreren Geräten zu nutzen</string>
+    <string
+        name="presets_description"
+    >Erstelle oder importiere Vorlagen, um App-Deinstallationslisten auf mehreren Geräten zu nutzen</string>
     <string name="more_options">Mehr Optionen</string>
     <string name="edit">Bearbeiten</string>
     <string name="add_apps">Apps hinzufügen</string>
     <string name="share">Teilen</string>
     <string name="delete">Löschen</string>
     <string name="apply_preset">Vorlage anwenden</string>
-    <string name="preset_save_error">Vorlage konnte nicht gespeichert werden</string>
+    <string
+        name="preset_save_error"
+    >Vorlage konnte nicht gespeichert werden</string>
     <string name="selected_apps">Ausgewählte Apps</string>
     <string name="text">Text</string>
     <string name="install_shizuku">Shizuku-App installieren</string>
     <string name="start_shizuku_service">Shizuku-Dienst starten</string>
-    <string name="grant_shizuku_permission_to_canta">Canta in Shizuku Berechtigung erteilen</string>
+    <string
+        name="grant_shizuku_permission_to_canta"
+    >Canta in Shizuku Berechtigung erteilen</string>
     <string name="shizuku_required">Shizuku Erforderlich</string>
-    <string name="shizuku_requirement_description">Canta nutzt Shizuku, um Apps ohne Root-Berechtigung zu deinstallieren. Shizuku bietet einen sicheren Weg, um auf systemnahe SDKs zuzugreifen.</string>
+    <string
+        name="shizuku_requirement_description"
+    >Canta nutzt Shizuku, um Apps ohne Root-Berechtigung zu deinstallieren. Shizuku bietet einen sicheren Weg, um auf systemnahe SDKs zuzugreifen.</string>
     <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
+    <string
+        name="commits_url_description"
+    >Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
+    <string
+        name="bloat_list_url_description"
+    >Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string
+        name="allow_unsafe_uninstalls_description"
+    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="donate">Donate</string>
+    <string
+        name="canta_donate_request"
+    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="success">Success %1$s!</string>
 </resources>
