@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">रद्द करें</string>
     <string name="ok">ठीक है</string>
-    <string
-        name="are_you_sure_to_uninstall_apps"
-    >क्या आप %1$s ऐप्स को अनइंस्टॉल करने के लिए सुनिश्चित हैं?</string>
-    <string
-        name="copy_package_name_to_clipboard"
-    >पैकेज का नाम क्लिपबोर्ड पर कॉपी करें</string>
+    <string name="are_you_sure_to_uninstall_apps">क्या आप %1$s ऐप्स को अनइंस्टॉल करने के लिए सुनिश्चित हैं?</string>
+    <string name="copy_package_name_to_clipboard">पैकेज का नाम क्लिपबोर्ड पर कॉपी करें</string>
     <string name="no_description_available">कोई विवरण उपलब्ध नहीं है</string>
     <string name="uninstall">अनइंस्टॉल करें</string>
     <string name="reinstall">रीइंस्टॉल करें</string>
@@ -30,73 +26,51 @@
         <item quantity="other">%d ऐप्स चुने गए</item>
     </plurals>
     <plurals name="success_uninstalled">
-    <item quantity="one">You have successfully uninstalled %d app!</item>
-    <item quantity="other">You have successfully uninstalled %d apps!</item>
-</plurals>
-<plurals name="success_reinstalled">
-    <item quantity="one">You have successfully reinstalled %d app!</item>
-    <item quantity="other">You have successfully reinstalled %d apps!</item>
-</plurals>
+        <item quantity="one">You have successfully uninstalled %d app!</item>
+        <item quantity="other">You have successfully uninstalled %d apps!</item>
+    </plurals>
+    <plurals name="success_reinstalled">
+        <item quantity="one">You have successfully reinstalled %d app!</item>
+        <item quantity="other">You have successfully reinstalled %d apps!</item>
+    </plurals>
     <string name="copy">कॉपी</string>
     <string name="app_settings">ऐप की जानकारी.</string>
     <string name="close">बंद करें</string>
-    <string
-        name="canta_description"
-    >कैंटा एक ओपन सोर्स अनइंस्टॉलर ऐप है जो सिस्टम और यूजर ऐप्स को हटाने के लिए शिज़ुकू का उपयोग करता है। यह आपको अपने डिवाइस को आपके इच्छानुसार डिब्लोट करने की अनुमति देता है, इसके लिए किसी पीसी की आवश्यकता नहीं है।%s को विशेष धन्यवाद।कैंटा उनके काम के बिना ऐसा नहीं होता।</string>
+    <string name="canta_description">कैंटा एक ओपन सोर्स अनइंस्टॉलर ऐप है जो सिस्टम और यूजर ऐप्स को हटाने के लिए शिज़ुकू का उपयोग करता है। यह आपको अपने डिवाइस को आपके इच्छानुसार डिब्लोट करने की अनुमति देता है, इसके लिए किसी पीसी की आवश्यकता नहीं है।%s को विशेष धन्यवाद।कैंटा उनके काम के बिना ऐसा नहीं होता।</string>
     <string name="search_apps">ऐप्स की खोज करें</string>
     <string name="auto_update_bloat_list">ऑटो अपडेट ब्लोट सूची</string>
-    <string
-        name="auto_update_bloat_list_description"
-    >स्वचालित रूप से नए संस्करण के ऐप बोट जानकारी लाएं। यह अद्यतन बैज और ऐप विवरणों की गारंटी देता है।</string>
+    <string name="auto_update_bloat_list_description">स्वचालित रूप से नए संस्करण के ऐप बोट जानकारी लाएं। यह अद्यतन बैज और ऐप विवरणों की गारंटी देता है।</string>
     <string name="settings">सेटिंग्स</string>
     <string name="confirm_uninstall">अनइंस्टॉल की पुष्टि करें</string>
     <string name="app_version">ऐप का वर्शन: %s</string>
     <string name="bloatware_list_version">नया बोटवेयर लिस्ट</string>
-    <string
-        name="no_warranty_content"
-    >यह ऐप तीसरे पक्ष की जानकारी के आधार पर ऐप हटाने की सिफारिशें प्रदान करता है। ये सिफारिशें सूचना स्वरूप होती हैं और आपके विशेष उपकरण के साथ सुरक्षा या संगतता की गारंटी नहीं देतीं। सिस्टम ऐप्स को अनइंस्टॉल करने से उम्मीद से परे समस्याएं हो सकती हैं, जिसमें कार्यक्षमता का ह्रास, सिस्टम अस्थिरता, उपकरण के बूटलूप, डेटा हानि आदि शामिल हैं। इस ऐप का डेवलपर किसी भी हानि के लिए जिम्मेदार नहीं है जो इन सिफारिशों का पालन करने से आपके उपकरण को हो सकती है।</string>
+    <string name="no_warranty_content">यह ऐप तीसरे पक्ष की जानकारी के आधार पर ऐप हटाने की सिफारिशें प्रदान करता है। ये सिफारिशें सूचना स्वरूप होती हैं और आपके विशेष उपकरण के साथ सुरक्षा या संगतता की गारंटी नहीं देतीं। सिस्टम ऐप्स को अनइंस्टॉल करने से उम्मीद से परे समस्याएं हो सकती हैं, जिसमें कार्यक्षमता का ह्रास, सिस्टम अस्थिरता, उपकरण के बूटलूप, डेटा हानि आदि शामिल हैं। इस ऐप का डेवलपर किसी भी हानि के लिए जिम्मेदार नहीं है जो इन सिफारिशों का पालन करने से आपके उपकरण को हो सकती है।</string>
     <string name="disclaimer">अस्वीकृति - कोई वारंटी नहीं</string>
-    <string
-        name="proceed_at_own_risk"
-    >\"जारी रखें\" पर क्लिक करके, आप अपनी जोखिम पर इस ऐप का उपयोग करने के लिए सहमत होते हैं।</string>
+    <string name="proceed_at_own_risk">\"जारी रखें\" पर क्लिक करके, आप अपनी जोखिम पर इस ऐप का उपयोग करने के लिए सहमत होते हैं।</string>
     <string name="never_show_again">इस संदेश को फिर से न दिखाएं</string>
     <string name="proceed">जारी रखें</string>
-    <string
-        name="confirm_uninstall_description"
-    >क्या अनइंस्टॉल करने की क्रिया की पुष्टि के लिए डायलॉग दिखाना चाहिए?</string>
+    <string name="confirm_uninstall_description">क्या अनइंस्टॉल करने की क्रिया की पुष्टि के लिए डायलॉग दिखाना चाहिए?</string>
     <string name="select_all">सभी चुनें</string>
-    <string
-        name="select_all_tip"
-    >सभी को चुनने की कार्यक्षमता सक्षम करने के लिए %d और बार टैप करें।</string>
-    <string
-        name="select_all_enabled"
-    >फिल्टर प्रकार \"सिफ़ारिश की गई\" के लिए सभी का चयन सक्षम किया गया है।</string>
+    <string name="select_all_tip">सभी को चुनने की कार्यक्षमता सक्षम करने के लिए %d और बार टैप करें।</string>
+    <string name="select_all_enabled">फिल्टर प्रकार \"सिफ़ारिश की गई\" के लिए सभी का चयन सक्षम किया गया है।</string>
     <string name="uninstall_options_title">अनइंस्टॉल विकल्प</string>
     <string name="uninstall_app">ऐप हटाएँ</string>
     <string name="reset_to_factory_version">फैक्टरी वर्शन पर रीसेट करें</string>
     <string name="import_preset">इम्पोर्ट प्रीसेट</string>
-    <string
-        name="import_preset_description"
-    >क्लिपबोर्ड से एक पूर्वनिर्धारित सेट आयात करें या सीधे JSON पाठ चिपकाएँ।</string>
+    <string name="import_preset_description">क्लिपबोर्ड से एक पूर्वनिर्धारित सेट आयात करें या सीधे JSON पाठ चिपकाएँ।</string>
     <string name="clipboard">क्लिपबोर्ड</string>
-    <string
-        name="import_preset_clipboard_description"
-    >क्लिपबोर्ड से प्रीसेट आयात करें। सुनिश्चित करें कि आपने एक वैध कांत प्रीसेट JSON कॉपी किया है।</string>
+    <string name="import_preset_clipboard_description">क्लिपबोर्ड से प्रीसेट आयात करें। सुनिश्चित करें कि आपने एक वैध कांत प्रीसेट JSON कॉपी किया है।</string>
     <string name="paste_preset_json">पेस्ट प्रीसेट JSON</string>
     <string name="paste_preset_json_here">यहां JSON प्रीसेट डालें ...</string>
     <string name="enter_valid_json">कृपया वैध JSON दर्ज करें</string>
     <string name="import_button">इम्पोर्ट</string>
     <string name="create_preset">प्रीसेट बनाएं</string>
-    <string
-        name="create_preset_description"
-    >हाल ही में अनइंस्टॉल की गई ऐप्स से एक प्रीसेट बनाएं। यह उन ऐप्स की एक सूची को सहेजेगा जिन्हें अन्य उपकरणों पर साझा और लागू किया जा सकता है।</string>
+    <string name="create_preset_description">हाल ही में अनइंस्टॉल की गई ऐप्स से एक प्रीसेट बनाएं। यह उन ऐप्स की एक सूची को सहेजेगा जिन्हें अन्य उपकरणों पर साझा और लागू किया जा सकता है।</string>
     <string name="preset_name">प्रेसेट का नाम.</string>
     <string name="preset_name_missing_error">नाम आवश्यक है</string>
     <string name="preset_name_placeholder">जैसे कि सैमसंग का ब्‍लोटवेयर</string>
     <string name="optional_description">विवरण (वैकल्पिक)</string>
-    <string
-        name="preset_description_placeholder"
-    >इस प्रीसेट द्वारा क्या हटाया जाता है, इसका वर्णन करें....</string>
+    <string name="preset_description_placeholder">इस प्रीसेट द्वारा क्या हटाया जाता है, इसका वर्णन करें....</string>
     <string name="save">सुरक्षित करें</string>
     <string name="import_preset_clipboard"> क्लिपबोर्ड से इम्पोर्ट करें</string>
     <string name="presets">प्रीसेट्स</string>
@@ -105,9 +79,7 @@
     <string name="preset_copied">प्रीसेट क्लिपबोर्ड पर कॉपी किया गया..</string>
     <string name="import_failed">इम्पोर्ट विफल हो गया</string>
     <string name="no_presets">कोई प्रीसेट नहीं</string>
-    <string
-        name="presets_description"
-    >ऐप अनइंस्टॉल सूचियों को उपकरणों के बीच प्रबंधित करने के लिए प्रीसेट बनाएं या इम्पोर्ट करें</string>
+    <string name="presets_description">ऐप अनइंस्टॉल सूचियों को उपकरणों के बीच प्रबंधित करने के लिए प्रीसेट बनाएं या इम्पोर्ट करें</string>
     <string name="more_options">अधिक विकल्प</string>
     <string name="edit">संपादित करें ...</string>
     <string name="add_apps">ऐप्स जोड़ें</string>
@@ -119,31 +91,19 @@
     <string name="text">टेक्स्ट</string>
     <string name="install_shizuku">शिजुकु ऐप इंस्टॉल करें.</string>
     <string name="start_shizuku_service">शिजुकु सेवा शुरू करें</string>
-    <string
-        name="grant_shizuku_permission_to_canta"
-    >शिजुकु में कैंता को अनुमति दें</string>
+    <string name="grant_shizuku_permission_to_canta">शिजुकु में कैंता को अनुमति दें</string>
     <string name="shizuku_required">शिजुकु आवश्यक है</string>
-    <string
-        name="shizuku_requirement_description"
-    >कांटा शिज़ुकु का उपयोग करके बिना रूट एक्सेस के ऐप्स को अनइंस्टॉल करता है। शिज़ुकु सिस्टम-स्तरीय SDKs तक पहुँचने का एक सुरक्षित तरीका प्रदान करता है।</string>
+    <string name="shizuku_requirement_description">कांटा शिज़ुकु का उपयोग करके बिना रूट एक्सेस के ऐप्स को अनइंस्टॉल करता है। शिज़ुकु सिस्टम-स्तरीय SDKs तक पहुँचने का एक सुरक्षित तरीका प्रदान करता है।</string>
     <string name="commits_url">Commits URL</string>
-    <string
-        name="commits_url_description"
-    >Where to get commit info for updates from</string>
+    <string name="commits_url_description">Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
     <string name="advanced_settings">Advanced settings</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
-    <string
-        name="bloat_list_url_description"
-    >Where to get badges and descriptions from.</string>
+    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string
-        name="allow_unsafe_uninstalls_description"
-    >Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
     <string name="donate">Donate</string>
-    <string
-        name="canta_donate_request"
-    >Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
+    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
     <string name="success">Success %1$s!</string>
 </resources>
