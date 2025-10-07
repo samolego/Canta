@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import io.github.samolego.canta.data.proto.AppSettings
 import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS
 import io.github.samolego.canta.util.DEFAULT_BLOAT_URL
 import kotlinx.coroutines.flow.map

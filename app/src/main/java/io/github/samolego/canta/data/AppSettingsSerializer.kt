@@ -2,6 +2,7 @@ package io.github.samolego.canta.data
 
 import androidx.datastore.core.Serializer
 import com.google.protobuf.InvalidProtocolBufferException
+import io.github.samolego.canta.data.proto.AppSettings
 import io.github.samolego.canta.util.LogUtils
 import java.io.InputStream
 import java.io.OutputStream
