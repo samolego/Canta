@@ -24,10 +24,10 @@
         <item quantity="other">已选择 %d 个应用</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="other">您已经成功卸载了 %d 个应用！</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="other">您已经成功恢复了 %d 个应用！</item>
     </plurals>
     <string name="copy">复制</string>
     <string name="app_settings">应用信息</string>
@@ -90,16 +90,16 @@
     <string name="grant_shizuku_permission_to_canta">在 Shizuku 应用中向 Canta 授予权限</string>
     <string name="shizuku_required">需要 Shizuku</string>
     <string name="shizuku_requirement_description">Canta 使用 Shizuku 来卸载应用而不需要 root 权限。Shizuku 提供了访问系统级SDK的安全途径。</string>
-    <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
-    <string name="reset_to_default">Reset to default</string>
-    <string name="advanced_settings">Advanced settings</string>
-    <string name="click_to_expand">Click to expand</string>
-    <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
-    <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
+    <string name="commits_url">提交 URL</string>
+    <string name="commits_url_description">从哪里获取更新提交信息</string>
+    <string name="reset_to_default">重置为默认设置</string>
+    <string name="advanced_settings">高级设置</string>
+    <string name="click_to_expand">点击以展开</string>
+    <string name="bloat_list_url">要卸载应用列表的 URL</string>
+    <string name="bloat_list_url_description">从哪里获取特殊标志和描述。</string>
+    <string name="allow_unsafe_selections">允许选择 Unsafe 选项</string>
+    <string name="allow_unsafe_uninstalls_description">是否允许选择被标记为 Unsafe 选项的应用（使用预设时无视此设置）。</string>
+    <string name="donate">捐助</string>
+    <string name="canta_donate_request">你喜欢 Canta 吗？这个软件是在我空闲的时间中开发的，它注重隐私 - 无广告、无跟踪。如果觉得它好用，可以考虑一下支持这个软件的开发！</string>
+    <string name="success">成功 %1$s！</string>
 </resources>
