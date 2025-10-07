@@ -28,6 +28,11 @@ Canta calls Android System APIs directly to uninstall apps, similar to how ADB d
 * Batch selection for multiple uninstalls
 * See app info and size details
 
+### Presets
+* Create reusable app removal configurations
+* Import and export presets as JSON
+* Share presets across devices and with others
+
 ### App Badges
 * 🟢 **Safe to Remove** - Non-essential apps. Still review them, though.
 * 🟡 **Advanced** - May affect some functionality.
@@ -45,6 +50,20 @@ Finding specific apps is effortless thanks to the quick search functionality and
       Canta Home Screen
   </div>
 </div>
+
+## Advanced Features
+
+### Presets System
+Canta's preset system allows you to create, manage, and share collections of apps for removal. This feature enables:
+
+* **Device Consistency**: Apply the same bloatware removal across multiple devices
+* **Community Sharing**: Share your carefully curated removal lists with others
+* **Quick Setup**: Rapidly configure new devices with proven app configurations
+* **Backup & Restore**: Save your uninstall preferences before major changes
+
+Presets are stored locally and can be exported as JSON for easy sharing. When importing presets, Canta automatically validates app availability on your device and filters out incompatible entries.
+
+[Learn more about Presets →](/presets)
 
 ## Privacy & Security
 

@@ -37,6 +37,44 @@ Enable this setting to ensure you have the most accurate information about which
 We recommend keeping this enabled to avoid accidentally uninstalling important apps.
 :::
 
+## Advanced Settings
+
+Canta includes advanced settings for power users who need more control over the app's behavior.
+
+### Allow Unsafe Selections
+
+**Description:** Controls whether you can select apps that are marked with the 🟣 **Unsafe** badge for uninstallation.
+You can bypass this restriction by using presets, too.
+
+- **Disabled (Default):** Apps marked as unsafe cannot be selected for uninstallation, protecting you from accidentally removing critical system components.
+- **Enabled:** Allows selection of unsafe apps, giving experienced users full control over what they can uninstall.
+
+::: danger IMPORTANT
+Enabling this setting allows you to select apps that could break vital system functionality. Only enable this if you understand the risks and know exactly what you're doing. There's a high chance you'll experience bootlooping!
+:::
+
+### Bloat List URL
+
+**Description:** Specifies the source URL where Canta downloads app classification data, badges, and descriptions.
+
+- **Default:** Points to the Universal Debloater Alliance repository
+- **Custom:** You can specify an alternative source that follows the same data format
+
+This setting allows organizations or advanced users to maintain their own app classification databases.
+
+### Commits URL
+
+**Description:** Defines where Canta checks for updates to the bloat list data.
+
+- **Default:** Points to the commits API of the Universal Debloater Alliance repository
+- **Custom:** Can be changed to track updates from alternative sources
+
+This works in conjunction with the "Auto-update Bloat List" setting to determine when new data is available.
+
+::: tip ADVANCED USAGE
+The Bloat List URL and Commits URL settings are primarily intended for developers testing custom app databases.
+:::
+
 ## Hidden Features
 
 ### Select All

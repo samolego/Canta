@@ -77,6 +77,7 @@ export default defineConfig({
       { text: "Home", link: "/" },
       { text: "Install", link: "/install" },
       { text: "Features", link: "/features" },
+      { text: "Presets", link: "/presets" },
       { text: "Download", link: "/download" },
     ],
 
@@ -91,11 +92,18 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: "Guide",
+        text: "Getting Started",
         items: [
           { text: "Setup", link: "/install" },
           { text: "Usage", link: "/usage" },
           { text: "Settings", link: "/settings" },
+        ],
+      },
+      {
+        text: "Advanced Features",
+        items: [
+          { text: "Features", link: "/features" },
+          { text: "Presets", link: "/presets" },
         ],
       },
     ],
