@@ -3,7 +3,7 @@
     <string name="cancel">取消</string>
     <string name="ok">是的</string>
     <string name="are_you_sure_to_uninstall_apps">您确定要卸载 “%1$s” 吗？</string>
-    <string name="copy_package_name_to_clipboard">复制包名到剪贴板</string>
+    <string name="copy_package_name_to_clipboard">将包名复制到剪贴板</string>
     <string name="no_description_available">无可用描述</string>
     <string name="uninstall">卸载</string>
     <string name="reinstall">重新安装</string>
