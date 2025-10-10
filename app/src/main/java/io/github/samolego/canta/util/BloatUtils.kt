@@ -27,7 +27,7 @@ fun parseLatestHash(commits: String): String {
     return c.substringBefore("\"")
 }
 
-const val TAG = "BloatUtils"
+private const val TAG = "BloatUtils"
 
 class BloatUtils {
     fun fetchBloatList(

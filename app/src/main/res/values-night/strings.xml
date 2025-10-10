@@ -104,6 +104,8 @@
     <string name="success">Success %1$s!</string>
     <string name="hide_success_dialog">Hide success dialog</string>
     <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
+    <string name="auth_required">Authentication required</string>
+    <string name="auth_required_description">This action requires higher priviliges.</string>
     <plurals name="num_selected_apps">
     <item quantity="one">%d app selected</item>
     <item quantity="other">%d apps selected</item>

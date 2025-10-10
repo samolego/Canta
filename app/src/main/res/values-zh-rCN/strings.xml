@@ -104,4 +104,6 @@
     <string name="success">成功 %1$s！</string>
     <string name="hide_success_dialog">把完成后显示的提示给隐藏</string>
     <string name="hide_success_dialog_description">当你卸载/恢复应用时，隐藏显示成功的提示框。</string>
+    <string name="auth_required">Authentication required</string>
+    <string name="auth_required_description">This action requires higher priviliges.</string>
 </resources>

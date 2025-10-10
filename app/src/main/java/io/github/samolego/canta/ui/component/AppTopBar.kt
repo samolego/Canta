@@ -156,15 +156,14 @@ fun CantaTopBar(
                 )
             },
             colors =
-                    TopAppBarColors(
-                            containerColor =
-                                    if (!searchActive) MaterialTheme.colorScheme.primaryContainer
-                                    else MaterialTheme.colorScheme.secondaryContainer,
-                            scrolledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            navigationIconContentColor =
-                                    MaterialTheme.colorScheme.onPrimaryContainer,
-                            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                            actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    ),
+                TopAppBarColors(
+                    containerColor = if (!searchActive) MaterialTheme.colorScheme.primaryContainer
+                    else MaterialTheme.colorScheme.secondaryContainer,
+                    scrolledContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    subtitleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                ),
     )
 }

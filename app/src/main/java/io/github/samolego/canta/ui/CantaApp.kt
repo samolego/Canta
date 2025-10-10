@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -74,6 +75,7 @@ import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModelFactory
 import io.github.samolego.canta.util.apps.Filter
 import io.github.samolego.canta.util.shizuku.ShizukuPermission
+import io.github.samolego.canta.util.showBiometricPrompt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -288,26 +290,29 @@ private fun MainContent(
 
                             val uninstallApps = {
                                 val uninstall = { resetToFactory: Boolean ->
-                                    coroutineScope.launch {
-                                        val uninstalled = uninstallOrReinstall(
-                                            uninstallApp = uninstallApp,
-                                            reinstallApp = reinstallApp,
-                                            selectedAppsType = selectedAppsType,
-                                            appListViewModel = appListViewModel,
-                                            resetToFactory = resetToFactory,
-                                        )
+                                    showBiometricPrompt(context) {
+                                        coroutineScope.launch {
+                                            val uninstalled = uninstallOrReinstall(
+                                                uninstallApp = uninstallApp,
+                                                reinstallApp = reinstallApp,
+                                                selectedAppsType = selectedAppsType,
+                                                appListViewModel = appListViewModel,
+                                                resetToFactory = resetToFactory,
+                                            )
 
-                                        if (uninstalled > 0 && !settingsViewModel.hideSuccessDialog.value) {
-                                            currentDialog = {
-                                                SuccessDialog(
-                                                    count = uninstalled,
-                                                    isReinstall = selectedAppsType == AppsType.UNINSTALLED,
-                                                    onDismissRequest = {
-                                                        currentDialog = null
-                                                    }
-                                                )
+                                            if (uninstalled > 0 && !settingsViewModel.hideSuccessDialog.value) {
+                                                currentDialog = {
+                                                    SuccessDialog(
+                                                        count = uninstalled,
+                                                        isReinstall = selectedAppsType == AppsType.UNINSTALLED,
+                                                        onDismissRequest = {
+                                                            currentDialog = null
+                                                        }
+                                                    )
+                                                }
                                             }
                                         }
+
                                     }
                                 }
 

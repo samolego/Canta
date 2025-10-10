@@ -18,7 +18,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "io.github.samolego.canta"
-    compileSdk = 35
+    compileSdk = 36
 
     // For reproducible builds
     dependenciesInfo {
@@ -109,6 +109,7 @@ dependencies {
     implementation(libs.androidx.datastore.core)
     implementation(libs.protobuf.javalite)
     implementation(libs.hiddenapibypass)
+    implementation(libs.androidx.biometric)
 }
 
 protobuf {

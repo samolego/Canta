@@ -1,31 +1,33 @@
 [versions]
-activityCompose = "1.10.0"
+activityCompose = "1.11.0"
 api = "13.1.5"
+biometric = "1.4.0-alpha04"
 coilCompose = "3.1.0"
-composeBom = "2025.02.00"
-coreKtx = "1.15.0"
-espressoCore = "3.6.1"
+composeBom = "2025.10.00"
+coreKtx = "1.17.0"
+espressoCore = "3.7.0"
 hiddenapibypass = "6.1"
 junit = "4.13.2"
-junitVersion = "1.2.1"
-lifecycleRuntimeKtx = "2.8.7"
-material3Android = "1.3.1"
+junitVersion = "1.3.0"
+lifecycleRuntimeKtx = "2.9.4"
+material3Android = "1.4.0"
 materialIconsExtended = "1.7.8"
-navigationRuntimeKtx = "2.8.7"
-navigationCompose = "2.8.7"
-protobuf = "4.28.3"
-protobufPlugin = "0.9.4"
+navigationRuntimeKtx = "2.9.5"
+navigationCompose = "2.9.5"
+protobuf = "4.32.0"
+protobufPlugin = "0.9.5"
 provider = "13.1.5"
-kotlin = "2.1.10"
+kotlin = "2.1.21"
+datastore = "1.1.7"
 
 [plugins]
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 
 [libraries]
-androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version = "1.0.0" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore", version = "1.0.0" }
-androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version = "1.0.0" }
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "datastore" }
 protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }

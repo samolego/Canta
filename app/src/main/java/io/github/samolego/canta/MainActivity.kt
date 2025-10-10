@@ -8,13 +8,13 @@ import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.fragment.app.FragmentActivity
 import io.github.samolego.canta.extension.getInfoForPackage
 import io.github.samolego.canta.ui.CantaApp
 import io.github.samolego.canta.ui.theme.CantaTheme
@@ -27,7 +27,7 @@ const val SHIZUKU_PACKAGE_NAME = "moe.shizuku.privileged.api"
 const val APP_NAME = "Canta"
 const val packageName = "io.github.samolego.canta"
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
