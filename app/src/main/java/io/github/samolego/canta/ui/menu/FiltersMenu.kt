@@ -45,12 +45,12 @@ fun FiltersMenu(
         // System apps toggle
         FilterChip(
                 text = stringResource(R.string.only_system),
-                isSelected = appListViewModel.showSystem,
-                onClick = { appListViewModel.showSystem = !appListViewModel.showSystem },
+                isSelected = appListViewModel.onlySystem,
+                onClick = { appListViewModel.onlySystem = !appListViewModel.onlySystem },
                 trailingContent = {
                     Checkbox(
-                            checked = appListViewModel.showSystem,
-                            onCheckedChange = { appListViewModel.showSystem = it }
+                            checked = appListViewModel.onlySystem,
+                            onCheckedChange = { appListViewModel.onlySystem = it }
                     )
                 }
         )

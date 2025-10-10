@@ -35,7 +35,7 @@ class AppListViewModel : ViewModel() {
     var selectedApps = mutableStateSetOf<String>()
 
     var searchQuery by mutableStateOf("")
-    var showSystem by mutableStateOf(false)
+    var onlySystem by mutableStateOf(true)
     var isLoading by mutableStateOf(false)
         private set
     var isLoadingBadges by mutableStateOf(false)
@@ -62,7 +62,7 @@ class AppListViewModel : ViewModel() {
                     it.name.contains(searchQuery, true) ||
                             it.packageName.contains(searchQuery, true)
                 }
-                .filter { it.isSystemApp || !showSystem }
+                .filter { it.isSystemApp || !onlySystem }
     }
 
     suspend fun loadInstalled(packageManager: PackageManager, context: Context) {
