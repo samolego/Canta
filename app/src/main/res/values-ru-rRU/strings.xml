@@ -30,16 +30,16 @@
         <item quantity="other">%d приложений выбрано</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">You have successfully uninstalled %d app!</item>
-        <item quantity="few">You have successfully uninstalled %d apps!</item>
-        <item quantity="many">You have successfully uninstalled %d apps!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="one">Приложение %d успешно удалено!</item>
+        <item quantity="few">Приложение %d успешно удалено!</item>
+        <item quantity="many">Приложения %d успешно удалены!</item>
+        <item quantity="other">Приложение %d успешно удалено!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">You have successfully reinstalled %d app!</item>
-        <item quantity="few">You have successfully reinstalled %d apps!</item>
-        <item quantity="many">You have successfully reinstalled %d apps!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="one">Приложение %d успешно переустановлено!</item>
+        <item quantity="few">Приложение %d успешно переустановлено!</item>
+        <item quantity="many">Приложения %d успешно переустановлены!</item>
+        <item quantity="other">Приложение %d успешно переустановлено!</item>
     </plurals>
     <string name="copy">Скопировать</string>
     <string name="app_settings">Информация о приложении</string>
@@ -109,11 +109,11 @@
     <string name="click_to_expand">Нажмите, чтобы раскрыть</string>
     <string name="bloat_list_url">URL-адрес списка блоков</string>
     <string name="bloat_list_url_description">Где взять значки и описания.</string>
-    <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
+    <string name="allow_unsafe_selections">Разрешить небезопасный выбор</string>
+    <string name="allow_unsafe_uninstalls_description">Разрешить ли выбирать приложения, помеченные как небезопасные (шаблоны обходят эту возможность).</string>
+    <string name="donate">Поддержать</string>
+    <string name="canta_donate_request">Нравится Canta? Я создал её в свободное время, заботясь о конфиденциальности — без рекламы и отслеживания. Если приложение вам полезно, поддержите его разработку!</string>
+    <string name="success">Успешно %1$s!</string>
     <string name="hide_success_dialog">Hide success dialog</string>
     <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
 </resources>
