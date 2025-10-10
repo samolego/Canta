@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import io.github.samolego.canta.data.proto.AppSettings
-import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS
+import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS_URL
 import io.github.samolego.canta.util.DEFAULT_BLOAT_URL
 import kotlinx.coroutines.flow.map
 
@@ -21,20 +21,10 @@ class SettingsStore private constructor(context: Context) {
     val disableRiskDialogFlow = dataStore.data.map { it.disableRiskDialog }
     val latestCommitHashFlow = dataStore.data.map { it.latestBloatCommitHash }
     val bloatListUrlFlow = dataStore.data.map {
-        it.bloatListUrl.let {
-            if (it.isEmpty()) {
-                DEFAULT_BLOAT_URL
-            }
-            it
-        }
+        it.bloatListUrl.ifEmpty { DEFAULT_BLOAT_URL }
     }
     val commitsUrlFlow = dataStore.data.map {
-        it.commitsUrl.let {
-            if (it.isEmpty()) {
-                DEFAULT_BLOAT_COMMITS
-            }
-            it
-        }
+        it.commitsUrl.ifEmpty { DEFAULT_BLOAT_COMMITS_URL }
     }
     val allowUnsafeUninstalls = dataStore.data.map { it.allowUnsafeUninstalls }
 

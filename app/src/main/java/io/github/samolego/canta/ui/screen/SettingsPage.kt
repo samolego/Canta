@@ -52,7 +52,7 @@ import io.github.samolego.canta.ui.component.IconClickButton
 import io.github.samolego.canta.ui.component.SettingsItem
 import io.github.samolego.canta.ui.component.SettingsTextItem
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
-import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS
+import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS_URL
 import io.github.samolego.canta.util.DEFAULT_BLOAT_URL
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +69,7 @@ fun SettingsScreen(
 
     var advancedSettingsExpanded by remember { mutableStateOf(false) }
     var bloatListUrl by remember { mutableStateOf(settingsViewModel.bloatListUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_URL else it }) }
-    var commitsUrl by remember { mutableStateOf(settingsViewModel.commitsUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_COMMITS else it }) }
+    var commitsUrl by remember { mutableStateOf(settingsViewModel.commitsUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_COMMITS_URL else it }) }
     val allowUnsafe by settingsViewModel.allowUnsafeUninstall.collectAsStateWithLifecycle()
 
     Scaffold(

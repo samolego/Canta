@@ -9,14 +9,14 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import java.io.File
-import java.net.URL
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
+import java.io.File
+import java.net.URL
 
 const val DEFAULT_BLOAT_URL =
         "https://raw.githubusercontent.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/main/resources/assets/uad_lists.json"
-const val DEFAULT_BLOAT_COMMITS =
+const val DEFAULT_BLOAT_COMMITS_URL =
         "https://api.github.com/repos/Universal-Debloater-Alliance/universal-android-debloater-next-generation/commits?path=resources%2Fassets%2Fuad_lists.json"
 
 /**
@@ -33,7 +33,7 @@ class BloatUtils {
     fun fetchBloatList(
             uadList: File,
             bloatUrl: String = DEFAULT_BLOAT_URL,
-            commitsUrl: String = DEFAULT_BLOAT_COMMITS
+            commitsUrl: String = DEFAULT_BLOAT_COMMITS_URL
     ): Pair<JSONObject, String> {
         try {
             // Fetch json from bloatUrl and parse it
@@ -59,7 +59,7 @@ class BloatUtils {
 
     fun checkForUpdates(
             latestBloatHash: String,
-            commitsUrl: String = DEFAULT_BLOAT_COMMITS
+            commitsUrl: String = DEFAULT_BLOAT_COMMITS_URL
     ): Boolean {
         return try {
             val commits = URL(commitsUrl).readText()
