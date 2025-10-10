@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExpandLess
@@ -71,6 +72,7 @@ fun SettingsScreen(
     var bloatListUrl by remember { mutableStateOf(settingsViewModel.bloatListUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_URL else it }) }
     var commitsUrl by remember { mutableStateOf(settingsViewModel.commitsUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_COMMITS_URL else it }) }
     val allowUnsafe by settingsViewModel.allowUnsafeUninstall.collectAsStateWithLifecycle()
+    val hideSuccessDialog by settingsViewModel.hideSuccessDialog.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -116,6 +118,18 @@ fun SettingsScreen(
                 checked = confirmBeforeUninstall,
                 onCheckedChange = {
                     settingsViewModel.saveConfirmBeforeUninstall(it)
+                }
+            )
+
+
+            SettingsItem(
+                title = stringResource(R.string.hide_success_dialog),
+                description = stringResource(R.string.hide_success_dialog_description),
+                icon = Icons.AutoMirrored.Default.Message,
+                isSwitch = true,
+                checked = hideSuccessDialog,
+                onCheckedChange = {
+                    settingsViewModel.saveHideSuccessDialog(it)
                 }
             )
 

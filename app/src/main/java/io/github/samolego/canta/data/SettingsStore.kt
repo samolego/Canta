@@ -26,7 +26,8 @@ class SettingsStore private constructor(context: Context) {
     val commitsUrlFlow = dataStore.data.map {
         it.commitsUrl.ifEmpty { DEFAULT_BLOAT_COMMITS_URL }
     }
-    val allowUnsafeUninstalls = dataStore.data.map { it.allowUnsafeUninstalls }
+    val allowUnsafeUninstallsFlow = dataStore.data.map { it.allowUnsafeUninstalls }
+    val hideSuccessDialogFlow = dataStore.data.map { it.hideSuccessDialog }
 
 
     suspend fun setAutoUpdateBloatList(autoUpdate: Boolean) {
@@ -55,6 +56,10 @@ class SettingsStore private constructor(context: Context) {
 
     suspend fun setAllowUnsafeUninstalls(allow: Boolean) {
         dataStore.updateData { it.toBuilder().setAllowUnsafeUninstalls(allow).build() }
+    }
+
+    suspend fun setHideSuccessDialog(hide: Boolean) {
+        dataStore.updateData { it.toBuilder().setHideSuccessDialog(hide).build() }
     }
 
 

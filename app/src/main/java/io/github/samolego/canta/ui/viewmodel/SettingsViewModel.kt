@@ -43,6 +43,9 @@ class SettingsViewModel(
     private val _allowUnsafeUninstalls = MutableStateFlow<Boolean>(false)
     val allowUnsafeUninstall = _allowUnsafeUninstalls.asStateFlow()
 
+    private val _hideSuccessDialog = MutableStateFlow<Boolean>(false)
+    val hideSuccessDialog = _hideSuccessDialog.asStateFlow()
+
     init {
         // here this will automatically starts observing and collecting values
         // upon viewModel initialization from the preferences
@@ -57,6 +60,7 @@ class SettingsViewModel(
         observeBloatListUrl()
         observeCommitsUrl()
         observeAllowUnsafeUninstalls()
+        observeHideSuccessDialog()
     }
 
     private fun observeSettings() {
@@ -98,8 +102,15 @@ class SettingsViewModel(
 
     private fun observeAllowUnsafeUninstalls() {
         settingsStore
-            .allowUnsafeUninstalls
+            .allowUnsafeUninstallsFlow
             .onEach { _allowUnsafeUninstalls.value = it }
+            .launchIn(viewModelScope)
+    }
+
+    private fun observeHideSuccessDialog() {
+        settingsStore
+            .hideSuccessDialogFlow
+            .onEach { _hideSuccessDialog.value = it }
             .launchIn(viewModelScope)
     }
 
@@ -139,6 +150,10 @@ class SettingsViewModel(
 
     fun saveAllowUnsafeUninstalls(allow: Boolean) {
         viewModelScope.launch { settingsStore.setAllowUnsafeUninstalls(allow) }
+    }
+
+    fun saveHideSuccessDialog(hide: Boolean) {
+        viewModelScope.launch { settingsStore.setHideSuccessDialog(hide) }
     }
 
     private companion object {

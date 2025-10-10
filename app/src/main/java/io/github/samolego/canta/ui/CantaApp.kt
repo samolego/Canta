@@ -297,7 +297,7 @@ private fun MainContent(
                                             resetToFactory = resetToFactory,
                                         )
 
-                                        if (uninstalled > 0) {
+                                        if (uninstalled > 0 && !settingsViewModel.hideSuccessDialog.value) {
                                             currentDialog = {
                                                 SuccessDialog(
                                                     count = uninstalled,

@@ -102,4 +102,6 @@
     <string name="donate">捐助</string>
     <string name="canta_donate_request">你喜欢 Canta 吗？这个软件是在我空闲的时间中开发的，它注重隐私 - 无广告、无跟踪。如果觉得它好用，可以考虑一下支持这个软件的开发！</string>
     <string name="success">成功 %1$s！</string>
+    <string name="hide_success_dialog">Hide success dialog</string>
+    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
 </resources>

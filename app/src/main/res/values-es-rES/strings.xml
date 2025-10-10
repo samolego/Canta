@@ -106,4 +106,6 @@
     <string name="donate">Donar</string>
     <string name="canta_donate_request">¿Te gusta Canta? Lo he creado en mi tiempo libre pensando en la privacidad: sin anuncios ni seguimiento. Si te resulta útil, ¡considera apoyar el desarrollo!</string>
     <string name="success">¡Correctamente %1$ss!</string>
+    <string name="hide_success_dialog">Hide success dialog</string>
+    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
 </resources>

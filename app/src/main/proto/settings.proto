@@ -11,4 +11,5 @@ message AppSettings {
   string bloat_list_url = 5;
   string commits_url = 6;
   bool allow_unsafe_uninstalls = 7;
+  bool hide_success_dialog = 8;
 }
