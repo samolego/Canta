@@ -95,13 +95,13 @@
     <string name="reset_to_default">重置为默认设置</string>
     <string name="advanced_settings">高级设置</string>
     <string name="click_to_expand">点击以展开</string>
-    <string name="bloat_list_url">要卸载应用列表的 URL</string>
+    <string name="bloat_list_url">软件列表 URL</string>
     <string name="bloat_list_url_description">从哪里获取特殊标志和描述。</string>
     <string name="allow_unsafe_selections">允许选择 Unsafe 选项</string>
     <string name="allow_unsafe_uninstalls_description">是否允许选择被标记为 Unsafe 选项的应用（使用预设时无视此设置）。</string>
     <string name="donate">捐助</string>
     <string name="canta_donate_request">你喜欢 Canta 吗？这个软件是在我空闲的时间中开发的，它注重隐私 - 无广告、无跟踪。如果觉得它好用，可以考虑一下支持这个软件的开发！</string>
     <string name="success">成功 %1$s！</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
+    <string name="hide_success_dialog">把完成显示的提示给隐藏</string>
+    <string name="hide_success_dialog_description">当你卸载/恢复应用时，隐藏显示成功的提示框。</string>
 </resources>
