@@ -110,4 +110,6 @@
     <string name="hide_success_dialog_description">Oculta el aviso de que la operación se realizó correctamente, después de la desinstalación/reinstalación.</string>
     <string name="auth_required">Authentication required</string>
     <string name="auth_required_description">This action requires higher priviliges.</string>
+    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
+    <string name="require_auth_setting">Require authentication</string>
 </resources>

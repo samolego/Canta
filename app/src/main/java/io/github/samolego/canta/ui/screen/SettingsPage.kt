@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,6 +56,7 @@ import io.github.samolego.canta.ui.component.SettingsTextItem
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
 import io.github.samolego.canta.util.DEFAULT_BLOAT_COMMITS_URL
 import io.github.samolego.canta.util.DEFAULT_BLOAT_URL
+import io.github.samolego.canta.util.showBiometricPrompt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,6 +75,7 @@ fun SettingsScreen(
     var commitsUrl by remember { mutableStateOf(settingsViewModel.commitsUrl.value.let { if (it.isEmpty()) DEFAULT_BLOAT_COMMITS_URL else it }) }
     val allowUnsafe by settingsViewModel.allowUnsafeUninstall.collectAsStateWithLifecycle()
     val hideSuccessDialog by settingsViewModel.hideSuccessDialog.collectAsStateWithLifecycle()
+    val authEnabled by settingsViewModel.authEnabled.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -130,6 +133,20 @@ fun SettingsScreen(
                 checked = hideSuccessDialog,
                 onCheckedChange = {
                     settingsViewModel.saveHideSuccessDialog(it)
+                }
+            )
+
+            SettingsItem(
+                title = stringResource(R.string.require_auth_setting),
+                description = stringResource(R.string.require_auth_setting_desc),
+                icon = Icons.Default.Lock,
+                isSwitch = true,
+                checked = authEnabled,
+                onCheckedChange = {
+                    showBiometricPrompt(
+                        context = context,
+                        onSuccess = { settingsViewModel.saveAuthEnabled(it) },
+                    )
                 }
             )
 

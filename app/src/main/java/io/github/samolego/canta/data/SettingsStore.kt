@@ -29,6 +29,8 @@ class SettingsStore private constructor(context: Context) {
     val allowUnsafeUninstallsFlow = dataStore.data.map { it.allowUnsafeUninstalls }
     val hideSuccessDialogFlow = dataStore.data.map { it.hideSuccessDialog }
 
+    val authEnabledFlow = dataStore.data.map { it.authEnabled }
+
 
     suspend fun setAutoUpdateBloatList(autoUpdate: Boolean) {
         dataStore.updateData { it.toBuilder().setAutoUpdateBloatList(autoUpdate).build() }
@@ -60,6 +62,10 @@ class SettingsStore private constructor(context: Context) {
 
     suspend fun setHideSuccessDialog(hide: Boolean) {
         dataStore.updateData { it.toBuilder().setHideSuccessDialog(hide).build() }
+    }
+
+    suspend fun setAuthEnabled(enabled: Boolean) {
+        dataStore.updateData { it.toBuilder().setAuthEnabled(enabled).build() }
     }
 
 

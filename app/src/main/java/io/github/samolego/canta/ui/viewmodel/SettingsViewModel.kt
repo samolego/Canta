@@ -23,28 +23,31 @@ class SettingsViewModel(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _autoUpdateBloatList = MutableStateFlow<Boolean>(true)
+    private val _autoUpdateBloatList = MutableStateFlow(true)
     val autoUpdateBloatList = _autoUpdateBloatList.asStateFlow()
 
-    private val _confirmBeforeUninstall = MutableStateFlow<Boolean>(true)
+    private val _confirmBeforeUninstall = MutableStateFlow(true)
     val confirmBeforeUninstall = _confirmBeforeUninstall.asStateFlow()
 
-    private val _disableRiskDialog = MutableStateFlow<Boolean>(true)
+    private val _disableRiskDialog = MutableStateFlow(true)
     val disableRiskDialog = _disableRiskDialog.asStateFlow()
 
-    private var _latestCommitHash = MutableStateFlow<String>("")
+    private var _latestCommitHash = MutableStateFlow("")
 
-    private val _bloatListUrl = MutableStateFlow<String>("")
+    private val _bloatListUrl = MutableStateFlow("")
     val bloatListUrl = _bloatListUrl.asStateFlow()
 
-    private val _commitsUrl = MutableStateFlow<String>("")
+    private val _commitsUrl = MutableStateFlow("")
     val commitsUrl = _commitsUrl.asStateFlow()
 
-    private val _allowUnsafeUninstalls = MutableStateFlow<Boolean>(false)
+    private val _allowUnsafeUninstalls = MutableStateFlow(false)
     val allowUnsafeUninstall = _allowUnsafeUninstalls.asStateFlow()
 
-    private val _hideSuccessDialog = MutableStateFlow<Boolean>(false)
+    private val _hideSuccessDialog = MutableStateFlow(false)
     val hideSuccessDialog = _hideSuccessDialog.asStateFlow()
+
+    private val _authEnabled = MutableStateFlow(false)
+    val authEnabled = _authEnabled.asStateFlow()
 
     init {
         // here this will automatically starts observing and collecting values
@@ -61,6 +64,7 @@ class SettingsViewModel(
         observeCommitsUrl()
         observeAllowUnsafeUninstalls()
         observeHideSuccessDialog()
+        observeAuthEnabled()
     }
 
     private fun observeSettings() {
@@ -114,6 +118,13 @@ class SettingsViewModel(
             .launchIn(viewModelScope)
     }
 
+    private fun observeAuthEnabled() {
+        settingsStore
+            .authEnabledFlow
+            .onEach { _authEnabled.value = it }
+            .launchIn(viewModelScope)
+    }
+
     private fun observeBloatListUrl() {
         settingsStore.bloatListUrlFlow.onEach { _bloatListUrl.value = it }.launchIn(viewModelScope)
     }
@@ -154,6 +165,10 @@ class SettingsViewModel(
 
     fun saveHideSuccessDialog(hide: Boolean) {
         viewModelScope.launch { settingsStore.setHideSuccessDialog(hide) }
+    }
+
+    fun saveAuthEnabled(authEnabled: Boolean) {
+        viewModelScope.launch { settingsStore.setAuthEnabled(authEnabled) }
     }
 
     private companion object {

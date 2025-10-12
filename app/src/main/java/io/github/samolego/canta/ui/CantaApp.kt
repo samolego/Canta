@@ -46,7 +46,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -290,7 +289,7 @@ private fun MainContent(
 
                             val uninstallApps = {
                                 val uninstall = { resetToFactory: Boolean ->
-                                    showBiometricPrompt(context) {
+                                    val process = {
                                         coroutineScope.launch {
                                             val uninstalled = uninstallOrReinstall(
                                                 uninstallApp = uninstallApp,
@@ -312,7 +311,11 @@ private fun MainContent(
                                                 }
                                             }
                                         }
-
+                                    }
+                                    if (settingsViewModel.authEnabled.value) {
+                                        showBiometricPrompt(context) { process() }
+                                    } else {
+                                        process()
                                     }
                                 }
 

@@ -12,4 +12,5 @@ message AppSettings {
   string commits_url = 6;
   bool allow_unsafe_uninstalls = 7;
   bool hide_success_dialog = 8;
+  bool auth_enabled = 9;
 }
