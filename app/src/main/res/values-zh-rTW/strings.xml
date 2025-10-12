@@ -24,10 +24,10 @@
         <item quantity="other">已選擇 %d 個應用程式</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="other">你已成功解除安裝 %d 個應用程式！</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="other">你已成功重新安裝 %d 個應用程式！</item>
     </plurals>
     <string name="copy">複製</string>
     <string name="app_settings">應用程式資訊</string>
@@ -92,16 +92,16 @@
     <string name="shizuku_requirement_description">Canta 使用 Shizuku 卸載應用程式，而無需 root 許可權。Shizuku 提供了一種訪問系統級 SDK 的安全方法。</string>
     <string name="commits_url">提交紀錄 URL</string>
     <string name="commits_url_description">從哪裡取得更新的提交資訊</string>
-    <string name="reset_to_default">  重設為預設值</string>
+    <string name="reset_to_default">重設為預設值</string>
     <string name="advanced_settings">進階設定</string>
     <string name="click_to_expand">點擊以展開</string>
     <string name="bloat_list_url">膨脹清單 URL</string>
-    <string name="bloat_list_url_description">從哪裡取得徽章與描述</string>
+    <string name="bloat_list_url_description">從哪裡取得徽章與描述。</string>
     <string name="allow_unsafe_selections">允許不安全的選取</string>
     <string name="allow_unsafe_uninstalls_description">是否允許選取被標記為不安全的應用程式（套用預設時已自動略過此限制）。</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
+    <string name="donate">贊助</string>
+    <string name="canta_donate_request">喜歡 Canta 嗎？這是我在閒暇時間打造、以隱私為核心的作品 - 沒有廣告，也沒有追蹤。如果你覺得它實用，請考慮支持它的開發！</string>
+    <string name="success">成功 %1$s！</string>
+    <string name="hide_success_dialog">隱藏成功對話框</string>
+    <string name="hide_success_dialog_description">在解除安裝或重新安裝後隱藏成功對話框。</string>
 </resources>
