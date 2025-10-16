@@ -114,10 +114,10 @@
     <string name="donate">Поддержать</string>
     <string name="canta_donate_request">Нравится Canta? Я создал её в свободное время, заботясь о конфиденциальности — без рекламы и отслеживания. Если приложение вам полезно, поддержите его разработку!</string>
     <string name="success">Успешно %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher priviliges.</string>
-    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
+    <string name="hide_success_dialog">Скрыть диалоговое окно успешного завершения</string>
+    <string name="hide_success_dialog_description">Скрыть диалоговое окно об успешном завершении удаления или переустановки.</string>
+    <string name="auth_required">Требуется аутентификация</string>
+    <string name="auth_required_description">Это действие требует повышенных привилегий.</string>
+    <string name="require_auth_setting_desc">Для удаления или переустановки приложений требуется аутентификация.</string>
+    <string name="require_auth_setting">Требуется проверка</string>
 </resources>
