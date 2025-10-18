@@ -108,8 +108,8 @@
     <string name="success">¡Correctamente %1$ss!</string>
     <string name="hide_success_dialog">Ocultar el aviso de que la operación se realizó correctamente</string>
     <string name="hide_success_dialog_description">Oculta el aviso de que la operación se realizó correctamente, después de la desinstalación/reinstalación.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher priviliges.</string>
-    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
+    <string name="auth_required">Es necesario autenticarse</string>
+    <string name="auth_required_description">Esta operación requiere unos privilegios más grandes.</string>
+    <string name="require_auth_setting_desc">Necesitas autentificarte para desinstalar o reinstalar las aplicaciones.</string>
+    <string name="require_auth_setting">Verificación necesaria</string>
 </resources>
