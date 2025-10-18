@@ -109,7 +109,7 @@
     <string name="hide_success_dialog">Ocultar el aviso de que la operación se realizó correctamente</string>
     <string name="hide_success_dialog_description">Oculta el aviso de que la operación se realizó correctamente, después de la desinstalación/reinstalación.</string>
     <string name="auth_required">Es necesario autenticarse</string>
-    <string name="auth_required_description">Esta operación requiere unos privilegios más grandes.</string>
+    <string name="auth_required_description">Esta operación requiere unos privilegios mayores.</string>
     <string name="require_auth_setting_desc">Necesitas autentificarte para desinstalar o reinstalar las aplicaciones.</string>
     <string name="require_auth_setting">Verificación necesaria</string>
 </resources>
