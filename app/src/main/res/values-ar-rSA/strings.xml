@@ -22,20 +22,16 @@
         <item quantity="one">مسح %d المحدد</item>
         <item quantity="two">مسح %d المحدد</item>
         <item quantity="few">مسح %d المحدد</item>
-        <item quantity="many">تنظيف %d المحدد</item>
-        <item quantity="other">تنظيف %d المحدد</item>
+        <item quantity="many">مسح %d المحدد</item>
+        <item quantity="other">مسح %d المحدد</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="zero">واحد
-%d تطبيق محدد
-
-اخرى
-%d تطبيقات محدده</item>
+        <item quantity="zero">تم تحديد %d تطبيق</item>
         <item quantity="one">تم تحديد %d تطبيق</item>
         <item quantity="two">تم تحديد %d تطبيق</item>
-        <item quantity="few">%d apps selected</item>
-        <item quantity="many">%d apps selected</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="few">حُدد %d تطبيقات</item>
+        <item quantity="many">حُدد %d تطبيق</item>
+        <item quantity="other">حُدد %d تطبيق</item>
     </plurals>
     <plurals name="success_uninstalled">
         <item quantity="zero">You have successfully uninstalled %d app!</item>
@@ -53,9 +49,9 @@
         <item quantity="many">لقد أعدت تثبيت %d تطبيق بنجاح!</item>
         <item quantity="other">لقد أعدت تثبيت %d تطبيق بنجاح!</item>
     </plurals>
-    <string name="copy">نسخ</string>
+    <string name="copy">انسخ</string>
     <string name="app_settings">معلومات التطبيق</string>
-    <string name="close">إغلاق</string>
+    <string name="close">أغلق</string>
     <string name="canta_description">Canta هو تطبيق إلغاء تثبيت مفتوح المصدر يستخدم Shizuku لإزالة تطبيقات النظام والمستخدم.\nإنه يسمح لك بإزالة الملفات الزائدة من جهازك كما يحلو لك، دون الحاجة إلى جهاز كمبيوتر.\n\nشكر خاص لـ %s.\nلن يكون Canta هو نفسه بدون عملهم.</string>
     <string name="search_apps">البحث عن التطبيقات</string>
     <string name="auto_update_bloat_list">قائمة البرامج غير المرغوبة التي يتم تحديثها تلقائيًا</string>
@@ -91,7 +87,7 @@
     <string name="preset_name_placeholder">على سبيل المثال، تطبيقات سامسونج المُزعجة</string>
     <string name="optional_description">الوصف (اختياري)</string>
     <string name="preset_description_placeholder">وصف الإعداد المسبق في تحرير...</string>
-    <string name="save">حفظ</string>
+    <string name="save">احفظ</string>
     <string name="import_preset_clipboard">الاستيراد من الحافظة</string>
     <string name="presets">الإعدادات المسبقة</string>
     <string name="preset_deleted">تم حذف الإعداد المسبق</string>
@@ -101,10 +97,10 @@
     <string name="no_presets">لا توجد إعدادات مسبقة</string>
     <string name="presets_description">قم بإنشاء أو استيراد الإعدادات المسبقة لإدارة قوائم إلغاء تثبيت التطبيق عبر الأجهزة</string>
     <string name="more_options">المزيد من الخيارات</string>
-    <string name="edit">تعديل</string>
-    <string name="add_apps">إضافة التطبيقات</string>
-    <string name="share">مشاركة</string>
-    <string name="delete">حذف</string>
+    <string name="edit">عدّل</string>
+    <string name="add_apps">أضف تطبيقات</string>
+    <string name="share">شارك</string>
+    <string name="delete">احذف</string>
     <string name="apply_preset">تطبيق الإعداد المسبق</string>
     <string name="preset_save_error">خطأ في حفظ الإعداد المسبق</string>
     <string name="selected_apps">تطبيقات محددة</string>
