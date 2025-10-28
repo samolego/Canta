@@ -19,11 +19,11 @@
     <string name="log_copied">Journal copié dans le presse-papiers</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Effacer %d sélectionné</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="other">Effacer %d sélectionné</item>
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="one">%d App sélectionnée</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="other">%d Apps sélectionnées</item>
     </plurals>
     <plurals name="success_uninstalled">
         <item quantity="one">You have successfully uninstalled %d app!</item>
@@ -36,7 +36,7 @@
     <string name="copy">Copier</string>
     <string name="app_settings">Infos sur l\'application</string>
     <string name="close">Fermer</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta est un désinstalleur open source qui utilise Shizuku pour supprimer les applications système et utilisateur. Il vous permet de débloater votre appareil comme vous le souhaitez, sans avoir besoin d\'un PC.\n\nUn merci spécial à %s.\nCanta ne serait pas la même sans leur travail.</string>
     <string name="search_apps">Rechercher des applications</string>
     <string name="auto_update_bloat_list">Mise à jour automatique de la liste des applications inutiles</string>
     <string name="auto_update_bloat_list_description">Récupérer automatiquement la nouvelle version des informations sur les applications superflues. Cela garantit des badges et des descriptions d\'applications toujours à jour.</string>
