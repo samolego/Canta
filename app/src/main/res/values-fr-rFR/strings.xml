@@ -19,24 +19,24 @@
     <string name="log_copied">Journal copié dans le presse-papiers</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Effacer %d sélectionné</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="other">Effacer %d sélectionné</item>
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="one">%d App sélectionnée</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="other">%d Apps sélectionnées</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">You have successfully uninstalled %d app!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="one">Vous avez désinstallé %d application avec succès !</item>
+        <item quantity="other">Vous avez désinstallé %d applications avec succès !</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">You have successfully reinstalled %d app!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="one">Vous avez réinstallé %d application avec succès !</item>
+        <item quantity="other">Vous avez réinstallé %d applications avec succès !</item>
     </plurals>
     <string name="copy">Copier</string>
     <string name="app_settings">Infos sur l\'application</string>
     <string name="close">Fermer</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta est une application de désinstallation open source qui utilise Shizuku pour supprimer les applications système et utilisateur. Elle vous permet d\'alléger votre appareil comme vous le souhaitez, sans avoir besoin d\'un PC.\n\nUn merci spécial à %s.\nCanta ne serait pas la même sans leur travail.</string>
     <string name="search_apps">Rechercher des applications</string>
     <string name="auto_update_bloat_list">Mise à jour automatique de la liste des applications inutiles</string>
     <string name="auto_update_bloat_list_description">Récupérer automatiquement la nouvelle version des informations sur les applications superflues. Cela garantit des badges et des descriptions d\'applications toujours à jour.</string>
@@ -94,22 +94,22 @@
     <string name="grant_shizuku_permission_to_canta">Accorder la permission de Canta à Shizuku</string>
     <string name="shizuku_required">Shizuku requis</string>
     <string name="shizuku_requirement_description">Canta utilise Shizuku pour désinstaller des applications sans accès root. Shizuku fournit un moyen sécurisé d\'accéder aux SDK au niveau du système.</string>
-    <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
-    <string name="reset_to_default">Reset to default</string>
-    <string name="advanced_settings">Advanced settings</string>
-    <string name="click_to_expand">Click to expand</string>
-    <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
-    <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher privileges.</string>
-    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
+    <string name="commits_url">URL des commits</string>
+    <string name="commits_url_description">D\'où obtenir les informations de commit pour les mises à jour</string>
+    <string name="reset_to_default">Rétablir les valeurs par défaut</string>
+    <string name="advanced_settings">Paramètres avancés</string>
+    <string name="click_to_expand">Cliquez pour développer</string>
+    <string name="bloat_list_url">URL liste applis inutiles</string>
+    <string name="bloat_list_url_description">D\'où obtenir les badges et descriptions.</string>
+    <string name="allow_unsafe_selections">Autoriser les sélections dangereuses</string>
+    <string name="allow_unsafe_uninstalls_description">Autoriser la sélection des applications marquées dangereuses (les préréglages ignorent déjà ce réglage).</string>
+    <string name="donate">Faire un don</string>
+    <string name="canta_donate_request">Vous aimer Canta ? Je la développe sur mon temps libre, avec respect de la vie privée - sans publicité, sans suivi. Si vous la trouvez utile, pensez à soutenir son développement !</string>
+    <string name="success">Succès %1$s!</string>
+    <string name="hide_success_dialog">Masquer la boîte de dialogue de succès</string>
+    <string name="hide_success_dialog_description">Masque la boîte de dialogue de succès après désinstallation / réinstallation.</string>
+    <string name="auth_required">Authentification requise</string>
+    <string name="auth_required_description">Cette action nécessite des privilèges plus élevés.</string>
+    <string name="require_auth_setting_desc">Authentification requise pour désinstaller ou réinstaller des applications.</string>
+    <string name="require_auth_setting">Exiger une authentification</string>
 </resources>

@@ -26,12 +26,12 @@
         <item quantity="other">%d adet uygulama seçildi</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">You have successfully uninstalled %d app!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="one">%d uygulamayı başarıyla kaldırdınız!</item>
+        <item quantity="other">%d uygulamaları başarıyla kaldırdınız!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">You have successfully reinstalled %d app!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="one">%d uygulamasını başarıyla geri yüklediniz!</item>
+        <item quantity="other">%d uygulamalarını başarıyla geri yüklediniz!</item>
     </plurals>
     <string name="copy">Kopyala</string>
     <string name="app_settings">Uygulama bilgileri</string>
@@ -94,22 +94,22 @@
     <string name="grant_shizuku_permission_to_canta">Shizuku\'dan Canta\'ya izin verin</string>
     <string name="shizuku_required">Shizuku Gerekli</string>
     <string name="shizuku_requirement_description">Canta, kök erişimi gerektirmeden uygulamaları kaldırmak için Shizuku\'yu kullanır. Shizuku, sistem düzeyindeki SDK\'lara erişmek için güvenli bir yol sağlar.</string>
-    <string name="commits_url">Commits URL</string>
+    <string name="commits_url">URL\'yi kaydeder</string>
     <string name="commits_url_description">Where to get commit info for updates from</string>
-    <string name="reset_to_default">Reset to default</string>
-    <string name="advanced_settings">Advanced settings</string>
-    <string name="click_to_expand">Click to expand</string>
-    <string name="bloat_list_url">Bloat list URL</string>
+    <string name="reset_to_default">Varsayılan ayarlara sıfırla</string>
+    <string name="advanced_settings">Gelişmiş ayarlar</string>
+    <string name="click_to_expand">Genişletmek için tıklayın</string>
+    <string name="bloat_list_url">Gereksiz uygulama liste URL\'si</string>
     <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
-    <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher privileges.</string>
-    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
+    <string name="allow_unsafe_selections">Güvenli olmayan seçimlere izin ver</string>
+    <string name="allow_unsafe_uninstalls_description">Güvenli olmayan olarak işaretlenmiş uygulamaların seçilmesine izin verilip verilmeyeceği (ön ayarların uygulanması bunu zaten atlar).</string>
+    <string name="donate">Bağış Yap</string>
+    <string name="canta_donate_request">Canta\'yı beğendiniz mi? Bu uygulama, gizlilik önceliğiyle boş zamanlarımda geliştirildi - reklam yok, izleme yok. Yararlı bulursanız, geliştirilmesine destek olmayı düşünün!</string>
+    <string name="success">Başarı %1$s!</string>
+    <string name="hide_success_dialog">Başarı uyarı kutusunu gizle</string>
+    <string name="hide_success_dialog_description">Kaldırma/yeniden yükleme işleminden sonra başarı iletişim kutusunu gizler.</string>
+    <string name="auth_required">Yetkilendirme gerekli</string>
+    <string name="auth_required_description">Bu işlem daha yüksek yetkiler gerektirir.</string>
+    <string name="require_auth_setting_desc">Uygulamaları kaldırmak veya yeniden yüklemek için yetkilendirme gerektir.</string>
+    <string name="require_auth_setting">Yetkilendirme gerekir</string>
 </resources>
