@@ -28,9 +28,9 @@
         <item quantity="other">%d aplikacija odabrano</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">You have successfully uninstalled %d app!</item>
-        <item quantity="few">You have successfully uninstalled %d apps!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="one">Uspješno ste deinstalirali %d aplikaciju!</item>
+        <item quantity="few">Uspješno ste deinstalirali %d aplikacije!</item>
+        <item quantity="other">Uspješno ste deinstalirali %d aplikacija!</item>
     </plurals>
     <plurals name="success_reinstalled">
         <item quantity="one">You have successfully reinstalled %d app!</item>
