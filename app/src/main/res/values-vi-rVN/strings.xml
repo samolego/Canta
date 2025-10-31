@@ -98,7 +98,7 @@
     <string name="bloat_list_url">Liên kết danh sách Bloat</string>
     <string name="bloat_list_url_description">Nguồn lấy nhãn và mô tả ứng dụng</string>
     <string name="allow_unsafe_selections">Cho phép chọn nhãn Unsafe</string>
-    <string name="allow_unsafe_uninstalls_description">Cho phép chọn các ứng dụng được đánh dấu là không an toàn (khi áp dụng cấu hình sẵn sẽ tự động bỏ qua tuỳ chọn này).</string>
+    <string name="allow_unsafe_uninstalls_description">Cho phép chọn các ứng dụng được đánh dấu là không an toàn (khi áp dụng cấu hình sẵn sẽ tự động bỏ qua tùy chọn này).</string>
     <string name="donate">Ủng hộ</string>
     <string name="canta_donate_request">Thích Canta? Ứng dụng này tôi viết trong thời gian rảnh, luôn đặt quyền riêng tư lên hàng đầu — không quảng cáo, không theo dõi người dùng. Nếu bạn thấy nó hữu ích, hãy ủng hộ tôi để có động lực tiếp tục phát triển nhé!</string>
     <string name="success">Thành công %1$s!</string>
