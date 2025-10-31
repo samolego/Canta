@@ -33,9 +33,9 @@
         <item quantity="other">Uspješno ste deinstalirali %d aplikacija!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">You have successfully reinstalled %d app!</item>
-        <item quantity="few">You have successfully reinstalled %d apps!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="one">Uspješno ste ponovno instalirali %d aplikaciju!</item>
+        <item quantity="few">Uspješno ste ponovno instalirali %d aplikacije!</item>
+        <item quantity="other">Uspješno ste ponovno instalirali %d aplikacija!</item>
     </plurals>
     <string name="copy">Kopiraj</string>
     <string name="app_settings">Informacije o aplikaciji</string>
@@ -53,7 +53,7 @@
     <string name="proceed_at_own_risk">Klikom na gumb \"Nastavi\" prihvaćate korištenje ove aplikacije na vlastitu odgovornost.</string>
     <string name="never_show_again">Više ne prikazuj ovu poruku</string>
     <string name="proceed">Nastavi</string>
-    <string name="confirm_uninstall_description">Prikaži dijalog za potvrdu radnje deinstalacije.</string>
+    <string name="confirm_uninstall_description">Prikažite dijalog za potvrdu deinstalacije.</string>
     <string name="select_all">Odaberi sve</string>
     <string name="select_all_tip">Pritisnite još %d puta kako biste omogućili funkcionalnost \"Odaberi sve\".</string>
     <string name="select_all_enabled">Funkcija \"Odaberi sve\" je omogućena za tip filtera \"Preporučeno\".</string>
@@ -102,18 +102,18 @@
     <string name="commits_url_description">Gdje dobiti informacije o commitu za ažuriranja</string>
     <string name="reset_to_default">Vrati na zadano</string>
     <string name="advanced_settings">Napredne postavke</string>
-    <string name="click_to_expand">Klikni za proširenje</string>
+    <string name="click_to_expand">Kliknite za proširenje</string>
     <string name="bloat_list_url">URL liste neželjenih aplikacija</string>
     <string name="bloat_list_url_description">Gdje nabaviti oznake i opise.</string>
-    <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher privileges.</string>
-    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
+    <string name="allow_unsafe_selections">Dopusti nesigurne odabire</string>
+    <string name="allow_unsafe_uninstalls_description">Dopušta odabir aplikacija označenih kao nesigurne (primjena unaprijed postavljenih postavki to već zaobilazi).</string>
+    <string name="donate">Doniraj</string>
+    <string name="canta_donate_request">Sviđa vam se Canta? Stvorena je u moje slobodno vrijeme s naglaskom na privatnost - bez oglasa, bez praćenja. Ako vam je korisna, razmislite o podržavanju njezinog razvoja!</string>
+    <string name="success">Uspjeh %1$s!</string>
+    <string name="hide_success_dialog">Sakrij dijaloški okvir uspjeha</string>
+    <string name="hide_success_dialog_description">Skriva dijalog o uspjehu nakon deinstalacije/ponovne instalacije.</string>
+    <string name="auth_required">Potrebna autentifikacija</string>
+    <string name="auth_required_description">Ova radnja zahtijeva veće privilegije.</string>
+    <string name="require_auth_setting_desc">Zahtijevajte autentifikaciju za deinstalaciju ili ponovnu instalaciju aplikacija.</string>
+    <string name="require_auth_setting">Zahtijevaj autentifikaciju</string>
 </resources>
