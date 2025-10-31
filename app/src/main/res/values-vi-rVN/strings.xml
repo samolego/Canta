@@ -2,14 +2,14 @@
 <resources>
     <string name="cancel">Hủy</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Bạn có chắc muốn xóa %1$s app?</string>
+    <string name="are_you_sure_to_uninstall_apps">Bạn có chắc muốn xóa ứng dụng %1$s?</string>
     <string name="copy_package_name_to_clipboard">Sao chép tên gói vào bảng tạm</string>
     <string name="no_description_available">Không có mô tả</string>
     <string name="uninstall">Gỡ cài đặt</string>
     <string name="reinstall">Cài đặt lại</string>
-    <string name="only_system">Chỉ hệ thống</string>
+    <string name="only_system">Chỉ ƯD hệ thống</string>
     <string name="no_apps_found">Không tìm thấy ứng dụng</string>
-    <string name="loading_apps">Đang tải app</string>
+    <string name="loading_apps">Đang tải ƯD</string>
     <string name="badge_info">Thông tin nhãn</string>
     <string name="got_it">Đã hiểu</string>
     <string name="loading_badges">Đang tải nhãn...</string>
@@ -64,7 +64,7 @@
     <string name="create_preset_description">Tạo một cấu hình từ những ứng dụng đã bị gỡ cài đặt lúc này và lưu thành một danh sách có thể chia sẻ và áp dụng trên nhiều thiết bị khác nhau.</string>
     <string name="preset_name">Tên cấu hình</string>
     <string name="preset_name_missing_error">Bắt buộc đặt tên</string>
-    <string name="preset_name_placeholder">ví dụ như: Samsung Bloatware</string>
+    <string name="preset_name_placeholder">ví dụ: ƯD rác của Samsung</string>
     <string name="optional_description">Mô tả (Không bắt buộc)</string>
     <string name="preset_description_placeholder">Mô tả các ứng dụng sẽ bị xoá trong cấu hình này...</string>
     <string name="save">Lưu</string>
