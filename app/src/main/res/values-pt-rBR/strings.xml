@@ -27,11 +27,11 @@
     </plurals>
     <plurals name="success_uninstalled">
         <item quantity="one">You have successfully uninstalled %d app!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="other">Você desinstalou os %d apps com sucesso!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">You have successfully reinstalled %d app!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="one">Você desinstalou os %d apps com sucesso!</item>
+        <item quantity="other">Você desinstalou os %d apps com sucesso!</item>
     </plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Informações do aplicativo</string>
@@ -74,9 +74,9 @@
     <string name="save">Salvar</string>
     <string name="import_preset_clipboard">Importar da área de transferência</string>
     <string name="presets">Predefinições</string>
-    <string name="preset_deleted">Preset deleted</string>
-    <string name="preset_delete_error">Failed to delete preset</string>
-    <string name="preset_copied">Preset copied to clipboard</string>
+    <string name="preset_deleted">Predefinição excluída</string>
+    <string name="preset_delete_error">Falha ao excluir predefinição</string>
+    <string name="preset_copied">Predefinição copiada para a área de transferência</string>
     <string name="import_failed">Falha na importação</string>
     <string name="no_presets">Sem predefinições</string>
     <string name="presets_description">Crie ou importe predefinições para gerenciar listas de desinstalação de aplicativos em todos os dispositivos</string>
@@ -86,7 +86,7 @@
     <string name="share">Compartilhar</string>
     <string name="delete">Apagar</string>
     <string name="apply_preset">Aplicar predefinição</string>
-    <string name="preset_save_error">Error saving preset</string>
+    <string name="preset_save_error">Erro ao salvar o preset</string>
     <string name="selected_apps">Selecionar aplicativo</string>
     <string name="text">Texto</string>
     <string name="install_shizuku">Instalar aplicativo Shizuku</string>
@@ -94,22 +94,22 @@
     <string name="grant_shizuku_permission_to_canta">Conceder permissão para Canta no Shizuku</string>
     <string name="shizuku_required">Shizuku Necessário</string>
     <string name="shizuku_requirement_description">O Canta usa o Shizuku para desinstalar aplicativos sem precisar de acesso root. O Shizuku oferece uma maneira segura de acessar SDKs em nível de sistema.</string>
-    <string name="commits_url">Commits URL</string>
-    <string name="commits_url_description">Where to get commit info for updates from</string>
-    <string name="reset_to_default">Reset to default</string>
-    <string name="advanced_settings">Advanced settings</string>
-    <string name="click_to_expand">Click to expand</string>
-    <string name="bloat_list_url">Bloat list URL</string>
-    <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
-    <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher privileges.</string>
-    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
+    <string name="commits_url">URL de commits</string>
+    <string name="commits_url_description">Onde obter informações de commit de atualizações de</string>
+    <string name="reset_to_default">Restaurar para as predefinições</string>
+    <string name="advanced_settings">Configurações avançadas</string>
+    <string name="click_to_expand">Clique para expandir</string>
+    <string name="bloat_list_url">URL da lista Bloat</string>
+    <string name="bloat_list_url_description">De onde obter distintivos e descrições.</string>
+    <string name="allow_unsafe_selections">Permitir seleções não seguras</string>
+    <string name="allow_unsafe_uninstalls_description">Se permitir a seleção de aplicativos marcados como inseguros (aplicar predefinições ignora isso já).</string>
+    <string name="donate">Doar</string>
+    <string name="canta_donate_request">Curtindo a Canta. Se você a achar útil, considere apoiar o seu desenvolvimento!</string>
+    <string name="success">Sucesso %1$s!</string>
+    <string name="hide_success_dialog">Ocultar o ‘pop-up\' de sucesso</string>
+    <string name="hide_success_dialog_description">Oculta o ‘pop-up\' de sucesso após desinstalar / reinstalar.</string>
+    <string name="auth_required">Autenticação requerida</string>
+    <string name="auth_required_description">Esta ação requer privilégios mais elevados.</string>
+    <string name="require_auth_setting_desc">Exigir autenticação para desinstalar ou reinstalar aplicativos.</string>
+    <string name="require_auth_setting">Requer autenticação</string>
 </resources>
