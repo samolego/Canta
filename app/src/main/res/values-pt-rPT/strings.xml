@@ -56,8 +56,8 @@
     <string name="uninstall_options_title">Opções de desinstalação</string>
     <string name="uninstall_app">Desinstalar aplicativo</string>
     <string name="reset_to_factory_version">Repor versão de fábrica</string>
-    <string name="import_preset">Import preset</string>
-    <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
+    <string name="import_preset">Importar predefinição</string>
+    <string name="import_preset_description">Importar uma predefinição da área de transferência ou colar texto JSON diretamente.</string>
     <string name="clipboard">Área de transferência</string>
     <string name="import_preset_clipboard_description">Import preset from clipboard. Make sure you have copied a valid Canta preset JSON.</string>
     <string name="paste_preset_json">Paste preset JSON</string>
