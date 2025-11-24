@@ -109,7 +109,7 @@
     <string name="hide_success_dialog">Verberg succes dialoog</string>
     <string name="hide_success_dialog_description">Verbergt het dialoogvenster succes na deïnstalleren / opnieuw installeren.</string>
     <string name="auth_required">Authenticatie vereist</string>
-    <string name="auth_required_description">This action requires higher privileges.</string>
+    <string name="auth_required_description">Voor deze actie zijn hogere rechten vereist.</string>
     <string name="require_auth_setting_desc">Authenticatie vereist om apps te verwijderen of opnieuw te installeren.</string>
     <string name="require_auth_setting">Verificatie vereist</string>
 </resources>
