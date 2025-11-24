@@ -10,7 +10,7 @@
     <string name="only_system">Alleen systeem</string>
     <string name="no_apps_found">Geen apps gevonden</string>
     <string name="loading_apps">Apps worden geladen</string>
-    <string name="badge_info">Badge info</string>
+    <string name="badge_info">Badge informatie</string>
     <string name="got_it">Begrepen</string>
     <string name="loading_badges">Badges laden...</string>
     <string name="logs">Logs</string>
@@ -19,15 +19,15 @@
     <string name="log_copied">Log naar klembord gekopieerd</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Wis %d geselecteerd</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="other">Wis %d geselecteerd</item>
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="one">%d app geselecteerd</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="other">%d apps geselecteerd</item>
     </plurals>
     <plurals name="success_uninstalled">
         <item quantity="one">Je hebt de %d app succesvol verwijderd!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="other">Je hebt %d apps succesvol verwijderd!</item>
     </plurals>
     <plurals name="success_reinstalled">
         <item quantity="one">Je hebt de %d app met succes opnieuw geïnstalleerd!</item>
@@ -36,7 +36,7 @@
     <string name="copy">Kopieer</string>
     <string name="app_settings">App info</string>
     <string name="close">Sluiten</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta is een opensource verwijderprogramma die Shizuku gebruikt om systeem- en gebruikersapps te verwijderen. Hiermee kunt u uw apparaat naar wens debloaten, zonder dat u een pc nodig hebt.\n\nMet speciale dank aan %s.\nCanta zou niet hetzelfde zijn zonder hun werk.</string>
     <string name="search_apps">Apps zoeken</string>
     <string name="auto_update_bloat_list">Bloatware lijst automatisch bijwerken</string>
     <string name="auto_update_bloat_list_description">Automatisch nieuwe versie van app bloat info ophalen. Dit garandeert up-to-date badges en app beschrijvingen.</string>
@@ -49,7 +49,7 @@
     <string name="proceed_at_own_risk">Door te klikken op \"Doorgaan\", gaat u ermee akkoord deze app op eigen risico te gebruiken.</string>
     <string name="never_show_again">Dit bericht niet meer tonen</string>
     <string name="proceed">Ga verder</string>
-    <string name="confirm_uninstall_description">Of de melding getoond moet worden voor het bevestigen van de verwijder actie.</string>
+    <string name="confirm_uninstall_description">Of het dialoogvenster voor het bevestigen van de verwijderingsactie moet worden weergegeven.</string>
     <string name="select_all">Selecteer alles</string>
     <string name="select_all_tip">Tik nog %d keer om selecteer alles in te schakelen.</string>
     <string name="select_all_enabled">Selecteer alles is ingeschakeld voor filtertype \"Aanbevolen\".</string>
