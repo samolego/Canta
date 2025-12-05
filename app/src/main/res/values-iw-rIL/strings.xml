@@ -21,7 +21,7 @@
         <item quantity="one">נקה %d נבחר</item>
         <item quantity="two">נקה %d נבחרים</item>
         <item quantity="many">נקה %d נבחרים</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="other">נקה %d נבחרים</item>
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="one">אפליקציה %d נבחרה</item>
