@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">ביטול</string>
     <string name="ok">בסדר</string>
-    <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח שברצונך להסיר את ההתקנה של אפליקציות %1$s?</string>
+    <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח שברצונך להסיר את ההתקנה של היישומים %1$s?</string>
     <string name="copy_package_name_to_clipboard">שם חבילה הועתק ללוח</string>
     <string name="no_description_available">אין תיאור זמין</string>
     <string name="uninstall">הסר התקנה</string>
@@ -24,22 +24,22 @@
         <item quantity="other">Clear %d selected</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">%d app selected</item>
-        <item quantity="two">%d apps selected</item>
-        <item quantity="many">%d apps selected</item>
-        <item quantity="other">%d apps selected</item>
+        <item quantity="one">יישום %d נבחר</item>
+        <item quantity="two">%d יישומים נבחרו</item>
+        <item quantity="many">%d יישומים נבחרו</item>
+        <item quantity="other">%d אפליקציות נבחרו</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">You have successfully uninstalled %d app!</item>
-        <item quantity="two">You have successfully uninstalled %d apps!</item>
-        <item quantity="many">You have successfully uninstalled %d apps!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="one">הסרת בהצלחה את ההתקנה של אפליקציה %d!</item>
+        <item quantity="two">הסרת בהצלחה %d אפליקציות!</item>
+        <item quantity="many">הסרת בהצלחה %d אפליקציות!</item>
+        <item quantity="other">הסרת בהצלחה %d אפליקציות!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">You have successfully reinstalled %d app!</item>
-        <item quantity="two">You have successfully reinstalled %d apps!</item>
-        <item quantity="many">You have successfully reinstalled %d apps!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="one">התקנת מחדש בהצלחה אפליקציה %d!</item>
+        <item quantity="two">התקנת מחדש בהצלחה %d אפליקציות!</item>
+        <item quantity="many">התקנת מחדש בהצלחה %d אפליקציות!</item>
+        <item quantity="other">התקנת מחדש בהצלחה %d אפליקציות!</item>
     </plurals>
     <string name="copy">העתק</string>
     <string name="app_settings">פרטי יישום</string>
@@ -61,7 +61,7 @@
     <string name="select_all">בחר הכל</string>
     <string name="select_all_tip">הקש %d פעמים נוספות כדי להפעיל בחירת כל הפונקציונליות.</string>
     <string name="select_all_enabled">בחר הכל הופעל עבור סוג המסנן \"מומלץ\".</string>
-    <string name="uninstall_options_title">Uninstall Options</string>
+    <string name="uninstall_options_title">אפשרויות הסרת התקנה</string>
     <string name="uninstall_app">Uninstall app</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
     <string name="import_preset">Import preset</string>
