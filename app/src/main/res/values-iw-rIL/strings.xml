@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">ביטול</string>
     <string name="ok">בסדר</string>
-    <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח שברצונך להסיר את ההתקנה של היישומים %1$s?</string>
+    <string name="are_you_sure_to_uninstall_apps">האם אתה בטוח שברצונך להסיר את ההתקנה של האפליקציות %1$s?</string>
     <string name="copy_package_name_to_clipboard">שם חבילה הועתק ללוח</string>
     <string name="no_description_available">אין תיאור זמין</string>
     <string name="uninstall">הסר התקנה</string>
