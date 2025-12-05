@@ -24,9 +24,9 @@
         <item quantity="other">Clear %d selected</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">יישום %d נבחר</item>
-        <item quantity="two">%d יישומים נבחרו</item>
-        <item quantity="many">%d יישומים נבחרו</item>
+        <item quantity="one">אפליקציה %d נבחרה</item>
+        <item quantity="two">%d אפליקציות נבחרו</item>
+        <item quantity="many">%d אפליקציות נבחרו</item>
         <item quantity="other">%d יישומים נבחרו</item>
     </plurals>
     <plurals name="success_uninstalled">
