@@ -24,31 +24,31 @@
         <item quantity="other">%d 個のアプリが選択済み</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="other">%d 個のアプリをアンインストールしました！</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="other">%d 個のアプリを再インストールしました！</item>
     </plurals>
     <string name="copy">コピー</string>
     <string name="app_settings">アプリ情報</string>
     <string name="close">閉じる</string>
     <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">アプリを検索</string>
-    <string name="auto_update_bloat_list">ブロートリストを自動で更新</string>
-    <string name="auto_update_bloat_list_description">Automatically fetch new version of app bloat info. This guarantees up-to-date badges and app descriptions.</string>
+    <string name="auto_update_bloat_list">ブロートリストを自動更新</string>
+    <string name="auto_update_bloat_list_description">アプリのブロート情報を自動的に取得します。これにより、最新のバッジとアプリの説明が常に最新になります。</string>
     <string name="settings">設定</string>
     <string name="confirm_uninstall">アンインストールを確認</string>
     <string name="app_version">アプリバージョン: %s</string>
     <string name="bloatware_list_version">最新のブロートウェアリスト</string>
-    <string name="no_warranty_content">This app provides app removal recommendations based on third-party information. These recommendations are informational in nature and do not guarantee safety or compatibility with your specific device. Uninstalling system apps can cause unexpected issues, including but not limited to: loss of functionality, system instability, device bootloops, data loss, etc. The developer of this app is not responsible for any damage done to your device resulting from following the recommendations provided.</string>
+    <string name="no_warranty_content">このアプリは、サードパーティーの情報に基づいてアプリの削除を推奨します。これらの推奨はあくまで参考情報であり、特定のデバイスにおける安全性や互換性を保証するものではありません。システムアプリをアンインストールすると機能の喪失、システムの不安定化、デバイスのブートループ、データの損失などの予期しない問題が発生する可能性があります。このアプリの開発者は、提供された推奨に従った結果やデバイスに損害が発生した場合でも責任を一切負いません。</string>
     <string name="disclaimer">免責事項 - 自己責任</string>
     <string name="proceed_at_own_risk">「続行」をタップすることでこのアプリを自己責任での利用に同意するものとします。</string>
     <string name="never_show_again">このメッセージを再度表示しない</string>
     <string name="proceed">続行</string>
-    <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
+    <string name="confirm_uninstall_description">アンインストールの操作を確認するためのダイアログを表示するかどうかを設定します。</string>
     <string name="select_all">すべて選択</string>
-    <string name="select_all_tip">Tap %d more times to enable select all functionality.</string>
-    <string name="select_all_enabled">Select all has been enabled for filter type \"Recommended\".</string>
+    <string name="select_all_tip">あと %d 回タップするとすべての機能が有効になります。</string>
+    <string name="select_all_enabled">フィルタータイプ「Recommended」に対してすべての選択が有効になっています。</string>
     <string name="uninstall_options_title">アンインストールオプション</string>
     <string name="uninstall_app">アプリをアンインストール</string>
     <string name="reset_to_factory_version">工場出荷時にリセット</string>
@@ -74,7 +74,7 @@
     <string name="preset_delete_error">プリセットの削除に失敗しました</string>
     <string name="preset_copied">プリセットをクリップボードにコピーしました</string>
     <string name="import_failed">インポートに失敗しました</string>
-    <string name="no_presets">プリセットなし</string>
+    <string name="no_presets">プリセットがありません</string>
     <string name="presets_description">デバイス間でアプリのアンインストールリストを管理するためのプリセットを作成またはインポートをします</string>
     <string name="more_options">その他のオプション</string>
     <string name="edit">編集</string>
@@ -91,12 +91,12 @@
     <string name="shizuku_required">Shizuku が必要です</string>
     <string name="shizuku_requirement_description">Canta は Shizuku を使用して root アクセスを必要とせずにアプリをアンインストールします。Shizuku は、安全にシステムレベルの SDK へアクセスする方法を提供します。</string>
     <string name="commits_url">コミット URL</string>
-    <string name="commits_url_description">更新のコミット情報の取得先</string>
+    <string name="commits_url_description">更新のコミット情報の取得先になります。</string>
     <string name="reset_to_default">デフォルトにリセット</string>
     <string name="advanced_settings">高度な設定</string>
     <string name="click_to_expand">タップで展開</string>
     <string name="bloat_list_url">ブロートリスト URL</string>
-    <string name="bloat_list_url_description">バッジと説明の取得先</string>
+    <string name="bloat_list_url_description">バッジと説明の取得先になります。</string>
     <string name="allow_unsafe_selections">unsafe の選択を許可</string>
     <string name="allow_unsafe_uninstalls_description">unsafe とマークされたアプリの選択を許可するかどうかを設定します (プリセットを適用するとバイパスします)。</string>
     <string name="donate">寄付</string>
@@ -105,7 +105,7 @@
     <string name="hide_success_dialog">成功時のダイアログを非表示にする</string>
     <string name="hide_success_dialog_description">アンインストールと再インストール成功時のダイアログを非表示にします。</string>
     <string name="auth_required">認証が必要です</string>
-    <string name="auth_required_description">このアクションにはより高度な権限が必要です。</string>
+    <string name="auth_required_description">この操作はより高度な権限が必要です。</string>
     <string name="require_auth_setting_desc">アプリをアンインストールまたは再インストールするには認証が必要です。</string>
     <string name="require_auth_setting">認証を要求</string>
 </resources>
