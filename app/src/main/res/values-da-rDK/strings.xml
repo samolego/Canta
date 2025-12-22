@@ -59,7 +59,7 @@
     <string name="import_preset">Importere forvalg</string>
     <string name="import_preset_description">Importér et forvalg fra udklipsholderen, eller indsæt JSON-tekst direkte.</string>
     <string name="clipboard">Udklipsholder</string>
-    <string name="import_preset_clipboard_description">Importér forvalg fra udklipsholder. Sørg for, at der er kopieretet en gyldig Canta forvalgs-JSON.</string>
+    <string name="import_preset_clipboard_description">Importér forvalg fra udklipsholder. Sørg for, at der er kopieret en gyldig Canta forvalgs-JSON.</string>
     <string name="paste_preset_json">Indsæt forvalgs-JSON</string>
     <string name="paste_preset_json_here">Indsæt JSON-forvalg hér ...</string>
     <string name="enter_valid_json">Angiv gyldig JSON</string>
