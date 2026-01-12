@@ -114,7 +114,7 @@
     <string name="donate">Donate</string>
     <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, consider supporting its development!</string>
     <string name="success">Success %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
+    <string name="hide_success_dialog">Прибрати сповіщення про успішну дію</string>
     <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
     <string name="auth_required">Authentication required</string>
     <string name="auth_required_description">This action requires higher privileges.</string>
