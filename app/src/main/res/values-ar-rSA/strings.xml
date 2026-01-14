@@ -66,7 +66,7 @@
     <string name="never_show_again">لا تظهر هذه الرسالة مرة أخرى</string>
     <string name="proceed">متابعة</string>
     <string name="confirm_uninstall_description">إظهار مربع حوار التأكيد دائمًا عند النقر فوق \"إلغاء التثبيت/التغيير\"</string>
-    <string name="select_all">تحديد الكل</string>
+    <string name="select_all">حدّد الكل</string>
     <string name="select_all_tip">انقر على %d عددة مرات لتحديد الكل</string>
     <string name="select_all_enabled">تم تمكين حدد الكل لنوع التصفية \"موصى به\".</string>
     <string name="uninstall_options_title">خيارات إلغاء التثبيت</string>
