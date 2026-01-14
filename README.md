@@ -5,7 +5,7 @@
 [![](https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)](https://samolego.github.io/Canta/)
 
 Uninstall any\* app without root!
-Powered by [Shizuku](https://shizuku.rikka.app/).
+Powered by [Shizuku](https://shizuku.rikka.app/) ([Android 16 fork](https://github.com/thedjchi/Shizuku)).
 
 ## Download
 
@@ -61,6 +61,7 @@ You can verify the authenticity of downloaded APKs using this SHA-256 certificat
   & [activate it](https://shizuku.rikka.app/guide/setup/)
     * you can
       follow [this Android Police guide for more in-depth explanation](https://www.androidpolice.com/how-to-use-shizuku-for-adb-rootless-mods-on-any-android-device/)
+      * note: **Android 16** might need [forked version](https://github.com/thedjchi/Shizuku)
 * install Canta
 * select an app and click the trash button
 
