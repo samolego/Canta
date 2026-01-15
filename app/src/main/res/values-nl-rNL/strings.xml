@@ -30,13 +30,13 @@
         <item quantity="other">Je hebt %d apps succesvol verwijderd!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">Je hebt de %d app met succes opnieuw geïnstalleerd!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="one">Je hebt %d app met succes opnieuw geïnstalleerd!</item>
+        <item quantity="other">Je hebt %d apps met succes opnieuw geïnstalleerd!</item>
     </plurals>
     <string name="copy">Kopieer</string>
     <string name="app_settings">App info</string>
     <string name="close">Sluiten</string>
-    <string name="canta_description">Canta is een opensource verwijderprogramma die Shizuku gebruikt om systeem- en gebruikersapps te verwijderen. Hiermee kunt u uw apparaat naar wens debloaten, zonder dat u een pc nodig hebt.\n\nMet speciale dank aan %s.\nCanta zou niet hetzelfde zijn zonder hun werk.</string>
+    <string name="canta_description">Canta is een opensource verwijderprogramma die Shizuku gebruikt om systeem- en gebruikersapps te verwijderen. Hiermee kunt u uw apparaat naar wens debloaten, zonder dat u een pc nodig heeft.\n\nMet speciale dank aan %s.\nCanta zou niet hetzelfde zijn zonder hun werk.</string>
     <string name="search_apps">Apps zoeken</string>
     <string name="auto_update_bloat_list">Bloatware lijst automatisch bijwerken</string>
     <string name="auto_update_bloat_list_description">Automatisch nieuwe versie van app bloat info ophalen. Dit garandeert up-to-date badges en app beschrijvingen.</string>
@@ -55,20 +55,20 @@
     <string name="select_all_enabled">Selecteer alles is ingeschakeld voor filtertype \"Aanbevolen\".</string>
     <string name="uninstall_options_title">Opties verwijderen</string>
     <string name="uninstall_app">App verwijderen</string>
-    <string name="reset_to_factory_version">Reset naar fabrieksversie</string>
+    <string name="reset_to_factory_version">Resetten naar fabrieksversie</string>
     <string name="import_preset">Voorkeursinstellingen importeren</string>
     <string name="import_preset_description">Importeer een voorkeursinstelling rechtstreeks van klembord of plak JSON tekst.</string>
     <string name="clipboard">Klembord</string>
-    <string name="import_preset_clipboard_description">Importeer voorkeurinstelling vanaf klembord. Zorg ervoor dat u een geldige Canta voorkeurinstelling JSON-kopieert.</string>
-    <string name="paste_preset_json">Plak voorkeursinstelling JSON</string>
-    <string name="paste_preset_json_here">Plak JSON voorkeursinstelling hier ...</string>
+    <string name="import_preset_clipboard_description">Importeer voorkeursinstelling vanaf klembord. Zorg ervoor dat u een geldige Canta JSON-voorinstelling kopieert.</string>
+    <string name="paste_preset_json">Plak JSON-voorinstelling</string>
+    <string name="paste_preset_json_here">Plak JSON-voorinstelling hier ...</string>
     <string name="enter_valid_json">Voer een geldige JSON in</string>
     <string name="import_button">Importeren</string>
     <string name="create_preset">Voorkeur aanmaken</string>
     <string name="create_preset_description">Maak een voorkeurinstelling van momenteel verwijderde apps. Dit zal een lijst met apps opslaan die kunnen worden gedeeld en toegepast op andere apparaten.</string>
     <string name="preset_name">Naam voorkeursinstelling</string>
     <string name="preset_name_missing_error">Naam is vereist</string>
-    <string name="preset_name_placeholder">e.g., Samsung Bloatware</string>
+    <string name="preset_name_placeholder">Bijv. Samsung Bloatware</string>
     <string name="optional_description">Beschrijving (optioneel)</string>
     <string name="preset_description_placeholder">Beschrijf wat deze voorkeursinstelling verwijdert...</string>
     <string name="save">Opslaan</string>
@@ -99,7 +99,7 @@
     <string name="reset_to_default">Standaardwaarde herstellen</string>
     <string name="advanced_settings">Geavanceerde instellingen</string>
     <string name="click_to_expand">Klik om te openen</string>
-    <string name="bloat_list_url">Bloat lijst URL</string>
+    <string name="bloat_list_url">Bloatlijst URL</string>
     <string name="bloat_list_url_description">Waar badges en beschrijvingen vandaan halen.</string>
     <string name="allow_unsafe_selections">Onveilige selecties toestaan</string>
     <string name="allow_unsafe_uninstalls_description">Toestaan dat apps gemarkeerd als onveilig worden geselecteerd (voorkeursinstellingen omzeilen dit altijd).</string>
@@ -107,7 +107,7 @@
     <string name="canta_donate_request">Geniet je van Canta? Het is in mijn vrije tijd gebouwd met privacy in het achterhoofd - geen advertenties, geen tracking. Als je het nuttig vindt, overweeg dan de ontwikkeling ervan te ondersteunen!</string>
     <string name="success">Succes %1$s!</string>
     <string name="hide_success_dialog">Verberg succes dialoog</string>
-    <string name="hide_success_dialog_description">Verbergt het dialoogvenster succes na deïnstalleren / opnieuw installeren.</string>
+    <string name="hide_success_dialog_description">Verbergt het succes dialoogvenster na deïnstalleren / opnieuw installeren.</string>
     <string name="auth_required">Authenticatie vereist</string>
     <string name="auth_required_description">Voor deze actie zijn hogere rechten vereist.</string>
     <string name="require_auth_setting_desc">Authenticatie vereist om apps te verwijderen of opnieuw te installeren.</string>
