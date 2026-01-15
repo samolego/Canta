@@ -36,7 +36,7 @@
     <string name="copy">Kopieer</string>
     <string name="app_settings">App info</string>
     <string name="close">Sluiten</string>
-    <string name="canta_description">Canta is een opensource verwijderprogramma die Shizuku gebruikt om systeem- en gebruikersapps te verwijderen. Hiermee kunt u uw apparaat naar wens debloaten, zonder dat u een pc nodig heeft.\n\nMet speciale dank aan %s.\nCanta zou niet hetzelfde zijn zonder hun werk.</string>
+    <string name="canta_description">Canta is een opensource verwijderprogramma dat Shizuku gebruikt om systeem- en gebruikersapps te verwijderen. Hiermee kunt u uw apparaat naar wens debloaten, zonder dat u een pc nodig heeft.\n\nMet speciale dank aan %s.\nCanta zou niet hetzelfde zijn zonder hun werk.</string>
     <string name="search_apps">Apps zoeken</string>
     <string name="auto_update_bloat_list">Bloatware lijst automatisch bijwerken</string>
     <string name="auto_update_bloat_list_description">Automatisch nieuwe versie van app bloat info ophalen. Dit garandeert up-to-date badges en app beschrijvingen.</string>
