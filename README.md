@@ -7,6 +7,7 @@
 Uninstall any\* app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/) ([Android 16 fork](https://github.com/thedjchi/Shizuku)).
 
+
 ## Download
 
 [![](https://img.shields.io/f-droid/v/io.github.samolego.canta?include_prereleases&style=for-the-badge&logo=F-Droid&color=blue)](https://f-droid.org/en/packages/io.github.samolego.canta/)
@@ -15,7 +16,6 @@ Powered by [Shizuku](https://shizuku.rikka.app/) ([Android 16 fork](https://gith
 <a href="https://play.google.com/store/apps/details?id=io.github.samolego.canta">
   <img src="https://github.com/user-attachments/assets/b9628c34-797c-4760-94bb-57712fdef178" height="32" />
 </a>
-
 
 [![GitHub all releases](https://img.shields.io/github/downloads/samolego/Canta/total?label=Downloads&logo=github)](https://github.com/samolego/Canta/releases/)
 [<img src="https://shields.rbtlog.dev/simple/io.github.samolego.canta" alt="badge">](https://shields.rbtlog.dev/io.github.samolego.canta)
@@ -38,6 +38,9 @@ It integrates with the [Universal Debloat List](https://github.com/Universal-Deb
 - ✅ Detects previously uninstalled apps (even across reinstalls)  
 - ✅ Works on Android **9.0+ (SDK 28+)**
 - ⚠️ No *permanent* bricking (If you uninstall **critical apps**, you can experience bootloop and have to **factory reset**!)
+
+\* **Oppo devices** are known to be stubborn and don't allow some uninstalls. See [tracking issue](https://github.com/samolego/Canta/issues/338).
+
 ---
 
 ## Screenshots
