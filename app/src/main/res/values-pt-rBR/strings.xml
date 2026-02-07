@@ -59,7 +59,7 @@
     <string name="import_preset">Importar predefinição</string>
     <string name="import_preset_description">Importar uma predefinição da área de transferência ou colar texto JSON diretamente.</string>
     <string name="clipboard">Área de transferência</string>
-    <string name="import_preset_clipboard_description">Importar predefinição da área de transferência. Certifique-se de ter copiado um JSON de predefinição do Canta válido.</string>
+    <string name="import_preset_clipboard_description">Importar predefinição da área de transferência. Certifique-se de ter copiado um JSON de predefinição válido.</string>
     <string name="paste_preset_json">Colar JSON predefinido</string>
     <string name="paste_preset_json_here">Cole a predefinição JSON aqui...</string>
     <string name="enter_valid_json">Por favor, insira um JSON válido</string>
