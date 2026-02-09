@@ -39,7 +39,7 @@ It integrates with the [Universal Debloat List](https://github.com/Universal-Deb
 - ✅ Works on Android **9.0+ (SDK 28+)**
 - ⚠️ No *permanent* bricking (If you uninstall **critical apps**, you can experience bootloop and have to **factory reset**!)
 
-\* **Oppo devices** are known to be stubborn and don't allow some uninstalls. See [tracking issue](https://github.com/samolego/Canta/issues/338).
+\* **Some oplus apps** are known to be stubborn and don't allow uninstallations. See [tracking issue](https://github.com/samolego/Canta/issues/338).
 
 ---
 
