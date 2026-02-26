@@ -1,0 +1,68 @@
+name: 🐞 Bug Report
+description: Help us fix bugs by reporting issues you've encountered
+title: "[BUG] "
+labels: bug
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below to help us understand and fix the issue.
+
+  - type: textarea
+    id: describe
+    attributes:
+      label: What happened?
+      description: Tell us what went wrong. Be as detailed as possible.
+      placeholder: |
+        Example: The app crashes when I try to Uninstall a system App.
+    validations:
+      required: true
+
+  - type: textarea
+    id: recurrence
+    attributes:
+      label: Steps to reproduce
+      description: Help Recreate The Bug By listing the Exact steps you took.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See Error
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots Or Screen Recording
+      description: |
+        Visual evidence helps us understand the issue better. You can:
+        - Drag and drop images directly here
+        - Paste screenshots from your clipboard
+        - Share a link to a video (YouTube, Google Drive, etc.)
+      placeholder: |
+        Drag and drop your screenshots here, or paste a link to a screen recording.
+    validations:
+      required: false
+
+  - type: textarea
+    id: device_info
+    attributes:
+      label: Device information
+      description: Help us understand your setup (you can find this in Settings → About)
+      placeholder: |
+        - Device: Pixel 9a
+        - Android version: Android 15 (API 35)
+        - Canta version: 3.x.x
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that might help us understand the issue ?
+    validations:
+      required: false
+      
