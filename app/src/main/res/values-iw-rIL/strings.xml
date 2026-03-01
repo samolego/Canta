@@ -120,4 +120,5 @@
     <string name="auth_required_description">פעולה זו דורשת הרשאות גבוהות יותר.</string>
     <string name="require_auth_setting_desc">נדרש אימות לצורך הסרה או התקנה מחדש של יישומים.</string>
     <string name="require_auth_setting">דרישת אימות</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
