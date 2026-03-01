@@ -116,4 +116,5 @@
     <string name="auth_required_description">Ova radnja zahtijeva veće privilegije.</string>
     <string name="require_auth_setting_desc">Zahtijevajte autentifikaciju za deinstalaciju ili ponovnu instalaciju aplikacija.</string>
     <string name="require_auth_setting">Zahtijevaj autentifikaciju</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
