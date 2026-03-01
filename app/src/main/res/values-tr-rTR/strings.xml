@@ -112,4 +112,5 @@
     <string name="auth_required_description">Bu işlem daha yüksek yetkiler gerektirir.</string>
     <string name="require_auth_setting_desc">Uygulamaları kaldırmak veya yeniden yüklemek için yetkilendirme gerektir.</string>
     <string name="require_auth_setting">Yetkilendirme gerekir</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
