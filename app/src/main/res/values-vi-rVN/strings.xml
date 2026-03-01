@@ -108,4 +108,5 @@
     <string name="auth_required_description">Thao tác này yêu cầu quyền cao hơn.</string>
     <string name="require_auth_setting_desc">Cần xác thực trước khi gỡ hoặc cài đặt lại ứng dụng.</string>
     <string name="require_auth_setting">Yêu cầu xác thực</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
