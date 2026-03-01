@@ -112,4 +112,5 @@
     <string name="auth_required_description">Esta operación requiere unos privilegios mayores.</string>
     <string name="require_auth_setting_desc">Necesitas autentificarte para desinstalar o reinstalar las aplicaciones.</string>
     <string name="require_auth_setting">Verificación necesaria</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
