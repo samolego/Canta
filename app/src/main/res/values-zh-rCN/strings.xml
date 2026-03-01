@@ -108,4 +108,5 @@
     <string name="auth_required_description">本次操作需要更高的权限。</string>
     <string name="require_auth_setting_desc">要卸载或重新安装应用，需要身份认证。</string>
     <string name="require_auth_setting">需要身份认证</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
