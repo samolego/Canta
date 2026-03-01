@@ -112,4 +112,5 @@
     <string name="auth_required_description">Denne handling kræver højere privilegier.</string>
     <string name="require_auth_setting_desc">Kræv godkendelse for at afinstallere/geninstallere apps.</string>
     <string name="require_auth_setting">Kræv godkendelse</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
