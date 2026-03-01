@@ -128,4 +128,5 @@
     <string name="auth_required_description">ويتطلب هذا الإجراء المزيد من الامتيازات.</string>
     <string name="require_auth_setting_desc">تطلب الاستيثاق لإلغاء تثبيت التطبيقات أو إعادة تثبيتها.</string>
     <string name="require_auth_setting">تطلب استيثاق</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
