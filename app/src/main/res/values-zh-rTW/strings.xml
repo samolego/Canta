@@ -108,4 +108,5 @@
     <string name="auth_required_description">此操作需要更高的權限。</string>
     <string name="require_auth_setting_desc">解除安裝或重新安裝應用程式時需要驗證。</string>
     <string name="require_auth_setting">需要驗證</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
