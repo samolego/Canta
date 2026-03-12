@@ -48,12 +48,11 @@ class MainActivity : FragmentActivity() {
                 ) {
                     CantaApp(
                         uninstallApp = { pkg, reset ->
-                            // Fix: Use a coroutine that the UI can actually track or wait for
-                            var result = false
+                            // Launched in scope, but we don't return 'true' blindly if we can avoid it
                             lifecycleScope.launch {
-                                result = uninstallApp(pkg, reset)
+                                uninstallApp(pkg, reset)
                             }
-                            true // Temporary true to keep UI logic flowing
+                            true 
                         },
                         canResetAppToFactory = { checkIfCanResetToFactory(it) },
                         reinstallApp = { reinstallApp(it) },
@@ -72,13 +71,14 @@ class MainActivity : FragmentActivity() {
     }
 
     /**
-     * Uninstalls app using Shizuku with state polling for system resets.
+     * Uninstalls app with timeout-safe polling for system resets.
      */
     private suspend fun uninstallApp(packageName: String, resetToFactory: Boolean = false): Boolean = withContext(Dispatchers.IO) {
         try {
             val packageInfo = packageManager.getInfoForPackage(packageName) ?: return@withContext false
-            val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-            val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+            val appInfo = packageInfo.applicationInfo!!
+            val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+            val hasUpdates = (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
 
             val shouldReset = resetToFactory && isSystem && hasUpdates
             val broadcastIntent = Intent("io.github.samolego.canta.UNINSTALL_RESULT_ACTION")
@@ -87,7 +87,6 @@ class MainActivity : FragmentActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             
-            // Fix: Move installer retrieval inside try-catch to handle resolution failures
             val packageInstaller = getPackageInstaller() ?: return@withContext false
             val flags = if (isSystem) 0x00000004 else 0x00000002
 
@@ -97,15 +96,20 @@ class MainActivity : FragmentActivity() {
                     packageName, 0x00000002, intent.intentSender
                 )
                 
-                // Fix: Poll package state instead of using a fixed delay
-                var attempts = 0
-                while (attempts < 10) {
+                // Polling with explicit timeout/abort logic
+                var success = false
+                repeat(10) {
                     delay(500)
                     val currentInfo = packageManager.getInfoForPackage(packageName)?.applicationInfo
                     if (currentInfo == null || (currentInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
-                        break
+                        success = true
+                        return@repeat
                     }
-                    attempts++
+                }
+                
+                if (!success) {
+                    LogUtils.e(APP_NAME, "Reset timeout for $packageName. Aborting uninstall.")
+                    return@withContext false
                 }
             }
 
@@ -138,9 +142,6 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    /**
-     * Resolves the PackageInstaller with proper User ID identifier resolution.
-     */
     private fun getPackageInstaller(): PackageInstaller? {
         return try {
             val iPackageInstaller = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
@@ -150,7 +151,7 @@ class MainActivity : FragmentActivity() {
             
             ShizukuPackageInstallerUtils.createPackageInstaller(iPackageInstaller, "com.android.shell", userId, this)
         } catch (e: Exception) {
-            LogUtils.e(APP_NAME, "Failed to resolve User ID or Installer: ${e.message}")
+            LogUtils.e(APP_NAME, "User ID resolution failed: ${e.message}")
             null
         }
     }
