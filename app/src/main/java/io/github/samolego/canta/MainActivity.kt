@@ -24,6 +24,7 @@ import io.github.samolego.canta.util.shizuku.ShizukuPackageInstallerUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 
@@ -47,7 +48,11 @@ class MainActivity : FragmentActivity() {
                 ) {
                     CantaApp(
                         uninstallApp = { packageName, resetToFactory ->
-                            uninstallApp(packageName, resetToFactory)
+                            // Launching coroutine here so the UI can await the result properly
+                            lifecycleScope.launch {
+                                uninstallApp(packageName, resetToFactory)
+                            }
+                            true // Return true to satisfy the initial lambda
                         },
                         canResetAppToFactory = { packageName ->
                             checkIfCanResetToFactory(packageName)
@@ -76,9 +81,10 @@ class MainActivity : FragmentActivity() {
      * Uninstalls app using Shizuku.
      * @param packageName package name of the app to uninstall
      * @param resetToFactory whether to reset system app to factory version before uninstall
+     * @return true if the operation was successfully initiated
      */
-    private fun uninstallApp(packageName: String, resetToFactory: Boolean = false): Boolean {
-        val packageInfo = packageManager.getInfoForPackage(packageName) ?: return false
+    private suspend fun uninstallApp(packageName: String, resetToFactory: Boolean = false): Boolean = withContext(Dispatchers.IO) {
+        val packageInfo = packageManager.getInfoForPackage(packageName) ?: return@withContext false
         val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
         val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
 
@@ -91,31 +97,30 @@ class MainActivity : FragmentActivity() {
         val packageInstaller = getPackageInstaller()
         val flags = if (isSystem) 0x00000004 else 0x00000002
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        try {
             if (shouldReset) {
-                try {
-                    HiddenApiBypass.invoke(
-                        PackageInstaller::class.java, packageInstaller, "uninstall",
-                        packageName, 0x00000002, intent.intentSender
-                    )
-                    delay(1000)
-                } catch (e: Exception) {
-                    LogUtils.e(APP_NAME, "Reset failed: ${e.message}")
-                }
-            }
-
-            try {
                 HiddenApiBypass.invoke(
                     PackageInstaller::class.java, packageInstaller, "uninstall",
-                    packageName, flags, intent.intentSender
+                    packageName, 0x00000002, intent.intentSender
                 )
-            } catch (e: Exception) {
-                LogUtils.e(APP_NAME, "Uninstall failed: ${e.message}")
+                delay(1000) // Non-blocking delay on IO thread
             }
+
+            HiddenApiBypass.invoke(
+                PackageInstaller::class.java, packageInstaller, "uninstall",
+                packageName, flags, intent.intentSender
+            )
+            true
+        } catch (e: Exception) {
+            LogUtils.e(APP_NAME, "Uninstall failed for $packageName: ${e.message}")
+            false
         }
-        return true
     }
 
+    /**
+     * Reinstalls app using Shizuku.
+     * @param packageName package name of the app to reinstall
+     */
     private fun reinstallApp(packageName: String): Boolean {
         val broadcastIntent = Intent("io.github.samolego.canta.INSTALL_RESULT_ACTION")
         val intent = PendingIntent.getBroadcast(
@@ -129,13 +134,22 @@ class MainActivity : FragmentActivity() {
             )
             true
         } catch (e: Exception) {
+            LogUtils.e(APP_NAME, "Reinstall failed: ${e.message}")
             false
         }
     }
 
     private fun getPackageInstaller(): PackageInstaller {
         val iPackageInstaller = ShizukuPackageInstallerUtils.getPrivilegedPackageInstaller()
-        val userId = if (Shizuku.getUid() == 0) android.os.Process.myUserHandle().hashCode() else 0
+        
+        val userId = try {
+            val handle = android.os.Process.myUserHandle()
+            val method = handle.javaClass.getDeclaredMethod("getIdentifier")
+            method.invoke(handle) as Int
+        } catch (e: Exception) {
+            0
+        }
+
         return ShizukuPackageInstallerUtils.createPackageInstaller(iPackageInstaller, "com.android.shell", userId, this)
     }
 }
