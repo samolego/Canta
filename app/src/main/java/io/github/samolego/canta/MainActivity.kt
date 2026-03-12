@@ -48,7 +48,6 @@ class MainActivity : FragmentActivity() {
                 ) {
                     CantaApp(
                         uninstallApp = { pkg, reset ->
-                            // Launched in scope, but we don't return 'true' blindly if we can avoid it
                             lifecycleScope.launch {
                                 uninstallApp(pkg, reset)
                             }
@@ -76,9 +75,8 @@ class MainActivity : FragmentActivity() {
     private suspend fun uninstallApp(packageName: String, resetToFactory: Boolean = false): Boolean = withContext(Dispatchers.IO) {
         try {
             val packageInfo = packageManager.getInfoForPackage(packageName) ?: return@withContext false
-            val appInfo = packageInfo.applicationInfo!!
-            val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
-            val hasUpdates = (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+            val isSystem = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+            val hasUpdates = (packageInfo.applicationInfo!!.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
 
             val shouldReset = resetToFactory && isSystem && hasUpdates
             val broadcastIntent = Intent("io.github.samolego.canta.UNINSTALL_RESULT_ACTION")
@@ -96,19 +94,20 @@ class MainActivity : FragmentActivity() {
                     packageName, 0x00000002, intent.intentSender
                 )
                 
-                // Polling with explicit timeout/abort logic
                 var success = false
-                repeat(10) {
+                var attempts = 0
+                while (attempts < 10) {
                     delay(500)
                     val currentInfo = packageManager.getInfoForPackage(packageName)?.applicationInfo
                     if (currentInfo == null || (currentInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
                         success = true
-                        return@repeat
+                        break // Properly exit the loop immediately
                     }
+                    attempts++
                 }
                 
                 if (!success) {
-                    LogUtils.e(APP_NAME, "Reset timeout for $packageName. Aborting uninstall.")
+                    LogUtils.e(APP_NAME, "Reset timeout for $packageName. Aborting.")
                     return@withContext false
                 }
             }
