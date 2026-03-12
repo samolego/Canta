@@ -48,9 +48,7 @@ class MainActivity : FragmentActivity() {
                 ) {
                     CantaApp(
                         uninstallApp = { pkg, reset ->
-                            lifecycleScope.launch {
-                                uninstallApp(pkg, reset)
-                            }
+                            lifecycleScope.launch { uninstallApp(pkg, reset) }
                             true 
                         },
                         canResetAppToFactory = { checkIfCanResetToFactory(it) },
@@ -69,9 +67,6 @@ class MainActivity : FragmentActivity() {
         return isSystem && hasUpdates
     }
 
-    /**
-     * Uninstalls app with timeout-safe polling for system resets.
-     */
     private suspend fun uninstallApp(packageName: String, resetToFactory: Boolean = false): Boolean = withContext(Dispatchers.IO) {
         try {
             val packageInfo = packageManager.getInfoForPackage(packageName) ?: return@withContext false
@@ -101,7 +96,7 @@ class MainActivity : FragmentActivity() {
                     val currentInfo = packageManager.getInfoForPackage(packageName)?.applicationInfo
                     if (currentInfo == null || (currentInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0) {
                         success = true
-                        break // Properly exit the loop immediately
+                        break
                     }
                     attempts++
                 }
