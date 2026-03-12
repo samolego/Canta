@@ -14,6 +14,6 @@ Canta pulls all app descriptions and categories from the [Universal Android Debl
 
 Please open a pull request with your updated descriptions in upstream repository instead:
 
-👉 https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/issues
+👉 https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/pulls
 
 If you don't know what a PR is, open an [issue](https://github.com/Universal-Debloater-Alliance/universal-android-debloater-next-generation/issues) instead.
