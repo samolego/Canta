@@ -9,13 +9,13 @@
     <string name="reinstall">Reinstalar</string>
     <string name="only_system">Apenas do sistema</string>
     <string name="no_apps_found">Nenhum aplicativo encontrado</string>
-    <string name="loading_apps">Carregando aplicativos</string>
+    <string name="loading_apps">Carregando os aplicativos</string>
     <string name="badge_info">Informações da etiqueta</string>
     <string name="got_it">Entendi</string>
     <string name="loading_badges">Carregando Distintivos...</string>
-    <string name="logs">Registo</string>
+    <string name="logs">Registro</string>
     <string name="back">Voltar</string>
-    <string name="copy_logs">Copiar Registo</string>
+    <string name="copy_logs">Copiar Registro</string>
     <string name="log_copied">Registo copiado para a área de transferência</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Limpar %d selecionado</item>
@@ -23,23 +23,23 @@
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="one">%d aplicativo selecionado</item>
-        <item quantity="other">%d aplicativos selecionados</item>
+        <item quantity="other">%d Aplicativos selecionados</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">You have successfully uninstalled %d app!</item>
-        <item quantity="other">Você desinstalou os %d apps com sucesso!</item>
+        <item quantity="one">Você desinstalou os %d apps com sucesso!</item>
+        <item quantity="other">Você desinstalou os %d apps co%dm sucesso!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">Você desinstalou os %d apps com sucesso!</item>
-        <item quantity="other">Você desinstalou os %d apps com sucesso!</item>
+        <item quantity="one">Você reinstalou os %d apps com sucesso!</item>
+        <item quantity="other">Você reinstalou os %d apps com sucesso!</item>
     </plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Informações do aplicativo</string>
     <string name="close">Fechar</string>
-    <string name="canta_description">Canta é um aplicativo desinstalador de código aberto que usa o Shizuku para remover aplicativos do sistema e do usuário. Ele permite que você desbloqueie seu dispositivo como quiser, sem a necessidade de um PC.\n\nAgradecimentos especiais a %s.\nO Canta não seria o mesmo sem o trabalho deles.</string>
+    <string name="canta_description">Canta é um aplicativo desinstalador de código aberto que usa o Shizuku para remover aplicativos do sistema e do usuário. Ele permite que você faça debloat do seu dispositivo como quiser, sem a necessidade de um PC.\n\nAgradecimentos especiais a %s.\nO Canta não seria o mesmo sem o trabalho deles.</string>
     <string name="search_apps">Procurar aplicativos</string>
     <string name="auto_update_bloat_list">Atualizar automaticamente a lista de bloat</string>
-    <string name="auto_update_bloat_list_description">Busca automaticamente novas versões de informações sobre bloat do aplicativo. Isso garante emblemas e descrições do aplicativo atualizados.</string>
+    <string name="auto_update_bloat_list_description">Buscar automaticamente novas versões de informações sobre bloat do aplicativo. Isso garante emblemas e descrições do aplicativo atualizados.</string>
     <string name="settings">Definições</string>
     <string name="confirm_uninstall">Confirmar desinstalações</string>
     <string name="app_version">Versão do aplicativo:%s</string>
@@ -55,7 +55,7 @@
     <string name="select_all_enabled">Selecionar tudo foi habilitado para o tipo de filtro \"Recomendado\".</string>
     <string name="uninstall_options_title">Opções de desinstalação</string>
     <string name="uninstall_app">Desinstalar o aplicativo</string>
-    <string name="reset_to_factory_version">Resetar para a versão de fábrica</string>
+    <string name="reset_to_factory_version">Redefinir para a versão de fábrica</string>
     <string name="import_preset">Importar predefinição</string>
     <string name="import_preset_description">Importar uma predefinição da área de transferência ou colar texto JSON diretamente.</string>
     <string name="clipboard">Área de transferência</string>
@@ -86,7 +86,7 @@
     <string name="share">Compartilhar</string>
     <string name="delete">Apagar</string>
     <string name="apply_preset">Aplicar predefinição</string>
-    <string name="preset_save_error">Erro ao salvar o preset</string>
+    <string name="preset_save_error">Erro ao salvar a predefinição</string>
     <string name="selected_apps">Selecionar aplicativo</string>
     <string name="text">Texto</string>
     <string name="install_shizuku">Instalar aplicativo Shizuku</string>
@@ -104,13 +104,13 @@
     <string name="allow_unsafe_selections">Permitir seleções não seguras</string>
     <string name="allow_unsafe_uninstalls_description">Se permitir a seleção de aplicativos marcados como inseguros (aplicar predefinições ignora isso já).</string>
     <string name="donate">Doar</string>
-    <string name="canta_donate_request">Curtindo a Canta. Se você a achar útil, considere apoiar o seu desenvolvimento!</string>
+    <string name="canta_donate_request">Está gostando do Canta? Ele foi criado no meu tempo livre com a privacidade em mente - sem anúncios, sem rastreamento. Se você achar útil, considere apoiar seu desenvolvimento!</string>
     <string name="success">Sucesso %1$s!</string>
     <string name="hide_success_dialog">Ocultar o ‘pop-up\' de sucesso</string>
     <string name="hide_success_dialog_description">Oculta o ‘pop-up\' de sucesso após desinstalar / reinstalar.</string>
     <string name="auth_required">Autenticação requerida</string>
-    <string name="auth_required_description">Esta ação requer privilégios mais elevados.</string>
+    <string name="auth_required_description">Esta ação requer privilégios mais altos.</string>
     <string name="require_auth_setting_desc">Exigir autenticação para desinstalar ou reinstalar aplicativos.</string>
     <string name="require_auth_setting">Requer autenticação</string>
-    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="enable_usb_debugging">(Opcional) Ative Depuração USB</string>
 </resources>
