@@ -14,7 +14,7 @@
     <string name="got_it">فهمت</string>
     <string name="loading_badges">جارٍ تحميل الشارات ...</string>
     <string name="logs">السجلات</string>
-    <string name="back">رجوع</string>
+    <string name="back">ارجع</string>
     <string name="copy_logs">انسخ السجلات</string>
     <string name="log_copied">نُسخ السجل إلى الحافظة</string>
     <plurals name="clear_selected_apps">
@@ -52,8 +52,8 @@
     <string name="copy">انسخ</string>
     <string name="app_settings">معلومات التطبيق</string>
     <string name="close">أغلق</string>
-    <string name="canta_description">Canta هو تطبيق إلغاء تثبيت مفتوح المصدر يستخدم Shizuku لإزالة تطبيقات النظام والمستخدم.\nإنه يسمح لك بإزالة الملفات الزائدة من جهازك كما يحلو لك، دون الحاجة إلى جهاز كمبيوتر.\n\nشكر خاص لـ %s.\nلن يكون Canta هو نفسه بدون عملهم.</string>
-    <string name="search_apps">البحث عن التطبيقات</string>
+    <string name="canta_description">Canta هو تطبيق إلغاء تثبيت مفتوح المصدر يستخدم Shizuku لإزالة تطبيقات النظام والمستخدم.\nإنه يسمح لك بإزالة البرامج الغير مرغوبة من جهازك كما يحلو لك، دون الحاجة إلى جهاز حاسوب.\n\nشكر خاص لـ %s.\nلن يكون Canta هو نفسه بدون عملهم.</string>
+    <string name="search_apps">ابحث عن تطبيقات</string>
     <string name="auto_update_bloat_list">قائمة البرامج غير المرغوبة التي يتم تحديثها تلقائيًا</string>
     <string name="auto_update_bloat_list_description">جلب معلومات تلقائيًا عن الإصدار الجديد التطبيق غير مرغوب بها. هذا يضمن وصف شعارات تطبيق محدثة.</string>
     <string name="settings">إعدادات</string>
@@ -90,7 +90,7 @@
     <string name="save">احفظ</string>
     <string name="import_preset_clipboard">الاستيراد من الحافظة</string>
     <string name="presets">الإعدادات المسبقة</string>
-    <string name="preset_deleted">تم حذف الإعداد المسبق</string>
+    <string name="preset_deleted">حُذف الإعداد المسبق</string>
     <string name="preset_delete_error">فشل في حذف الإعداد المسبق</string>
     <string name="preset_copied">تم نسخ الإعداد المسبق إلى الحافظة</string>
     <string name="import_failed">فشل الاستيراد</string>
