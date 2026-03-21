@@ -32,7 +32,7 @@
     <string name="copy">コピー</string>
     <string name="app_settings">アプリ情報</string>
     <string name="close">閉じる</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Cantaは、Shizukuを使用してシステムとユーザーアプリを削除するオープンソースのアンインストーラーです。PC無しで自分の好きな様にデバイスの不要な物を削除出来ます。\n\n %sありがとうございます。\n彼らの仕事無しには今の様にはなりませんでした。</string>
     <string name="search_apps">アプリを検索</string>
     <string name="auto_update_bloat_list">ブロートリストを自動更新</string>
     <string name="auto_update_bloat_list_description">アプリのブロート情報を自動的に取得します。これにより、最新のバッジとアプリの説明が常に最新になります。</string>
