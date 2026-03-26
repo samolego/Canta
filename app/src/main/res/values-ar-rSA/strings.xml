@@ -14,7 +14,7 @@
     <string name="got_it">فهمت</string>
     <string name="loading_badges">جارٍ تحميل الشارات ...</string>
     <string name="logs">السجلات</string>
-    <string name="back">رجوع</string>
+    <string name="back">ارجع</string>
     <string name="copy_logs">انسخ السجلات</string>
     <string name="log_copied">نُسخ السجل إلى الحافظة</string>
     <plurals name="clear_selected_apps">
@@ -52,14 +52,14 @@
     <string name="copy">انسخ</string>
     <string name="app_settings">معلومات التطبيق</string>
     <string name="close">أغلق</string>
-    <string name="canta_description">Canta هو تطبيق إلغاء تثبيت مفتوح المصدر يستخدم Shizuku لإزالة تطبيقات النظام والمستخدم.\nإنه يسمح لك بإزالة الملفات الزائدة من جهازك كما يحلو لك، دون الحاجة إلى جهاز كمبيوتر.\n\nشكر خاص لـ %s.\nلن يكون Canta هو نفسه بدون عملهم.</string>
-    <string name="search_apps">البحث عن التطبيقات</string>
-    <string name="auto_update_bloat_list">قائمة البرامج غير المرغوبة التي يتم تحديثها تلقائيًا</string>
-    <string name="auto_update_bloat_list_description">جلب معلومات تلقائيًا عن الإصدار الجديد التطبيق غير مرغوب بها. هذا يضمن وصف شعارات تطبيق محدثة.</string>
+    <string name="canta_description">Canta هو تطبيق إلغاء تثبيت مفتوح المصدر يستخدم Shizuku لإزالة تطبيقات النظام والمستخدم.\nإنه يسمح لك بإزالة البرامج الغير مرغوبة من جهازك كما يحلو لك، دون الحاجة إلى جهاز حاسوب.\n\nشكر خاص لـ %s.\nلن يكون Canta هو نفسه بدون عملهم.</string>
+    <string name="search_apps">ابحث عن تطبيقات</string>
+    <string name="auto_update_bloat_list">حدّث تلقائيًا قائمة البرامج غير المرغوبة</string>
+    <string name="auto_update_bloat_list_description">جلب نسخة جديدة من معلومات التطبيق الغير مرغوب به. وهذا يضمن الشارات الحديثة والأوصاف التطبيقات.</string>
     <string name="settings">إعدادات</string>
     <string name="confirm_uninstall">تأكيد إلغاء التثبيت</string>
     <string name="app_version">إصدار التطبيق: %s</string>
-    <string name="bloatware_list_version">آخر تحديث قائمة التطبيقات غير الضرورية</string>
+    <string name="bloatware_list_version">آخر تحديث قائمة التطبيقات غير المرغوبة</string>
     <string name="no_warranty_content">يوفر هذا التطبيق توصيات إزالة التطبيق بناءً على معلومات الطرف الثالث. هذه التوصيات المعلوماتية في الطبيعة ولا تضمن السلامة أو التوافق مع جهازك المحدد. يمكن أن تتسبب تطبيق تطبيقات النظام في حدوث مشكلات غير متوقعة ، بما في ذلك على سبيل المثال لا الحصر: فقدان الوظائف ، وعدم الاستقرار في النظام ، وتجهيزات الجهاز ، وفقدان البيانات ، وما إلى ذلك. مطور هذا التطبيق غير مسؤول عن أي ضرر يتم لحضن جهازك الناتج عن اتباع التوصيات المقدمة.</string>
     <string name="disclaimer">إخلاء المسئولية - لا ضمان</string>
     <string name="proceed_at_own_risk">بالنقر فوق \"متابعة\", فإنك توافق على استخدام هذا التطبيق على مسؤوليتك الخاصة.</string>
@@ -84,13 +84,13 @@
     <string name="create_preset_description">أنشئ إعدادًا مسبقًا من التطبيقات التي تم إلغاء تثبيتها حاليًا. سيؤدي هذا إلى حفظ قائمة بالتطبيقات التي يمكن مشاركتها وتطبيقها على أجهزة أخرى.</string>
     <string name="preset_name">اسم الإعداد المسبق</string>
     <string name="preset_name_missing_error">الاسم مطلوب</string>
-    <string name="preset_name_placeholder">على سبيل المثال، تطبيقات سامسونج المُزعجة</string>
+    <string name="preset_name_placeholder">مثال، تطبيقات سامسونج الغير مرغوب بها</string>
     <string name="optional_description">الوصف (اختياري)</string>
     <string name="preset_description_placeholder">وصف الإعداد المسبق في تحرير...</string>
     <string name="save">احفظ</string>
     <string name="import_preset_clipboard">الاستيراد من الحافظة</string>
     <string name="presets">الإعدادات المسبقة</string>
-    <string name="preset_deleted">تم حذف الإعداد المسبق</string>
+    <string name="preset_deleted">حُذف الإعداد المسبق</string>
     <string name="preset_delete_error">فشل في حذف الإعداد المسبق</string>
     <string name="preset_copied">تم نسخ الإعداد المسبق إلى الحافظة</string>
     <string name="import_failed">فشل الاستيراد</string>
@@ -115,8 +115,8 @@
     <string name="reset_to_default">صفّر إلى المبدئي</string>
     <string name="advanced_settings">الإعدادات المتقدمة</string>
     <string name="click_to_expand">انقر للتوسيع</string>
-    <string name="bloat_list_url">رابط قائمة البرامج المنتفخة</string>
-    <string name="bloat_list_url_description">من أين نحصل على الشارات والأوصاف.</string>
+    <string name="bloat_list_url">رابط قائمة البرامج الغير مرغوب بها</string>
+    <string name="bloat_list_url_description">من أين احصل على الشارات والأوصاف.</string>
     <string name="allow_unsafe_selections">اسمح بالاختيارات غير الآمنة</string>
     <string name="allow_unsafe_uninstalls_description">ما إذا كان يسمح باختيار التطبيقات المعلَّمة كتطبيقات غير آمنة (تطبيق الإعدادات المسبقة يتجاوز هذا بالفعل).</string>
     <string name="donate">تبرع</string>
@@ -128,5 +128,5 @@
     <string name="auth_required_description">ويتطلب هذا الإجراء المزيد من الامتيازات.</string>
     <string name="require_auth_setting_desc">تطلب الاستيثاق لإلغاء تثبيت التطبيقات أو إعادة تثبيتها.</string>
     <string name="require_auth_setting">تطلب استيثاق</string>
-    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="enable_usb_debugging">(اختياري) فعّل تصحيح علل USB</string>
 </resources>

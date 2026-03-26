@@ -10,7 +10,7 @@
     <string name="only_system">יישומי מערכת בלבד</string>
     <string name="no_apps_found">לא נמצאו יישומים</string>
     <string name="loading_apps">היישומים נטענים</string>
-    <string name="badge_info">מידע על תג</string>
+    <string name="badge_info">מידע על התגית</string>
     <string name="got_it">הבנתי</string>
     <string name="loading_badges">התגיות נטענות...</string>
     <string name="logs">קובצי יומן</string>
@@ -18,16 +18,16 @@
     <string name="copy_logs">העתקת היומן</string>
     <string name="log_copied">היומן הועתק ללוח הגזירים</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">נקה %d נבחר</item>
-        <item quantity="two">נקה %d נבחרים</item>
-        <item quantity="many">נקה %d נבחרים</item>
-        <item quantity="other">Clear %d selected</item>
+        <item quantity="one">ניקוי אחד נבחר</item>
+        <item quantity="two">ניקוי שני נבחרים</item>
+        <item quantity="many">ניקוי %d נבחרים</item>
+        <item quantity="other">ניקוי %d נבחרים</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">יישום %d נבחר</item>
-        <item quantity="two">%d יישומים נבחרו</item>
-        <item quantity="many">%d יישומים נבחרו</item>
-        <item quantity="other">%d יישומים נבחרו</item>
+        <item quantity="one">נבחר יישום אחד</item>
+        <item quantity="two">נבחרו שני יישומים</item>
+        <item quantity="many">נבחרו %d יישומים</item>
+        <item quantity="other">נבחרו %d יישומים</item>
     </plurals>
     <plurals name="success_uninstalled">
         <item quantity="one">הסרת בהצלחה את ההתקנה של יישום %d!</item>
@@ -98,7 +98,7 @@
     <string name="selected_apps">יישומים שנבחרו</string>
     <string name="text">טקסט</string>
     <string name="install_shizuku">התקנת היישום Shizuku</string>
-    <string name="start_shizuku_service">הפעל שירות Shizuku</string>
+    <string name="start_shizuku_service">הפעלת שירות Shizuku</string>
     <string name="grant_shizuku_permission_to_canta">מתן הרשאה ל־Canta להשתמש ב־Shizuku</string>
     <string name="shizuku_required">יש צורך ב־Shizuku</string>
     <string name="shizuku_requirement_description">היישום Canta משתמש ב־Shizuku לצורך הסרת יישומים מבלי לדרוש גישת שורש (root). Shizuku מספק דרך בטוחה לגשת לערכות פיתוח תוכנה (SDK) ברמת המערכת.</string>
@@ -112,13 +112,13 @@
     <string name="allow_unsafe_selections">לאפשר בחירות מסוכנות להסרה</string>
     <string name="allow_unsafe_uninstalls_description">האם לאפשר בחירת יישומים המסומנים כמסוכנים להסרה (החלת מערכים עוקפת הגדרה זו בכל אופן).</string>
     <string name="donate">תרומה</string>
-    <string name="canta_donate_request">נהנים Canta? הוא נבנה בזמני הפנוי תוך מחשבה על פרטיות - ללא פרסומות, ללא מעקב. אם אתם מוצאים אותו שימושי, שקלו לתמוך בפיתוח שלו!</string>
+    <string name="canta_donate_request">אהבת את Canta? היישום פותח בזמני הפנוי תוך מחשבה על פרטיות - בלי פרסומות, בלי מעקב. אם היישום שימושי עבורך, נא לשקול לתמוך בפיתוחו!</string>
     <string name="success">הצלחה %1$s!</string>
-    <string name="hide_success_dialog">הסתר דיאלוג הסרה מוצלחת</string>
-    <string name="hide_success_dialog_description">מסתיר את תיבת הדו-שיח של ההצלחה לאחר הסרה/התקנה מחדש.</string>
+    <string name="hide_success_dialog">הסתרת חלונית הדיווח על הצלחה</string>
+    <string name="hide_success_dialog_description">הסתרת החלונית שמדווחת על הצלחה בהסרת התקנה או התקנה מחדש.</string>
     <string name="auth_required">נדרש אימות</string>
     <string name="auth_required_description">פעולה זו דורשת הרשאות גבוהות יותר.</string>
     <string name="require_auth_setting_desc">נדרש אימות לצורך הסרה או התקנה מחדש של יישומים.</string>
     <string name="require_auth_setting">דרישת אימות</string>
-    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="enable_usb_debugging">הפעלת ניפוי שגיאות ב־USB (רשות)</string>
 </resources>
