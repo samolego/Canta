@@ -121,5 +121,4 @@
     <string name="require_auth_setting_desc">נדרש אימות לצורך הסרה או התקנה מחדש של יישומים.</string>
     <string name="require_auth_setting">דרישת אימות</string>
     <string name="enable_usb_debugging">הפעלת ניפוי שגיאות ב־USB (רשות)</string>
-    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
 </resources>
