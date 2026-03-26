@@ -1,32 +1,37 @@
-name: 📦🚀 Build & deploy Android app for an environment
+name: 📦🚀 Build & prepare draft Android release
 
 on:
   workflow_dispatch:
-  release:
-    types:
-      - published
+
+permissions:
+  id-token: write
+  contents: read
+  attestations: write
+
 jobs:
   deployAndroid:
     permissions: write-all
-    name: 🤖📦🚀 Build & deploy Android release
+    name: 🤖📦🚀 Build & prepare Android release
     runs-on: ubuntu-latest
+
     steps:
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
+
       - name: ⚙️ Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: "21.x"
           cache: "gradle"
           distribution: "adopt"
-        id: java
-      - name: 🔐 Retrieve base64 keystore and decode it to a file
-        id: write_file
+
+      - name: 🔐 Retrieve base64 keystore
         uses: timheuer/base64-to-file@v1.2
         with:
           fileName: "android-keystore.jks"
           fileDir: "${{ github.workspace }}/"
           encodedString: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+
       - name: 📝🔐 Create keystore.properties file
         env:
           KEYSTORE_PROPERTIES_PATH: ${{ github.workspace }}/key.properties
@@ -35,17 +40,53 @@ jobs:
           echo "keyAlias=${{ secrets.KEYSTORE_KEY_ALIAS }}" >> $KEYSTORE_PROPERTIES_PATH
           echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
           echo "keyPassword=${{ secrets.KEYSTORE_KEY_PASSWORD }}" >> $KEYSTORE_PROPERTIES_PATH
-      - name: 🤖📦 Create Android release
+
+      - name: 📌 Extract version_name from gradle.properties
+        id: extract_version
         run: |
-          ./gradlew app:assembleRelease
-      - name: 📝 Generate SHA-256
+          # read version_name
+          version=$(grep "^version_name=" app/gradle.properties | cut -d'=' -f2)
+          echo "VERSION_NAME=$version" >> $GITHUB_ENV
+          echo "::set-output name=tag::v$version"
+
+      - name: 🤖📦 Build Android APKs
+        run: ./gradlew app:assembleRelease
+
+      - name: 📝 Generate SHA-256 checksums
         run: |
           cd app/build/outputs/apk/release/
           sha256sum *.apk > SHA256SUMS.txt
+
       - name: "Echo SHA-256 sums"
         run: cat app/build/outputs/apk/release/SHA256SUMS.txt
-      - name: 🤖🚀 Upload to GitHub release
-        uses: AButler/upload-release-assets@v2.0
+
+      - name: 🔧 Setup GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh config set prompt disabled
+
+      - name: 🛡️ Generate artifact attestation
+        id: attest
+        uses: actions/attest-build-provenance@v3
         with:
-          files: "app/build/outputs/apk/release/*.apk"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          subject-path: 'app/build/outputs/apk/release/*.apk'
+
+      - name: 📦 Create GitHub release draft
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ env.VERSION_NAME }}" \
+            --draft \
+            --title "Canta ${{ env.VERSION_NAME }}" \
+            --notes "" \
+            --target "$GITHUB_SHA"
+
+      - name: 📁 Upload APKs, checksums & attestation
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ env.VERSION_NAME }}"
+          gh release upload "$TAG" app/build/outputs/apk/release/*.apk
+          gh release upload "$TAG" app/build/outputs/apk/release/SHA256SUMS.txt
+          gh release upload "$TAG" "${{ steps.attest.outputs.bundle-path }}"

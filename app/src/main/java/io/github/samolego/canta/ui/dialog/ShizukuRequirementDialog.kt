@@ -2,7 +2,8 @@ package io.github.samolego.canta.ui.dialog
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.net.toUri
 import io.github.samolego.canta.R
 import io.github.samolego.canta.SHIZUKU_PACKAGE_NAME
 import io.github.samolego.canta.ui.theme.GreenOk
@@ -41,6 +43,7 @@ import io.github.samolego.canta.util.shizuku.ShizukuStatus
 
 const val SHIZUKU_PLAY_STORE_URL =
     "https://play.google.com/store/apps/details?id=$SHIZUKU_PACKAGE_NAME"
+const val SHIZUKU_ANDROID_16_URL = "https://github.com/thedjchi/Shizuku/releases"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,6 +59,16 @@ fun ShizukuRequirementDialog(
         if (intent != null) {
             context.startActivity(intent)
         }
+    }
+
+    val isUsbDebuggingEnabled = try {
+        Settings.Global.getInt(
+            context.contentResolver,
+            Settings.Global.ADB_ENABLED,
+            0
+        ) == 1
+    } catch (e: Exception) {
+        false
     }
 
 
@@ -101,6 +114,19 @@ fun ShizukuRequirementDialog(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                // We want to also prompt
+                // the user to enable USB debugging just
+                // in case, if they'll need to rescue their device with
+                // PC if sth goes wrong (#284)
+                RequirementItem(
+                    text = stringResource(R.string.enable_usb_debugging),
+                    isCompleted = isUsbDebuggingEnabled,
+                    enabled = false,
+                    onActionClick = {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+                        context.startActivity(intent)
+                    }
+                )
                 // Install Shizuku
                 RequirementItem(
                     text = stringResource(R.string.install_shizuku),
@@ -110,7 +136,10 @@ fun ShizukuRequirementDialog(
                         val intent =
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse(SHIZUKU_PLAY_STORE_URL)
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                                    SHIZUKU_ANDROID_16_URL.toUri()
+                                else
+                                    SHIZUKU_PLAY_STORE_URL.toUri()
                             )
                         context.startActivity(intent)
                     }

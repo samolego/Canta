@@ -19,6 +19,8 @@ class Filter(
          */
         val any: Filter = Filter(name = "Any", shouldShow = { true })
 
+        val user = Filter(name = "User", shouldShow = { app -> !app.isSystemApp })
+
         /**
          * List of available filters.
          */
@@ -39,7 +41,6 @@ class Filter(
             removalFilters.add(0, any)
 
             // Apps that are not system apps.
-            val user = Filter(name = "User", shouldShow = { app -> !app.isSystemApp })
             removalFilters.add(1, user)
 
             val unclassified =

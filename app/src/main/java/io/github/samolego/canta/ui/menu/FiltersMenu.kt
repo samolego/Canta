@@ -43,14 +43,20 @@ fun FiltersMenu(
             modifier = Modifier.width(180.dp)
     ) {
         // System apps toggle
+        val toggleSystem = { enabled: Boolean ->
+            appListViewModel.onlySystem = enabled
+            if (enabled && appListViewModel.selectedFilter == Filter.user) {
+                appListViewModel.selectedFilter = Filter.any
+            }
+        }
         FilterChip(
                 text = stringResource(R.string.only_system),
                 isSelected = appListViewModel.onlySystem,
-                onClick = { appListViewModel.onlySystem = !appListViewModel.onlySystem },
+                onClick = { toggleSystem(!appListViewModel.onlySystem) },
                 trailingContent = {
                     Checkbox(
                             checked = appListViewModel.onlySystem,
-                            onCheckedChange = { appListViewModel.onlySystem = it }
+                            onCheckedChange = toggleSystem,
                     )
                 }
         )
@@ -76,6 +82,9 @@ fun FiltersMenu(
                         isSelected = appListViewModel.selectedFilter == filter,
                         onClick = {
                             appListViewModel.selectedFilter = filter
+                            if (filter == Filter.user && appListViewModel.onlySystem) {
+                                appListViewModel.onlySystem = false
+                            }
                             filtersMenu = false
                         }
                 )

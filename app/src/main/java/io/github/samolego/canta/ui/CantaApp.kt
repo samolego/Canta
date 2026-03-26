@@ -99,6 +99,7 @@ fun CantaApp(
 
     NavHost(navController = navController, startDestination = Screen.Main.route) {
         composable(Screen.Main.route) {
+            val presetSaveError = stringResource(R.string.preset_save_error)
             MainContent(
                 canResetAppToFactory = canResetAppToFactory,
                 uninstallApp = uninstallApp,
@@ -121,9 +122,7 @@ fun CantaApp(
                                 // Show error message to user
                                 Toast.makeText(
                                     context,
-                                    context.getString(
-                                        R.string.preset_save_error
-                                    ),
+                                    presetSaveError,
                                     Toast.LENGTH_LONG
                                 )
                                     .show()

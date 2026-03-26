@@ -1,5 +1,6 @@
 package io.github.samolego.canta.ui.dialog
 
+import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -34,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -190,7 +192,7 @@ fun AppInfoDialog(
                     )
                 } else {
                     Text(
-                            text = context.getString(R.string.no_description_available),
+                            text = stringResource(R.string.no_description_available),
                             style = MaterialTheme.typography.bodySmall
                     )
                 }

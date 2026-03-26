@@ -26,13 +26,13 @@ A clear and concise description of what you expected to happen.
  - Shizuku version:
 
 **Logcat**
-<!--Please capture the logcat of the issue. Filter it for Canta, reproduce the bug and paste logcat here or use a pasting site (e.g. github gist, pastebin, etc.)-->
-<!--If app doesn't crash you can get all logs by clicking on the 3 dots in the top right corner and select "Logs", then you can copy individual log-->
-<!--by long clicking it or copy all the logs with the button in the bottom right corner-->
-
 <details>
   <summary>View logcat</summary>
   ```logcat
-  paste logcat here
+    <!--Please capture the logcat of the issue. Filter it for Canta, reproduce the bug and paste logcat here or use a pasting site (e.g. github gist, pastebin, etc.)-->
+    <!--If app doesn't crash you can get all logs by clicking on the 3 dots in the top right corner and select "Logs", then you can copy individual log-->
+    <!--by long clicking it or copy all the logs with the button in the bottom right corner-->
+    <!--Then paste the logs here.-->
+    <!--Note: screenshots of the logs do NOT count as logs-->
   ```
 </details>
