@@ -84,7 +84,7 @@
     <string name="edit">Editar</string>
     <string name="add_apps">Añadir aplicaciones</string>
     <string name="share">Compartir</string>
-    <string name="delete">Borrar</string>
+    <string name="delete">Eliminar</string>
     <string name="apply_preset">Aplicar los ajustes preestablecidos</string>
     <string name="preset_save_error">Error al guardar los ajustes preestablecidos</string>
     <string name="selected_apps">Aplicaciones seleccionadas</string>
