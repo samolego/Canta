@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Cancelar</string>
-    <string name="ok">Entendido</string>
+    <string name="ok">Aceptar</string>
     <string name="are_you_sure_to_uninstall_apps">¿Estás seguro de que quieres desinstalar las aplicaciones %1$s?</string>
     <string name="copy_package_name_to_clipboard">Copiar el nombre del paquete al portapapeles</string>
     <string name="no_description_available">Sin descripción</string>
@@ -46,13 +46,13 @@
     <string name="bloatware_list_version">Lista de programas no deseados más recientes</string>
     <string name="no_warranty_content">Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con su dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicio del dispositivo de forma continua, pérdida de datos, etc. El desarrollador de esta aplicación no es responsable de ningún daño causado a su dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
     <string name="disclaimer">Descargo de responsabilidad - Sin garantía</string>
-    <string name="proceed_at_own_risk">Al hacer clic en «Continuar», acepta utilizar esta aplicación bajo su propia responsabilidad.</string>
+    <string name="proceed_at_own_risk">Al hacer clic en \"Continuar\", aceptas utilizar esta aplicación bajo tu propia responsabilidad.</string>
     <string name="never_show_again">No volver a mostrar este mensaje</string>
     <string name="proceed">Continuar</string>
     <string name="confirm_uninstall_description">Indicar si se debe mostrar el diálogo para confirmar la desinstalación.</string>
     <string name="select_all">Seleccionar todo</string>
-    <string name="select_all_tip">Pulse %d veces más para activar seleccionar todo.</string>
-    <string name="select_all_enabled">Seleccionar todo se ha activado para «Recomendado».</string>
+    <string name="select_all_tip">Pulsa %d veces más para activar seleccionar todo.</string>
+    <string name="select_all_enabled">Seleccionar todo se ha activado para \"Recomendado\".</string>
     <string name="uninstall_options_title">Opciones de desinstalación</string>
     <string name="uninstall_app">Desinstalar la aplicación</string>
     <string name="reset_to_factory_version">Reiniciar a la versión de fábrica</string>
@@ -84,7 +84,7 @@
     <string name="edit">Editar</string>
     <string name="add_apps">Añadir aplicaciones</string>
     <string name="share">Compartir</string>
-    <string name="delete">Borrar</string>
+    <string name="delete">Eliminar</string>
     <string name="apply_preset">Aplicar los ajustes preestablecidos</string>
     <string name="preset_save_error">Error al guardar los ajustes preestablecidos</string>
     <string name="selected_apps">Aplicaciones seleccionadas</string>
@@ -112,5 +112,5 @@
     <string name="auth_required_description">Esta operación requiere unos privilegios mayores.</string>
     <string name="require_auth_setting_desc">Necesitas autentificarte para desinstalar o reinstalar las aplicaciones.</string>
     <string name="require_auth_setting">Verificación necesaria</string>
-    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="enable_usb_debugging">(Opcional) Activar la depuración USB</string>
 </resources>
