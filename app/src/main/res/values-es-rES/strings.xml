@@ -26,12 +26,12 @@
         <item quantity="other">%d aplicaciones seleccionadas</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">¡Has desinstalado con éxito la aplicación %d!</item>
-        <item quantity="other">¡Has desinstalado con éxito las aplicaciones %d!</item>
+        <item quantity="one">¡Has desinstalado correctamente %d aplicación!</item>
+        <item quantity="other">¡Has desinstalado correctamente %d aplicaciones!</item>
     </plurals>
     <plurals name="success_reinstalled">
         <item quantity="one">¡Has reinstalado correctamente la aplicación %d!</item>
-        <item quantity="other">¡Has reinstalado correctamente las aplicaciones %d!</item>
+        <item quantity="other">¡Has reinstalado correctamente %d aplicaciones!</item>
     </plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Información de la aplicación</string>
