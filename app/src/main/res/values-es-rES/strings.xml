@@ -79,7 +79,7 @@
     <string name="preset_copied">Preajuste copiado al portapapeles</string>
     <string name="import_failed">La importación ha fallado</string>
     <string name="no_presets">Sin preajustes</string>
-    <string name="presets_description">Crear o importar ajustes preestablecidos para administrar listas de desinstalación de aplicaciones en dispositivos</string>
+    <string name="presets_description">Crear o importar preajustes para gestionar listas de desinstalación de aplicaciones en varios dispositivos</string>
     <string name="more_options">Más opciones</string>
     <string name="edit">Editar</string>
     <string name="add_apps">Añadir aplicaciones</string>
@@ -102,15 +102,15 @@
     <string name="bloat_list_url">URL de la lista de aplicaciones innecesarias</string>
     <string name="bloat_list_url_description">Dónde obtener los distintivos y las descripciones.</string>
     <string name="allow_unsafe_selections">Permitir selecciones no seguras</string>
-    <string name="allow_unsafe_uninstalls_description">Se permite seleccionar aplicaciones marcadas como inseguras (los ajustes predeterminados de la aplicación omite esto).</string>
+    <string name="allow_unsafe_uninstalls_description">Indica si se permite seleccionar aplicaciones marcadas como no seguras (al aplicar preajustes esto ya se omite).</string>
     <string name="donate">Donar</string>
     <string name="canta_donate_request">¿Te gusta Canta? Lo he creado en mi tiempo libre pensando en la privacidad: sin anuncios ni seguimiento. Si te resulta útil, ¡considera apoyar el desarrollo!</string>
-    <string name="success">¡Correctamente %1$ss!</string>
+    <string name="success">¡Operación realizada correctamente %1$s!</string>
     <string name="hide_success_dialog">Ocultar el aviso de que la operación se realizó correctamente</string>
-    <string name="hide_success_dialog_description">Oculta el aviso de que la operación se realizó correctamente, después de la desinstalación/reinstalación.</string>
-    <string name="auth_required">Es necesario autenticarse</string>
-    <string name="auth_required_description">Esta operación requiere unos privilegios mayores.</string>
-    <string name="require_auth_setting_desc">Necesitas autentificarte para desinstalar o reinstalar las aplicaciones.</string>
-    <string name="require_auth_setting">Verificación necesaria</string>
+    <string name="hide_success_dialog_description">Oculta el aviso de que la operación se realizó correctamente después de desinstalar/reinstalar.</string>
+    <string name="auth_required">Se requiere autenticación</string>
+    <string name="auth_required_description">Esta acción requiere privilegios más altos.</string>
+    <string name="require_auth_setting_desc">Requerir autenticación para desinstalar o reinstalar aplicaciones.</string>
+    <string name="require_auth_setting">Requerir autenticación</string>
     <string name="enable_usb_debugging">(Opcional) Activar la depuración USB</string>
 </resources>
