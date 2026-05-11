@@ -65,7 +65,7 @@
     <string name="enter_valid_json">Por favor, introduce un JSON válido</string>
     <string name="import_button">Importar</string>
     <string name="create_preset">Crear preajuste</string>
-    <string name="create_preset_description">Crea un ajuste preestablecido a partir de las aplicaciones actualmente desinstaladas. Esto guardará una lista de aplicaciones que se pueden compartir y aplicar en otros dispositivos.</string>
+    <string name="create_preset_description">Crea un preajuste a partir de las aplicaciones actualmente desinstaladas. Esto guardará una lista de aplicaciones que se pueden compartir y aplicar en otros dispositivos.</string>
     <string name="preset_name">Nombre del ajuste preestablecido</string>
     <string name="preset_name_missing_error">Es necesario un nombre</string>
     <string name="preset_name_placeholder">Por ejemplo, Samsung Bloatware</string>
