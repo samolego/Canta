@@ -30,29 +30,29 @@
         <item quantity="other">¡Has desinstalado correctamente %d aplicaciones!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">¡Has reinstalado correctamente la aplicación %d!</item>
+        <item quantity="one">¡Has reinstalado correctamente %d aplicación!</item>
         <item quantity="other">¡Has reinstalado correctamente %d aplicaciones!</item>
     </plurals>
     <string name="copy">Copiar</string>
     <string name="app_settings">Información de la aplicación</string>
     <string name="close">Cerrar</string>
-    <string name="canta_description">Canta es una aplicación de desinstalación de código abierto que utiliza Shizuku para eliminar aplicaciones del sistema y del usuario. Te permite desinstalar aplicaciones de tu dispositivo como quieras, sin necesidad de un PC.\n\nUn agradecimiento especial a %s.\nCanta no sería lo mismo sin su trabajo.</string>
+    <string name="canta_description">Canta es una aplicación de desinstalación de código abierto que utiliza Shizuku para eliminar aplicaciones del sistema y de usuario. Te permite desinstalar aplicaciones innecesarias de tu dispositivo como quieras, sin necesidad de un PC.\n\nUn agradecimiento especial a %s.\nCanta no sería lo mismo sin su trabajo.</string>
     <string name="search_apps">Buscar aplicaciones</string>
-    <string name="auto_update_bloat_list">Actualizar automáticamente la lista de elementos basura/innecesarios</string>
-    <string name="auto_update_bloat_list_description">Recibir automáticamente una nueva versión de la lista de aplicaciones. Esto garantiza que los iconos y las descripciones de las aplicaciones estén actualizados.</string>
+    <string name="auto_update_bloat_list">Actualizar automáticamente la lista de aplicaciones innecesarias</string>
+    <string name="auto_update_bloat_list_description">Obtener automáticamente la información actualizada sobre las aplicaciones innecesarias. Esto garantiza que los distintivos y las descripciones de las aplicaciones estén actualizados.</string>
     <string name="settings">Ajustes</string>
     <string name="confirm_uninstall">Confirmar las desinstalaciones</string>
     <string name="app_version">Versión de la aplicación: %s</string>
-    <string name="bloatware_list_version">Lista más reciente de aplicaciones basura/innecesarias</string>
-    <string name="no_warranty_content">Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con su dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicio del dispositivo de forma continua, pérdida de datos, etc. El desarrollador de esta aplicación no es responsable de ningún daño causado a su dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
+    <string name="bloatware_list_version">Lista más reciente de aplicaciones innecesarias</string>
+    <string name="no_warranty_content">Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con tu dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicios continuos del dispositivo, pérdida de datos, etc. El desarrollador de esta aplicación no se hace responsable de cualquier daño causado a tu dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
     <string name="disclaimer">Descargo de responsabilidad - Sin garantía</string>
     <string name="proceed_at_own_risk">Al hacer clic en \"Continuar\", aceptas utilizar esta aplicación bajo tu propia responsabilidad.</string>
     <string name="never_show_again">No volver a mostrar este mensaje</string>
     <string name="proceed">Continuar</string>
     <string name="confirm_uninstall_description">Indicar si se debe mostrar el diálogo para confirmar la desinstalación.</string>
     <string name="select_all">Seleccionar todo</string>
-    <string name="select_all_tip">Pulsa %d veces más para activar seleccionar todo.</string>
-    <string name="select_all_enabled">Seleccionar todo se ha activado para \"Recomendado\".</string>
+    <string name="select_all_tip">Toca %d veces más para activar la función de seleccionar todo.</string>
+    <string name="select_all_enabled">Se ha activado Seleccionar todo para el tipo de filtro \"Recomendado\".</string>
     <string name="uninstall_options_title">Opciones de desinstalación</string>
     <string name="uninstall_app">Desinstalar la aplicación</string>
     <string name="reset_to_factory_version">Restablecer a la versión de fábrica</string>
