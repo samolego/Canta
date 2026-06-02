@@ -22,7 +22,7 @@
         <item quantity="other">Borrar %d seleccionados</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">%d aplicación seleccionada</item>
+        <item quantity="one">%d Aplicación seleccionada</item>
         <item quantity="other">%d aplicaciones seleccionadas</item>
     </plurals>
     <plurals name="success_uninstalled">
@@ -50,7 +50,7 @@
     <string name="never_show_again">No volver a mostrar este mensaje</string>
     <string name="proceed">Continuar</string>
     <string name="confirm_uninstall_description">Indicar si se debe mostrar el diálogo para confirmar la desinstalación.</string>
-    <string name="select_all">Seleccionar todo</string>
+    <string name="select_all">Select</string>
     <string name="select_all_tip">Toca %d veces más para activar la función de seleccionar todo.</string>
     <string name="select_all_enabled">Se ha activado Seleccionar todo para el tipo de filtro \"Recomendado\".</string>
     <string name="uninstall_options_title">Opciones de desinstalación</string>
@@ -61,7 +61,8 @@
     <string name="clipboard">Portapapeles</string>
     <string name="import_preset_clipboard_description">Importar preajuste desde el portapapeles. Asegúrate de haber copiado un archivo JSON de preajuste de Canta válido.</string>
     <string name="paste_preset_json">Pegar JSON del preajuste</string>
-    <string name="paste_preset_json_here">Pega aquí el JSON del preajuste ...</string>
+    <string name="paste_preset_json_here">https://crowdin.com/editor/canta/14/en-es?view=side-by-side#86
+Pega aquí el JSON del preajuste ...</string>
     <string name="enter_valid_json">Por favor, introduce un JSON válido</string>
     <string name="import_button">Importar</string>
     <string name="create_preset">Crear preajuste</string>
