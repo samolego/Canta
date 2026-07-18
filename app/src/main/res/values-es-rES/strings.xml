@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Cancelar</string>
     <string name="ok">Aceptar</string>
-    <string name="are_you_sure_to_uninstall_apps">¿Estás seguro de que quieres desinstalar %1$s aplicaciones?</string>
+    <string name="are_you_sure_to_uninstall_apps">¿Estás seguro de que quieres desinstalar %1$s aplicación(es)?</string>
     <string name="copy_package_name_to_clipboard">Copiar el nombre del paquete al portapapeles</string>
     <string name="no_description_available">No hay descripción disponible</string>
     <string name="uninstall">Desinstalar</string>
