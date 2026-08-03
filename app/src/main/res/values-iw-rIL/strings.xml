@@ -58,10 +58,10 @@
     <string name="never_show_again">לא להציג שוב הודעה זו</string>
     <string name="proceed">המשך</string>
     <string name="confirm_uninstall_description">האם להציג חלונית לאישור הסרת ההתקנה.</string>
-    <string name="select_all">בחירה של הכול</string>
+    <string name="select_all">לבחור הכול</string>
     <string name="select_all_tip">אפשרות הבחירה של הכול תופעל בעוד %d הקשות.</string>
     <string name="select_all_enabled">הופעלה בחירה של הכול לסוג המסנן ‚מומלץ’.</string>
-    <string name="uninstall_options_title">אפשרויות הסרת התקנה</string>
+    <string name="uninstall_options_title">אפשרויות הסרה</string>
     <string name="uninstall_app">הסרת היישום</string>
     <string name="reset_to_factory_version">איפוס לגרסת היצרן</string>
     <string name="import_preset">ייבוא ​​מערך</string>
