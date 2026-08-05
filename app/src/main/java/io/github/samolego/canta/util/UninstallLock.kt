@@ -41,7 +41,7 @@ fun showBiometricPrompt(
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                LogUtils.e(TAG, "An error occured while trying to authenticate. Code: $errorCode, message: $errString")
+                LogUtils.e(TAG, "An error occurred while trying to authenticate. Code: $errorCode, message: $errString")
             }
 
             override fun onAuthenticationFailed() {
