@@ -26,12 +26,12 @@
         <item quantity="other">%d kiválasztott alkalmazás</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">Sikeresesn töröltél %d alkalmazást!</item>
-        <item quantity="other">Sikeresesn töröltél %d alkalmazást!</item>
+        <item quantity="one">Sikeresen töröltél %d alkalmazást!</item>
+        <item quantity="other">Sikeresen töröltél %d alkalmazást!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">Sikeresesn újratelepítettél %d alkalmazást!</item>
-        <item quantity="other">Sikeresesn újratelepítettél %d alkalmazást!</item>
+        <item quantity="one">Sikeresen újratelepítettél %d alkalmazást!</item>
+        <item quantity="other">Sikeresen újratelepítettél %d alkalmazást!</item>
     </plurals>
     <string name="copy">Másolás</string>
     <string name="app_settings">App infó</string>
@@ -51,8 +51,8 @@
     <string name="proceed">Folytatás</string>
     <string name="confirm_uninstall_description">Megjelenjen az eltávolítási művelet megerősítésére szolgáló párbeszédpanel?</string>
     <string name="select_all">Mind kijelölése</string>
-    <string name="select_all_tip">Még %d alkalommal érintse meg az \"Mind kijelölése\" funkció engedélyezéséhez!</string>
-    <string name="select_all_enabled">A \"Mind kijelölése\" engedélyezésre került az „Ajánlott” szűrőtípushoz. </string>
+    <string name="select_all_tip">Még %d alkalommal érintse meg az \"Mind kijelölése\" funkció engedélyezéséhez.</string>
+    <string name="select_all_enabled">A Mind kijelölése engedélyezésre került az \"Ajánlott” szűrőtípushoz.</string>
     <string name="uninstall_options_title">Törlési Opciók</string>
     <string name="uninstall_app">Alkalmazás eltávolítása</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
