@@ -26,12 +26,12 @@
         <item quantity="other">%d kiválasztott alkalmazás</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">Sikeresesn töröltél %d alkalmazást!</item>
-        <item quantity="other">Sikeresesn töröltél %d alkalmazást!</item>
+        <item quantity="one">Sikeresen töröltél %d alkalmazást!</item>
+        <item quantity="other">Sikeresen töröltél %d alkalmazást!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">Sikeresesn újratelepítettél %d alkalmazást!</item>
-        <item quantity="other">Sikeresesn újratelepítettél %d alkalmazást!</item>
+        <item quantity="one">Sikeresen újratelepítettél %d alkalmazást!</item>
+        <item quantity="other">Sikeresen újratelepítettél %d alkalmazást!</item>
     </plurals>
     <string name="copy">Másolás</string>
     <string name="app_settings">App infó</string>
@@ -51,8 +51,8 @@
     <string name="proceed">Folytatás</string>
     <string name="confirm_uninstall_description">Megjelenjen az eltávolítási művelet megerősítésére szolgáló párbeszédpanel?</string>
     <string name="select_all">Mind kijelölése</string>
-    <string name="select_all_tip">Még %d alkalommal érintse meg az \"Mind kijelölése\" funkció engedélyezéséhez!</string>
-    <string name="select_all_enabled">A \"Mind kijelölése\" engedélyezésre került az „Ajánlott” szűrőtípushoz. </string>
+    <string name="select_all_tip">Még %d alkalommal érintse meg az \"Mind kijelölése\" funkció engedélyezéséhez.</string>
+    <string name="select_all_enabled">A Mind kijelölése engedélyezésre került az \"Ajánlott” szűrőtípushoz.</string>
     <string name="uninstall_options_title">Törlési Opciók</string>
     <string name="uninstall_app">Alkalmazás eltávolítása</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
@@ -97,20 +97,20 @@
     <string name="commits_url">Commits URL</string>
     <string name="commits_url_description">Where to get commit info for updates from</string>
     <string name="reset_to_default">Reset to default</string>
-    <string name="advanced_settings">Advanced settings</string>
+    <string name="advanced_settings">Haladó beállítások</string>
     <string name="click_to_expand">Click to expand</string>
     <string name="bloat_list_url">Bloat list URL</string>
     <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
     <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, please consider supporting its development!</string>
+    <string name="donate">Támogatás</string>
+    <string name="canta_donate_request">Tetszik a Canta? Szabadidőmben fejlesztettem, szem előtt tartva az adatvédelmet - nincs benne reklám, nincs nyomkövetés. Ha hasznosnak találod, kérlek, fontold meg a fejlesztés támogatását!</string>
     <string name="success">Success %1$s!</string>
     <string name="hide_success_dialog">Hide success dialog</string>
     <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher privileges.</string>
+    <string name="auth_required">Azonosítás szükséges</string>
+    <string name="auth_required_description">Ehhez a művelethez magasabb jogosultságok szükségesek.</string>
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
-    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="require_auth_setting">Azonosítás szükséges</string>
+    <string name="enable_usb_debugging">(Opcionális) Az USB hibakeresés engedélyezése</string>
 </resources>
