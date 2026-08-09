@@ -82,7 +82,7 @@
     <string name="presets_description">Create or import presets to manage app uninstall lists across devices</string>
     <string name="more_options">More options</string>
     <string name="edit">Edit</string>
-    <string name="add_apps">Add apps</string>
+    <string name="add_apps">Add</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="apply_preset">Apply Preset</string>
@@ -102,10 +102,10 @@
     <string name="bloat_list_url">Bloat list URL</string>
     <string name="bloat_list_url_description">Where to get badges and descriptions from.</string>
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
-    <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
+    <string name="allow_unsafe_uninstalls_description">Unsafe Choice(*.).</string>
     <string name="donate">Donate</string>
     <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, please consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
+    <string name="success">%1$s!</string>
     <string name="hide_success_dialog">Hide success dialog</string>
     <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
     <string name="auth_required">Authentication required</string>
