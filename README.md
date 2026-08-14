@@ -89,4 +89,4 @@ https://crowdin.com/project/canta
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=samolego/Canta&type=Date)](https://star-history.com/#samolego/Canta&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=samolego/Canta&type=Date)](https://star-history.dera.page/#samolego/Canta&Date)
