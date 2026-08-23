@@ -1,6 +1,7 @@
 package io.github.samolego.canta.ui.component
 
 import android.graphics.drawable.Drawable
+import android.text.format.Formatter
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -84,6 +85,16 @@ fun AppTile(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                         ) { Text(appInfo.packageName, modifier = Modifier.weight(9f)) }
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                Formatter.formatFileSize(LocalContext.current, appInfo.size),
+                                modifier = Modifier.weight(9f)
+                            )
+                        }
 
                         FlowRow {
                             if (appInfo.removalInfo != null) {
@@ -192,6 +203,7 @@ fun CantaAppTileDemo() {
                                             description = "Canta is not a system app",
                                             removal = RemovalRecommendation.RECOMMENDED,
                                     ),
+                        size = 10000
                     ),
             isSelected = false,
             enabled = false,
@@ -220,6 +232,7 @@ fun LongTileDemo() {
                                             description = "Canta is a system app",
                                             removal = RemovalRecommendation.RECOMMENDED,
                                     ),
+                        size = 0
                     ),
             isSelected = false,
             onCheckChanged = {},

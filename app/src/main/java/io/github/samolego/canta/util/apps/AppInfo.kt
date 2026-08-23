@@ -7,6 +7,7 @@ import android.os.Parcelable
 import io.github.samolego.canta.util.BloatData
 import io.github.samolego.canta.util.RemovalRecommendation
 import kotlinx.parcelize.Parcelize
+import java.io.File
 
 /**
  * Data class to hold information about an app.
@@ -17,6 +18,7 @@ data class AppInfo(
     val packageName: String,
     val versionName: String,
     val versionCode: Long,
+    val size: Long = 0,
     val isSystemApp: Boolean,
     val isUninstalled: Boolean,
     val isDisabled: Boolean,
@@ -55,6 +57,7 @@ data class AppInfo(
                 appName = packageInfo.applicationInfo!!.loadLabel(packageManager).toString(),
                 packageName = packageInfo.packageName,
                 versionName = versionName,
+                size = File(packageInfo.applicationInfo!!.sourceDir).length(),
                 versionCode = packageInfo.longVersionCode,
                 isSystemApp = isSystemApp,
                 isUninstalled = isUninstalled,
