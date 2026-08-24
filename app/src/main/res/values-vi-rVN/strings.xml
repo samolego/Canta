@@ -32,10 +32,10 @@
     <string name="copy">Sao chép</string>
     <string name="app_settings">Thông tin ứng dụng</string>
     <string name="close">Đóng</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %s.\nCanta would\'t be the same without their work.</string>
+    <string name="canta_description">Canta là một ứng dụng mã nguồn mở dùng Shizuku để loại bỏ ứng dụng hệ thống và người dùng. Nó cho phép bạn loại bỏ các phần mềm không cần thiết trong thiết bị nếu như bạn muốn, không cần máy tính\n\nLời cảm ơn đặc biệt tới %s.\nCanta sẽ không thể như vậy nếu thiếu đi công sức của họ.</string>
     <string name="search_apps">Tìm kiếm ứng dụng</string>
     <string name="auto_update_bloat_list">Tự động cập nhật danh sách ứng dụng rác</string>
-    <string name="auto_update_bloat_list_description">Tự động lấy phiên bản mới nhất của thông tin ứng dụng rác tệ hại. Điều này đảm bảo huy hiệu thông tin mô tả ứng dụng được cập nhật. </string>
+    <string name="auto_update_bloat_list_description">Tự động lấy phiên bản mới nhất của thông tin ứng dụng rác tệ hại. Điều này đảm bảo huy hiệu thông tin mô tả ứng dụng được cập nhật.</string>
     <string name="settings">Cài đặt</string>
     <string name="confirm_uninstall">Xác nhận gỡ cài đặt</string>
     <string name="app_version">Phiên bản ứng dụng: %s</string>
@@ -44,7 +44,7 @@
     <string name="disclaimer">Tuyên bố từ chối trách nhiệm - Không bảo hành</string>
     <string name="proceed_at_own_risk">Khi nhấp vào \"Tiếp tục\", bạn đồng ý sử dụng ứng dụng này theo rủi ro của riêng bạn.</string>
     <string name="never_show_again">Không hiển thị thông báo này nữa</string>
-    <string name="proceed">Tiếp tục </string>
+    <string name="proceed">Tiếp tục</string>
     <string name="confirm_uninstall_description">Có hiển thị hộp thoại để xác nhận hành động gỡ cài đặt hay không.</string>
     <string name="select_all">Chọn tất cả</string>
     <string name="select_all_tip">Chạm %d lần nữa để bật chức năng chọn tất cả.</string>
@@ -64,7 +64,7 @@
     <string name="create_preset_description">Tạo một cấu hình từ những ứng dụng đã bị gỡ cài đặt lúc này và lưu thành một danh sách có thể chia sẻ và áp dụng trên nhiều thiết bị khác nhau.</string>
     <string name="preset_name">Tên cấu hình</string>
     <string name="preset_name_missing_error">Bắt buộc đặt tên</string>
-    <string name="preset_name_placeholder">ví dụ: ƯD rác của Samsung</string>
+    <string name="preset_name_placeholder">ví dụ: Ứng dụng rác của Samsung</string>
     <string name="optional_description">Mô tả (Không bắt buộc)</string>
     <string name="preset_description_placeholder">Mô tả các ứng dụng sẽ bị xoá trong cấu hình này...</string>
     <string name="save">Lưu</string>
