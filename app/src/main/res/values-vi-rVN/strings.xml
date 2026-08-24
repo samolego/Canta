@@ -7,13 +7,13 @@
     <string name="no_description_available">Không có mô tả</string>
     <string name="uninstall">Gỡ cài đặt</string>
     <string name="reinstall">Cài đặt lại</string>
-    <string name="only_system">Chỉ ƯD hệ thống</string>
+    <string name="only_system">Chỉ ứng dụng hệ thống</string>
     <string name="no_apps_found">Không tìm thấy ứng dụng</string>
-    <string name="loading_apps">Đang tải ƯD</string>
+    <string name="loading_apps">Đang tải ứng dụng</string>
     <string name="badge_info">Thông tin nhãn</string>
     <string name="got_it">Đã hiểu</string>
     <string name="loading_badges">Đang tải nhãn...</string>
-    <string name="logs"></string>
+    <string name="logs">Nhật kí</string>
     <string name="back">Quay lại</string>
     <string name="copy_logs">Sao chép bộ nhớ tạm</string>
     <string name="log_copied">Sao chép nhật ký vào bảng tạm</string>
