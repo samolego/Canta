@@ -18,6 +18,7 @@ import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
+import java.util.UUID
 
 object PresetsListSerializer : Serializer<PresetsList> {
     override val defaultValue: PresetsList = PresetsList.getDefaultInstance()
@@ -34,7 +35,7 @@ object PresetsListSerializer : Serializer<PresetsList> {
 }
 
 private val Context.presetDataStore: DataStore<PresetsList> by
-        dataStore(fileName = "presets.pb", serializer = PresetsListSerializer)
+dataStore(fileName = "presets.pb", serializer = PresetsListSerializer)
 
 class PresetStore(private val context: Context) {
 
@@ -43,38 +44,75 @@ class PresetStore(private val context: Context) {
     }
 
     val presetsFlow: Flow<List<CantaPresetData>> =
-            context.presetDataStore.data
-                    .catch { exception ->
-                        if (exception is IOException) {
-                            LogUtils.e(TAG, "Error reading presets.", exception)
-                            emit(PresetsList.getDefaultInstance())
+        context.presetDataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    LogUtils.e(TAG, "Error reading presets.", exception)
+                    emit(PresetsList.getDefaultInstance())
+                } else {
+                    throw exception
+                }
+            }
+            .map { presetsList ->
+                presetsList.presetsList.map { protoPreset ->
+                    CantaPresetData(
+                        name = protoPreset.name,
+                        description = protoPreset.description,
+                        createdDate = protoPreset.createdDate,
+                        apps = protoPreset.appsList.toSet(),
+                        version = protoPreset.version.ifEmpty { "1.0" },
+                        uuid = protoPreset.uuid
+                    )
+                }
+            }
+
+    /**
+     * One-time migration for presets created before unique IDs were introduced.
+     * Assigns a UUID to every preset that does not already have one.
+     */
+    suspend fun migratePresetsIfNeeded() {
+        try {
+            context.presetDataStore.updateData { currentPresets ->
+                var needsUpdate = false
+                val migratedPresets =
+                    currentPresets.presetsList.map { protoPreset ->
+                        if (protoPreset.uuid.isEmpty()) {
+                            needsUpdate = true
+                            protoPreset.toBuilder().setUuid(generateUuid()).build()
                         } else {
-                            throw exception
+                            protoPreset
                         }
                     }
-                    .map { presetsList ->
-                        presetsList.presetsList.map { protoPreset ->
-                            CantaPresetData(
-                                    name = protoPreset.name,
-                                    description = protoPreset.description,
-                                    createdDate = protoPreset.createdDate,
-                                    apps = protoPreset.appsList.toSet(),
-                                    version = protoPreset.version.ifEmpty { "1.0" }
-                            )
-                        }
-                    }
+
+                if (needsUpdate) {
+                    LogUtils.i(TAG, "Migrated ${migratedPresets.size} presets to use UUIDs")
+                    currentPresets
+                        .toBuilder()
+                        .clearPresets()
+                        .addAllPresets(migratedPresets)
+                        .build()
+                } else {
+                    currentPresets
+                }
+            }
+        } catch (e: Exception) {
+            LogUtils.e(TAG, "Failed to migrate presets: ${e.message}")
+        }
+    }
 
     suspend fun savePreset(preset: CantaPresetData): Boolean {
         return try {
             context.presetDataStore.updateData { currentPresets ->
+                val presetWithUuid = preset.ensureUuid()
                 val protoPreset =
-                        CantaPreset.newBuilder()
-                                .setName(preset.name)
-                                .setDescription(preset.description)
-                                .setCreatedDate(preset.createdDate)
-                                .addAllApps(preset.apps)
-                                .setVersion(preset.version)
-                                .build()
+                    CantaPreset.newBuilder()
+                        .setName(presetWithUuid.name)
+                        .setDescription(presetWithUuid.description)
+                        .setCreatedDate(presetWithUuid.createdDate)
+                        .addAllApps(presetWithUuid.apps)
+                        .setVersion(presetWithUuid.version)
+                        .setUuid(presetWithUuid.uuid)
+                        .build()
 
                 currentPresets.toBuilder().addPresets(protoPreset).build()
             }
@@ -90,15 +128,14 @@ class PresetStore(private val context: Context) {
         return try {
             context.presetDataStore.updateData { currentPresets ->
                 currentPresets
-                        .toBuilder()
-                        .clearPresets()
-                        .addAllPresets(
-                                currentPresets.presetsList.filter { protoPreset ->
-                                    !(protoPreset.name == preset.name &&
-                                            protoPreset.createdDate == preset.createdDate)
-                                }
-                        )
-                        .build()
+                    .toBuilder()
+                    .clearPresets()
+                    .addAllPresets(
+                        currentPresets.presetsList.filter { protoPreset ->
+                            !protoPreset.matches(preset)
+                        }
+                    )
+                    .build()
             }
             LogUtils.i(TAG, "Preset deleted: ${preset.name}")
             true
@@ -115,21 +152,21 @@ class PresetStore(private val context: Context) {
         return try {
             context.presetDataStore.updateData { currentPresets ->
                 val updatedPresets =
-                        currentPresets.presetsList.map { protoPreset ->
-                            if (protoPreset.name == oldPreset.name &&
-                                            protoPreset.createdDate == oldPreset.createdDate
-                            ) {
-                                CantaPreset.newBuilder()
-                                        .setName(newPreset.name)
-                                        .setDescription(newPreset.description)
-                                        .setCreatedDate(newPreset.createdDate)
-                                        .addAllApps(newPreset.apps)
-                                        .setVersion(newPreset.version)
-                                        .build()
-                            } else {
-                                protoPreset
-                            }
+                    currentPresets.presetsList.map { protoPreset ->
+                        if (protoPreset.matches(oldPreset)) {
+                            val presetWithUuid = newPreset.ensureUuid()
+                            CantaPreset.newBuilder()
+                                .setName(presetWithUuid.name)
+                                .setDescription(presetWithUuid.description)
+                                .setCreatedDate(presetWithUuid.createdDate)
+                                .addAllApps(presetWithUuid.apps)
+                                .setVersion(presetWithUuid.version)
+                                .setUuid(presetWithUuid.uuid)
+                                .build()
+                        } else {
+                            protoPreset
                         }
+                    }
 
                 currentPresets.toBuilder().clearPresets().addAllPresets(updatedPresets).build()
             }
@@ -150,22 +187,14 @@ class PresetStore(private val context: Context) {
     }
 
     fun exportToJson(preset: CantaPresetData): String {
-        // Keep the same JSON format for compatibility with import/export
         val jsonObject =
-                JSONObject().apply {
-                    put("name", preset.name)
-                    put("description", preset.description)
-                    put("createdDate", preset.createdDate)
-                    put("version", preset.version)
-
-                    val appsArray = org.json.JSONArray()
-                    preset.apps.forEach { app ->
-                        val appJson = JSONObject()
-                        appJson.put("packageName", app)
-                        appsArray.put(appJson)
-                    }
-                    put("apps", appsArray)
-                }
+            JSONObject().apply {
+                put("name", preset.name)
+                put("description", preset.description)
+                put("createdDate", preset.createdDate)
+                put("version", preset.version)
+                put("apps", org.json.JSONArray(preset.apps.toList()))
+            }
         return jsonObject.toString(2)
     }
 
@@ -176,8 +205,14 @@ class PresetStore(private val context: Context) {
             val appsArray = json.getJSONArray("apps")
 
             for (i in 0 until appsArray.length()) {
-                val appJson = appsArray.getJSONObject(i)
-                val packageName = appJson.getString("packageName")
+                val packageName =
+                    try {
+                        // New format: array of package-name strings
+                        appsArray.getString(i)
+                    } catch (e: Exception) {
+                        // Legacy format: array of { "packageName": "..." } objects
+                        appsArray.getJSONObject(i).getString("packageName")
+                    }
 
                 // Check if package exists on this device
                 context.packageManager.getInfoForPackage(packageName) ?: continue
@@ -185,11 +220,12 @@ class PresetStore(private val context: Context) {
             }
 
             CantaPresetData(
-                    name = json.getString("name"),
-                    description = json.getString("description"),
-                    createdDate = json.getLong("createdDate"),
-                    apps = apps,
-                    version = json.optString("version", "1.0")
+                name = json.getString("name"),
+                description = json.getString("description"),
+                createdDate = json.getLong("createdDate"),
+                apps = apps,
+                version = json.optString("version", "1.0"),
+                uuid = generateUuid()
             )
         } catch (e: Exception) {
             LogUtils.e(TAG, "Failed to import preset from JSON: ${e.message}")
@@ -198,21 +234,37 @@ class PresetStore(private val context: Context) {
     }
 
     fun createPresetFromUninstalledApps(
-            apps: Set<String>,
-            name: String,
-            description: String
+        apps: Set<String>,
+        name: String,
+        description: String
     ): CantaPresetData {
         return CantaPresetData(
-                name = name,
-                description = description,
-                createdDate = System.currentTimeMillis(),
-                apps = apps
+            name = name,
+            description = description,
+            createdDate = System.currentTimeMillis(),
+            apps = apps,
+            uuid = generateUuid()
         )
     }
 
     fun formatDate(timestamp: Long): String {
         val formatter =
-                java.text.SimpleDateFormat("MMM dd, yyyy HH:mm", java.util.Locale.getDefault())
+            java.text.SimpleDateFormat("MMM dd, yyyy HH:mm", java.util.Locale.getDefault())
         return formatter.format(java.util.Date(timestamp))
+    }
+
+    private fun generateUuid(): String = UUID.randomUUID().toString()
+
+    private fun CantaPresetData.ensureUuid(): CantaPresetData {
+        return if (uuid.isEmpty()) copy(uuid = generateUuid()) else this
+    }
+
+    private fun CantaPreset.matches(preset: CantaPresetData): Boolean {
+        return if (uuid.isNotEmpty() && preset.uuid.isNotEmpty()) {
+            uuid == preset.uuid
+        } else {
+            // Fallback for presets that have not been migrated yet
+            name == preset.name && createdDate == preset.createdDate
+        }
     }
 }

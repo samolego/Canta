@@ -9,6 +9,7 @@ message CantaPreset {
   int64 created_date = 3;
   repeated string apps = 4;
   string version = 5;
+  string uuid = 6;
 }
 
 message PresetsList {

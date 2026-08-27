@@ -36,24 +36,25 @@ class PresetsViewModel : ViewModel() {
         presetStore = PresetStore(context)
         // Collect presets flow and update state
         viewModelScope.launch {
+            presetStore.migratePresetsIfNeeded()
             presetStore.presetsFlow.stateIn(
-                            scope = viewModelScope,
-                            started = SharingStarted.WhileSubscribed(5000),
-                            initialValue = emptyList()
-                    )
-                    .collect { presetsList ->
-                        _presets.value = presetsList
-                        LogUtils.i(TAG, "Loaded ${presetsList.size} presets")
-                    }
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
+                .collect { presetsList ->
+                    _presets.value = presetsList
+                    LogUtils.i(TAG, "Loaded ${presetsList.size} presets")
+                }
         }
     }
 
     fun savePreset(
-            name: String,
-            description: String,
-            apps: Set<String>,
-            onSuccess: () -> Unit,
-            onError: () -> Unit
+        name: String,
+        description: String,
+        apps: Set<String>,
+        onSuccess: () -> Unit,
+        onError: () -> Unit
     ) {
         viewModelScope.launch {
             val preset = presetStore.createPresetFromUninstalledApps(apps, name, description)
@@ -136,11 +137,11 @@ class PresetsViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             val updatedPreset =
-                    oldPreset.copy(
-                            name = newName,
-                            description = newDescription,
-                            apps = oldPreset.apps
-                    )
+                oldPreset.copy(
+                    name = newName,
+                    description = newDescription,
+                    apps = oldPreset.apps
+                )
 
             val success = presetStore.updatePreset(oldPreset, updatedPreset)
             if (success) {

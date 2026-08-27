@@ -70,12 +70,8 @@ Presets are exported in JSON format for easy sharing. Here's what a preset JSON 
   "createdDate": 1699123456789,
   "version": "1.0",
   "apps": [
-    {
-      "packageName": "com.samsung.android.bixby.agent"
-    },
-    {
-      "packageName": "com.samsung.android.app.spage"
-    }
+    "com.samsung.android.bixby.agent",
+    "com.samsung.android.app.spage"
   ]
 }
 ```

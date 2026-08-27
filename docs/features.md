@@ -8,7 +8,7 @@ description: Features of Canta.
 
 ### Safe Uninstallation
 No permanent device damage risk can be done when uninstalling apps with Canta. The uninstallation process happens for current user
-only, so APKs remain on device. In case you uninstall a critical system component, you can risk a bootloop.
+only (user 0), so APKs remain on device. In case you uninstall a critical system component, you can risk a bootloop.
 In that case, you will need to perform a factory reset and the device will not be bricked.
 
 ::: info
