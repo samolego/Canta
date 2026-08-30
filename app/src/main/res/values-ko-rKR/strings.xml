@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel"></string>
-    <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Are you sure to uninstall %1$s apps?</string>
-    <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
-    <string name="no_description_available">No description available</string>
-    <string name="uninstall">Uninstall</string>
-    <string name="reinstall">ReInstall</string>
+    <string name="ok">확인</string>
+    <string name="are_you_sure_to_uninstall_apps">%1$s 앱을 제거하시겠습니까?</string>
+    <string name="copy_package_name_to_clipboard">패키지 이름이 클립보드에 복사되었습니다</string>
+    <string name="no_description_available">설명 없음</string>
+    <string name="uninstall">제거</string>
+    <string name="reinstall">재설치</string>
     <string name="only_system">Only system</string>
     <string name="no_apps_found">No apps found</string>
     <string name="loading_apps">Loading apps</string>
