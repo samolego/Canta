@@ -7,7 +7,7 @@
     <string name="no_description_available">설명 없음</string>
     <string name="uninstall">제거</string>
     <string name="reinstall">재설치</string>
-    <string name="only_system">Only system</string>
+    <string name="only_system">시스템 앱만</string>
     <string name="no_apps_found">앱을 찾을 수 없음</string>
     <string name="loading_apps">앱 불러오는 중</string>
     <string name="badge_info">배지 정보</string>
