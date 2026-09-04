@@ -82,7 +82,7 @@
     <string name="presets_description">Create or import presets to manage app uninstall lists across devices</string>
     <string name="more_options">More options</string>
     <string name="edit">Edit</string>
-    <string name="add_apps">Add_apps</string>
+    <string name="add_apps">Add apps</string>
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="apply_preset">Apply Preset</string>
