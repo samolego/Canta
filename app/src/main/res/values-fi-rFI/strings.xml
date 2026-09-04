@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">Peruuta</string>
     <string name="ok">OK</string>
-    <string name="are_you_sure_to_uninstall_apps">Haluatko varmasti poistaa %1$s sovellukset?</string>
+    <string name="are_you_sure_to_uninstall_apps">Haluatko varmasti poistaa %1$s sovellusta?</string>
     <string name="copy_package_name_to_clipboard">Kopioi paketin nimi leikepöydälle</string>
     <string name="no_description_available">Kuvausta ei ole saatavilla</string>
     <string name="uninstall">Poista asennus</string>
@@ -19,7 +19,7 @@
     <string name="log_copied">Loki kopioitu leikepöydälle</string>
     <plurals name="clear_selected_apps">
         <item quantity="one">Tyhjennä %d valittu</item>
-        <item quantity="other">Tyhjennä %d valittu</item>
+        <item quantity="other">Tyhjennä %d valittua</item>
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="one">%d sovellus valittu</item>
@@ -31,7 +31,7 @@
     </plurals>
     <plurals name="success_reinstalled">
         <item quantity="one">Olet onnistuneesti uudelleenasentanut %d sovelluksen!</item>
-        <item quantity="other">Olet onnistuneesti uudelleenasentanut %d sovellusta!</item>
+        <item quantity="other">Olet onnistuneesti uudelleen asentanut %d sovellusta!</item>
     </plurals>
     <string name="copy">Kopioi</string>
     <string name="app_settings">Sovelluksen tiedot</string>
@@ -42,7 +42,7 @@
     <string name="auto_update_bloat_list_description">Hae automaattisesti uusi versio sovelluksen bloat tiedoista. Tämä takaa ajan tasalla olevat tunnukset ja sovelluksen kuvaukset.</string>
     <string name="settings">Asetukset</string>
     <string name="confirm_uninstall">Vahvista asennusten poistaminen</string>
-    <string name="app_version">Sovellusversio: %s</string>
+    <string name="app_version">Sovelluksen versio: %s</string>
     <string name="bloatware_list_version">Viimeisin bloatware lista</string>
     <string name="no_warranty_content">Tämä sovellus tarjoaa sovellusten poistosuosituksia kolmannen osapuolen tietojen perusteella. Nämä suositukset ovat luonteeltaan informatiivisia eivätkä takaa turvallisuutta tai yhteensopivuutta tietyn laitteen kanssa. Järjestelmäsovellusten poistaminen voi aiheuttaa odottamattomia ongelmia, kuten toiminnallisuuden, järjestelmän epävakauden, laitteen käynnistyssilmukoiden, tietojen häviämisen jne. Tämän sovelluksen kehittäjä ei ole vastuussa mistään vahingoista, joita laitteellesi on aiheutunut annettujen suositusten noudattamisesta.</string>
     <string name="disclaimer">Vastuuvapauslauseke - Ei Takuuta</string>
@@ -69,7 +69,7 @@
     <string name="preset_name">Esiasetuksen nimi</string>
     <string name="preset_name_missing_error">Nimi on pakollinen</string>
     <string name="preset_name_placeholder">esim. Samsung Bloatware</string>
-    <string name="optional_description">Kuvaus (valinnainen)</string>
+    <string name="optional_description">Kuvaus (Valinnainen)</string>
     <string name="preset_description_placeholder">Kuvaile mitä tämä esiasetus poistaa...</string>
     <string name="save">Tallenna</string>
     <string name="import_preset_clipboard">Tuo leikepöydältä</string>
@@ -97,14 +97,14 @@
     <string name="commits_url">Commitin URL</string>
     <string name="commits_url_description">Mistä saada commitin tieto päivityksiin</string>
     <string name="reset_to_default">Palauta oletusasetukset</string>
-    <string name="advanced_settings">Lisäasetukset</string>
-    <string name="click_to_expand">Laajenna napsauttamalla</string>
+    <string name="advanced_settings">Edistyneet asetukset</string>
+    <string name="click_to_expand">Laajenna napauttamalla</string>
     <string name="bloat_list_url">Bloat-listan URL</string>
     <string name="bloat_list_url_description">Mistä saada tunnuksia ja kuvauksia.</string>
     <string name="allow_unsafe_selections">Salli vaaralliset valinnat</string>
     <string name="allow_unsafe_uninstalls_description">Sallitaanko vaarallisiksi merkittyjen sovellusten valitseminen (esiasetusten käyttöönotto ohittaa tämän jo).</string>
     <string name="donate">Lahjoita</string>
-    <string name="canta_donate_request">Nautitko Cantasta? Se on rakennettu vapaa-aikaa yksityisyyden mielessä - ei mainoksia, ei seurantaa. Jos löydät sen hyödylliseksi, harkitse sen kehityksen tukemista!</string>
+    <string name="canta_donate_request">Nautitko Cantasta? Se on rakennettu vapaa-ajallani yksityisyyden mielessä - ei mainoksia, ei seurantaa. Jos koet sen hyödylliseksi, harkitse sen kehityksen tukemista!</string>
     <string name="success">Onnistui %1$s!</string>
     <string name="hide_success_dialog">Piilota onnistumisikkuna</string>
     <string name="hide_success_dialog_description">Piilottaa onnistumisikkunan poiston / uudelleenasennuksen jälkeen.</string>

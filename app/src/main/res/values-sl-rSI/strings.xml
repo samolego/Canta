@@ -32,14 +32,14 @@
     <plurals name="success_uninstalled">
         <item quantity="one">You have successfully uninstalled %d app!</item>
         <item quantity="two">You have successfully uninstalled %d apps!</item>
-        <item quantity="few">You have successfully uninstalled %d apps!</item>
-        <item quantity="other">You have successfully uninstalled %d apps!</item>
+        <item quantity="few">Uspešno ste odstranili %d aplikacije!</item>
+        <item quantity="other">Uspešno ste odstranili %d aplikacij!</item>
     </plurals>
     <plurals name="success_reinstalled">
         <item quantity="one">You have successfully reinstalled %d app!</item>
         <item quantity="two">You have successfully reinstalled %d apps!</item>
         <item quantity="few">You have successfully reinstalled %d apps!</item>
-        <item quantity="other">You have successfully reinstalled %d apps!</item>
+        <item quantity="other">Uspešno ste namestili %d aplikacij!</item>
     </plurals>
     <string name="copy">Kopiraj</string>
     <string name="app_settings">Podatki o aplikaciji</string>
@@ -65,7 +65,7 @@
     <string name="uninstall_app">Odstrani aplikacijo</string>
     <string name="reset_to_factory_version">Ponastavi na tovarniško verzijo</string>
     <string name="import_preset">Uvozi predlogo</string>
-    <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
+    <string name="import_preset_description">Uvozi predlogo iz odložišča ali prilepi JSON.</string>
     <string name="clipboard">Odložišče</string>
     <string name="import_preset_clipboard_description">Uvozi predlogo iz odložišča. Pred tem morate kopirati veljavno predlogo za Canto v JSON obliki.</string>
     <string name="paste_preset_json">Prilepi JSON predlogo</string>
@@ -111,14 +111,14 @@
     <string name="bloat_list_url_description">Od kod aplikacija pridobi značke in opise.</string>
     <string name="allow_unsafe_selections">Dovoli nevarne izbire</string>
     <string name="allow_unsafe_uninstalls_description">Ali dovoliti izbiranje aplikacij, označenih kot unsafe (uporaba predlog obide to nastavitev).</string>
-    <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, please consider supporting its development!</string>
-    <string name="success">Success %1$s!</string>
-    <string name="hide_success_dialog">Hide success dialog</string>
-    <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
-    <string name="auth_required">Authentication required</string>
-    <string name="auth_required_description">This action requires higher privileges.</string>
-    <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
-    <string name="require_auth_setting">Require authentication</string>
-    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="donate">Doniraj</string>
+    <string name="canta_donate_request">Vam je Canta všeč? Programiram jo v svojem prostem času, z mislijo na zasebnost - brez oglasov, brez sledilcev. Če se vam zdi uporabna, vas naprošam, da me podprete!</string>
+    <string name="success">Uspeh %1$s!</string>
+    <string name="hide_success_dialog">Skrij poziv ob uspehu.</string>
+    <string name="hide_success_dialog_description">Skrije poziv po uspešni odstranitvi / namestitvi aplikacij.</string>
+    <string name="auth_required">Potrebna je overitev</string>
+    <string name="auth_required_description">To dejanje zahteva višje privilegije.</string>
+    <string name="require_auth_setting_desc">Zahtevaj overitev za odstranitev aplikacij.</string>
+    <string name="require_auth_setting">Zahtevaj overitev</string>
+    <string name="enable_usb_debugging">(Opcijsko) Vključite razhroščevanje preko USB</string>
 </resources>
