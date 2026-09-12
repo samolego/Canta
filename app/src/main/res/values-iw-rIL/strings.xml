@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">ביטול</string>
     <string name="ok">אישור</string>
@@ -121,4 +121,14 @@
     <string name="require_auth_setting_desc">נדרש אימות לצורך הסרה או התקנה מחדש של יישומים.</string>
     <string name="require_auth_setting">דרישת אימות</string>
     <string name="enable_usb_debugging">הפעלת ניפוי שגיאות ב־USB (רשות)</string>
+    <string name="sort_by">מיון לפי</string>
+    <string name="sort_name_ascending">שם: A -&gt; Z</string>
+    <string name="sort_name_descending">שם: Z -&gt; A</string>
+    <string name="sort_package_ascending">חבילה: A -&gt; Z</string>
+    <string name="sort_package_descending">חבילה: Z -&gt; A</string>
+    <string name="sort_size_ascending">גודל: קטן -&gt; גדול</string>
+    <string name="sort_size_descending">גודל: גדול -&gt; קטן</string>
+    <string name="sort_badge_ascending">תג: מומלץ -&gt; מערכת</string>
+    <string name="sort_badge_descending">תג: מערכת -&gt; מומלץ</string>
 </resources>
+

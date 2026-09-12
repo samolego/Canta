@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Annuler</string>
     <string name="ok">Ok</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Authentification requise pour désinstaller ou réinstaller des applications.</string>
     <string name="require_auth_setting">Exiger une authentification</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">Trier par</string>
+    <string name="sort_name_ascending">Nom : A -&gt; Z</string>
+    <string name="sort_name_descending">Nom : Z -&gt; A</string>
+    <string name="sort_package_ascending">Paquet : A -&gt; Z</string>
+    <string name="sort_package_descending">Paquet : Z -&gt; A</string>
+    <string name="sort_size_ascending">Taille : Petite -&gt; Grande</string>
+    <string name="sort_size_descending">Taille : Grande -&gt; Petite</string>
+    <string name="sort_badge_ascending">Badge : Recommandé -&gt; Système</string>
+    <string name="sort_badge_descending">Badge : Système -&gt; Recommandé</string>
 </resources>
+

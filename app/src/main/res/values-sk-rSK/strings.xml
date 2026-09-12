@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
@@ -121,4 +121,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">Zoradiť podľa</string>
+    <string name="sort_name_ascending">Názov: A -&gt; Z</string>
+    <string name="sort_name_descending">Názov: Z -&gt; A</string>
+    <string name="sort_package_ascending">Balík: A -&gt; Z</string>
+    <string name="sort_package_descending">Balík: Z -&gt; A</string>
+    <string name="sort_size_ascending">Veľkosť: Malá -&gt; Veľká</string>
+    <string name="sort_size_descending">Veľkosť: Veľká -&gt; Malá</string>
+    <string name="sort_badge_ascending">Štítok: Odporúčané -&gt; Systém</string>
+    <string name="sort_badge_descending">Štítok: Systém -&gt; Odporúčané</string>
 </resources>
+

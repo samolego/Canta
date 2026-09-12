@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Cancelar</string>
     <string name="ok">Aceptar</string>
@@ -114,4 +114,14 @@ Pega aquí el JSON del preajuste ...</string>
     <string name="require_auth_setting_desc">Requerir autenticación para desinstalar o reinstalar aplicaciones.</string>
     <string name="require_auth_setting">Requerir autenticación</string>
     <string name="enable_usb_debugging">(Opcional) Activar la depuración USB</string>
+    <string name="sort_by">Ordenar por</string>
+    <string name="sort_name_ascending">Nombre: A -&gt; Z</string>
+    <string name="sort_name_descending">Nombre: Z -&gt; A</string>
+    <string name="sort_package_ascending">Paquete: A -&gt; Z</string>
+    <string name="sort_package_descending">Paquete: Z -&gt; A</string>
+    <string name="sort_size_ascending">Tamaño: Pequeño -&gt; Grande</string>
+    <string name="sort_size_descending">Tamaño: Grande -&gt; Pequeño</string>
+    <string name="sort_badge_ascending">Insignia: Recomendado -&gt; Sistema</string>
+    <string name="sort_badge_descending">Insignia: Sistema -&gt; Recomendado</string>
 </resources>
+

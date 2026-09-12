@@ -13,9 +13,13 @@ import io.github.samolego.canta.data.SettingsStore
 import io.github.samolego.canta.extension.getAllPackagesInfo
 import io.github.samolego.canta.extension.mutableStateSetOf
 import io.github.samolego.canta.packageName
+import io.github.samolego.canta.ui.menu.SortDirection
+import io.github.samolego.canta.ui.menu.SortField
+import io.github.samolego.canta.ui.menu.SortOption
 import io.github.samolego.canta.util.BloatData
 import io.github.samolego.canta.util.BloatUtils
 import io.github.samolego.canta.util.LogUtils
+import io.github.samolego.canta.util.RemovalRecommendation
 import io.github.samolego.canta.util.apps.AppInfo
 import io.github.samolego.canta.util.apps.Filter
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +47,13 @@ class AppListViewModel : ViewModel() {
 
     var selectedFilter by mutableStateOf(Filter.any)
 
+    var sortedBy by mutableStateOf(
+        SortOption(
+            field = SortField.NAME,
+            direction = SortDirection.ASCENDING,
+            "Name: A → Z"
+        )
+    )
     val selectedAppsSorted by derivedStateOf {
         sortedList.filter { selectedApps.contains(it.packageName) }
     }
@@ -51,7 +62,25 @@ class AppListViewModel : ViewModel() {
     private val sortedList by derivedStateOf {
         isLoading = true
 
-        apps.filter { selectedFilter.shouldShow(it) }.sortedWith(nameComparator).also {
+        val filteredApps = apps.filter { selectedFilter.shouldShow(it) }
+
+        val comparator = when (sortedBy.field) {
+            SortField.NAME -> nameComparator
+            SortField.PACKAGE_NAME -> compareBy(AppInfo::packageName)
+            SortField.SIZE -> compareBy(AppInfo::size)
+            SortField.BADGE -> compareBy {
+                getRecommendationRank(it.removalInfo)
+            }
+        }
+
+        val finalComparator =
+            if (sortedBy.direction == SortDirection.ASCENDING) {
+                comparator
+            } else {
+                comparator.reversed()
+            }
+
+        filteredApps.sortedWith(finalComparator).also {
             isLoading = false
         }
     }
@@ -177,6 +206,20 @@ class AppListViewModel : ViewModel() {
                         it
                     }
                 }
+    }
+
+
+    private fun getRecommendationRank(
+        recommendation: RemovalRecommendation?
+    ): Int {
+        return when (recommendation) {
+            RemovalRecommendation.RECOMMENDED -> 0
+            RemovalRecommendation.ADVANCED -> 1
+            RemovalRecommendation.EXPERT -> 2
+            RemovalRecommendation.UNSAFE -> 3
+            RemovalRecommendation.SYSTEM -> 4
+            null -> 5
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="install_shizuku">Install Shizuku app</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
@@ -103,4 +103,14 @@
     <item quantity="one">You have successfully reinstalled %d app!</item>
     <item quantity="other">You have successfully reinstalled %d apps!</item>
 </plurals>
+    <string name="sort_by">مرتب‌سازی بر اساس</string>
+    <string name="sort_name_ascending">نام: A -&gt; Z</string>
+    <string name="sort_name_descending">نام: Z -&gt; A</string>
+    <string name="sort_package_ascending">بسته: A -&gt; Z</string>
+    <string name="sort_package_descending">بسته: Z -&gt; A</string>
+    <string name="sort_size_ascending">اندازه: کوچک -&gt; بزرگ</string>
+    <string name="sort_size_descending">اندازه: بزرگ -&gt; کوچک</string>
+    <string name="sort_badge_ascending">نشان: پیشنهادی -&gt; سیستم</string>
+    <string name="sort_badge_descending">نشان: سیستم -&gt; پیشنهادی</string>
 </resources>
+

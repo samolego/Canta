@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Отмена</string>
     <string name="ok">ОК</string>
@@ -121,4 +121,14 @@
     <string name="require_auth_setting_desc">Для удаления или переустановки приложений требуется аутентификация.</string>
     <string name="require_auth_setting">Требуется проверка</string>
     <string name="enable_usb_debugging">(Необязательно) Включить USB отладку</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="sort_name_ascending">Имя: A -&gt; Z</string>
+    <string name="sort_name_descending">Имя: Z -&gt; A</string>
+    <string name="sort_package_ascending">Пакет: A -&gt; Z</string>
+    <string name="sort_package_descending">Пакет: Z -&gt; A</string>
+    <string name="sort_size_ascending">Размер: Маленький -&gt; Большой</string>
+    <string name="sort_size_descending">Размер: Большой -&gt; Маленький</string>
+    <string name="sort_badge_ascending">Значок: Рекомендуется -&gt; Система</string>
+    <string name="sort_badge_descending">Значок: Система -&gt; Рекомендуется</string>
 </resources>
+

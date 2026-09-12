@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Peruuta</string>
     <string name="ok">OK</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Vaadi todennusta sovellusten poistamiseen tai uudelleenasentamiseen.</string>
     <string name="require_auth_setting">Vaadi todennusta</string>
     <string name="enable_usb_debugging">(Valinnainen) Ota USB-vianetsintä käyttöön</string>
+    <string name="sort_by">Järjestä</string>
+    <string name="sort_name_ascending">Nimi: A -&gt; Z</string>
+    <string name="sort_name_descending">Nimi: Z -&gt; A</string>
+    <string name="sort_package_ascending">Paketti: A -&gt; Z</string>
+    <string name="sort_package_descending">Paketti: Z -&gt; A</string>
+    <string name="sort_size_ascending">Koko: Pieni -&gt; Suuri</string>
+    <string name="sort_size_descending">Koko: Suuri -&gt; Pieni</string>
+    <string name="sort_badge_ascending">Tunniste: Suositeltu -&gt; Järjestelmä</string>
+    <string name="sort_badge_descending">Tunniste: Järjestelmä -&gt; Suositeltu</string>
 </resources>
+

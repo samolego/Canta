@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">キャンセル</string>
     <string name="ok">OK</string>
@@ -109,4 +109,14 @@
     <string name="require_auth_setting_desc">アプリをアンインストールまたは再インストールするには認証が必要です。</string>
     <string name="require_auth_setting">認証を要求</string>
     <string name="enable_usb_debugging">（任意）USBデバッグを有効にする</string>
+    <string name="sort_by">並べ替え</string>
+    <string name="sort_name_ascending">名前: A -&gt; Z</string>
+    <string name="sort_name_descending">名前: Z -&gt; A</string>
+    <string name="sort_package_ascending">パッケージ: A -&gt; Z</string>
+    <string name="sort_package_descending">パッケージ: Z -&gt; A</string>
+    <string name="sort_size_ascending">サイズ: 小さい -&gt; 大きい</string>
+    <string name="sort_size_descending">サイズ: 大きい -&gt; 小さい</string>
+    <string name="sort_badge_ascending">バッジ: 推奨 -&gt; システム</string>
+    <string name="sort_badge_descending">バッジ: システム -&gt; 推奨</string>
 </resources>
+

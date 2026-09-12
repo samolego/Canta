@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">取消</string>
     <string name="ok">是的</string>
@@ -109,4 +109,14 @@
     <string name="require_auth_setting_desc">要卸载或重新安装应用，需要身份认证。</string>
     <string name="require_auth_setting">需要身份认证</string>
     <string name="enable_usb_debugging">(可选)启用 USB 调试</string>
+    <string name="sort_by">排序方式</string>
+    <string name="sort_name_ascending">名称：A -&gt; Z</string>
+    <string name="sort_name_descending">名称：Z -&gt; A</string>
+    <string name="sort_package_ascending">软件包：A -&gt; Z</string>
+    <string name="sort_package_descending">软件包：Z -&gt; A</string>
+    <string name="sort_size_ascending">大小：小 -&gt; 大</string>
+    <string name="sort_size_descending">大小：大 -&gt; 小</string>
+    <string name="sort_badge_ascending">徽章：推荐 -&gt; 系统</string>
+    <string name="sort_badge_descending">徽章：系统 -&gt; 推荐</string>
 </resources>
+

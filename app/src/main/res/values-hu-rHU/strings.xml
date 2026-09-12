@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Mégse</string>
     <string name="ok">Rendben</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Azonosítás szükséges</string>
     <string name="enable_usb_debugging">(Opcionális) Az USB hibakeresés engedélyezése</string>
+    <string name="sort_by">Rendezés</string>
+    <string name="sort_name_ascending">Név: A -&gt; Z</string>
+    <string name="sort_name_descending">Név: Z -&gt; A</string>
+    <string name="sort_package_ascending">Csomag: A -&gt; Z</string>
+    <string name="sort_package_descending">Csomag: Z -&gt; A</string>
+    <string name="sort_size_ascending">Méret: Kicsi -&gt; Nagy</string>
+    <string name="sort_size_descending">Méret: Nagy -&gt; Kicsi</string>
+    <string name="sort_badge_ascending">Jelvény: Ajánlott -&gt; Rendszer</string>
+    <string name="sort_badge_descending">Jelvény: Rendszer -&gt; Ajánlott</string>
 </resources>
+

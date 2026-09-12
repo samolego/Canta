@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -66,6 +67,15 @@ fun AppList(
                 }
             }
         }
+    }
+
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(
+        appListModel.sortedBy,
+        appListModel.selectedFilter
+    ) {
+        listState.scrollToItem(0)
     }
 
     val selectedAppList by remember {
@@ -178,8 +188,9 @@ fun AppList(
 
             if (appList.isNotEmpty()) {
                 LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = WindowInsets.navigationBars.asPaddingValues()
+                    modifier = Modifier.fillMaxSize(),
+                    state = listState,
+                    contentPadding = WindowInsets.navigationBars.asPaddingValues()
                 ) {
                     items(appList, key = { it.packageName }) { appInfo ->
                         AppTile(

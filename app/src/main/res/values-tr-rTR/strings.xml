@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">İptal</string>
     <string name="ok">Tamam</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Uygulamaları kaldırmak veya yeniden yüklemek için yetkilendirme gerektir.</string>
     <string name="require_auth_setting">Yetkilendirme gerekir</string>
     <string name="enable_usb_debugging">(İsteğe bağlı) USB hata ayıklamasını etkinleştir</string>
+    <string name="sort_by">Şuna göre sırala</string>
+    <string name="sort_name_ascending">Ad: A -&gt; Z</string>
+    <string name="sort_name_descending">Ad: Z -&gt; A</string>
+    <string name="sort_package_ascending">Paket: A -&gt; Z</string>
+    <string name="sort_package_descending">Paket: Z -&gt; A</string>
+    <string name="sort_size_ascending">Boyut: Küçük -&gt; Büyük</string>
+    <string name="sort_size_descending">Boyut: Büyük -&gt; Küçük</string>
+    <string name="sort_badge_ascending">Rozet: Önerilen -&gt; Sistem</string>
+    <string name="sort_badge_descending">Rozet: Sistem -&gt; Önerilen</string>
 </resources>
+

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Hủy</string>
     <string name="ok">OK</string>
@@ -109,4 +109,14 @@
     <string name="require_auth_setting_desc">Cần xác thực trước khi gỡ hoặc cài đặt lại ứng dụng.</string>
     <string name="require_auth_setting">Yêu cầu xác thực</string>
     <string name="enable_usb_debugging">(Tùy chọn) Bật chế độ gỡ lỗi USB</string>
+    <string name="sort_by">Sắp xếp theo</string>
+    <string name="sort_name_ascending">Tên: A -&gt; Z</string>
+    <string name="sort_name_descending">Tên: Z -&gt; A</string>
+    <string name="sort_package_ascending">Gói: A -&gt; Z</string>
+    <string name="sort_package_descending">Gói: Z -&gt; A</string>
+    <string name="sort_size_ascending">Kích thước: Nhỏ -&gt; Lớn</string>
+    <string name="sort_size_descending">Kích thước: Lớn -&gt; Nhỏ</string>
+    <string name="sort_badge_ascending">Nhãn: Được đề xuất -&gt; Hệ thống</string>
+    <string name="sort_badge_descending">Nhãn: Hệ thống -&gt; Được đề xuất</string>
 </resources>
+

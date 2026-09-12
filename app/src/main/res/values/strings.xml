@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name" translatable="false">Canta</string>
     <string name="cancel">Cancel</string>
@@ -155,4 +155,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">Sort by</string>
+    <string name="sort_name_ascending">Name: A &#x2192; Z</string>
+    <string name="sort_name_descending">Name: Z &#x2192; A</string>
+    <string name="sort_package_ascending">Package: A &#x2192; Z</string>
+    <string name="sort_package_descending">Package: Z &#x2192; A</string>
+    <string name="sort_size_ascending">Size: Low &#x2192; High</string>
+    <string name="sort_size_descending">Size: High &#x2192; Low</string>
+    <string name="sort_badge_ascending">Badge: Recommended &#x2192; System</string>
+    <string name="sort_badge_descending">Badge: System &#x2192; Recommended</string>
 </resources>
+

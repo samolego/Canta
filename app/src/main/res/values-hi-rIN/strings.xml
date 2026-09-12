@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">रद्द करें</string>
     <string name="ok">ठीक है</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">इसके अनुसार क्रमित करें</string>
+    <string name="sort_name_ascending">नाम: A -&gt; Z</string>
+    <string name="sort_name_descending">नाम: Z -&gt; A</string>
+    <string name="sort_package_ascending">पैकेज: A -&gt; Z</string>
+    <string name="sort_package_descending">पैकेज: Z -&gt; A</string>
+    <string name="sort_size_ascending">आकार: छोटा -&gt; बड़ा</string>
+    <string name="sort_size_descending">आकार: बड़ा -&gt; छोटा</string>
+    <string name="sort_badge_ascending">बैज: अनुशंसित -&gt; सिस्टम</string>
+    <string name="sort_badge_descending">बैज: सिस्टम -&gt; अनुशंसित</string>
 </resources>
+

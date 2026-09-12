@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Atcelt</string>
     <string name="ok">Labi</string>
@@ -117,4 +117,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(Pēc izvēles) Iespējot USB atkļūdošanu</string>
+    <string name="sort_by">Kārtot pēc</string>
+    <string name="sort_name_ascending">Nosaukums: A -&gt; Z</string>
+    <string name="sort_name_descending">Nosaukums: Z -&gt; A</string>
+    <string name="sort_package_ascending">Pakotne: A -&gt; Z</string>
+    <string name="sort_package_descending">Pakotne: Z -&gt; A</string>
+    <string name="sort_size_ascending">Izmērs: Mazs -&gt; Liels</string>
+    <string name="sort_size_descending">Izmērs: Liels -&gt; Mazs</string>
+    <string name="sort_badge_ascending">Emblēma: Ieteicams -&gt; Sistēma</string>
+    <string name="sort_badge_descending">Emblēma: Sistēma -&gt; Ieteicams</string>
 </resources>
+

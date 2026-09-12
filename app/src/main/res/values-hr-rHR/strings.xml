@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Odustani</string>
     <string name="ok">OK</string>
@@ -117,4 +117,14 @@
     <string name="require_auth_setting_desc">Zahtijevajte autentifikaciju za deinstalaciju ili ponovnu instalaciju aplikacija.</string>
     <string name="require_auth_setting">Zahtijevaj autentifikaciju</string>
     <string name="enable_usb_debugging">(Neobavezno) Omogući otklanjanje pogrešaka putem USB-a</string>
+    <string name="sort_by">Razvrstaj po</string>
+    <string name="sort_name_ascending">Naziv: A -&gt; Z</string>
+    <string name="sort_name_descending">Naziv: Z -&gt; A</string>
+    <string name="sort_package_ascending">Paket: A -&gt; Z</string>
+    <string name="sort_package_descending">Paket: Z -&gt; A</string>
+    <string name="sort_size_ascending">Veličina: Mala -&gt; Velika</string>
+    <string name="sort_size_descending">Veličina: Velika -&gt; Mala</string>
+    <string name="sort_badge_ascending">Oznaka: Preporučeno -&gt; Sustav</string>
+    <string name="sort_badge_descending">Oznaka: Sustav -&gt; Preporučeno</string>
 </resources>
+

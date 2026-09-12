@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Скасувати</string>
     <string name="ok">OK</string>
@@ -121,4 +121,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">Сортувати за</string>
+    <string name="sort_name_ascending">Назва: A -&gt; Z</string>
+    <string name="sort_name_descending">Назва: Z -&gt; A</string>
+    <string name="sort_package_ascending">Пакет: A -&gt; Z</string>
+    <string name="sort_package_descending">Пакет: Z -&gt; A</string>
+    <string name="sort_size_ascending">Розмір: Малий -&gt; Великий</string>
+    <string name="sort_size_descending">Розмір: Великий -&gt; Малий</string>
+    <string name="sort_badge_ascending">Позначка: Рекомендовано -&gt; Система</string>
+    <string name="sort_badge_descending">Позначка: Система -&gt; Рекомендовано</string>
 </resources>
+

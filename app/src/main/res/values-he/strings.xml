@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="cancel">ביטול</string>
     <string name="ok">בסדר</string>
@@ -157,4 +157,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">מיון לפי</string>
+    <string name="sort_name_ascending">שם: A -&gt; Z</string>
+    <string name="sort_name_descending">שם: Z -&gt; A</string>
+    <string name="sort_package_ascending">חבילה: A -&gt; Z</string>
+    <string name="sort_package_descending">חבילה: Z -&gt; A</string>
+    <string name="sort_size_ascending">גודל: קטן -&gt; גדול</string>
+    <string name="sort_size_descending">גודל: גדול -&gt; קטן</string>
+    <string name="sort_badge_ascending">תג: מומלץ -&gt; מערכת</string>
+    <string name="sort_badge_descending">תג: מערכת -&gt; מומלץ</string>
 </resources>
+

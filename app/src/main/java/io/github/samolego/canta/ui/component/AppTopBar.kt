@@ -10,10 +10,12 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SortByAlpha
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +41,7 @@ import io.github.samolego.canta.APP_NAME
 import io.github.samolego.canta.R
 import io.github.samolego.canta.ui.menu.FiltersMenu
 import io.github.samolego.canta.ui.menu.MoreOptionsMenu
+import io.github.samolego.canta.ui.menu.SortByOptions
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,6 +53,7 @@ fun CantaTopBar(
 ) {
     var showMoreOptionsMenu by remember { mutableStateOf(false) }
     var showFiltersMenu by remember { mutableStateOf(false) }
+    var showSortByOptionsMenu by remember { mutableStateOf(false) }
     var searchActive by remember { mutableStateOf(false) }
     val searchFocusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -131,6 +135,12 @@ fun CantaTopBar(
                 )
 
                 IconClickButton(
+                    onClick = { showSortByOptionsMenu = !showSortByOptionsMenu },
+                    icon = Icons.AutoMirrored.Default.Sort,
+                    contentDescription = "Sort by"
+                )
+
+                IconClickButton(
                         onClick = { showFiltersMenu = !showFiltersMenu },
                         icon = Icons.Default.FilterAlt,
                         contentDescription = "Filter"
@@ -140,6 +150,12 @@ fun CantaTopBar(
                         onClick = { showMoreOptionsMenu = !showMoreOptionsMenu },
                         icon = Icons.Default.MoreVert,
                         contentDescription = "More options",
+                )
+
+                SortByOptions(
+                    showMenu = showSortByOptionsMenu,
+                    onDismiss = { showSortByOptionsMenu = false },
+                    appListViewModel = appListViewModel,
                 )
 
                 FiltersMenu(

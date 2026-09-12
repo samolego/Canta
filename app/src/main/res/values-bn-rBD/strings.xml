@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">বাতিল</string>
     <string name="ok">ঠিক আছে</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(ঐচ্ছিক) ইউ. এস. বি. ডিবাগিং চালু করুন</string>
+    <string name="sort_by">সাজান</string>
+    <string name="sort_name_ascending">নাম: A -&gt; Z</string>
+    <string name="sort_name_descending">নাম: Z -&gt; A</string>
+    <string name="sort_package_ascending">প্যাকেজ: A -&gt; Z</string>
+    <string name="sort_package_descending">প্যাকেজ: Z -&gt; A</string>
+    <string name="sort_size_ascending">আকার: ছোট -&gt; বড়</string>
+    <string name="sort_size_descending">আকার: বড় -&gt; ছোট</string>
+    <string name="sort_badge_ascending">ব্যাজ: প্রস্তাবিত -&gt; সিস্টেম</string>
+    <string name="sort_badge_descending">ব্যাজ: সিস্টেম -&gt; প্রস্তাবিত</string>
 </resources>
+

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Annuleer</string>
     <string name="ok">OK</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Authenticatie vereist om apps te verwijderen of opnieuw te installeren.</string>
     <string name="require_auth_setting">Verificatie vereist</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">Sorteren op</string>
+    <string name="sort_name_ascending">Naam: A -&gt; Z</string>
+    <string name="sort_name_descending">Naam: Z -&gt; A</string>
+    <string name="sort_package_ascending">Pakket: A -&gt; Z</string>
+    <string name="sort_package_descending">Pakket: Z -&gt; A</string>
+    <string name="sort_size_ascending">Grootte: Klein -&gt; Groot</string>
+    <string name="sort_size_descending">Grootte: Groot -&gt; Klein</string>
+    <string name="sort_badge_ascending">Badge: Aanbevolen -&gt; Systeem</string>
+    <string name="sort_badge_descending">Badge: Systeem -&gt; Aanbevolen</string>
 </resources>
+

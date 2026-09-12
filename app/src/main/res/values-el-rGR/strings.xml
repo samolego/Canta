@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Ακύρωση</string>
     <string name="ok">ΟΚ</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Require authentication for uninstalling or reinstalling apps.</string>
     <string name="require_auth_setting">Require authentication</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">Ταξινόμηση κατά</string>
+    <string name="sort_name_ascending">Όνομα: A -&gt; Z</string>
+    <string name="sort_name_descending">Όνομα: Z -&gt; A</string>
+    <string name="sort_package_ascending">Πακέτο: A -&gt; Z</string>
+    <string name="sort_package_descending">Πακέτο: Z -&gt; A</string>
+    <string name="sort_size_ascending">Μέγεθος: Μικρό -&gt; Μεγάλο</string>
+    <string name="sort_size_descending">Μέγεθος: Μεγάλο -&gt; Μικρό</string>
+    <string name="sort_badge_ascending">Σήμα: Προτεινόμενο -&gt; Σύστημα</string>
+    <string name="sort_badge_descending">Σήμα: Σύστημα -&gt; Προτεινόμενο</string>
 </resources>
+

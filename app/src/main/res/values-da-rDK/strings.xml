@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Afbryd</string>
     <string name="ok">OK</string>
@@ -113,4 +113,14 @@
     <string name="require_auth_setting_desc">Kræv godkendelse for at afinstallere/geninstallere apps.</string>
     <string name="require_auth_setting">Kræv godkendelse</string>
     <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
+    <string name="sort_by">Sortér efter</string>
+    <string name="sort_name_ascending">Navn: A -&gt; Z</string>
+    <string name="sort_name_descending">Navn: Z -&gt; A</string>
+    <string name="sort_package_ascending">Pakke: A -&gt; Z</string>
+    <string name="sort_package_descending">Pakke: Z -&gt; A</string>
+    <string name="sort_size_ascending">Størrelse: Lille -&gt; Stor</string>
+    <string name="sort_size_descending">Størrelse: Stor -&gt; Lille</string>
+    <string name="sort_badge_ascending">Mærke: Anbefalet -&gt; System</string>
+    <string name="sort_badge_descending">Mærke: System -&gt; Anbefalet</string>
 </resources>
+

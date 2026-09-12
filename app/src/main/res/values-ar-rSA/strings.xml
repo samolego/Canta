@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">إلغاء</string>
     <string name="ok">موافق</string>
@@ -129,4 +129,14 @@
     <string name="require_auth_setting_desc">تطلب الاستيثاق لإلغاء تثبيت التطبيقات أو إعادة تثبيتها.</string>
     <string name="require_auth_setting">تطلب استيثاق</string>
     <string name="enable_usb_debugging">(اختياري) فعّل تصحيح علل USB</string>
+    <string name="sort_by">فرز حسب</string>
+    <string name="sort_name_ascending">الاسم: أ -&gt; ي</string>
+    <string name="sort_name_descending">الاسم: ي -&gt; أ</string>
+    <string name="sort_package_ascending">الحزمة: أ -&gt; ي</string>
+    <string name="sort_package_descending">الحزمة: ي -&gt; أ</string>
+    <string name="sort_size_ascending">الحجم: من الأصغر إلى الأكبر</string>
+    <string name="sort_size_descending">الحجم: من الأكبر إلى الأصغر</string>
+    <string name="sort_badge_ascending">الشارة: موصى به -&gt; النظام</string>
+    <string name="sort_badge_descending">الشارة: النظام -&gt; موصى به</string>
 </resources>
+
