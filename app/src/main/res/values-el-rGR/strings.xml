@@ -2,12 +2,12 @@
 <resources>
     <string name="cancel">Ακύρωση</string>
     <string name="ok">ΟΚ</string>
-    <string name="are_you_sure_to_uninstall_apps">Σίγουρα θέλετε να απεγκαταστήσετε %1$s εφαρμογές;</string>
+    <string name="are_you_sure_to_uninstall_apps">Θέλετε σίγουρα να απεγκαταστήσετε %1$s εφαρμογές;</string>
     <string name="copy_package_name_to_clipboard">Αντιγραφή ονόματος πακέτου στο πρόχειρο</string>
     <string name="no_description_available">Δεν υπάρχει διαθέσιμη περιγραφή</string>
     <string name="uninstall">Απεγκατάσταση</string>
     <string name="reinstall">Επανεγκατάσταση</string>
-    <string name="only_system">Μόνο σύστημα</string>
+    <string name="only_system">Μόνο συστήματος</string>
     <string name="no_apps_found">Δεν βρέθηκαν εφαρμογές</string>
     <string name="loading_apps">Φόρτωση εφαρμογών</string>
     <string name="badge_info">Πληροφορίες σήματος</string>
@@ -18,23 +18,23 @@
     <string name="copy_logs">Αντιγραφή αρχ. καταγραφών</string>
     <string name="log_copied">Το αρχείο καταγραφής αντιγράφηκε στο πρόχειρο</string>
     <plurals name="clear_selected_apps">
-        <item quantity="one">Εκκαθάριση %d επιλεγμένο</item>
+        <item quantity="one">Εκκαθάριση %d επιλεγμένου</item>
         <item quantity="other">Εκκαθάριση %d επιλεγμένων</item>
     </plurals>
     <plurals name="num_selected_apps">
-        <item quantity="one">Έχει επιλεγεί %d εφαρμογή</item>
-        <item quantity="other">Έχουν επιλεγεί %d εφαρμογές</item>
+        <item quantity="one">Επιλέχθηκε %d εφαρμογή</item>
+        <item quantity="other">Επιλέχθηκαν %d εφαρμογές</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">Έχετε απεγκαταστήσει με επιτυχία την εφαρμογή %d!</item>
-        <item quantity="other">Έχετε απεγκαταστήσει με επιτυχία τις εφαρμογές %d!</item>
+        <item quantity="one">Έχετε απεγκαταστήσει με επιτυχία %d εφαρμογή!</item>
+        <item quantity="other">Έχετε απεγκαταστήσει με επιτυχία %d εφαρμογές!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">Έχετε επανεγκαταστήσει επιτυχώς την εφαρμογή %d!</item>
-        <item quantity="other">Έχετε επανεγκαταστήσει με επιτυχία τις εφαρμογές %d!</item>
+        <item quantity="one">Έχετε επανεγκαταστήσει με επιτυχία %d εφαρμογή!</item>
+        <item quantity="other">Έχετε επανεγκαταστήσει με επιτυχία %d εφαρμογές!</item>
     </plurals>
     <string name="copy">Αντιγραφή</string>
-    <string name="app_settings">Πληρ. εφαρμογής</string>
+    <string name="app_settings">Πληροφορίες εφαρμογής</string>
     <string name="close">Κλείσιμο</string>
     <string name="canta_description">Το Canta είναι μια εφαρμογή απεγκατάστασης ανοικτού κώδικα που χρησιμοποιεί το Shizuku για την αφαίρεση εφαρμογών συστήματος και χρήστη. Σας επιτρέπει να debloat τη συσκευή σας όπως επιθυμείτε, δεν απαιτείται PC.\n\nΙδιαίτερες ευχαριστίες στους%s.\nΤο Canta δεν θα ήταν το ίδιο χωρίς την εργασία τους.</string>
     <string name="search_apps">Αναζήτηση εφαρμογών</string>
