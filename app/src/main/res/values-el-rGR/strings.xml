@@ -111,6 +111,6 @@
     <string name="auth_required">Απαιτείται έλεγχος ταυτότητας</string>
     <string name="auth_required_description">Αυτή η ενέργεια απαιτεί αυξημένα δικαιώματα.</string>
     <string name="require_auth_setting_desc">Απαιτείται έλεγχος ταυτότητας για την απεγκατάσταση ή επανεγκατάσταση εφαρμογών.</string>
-    <string name="require_auth_setting">Να απαιτείται έλεγχος ταυτότητας</string>
+    <string name="require_auth_setting">Απαιτείται έλεγχος ταυτότητας</string>
     <string name="enable_usb_debugging">(Προαιρετικό) Ενεργοποίηση εντοπισμού σφαλμάτων USB</string>
 </resources>
