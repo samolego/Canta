@@ -42,12 +42,12 @@
         <item quantity="other">Udało Ci się zainstalować ponownie %d aplikacji!</item>
     </plurals>
     <string name="copy">Kopiuj</string>
-    <string name="app_settings">Informacje o aplikacji</string>
+    <string name="app_settings">O aplikacji</string>
     <string name="close">Zamknij</string>
     <string name="canta_description">Canta to aplikacja open source do odinstalowywania systemowych i użytkowych aplikacji z wykorzystaniem Shizuku.\nPozwala na debloat urządzenia według własnych potrzeb, bez komputera.\n\nSpecjalne podziękowania dla %s.\nBez ich pracy Canta nie byłaby taka sama.</string>
     <string name="search_apps">Szukaj aplikacji</string>
-    <string name="auto_update_bloat_list">Automatycznie aktualizuj listę bloatware</string>
-    <string name="auto_update_bloat_list_description">Automatycznie aktualizuje informacji o aplikacjach bloatware. Gwarantuje to aktualność odznak i opisów aplikacji.</string>
+    <string name="auto_update_bloat_list">Automatycznie aktualizuj listę zbędnych aplikacji</string>
+    <string name="auto_update_bloat_list_description">Automatycznie aktualizuje informacji o zbędnych aplikacji. Gwarantuje to aktualność odznak i opisów aplikacji.</string>
     <string name="settings">Ustawienia</string>
     <string name="confirm_uninstall">Potwierdzaj odinstalowanie</string>
     <string name="app_version">Wersja aplikacji: %s</string>
@@ -76,7 +76,7 @@
     <string name="create_preset_description">Stworzy preset z listy odinstalowanych aplikacji, który będzie można udostępnić i zastosować na innym urządzeniu.</string>
     <string name="preset_name">Nazwa presetu</string>
     <string name="preset_name_missing_error">Nazwa jest wymagana</string>
-    <string name="preset_name_placeholder">np. Aplikacje Samsunga</string>
+    <string name="preset_name_placeholder">np. Bezużyteczne aplikacje Samsunga</string>
     <string name="optional_description">Opis (opcjonalny)</string>
     <string name="preset_description_placeholder">Opisz co ten preset usuwa...</string>
     <string name="save">Zapisz</string>
@@ -116,7 +116,7 @@
     <string name="success">Udało się %1$s!</string>
     <string name="hide_success_dialog">Ukryj okno z komunikatem o powodzeniu</string>
     <string name="hide_success_dialog_description">Ukrywa okno potwierdzenia po odinstalowaniu lub ponownej instalacji aplikacji.</string>
-    <string name="auth_required">Wymagana autoryzacja</string>
+    <string name="auth_required">Wymagane uwierzytelnienie</string>
     <string name="auth_required_description">Ta akcja wymaga wyższych uprawnień.</string>
     <string name="require_auth_setting_desc">Wymagaj uwierzytelnienia przy odinstalowywaniu i instalacji aplikacji.</string>
     <string name="require_auth_setting">Wymagaj uwierzytelniania</string>

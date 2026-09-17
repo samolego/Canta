@@ -20,25 +20,21 @@
     <plurals name="clear_selected_apps">
         <item quantity="one">ניקוי אחד נבחר</item>
         <item quantity="two">ניקוי שני נבחרים</item>
-        <item quantity="many">ניקוי %d נבחרים</item>
         <item quantity="other">ניקוי %d נבחרים</item>
     </plurals>
     <plurals name="num_selected_apps">
         <item quantity="one">נבחר יישום אחד</item>
         <item quantity="two">נבחרו שני יישומים</item>
-        <item quantity="many">נבחרו %d יישומים</item>
         <item quantity="other">נבחרו %d יישומים</item>
     </plurals>
     <plurals name="success_uninstalled">
         <item quantity="one">הסרת בהצלחה את ההתקנה של יישום %d!</item>
         <item quantity="two">הסרת בהצלחה %d יישומים!</item>
-        <item quantity="many">הסרת בהצלחה %d יישומים!</item>
         <item quantity="other">הסרת בהצלחה %d יישומים!</item>
     </plurals>
     <plurals name="success_reinstalled">
         <item quantity="one">התקנת מחדש בהצלחה יישום %d!</item>
         <item quantity="two">התקנת מחדש בהצלחה %d יישומים!</item>
-        <item quantity="many">התקנת מחדש בהצלחה %d יישומים!</item>
         <item quantity="other">התקנת מחדש בהצלחה %d יישומים!</item>
     </plurals>
     <string name="copy">העתקה</string>
