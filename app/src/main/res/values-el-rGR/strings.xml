@@ -102,15 +102,15 @@
     <string name="bloat_list_url">Διεύθυνση URL λίστας bloatware</string>
     <string name="bloat_list_url_description">Πηγή σημάτων και περιγραφών.</string>
     <string name="allow_unsafe_selections">Να επιτρέπονται μη ασφαλείς επιλογές</string>
-    <string name="allow_unsafe_uninstalls_description">Αν θα επιτρέπεται η επιλογή εφαρμογών που σημειώνονται ως μη ασφαλείς (η εφαρμογή προρυθμίσεων παρακάμπτει ήδη αυτό το στοιχείο).</string>
-    <string name="donate">Κάντε Δωρεά</string>
-    <string name="canta_donate_request">Απολαμβάνετε το Canta? Το αναπτύσσω στον ελεύθερό μου χρόνο με την ιδιωτικότητα εν νου - δήθεν διαφημίσεις, δήθεν παρακολούθηση. Αν σας φαίνεται χρήσιμο, παρακαλώ σκεφτείτε να υποστηρίξετε την ανάπτυξή του!</string>
+    <string name="allow_unsafe_uninstalls_description">Αν θα επιτρέπεται η επιλογή εφαρμογών που σημειώνονται ως μη ασφαλείς (η εφαρμογή προεπιλογών παρακάμπτει ήδη αυτόν τον περιορισμό).</string>
+    <string name="donate">Δωρεά</string>
+    <string name="canta_donate_request">Σας αρέσει το Canta; Δημιουργήθηκε στον ελεύθερο χρόνο μου με γνώμονα το απόρρητο - χωρίς διαφημίσεις, χωρίς παρακολούθηση. Εάν το θεωρείτε χρήσιμο, μπορείτε να υποστηρίξτε την ανάπτυξή του!</string>
     <string name="success">Επιτυχία %1$s!</string>
-    <string name="hide_success_dialog">Απόκρυψη διαλόγου επιτυχίας</string>
-    <string name="hide_success_dialog_description">Κρύβει το διάλογο επιτυχίας μετά την απεγκατάσταση / επανεγκατάσταση.</string>
+    <string name="hide_success_dialog">Απόκρυψη παραθύρου επιτυχίας</string>
+    <string name="hide_success_dialog_description">Απόκρυψη του παραθύρου επιτυχίας μετά την απεγκατάσταση ή την επανεγκατάσταση.</string>
     <string name="auth_required">Απαιτείται έλεγχος ταυτότητας</string>
-    <string name="auth_required_description">Αυτή η ενέργεια απαιτεί υψηλότερα δικαιώματα.</string>
-    <string name="require_auth_setting_desc">Να απαιτείται έλεγχος ταυτότητας για απεγκατάσταση ή επανεγκατάσταση εφαρμογών.</string>
+    <string name="auth_required_description">Αυτή η ενέργεια απαιτεί αυξημένα δικαιώματα.</string>
+    <string name="require_auth_setting_desc">Απαιτείται έλεγχος ταυτότητας για την απεγκατάσταση ή επανεγκατάσταση εφαρμογών.</string>
     <string name="require_auth_setting">Να απαιτείται έλεγχος ταυτότητας</string>
     <string name="enable_usb_debugging">(Προαιρετική) Ενεργοποίηση εντοπισμού σφαλμάτων USB</string>
 </resources>
