@@ -5,6 +5,8 @@
   "tasks": {
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:preview": "vitepress preview",
+    "site:build": "node ./scripts/build-site.mjs",
+    "site:build:no-wasm": "node ./scripts/build-site.mjs --no-wasm"
   }
 }

@@ -1,54 +1,60 @@
 [versions]
+# Build
+agp = "9.4.1"
+kotlin = "2.4.20"
+composeMultiplatform = "1.12.1"
+jvm = "21"
+android-compileSdk = "37"
+android-targetSdk = "35"
+# Android 9: hidden API access (Shizuku and the ADB helper) is only handled from
+# there on. Also the floor desktop/web accept (see the device_android_too_old string).
+android-minSdk = "28"
+
+# Libraries
+androidxLifecycle = "2.11.0"
+navigationMpp = "2.9.2"
+kotlinxSerialization = "1.11.0"
+kotlinxDatetime = "0.8.0"
+kotlinxCoroutines = "1.11.0"
+ktor = "3.6.0"
 activityCompose = "1.13.0"
-api = "13.1.5"
 biometric = "1.4.0-alpha07"
-coilCompose = "3.4.0"
-composeBom = "2026.05.01"
-coreKtx = "1.18.0"
-espressoCore = "3.7.0"
+coreKtx = "1.19.1"
+fragment = "1.9.1"
 hiddenapibypass = "6.1"
-junit = "4.13.2"
-junitVersion = "1.3.0"
-lifecycleRuntimeKtx = "2.10.0"
-material3Android = "1.4.0"
-materialIconsExtended = "1.7.8"
-navigationRuntimeKtx = "2.9.8"
-navigationCompose = "2.9.8"
-protobuf = "4.35.0"
-protobufPlugin = "0.10.0"
-provider = "13.1.5"
-kotlin = "2.3.21"
-datastore = "1.2.1"
+shizuku = "13.1.5"
+dadb = "2.0.0"
 
 [plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [libraries]
-androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
-androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
-androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "datastore" }
-protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
-protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
-androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
-androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
-androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
-androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-androidx-navigation-runtime-ktx = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
-androidx-material3-android = { module = "androidx.compose.material3:material3-android", version.ref = "material3Android" }
-androidx-ui = { module = "androidx.compose.ui:ui" }
-androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
-androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
-androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
-androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-api = { module = "dev.rikka.shizuku:api", version.ref = "api" }
-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
+androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationMpp" }
+
+shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }
+shizuku-provider = { module = "dev.rikka.shizuku:provider", version.ref = "shizuku" }
 hiddenapibypass = { module = "org.lsposed.hiddenapibypass:hiddenapibypass", version.ref = "hiddenapibypass" }
-junit = { module = "junit:junit", version.ref = "junit" }
-provider = { module = "dev.rikka.shizuku:provider", version.ref = "provider" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+dadb = { module = "dev.mobile:dadb", version.ref = "dadb" }
+
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinxSerialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }

@@ -45,20 +45,20 @@ jobs:
         id: extract_version
         run: |
           # read version_name
-          version=$(grep "^version_name=" app/gradle.properties | cut -d'=' -f2)
+          version=$(grep "^version_name=" gradle.properties | cut -d'=' -f2)
           echo "VERSION_NAME=$version" >> $GITHUB_ENV
           echo "::set-output name=tag::v$version"
 
       - name: 🤖📦 Build Android APKs
-        run: ./gradlew app:assembleRelease
+        run: ./gradlew :androidApp:assembleRelease
 
       - name: 📝 Generate SHA-256 checksums
         run: |
-          cd app/build/outputs/apk/release/
+          cd androidApp/build/outputs/apk/release/
           sha256sum *.apk > SHA256SUMS.txt
 
       - name: "Echo SHA-256 sums"
-        run: cat app/build/outputs/apk/release/SHA256SUMS.txt
+        run: cat androidApp/build/outputs/apk/release/SHA256SUMS.txt
 
       - name: 🔧 Setup GitHub CLI
         env:
@@ -70,7 +70,7 @@ jobs:
         id: attest
         uses: actions/attest-build-provenance@v3
         with:
-          subject-path: 'app/build/outputs/apk/release/*.apk'
+          subject-path: 'androidApp/build/outputs/apk/release/*.apk'
 
       - name: 📦 Create GitHub release draft
         env:
@@ -87,6 +87,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="v${{ env.VERSION_NAME }}"
-          gh release upload "$TAG" app/build/outputs/apk/release/*.apk
-          gh release upload "$TAG" app/build/outputs/apk/release/SHA256SUMS.txt
+          gh release upload "$TAG" androidApp/build/outputs/apk/release/*.apk
+          gh release upload "$TAG" androidApp/build/outputs/apk/release/SHA256SUMS.txt
           gh release upload "$TAG" "${{ steps.attest.outputs.bundle-path }}"

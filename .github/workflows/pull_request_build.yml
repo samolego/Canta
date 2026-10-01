@@ -25,14 +25,14 @@ jobs:
           distribution: "adopt"
 
       - name: 🔍 Run tests
-        run: ./gradlew test
+        run: ./gradlew :packages:desktopTest :composeApp:desktopTest
 
       - name: 🏗️ Verify debug build
-        run: ./gradlew assembleDebug
+        run: ./gradlew :androidApp:assembleDebug :desktopApp:desktopJar :webApp:wasmJsBrowserDistribution
 
       - name: 📦 Upload debug APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: app/build/outputs/apk/debug/*.apk
+          path: androidApp/build/outputs/apk/debug/*.apk
           retention-days: 7

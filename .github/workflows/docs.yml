@@ -5,8 +5,15 @@ on:
     branches: [master]
     paths:
       - "docs/**"
+  release:
+    types: [published]
   # Allow manual trigger
   workflow_dispatch:
+    inputs:
+      build_wasm:
+        description: "Rebuild WASM app and include it in the deploy"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -25,19 +32,52 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Java
+        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.build_wasm)
+        uses: actions/setup-java@v4
         with:
-          deno-version: v2.x
+          java-version: "21"
+          distribution: "temurin"
+          cache: "gradle"
+
+      - name: Restore cached WASM dist
+        if: github.event_name != 'release' && (github.event_name != 'workflow_dispatch' || !inputs.build_wasm)
+        uses: actions/cache/restore@v4
+        with:
+          path: webApp/build/dist/wasmJs/productionExecutable
+          key: wasm-app-${{ github.sha }}
+          restore-keys: |
+            wasm-app-
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Build
+      - name: Build full site (WASM + docs)
+        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.build_wasm)
+        run: |
+          chmod +x gradlew
+          cd docs
+          npm install --no-audit --no-fund
+          npm run site:build
+
+      - name: Build docs (reuse cached WASM)
+        if: github.event_name != 'release' && (github.event_name != 'workflow_dispatch' || !inputs.build_wasm)
         run: |
           cd docs
-          deno install
-          deno task docs:build
+          npm install --no-audit --no-fund
+          npm run site:build:no-wasm
+
+      - name: Save WASM dist to cache
+        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.build_wasm)
+        uses: actions/cache/save@v4
+        with:
+          path: webApp/build/dist/wasmJs/productionExecutable
+          key: wasm-app-${{ github.sha }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

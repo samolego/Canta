@@ -17,11 +17,15 @@ hero:
     - theme: alt
       text: View on GitHub
       link: https://github.com/samolego/Canta
+    - theme: brand
+      text: Open web app
+      link: /app/
+      target: _self
 
 features:
   - icon: 🛡️
     title: Safe Uninstallation
-    details: No risk of bricking your device - APKs stay on device. In case of bootloop you will only need to perform a factory reset.
+    details: No risk of bricking your device, since APKs stay on device. In case of bootloop you will only need to perform a factory reset.
 
   - icon: 📝
     title: Badges & Descriptions

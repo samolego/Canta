@@ -1,3 +1,10 @@
 files:
-  - source: /app/src/main/res/values/strings.xml
-    translation: /app/src/main/res/values-%android_code%/%original_file_name%
+  - source: /composeApp/src/commonMain/composeResources/values/strings.xml
+    translation: /composeApp/src/commonMain/composeResources/values-%android_code%/%original_file_name%
+    # Compose Multiplatform resources don't unescape Android's \' and \", so
+    # Crowdin must export quotes and apostrophes as-is.
+    escape_quotes: 0
+    escape_special_characters: 0
+    languages_mapping:
+      android_code:
+        he: he-rIL
