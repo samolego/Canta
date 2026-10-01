@@ -130,13 +130,13 @@ Pega aquí el JSON del preajuste ...</string>
     <string name="refresh">Actualizar</string>
     <string name="pick_device">Elegir dispositivo</string>
     <string name="pick_device_description">Conecta tu dispositivo Android por USB y luego selecciónalo en el aviso del navegador. Activa la depuración USB en el dispositivo y acepta el aviso de autorización en su pantalla.</string>
-    <string name="webusb_not_supported_title">WebUSB is not supported</string>
-    <string name="webusb_not_supported_description">This browser cannot access USB devices. Open Canta in Chrome or Edge on a computer to connect your phone.</string>
-    <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with \"Pick device\", and make sure no other program (such as adb) is using the device.</string>
-    <string name="device_access_denied_linux">Access to the USB device was denied. On Linux, browsers need permission to open USB devices: install udev rules for your phone (e.g. the android-udev-rules package), then unplug it and plug it back in.</string>
-    <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone\'s ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
-    <string name="device_connection_failed">Could not connect to the device: %1$s</string>
-    <string name="device_no_longer_available">The selected device is no longer available. Please pick it again.</string>
-    <string name="device_busy">The device is already in use by another program or browser tab. Close anything else using it, unplug the device and plug it back in, then pick it again.</string>
-    <string name="device_busy_linux">The device is busy: another program on this computer has claimed it. On Linux this is often ModemManager, an adb server, or a file-transfer (MTP) monitor. Stop them (e.g. sudo systemctl stop ModemManager), unplug the phone and plug it back in, then pick it again.</string>
+    <string name="webusb_not_supported_title">WebUSB no es compatible</string>
+    <string name="webusb_not_supported_description">Este navegador no puede acceder a dispositivos USB. Abre Canta en Chrome o Edge en un ordenador para conectar tu teléfono.</string>
+    <string name="device_access_denied">Se denegó el acceso al dispositivo USB. Desconéctalo y vuelve a conectarlo, concede el acceso de nuevo con “Elegir dispositivo” y asegúrate de que ningún otro programa (como adb) esté usando el dispositivo.</string>
+    <string name="device_access_denied_linux">Se denegó el acceso al dispositivo USB. En Linux, los navegadores necesitan permiso para abrir dispositivos USB: instala las reglas udev para tu teléfono (por ejemplo, el paquete android-udev-rules), luego desconéctalo y vuelve a conectarlo.</string>
+    <string name="device_access_denied_windows">Se denegó el acceso al dispositivo USB. En Windows, la interfaz ADB del teléfono necesita un controlador WinUSB: instálalo con Zadig y luego desconecta el teléfono y vuelve a conectarlo.</string>
+    <string name="device_connection_failed">No se pudo conectar con el dispositivo: %1$s</string>
+    <string name="device_no_longer_available">El dispositivo seleccionado ya no está disponible. Vuelve a elegirlo.</string>
+    <string name="device_busy">El dispositivo ya está siendo usado por otro programa o pestaña del navegador. Cierra cualquier cosa que lo esté utilizando, desconecta el dispositivo y vuelve a conectarlo, y después vuelve a elegirlo.</string>
+    <string name="device_busy_linux">El dispositivo está ocupado: otro programa en este ordenador lo ha reclamado. En Linux esto suele ser ModemManager, un servidor adb o un monitor de transferencia de archivos (MTP). Detén esos procesos (por ejemplo, sudo systemctl stop ModemManager), desconecta el teléfono y vuelve a conectarlo, y después vuelve a elegirlo.</string>
 </resources>
