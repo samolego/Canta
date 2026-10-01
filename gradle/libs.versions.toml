@@ -5,7 +5,7 @@ kotlin = "2.4.20"
 composeMultiplatform = "1.12.1"
 jvm = "21"
 android-compileSdk = "37"
-android-targetSdk = "35"
+android-targetSdk = "37"
 # Android 9: hidden API access (Shizuku and the ADB helper) is only handled from
 # there on. Also the floor desktop/web accept (see the device_android_too_old string).
 android-minSdk = "28"
