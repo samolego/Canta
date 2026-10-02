@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -54,6 +53,7 @@ import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.MainDialog
 import io.github.samolego.canta.ui.viewmodel.MainViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -62,6 +62,7 @@ import org.jetbrains.compose.resources.stringResource
 fun MainScreen(
     handler: CantaHandler,
     platform: CantaPlatform,
+    pagerState: PagerState,
     mainViewModel: MainViewModel,
     appListViewModel: AppListViewModel,
     settingsViewModel: SettingsViewModel,
@@ -71,12 +72,18 @@ fun MainScreen(
     closeApp: () -> Unit,
     enableSelectAll: Boolean,
 ) {
-    val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
+    // Pager state is hoisted to CantaNavigation so preset-applying knows the tab.
     val selectedAppsType = AppsType.entries[pagerState.currentPage]
 
     LaunchedEffect(pagerState) {
-        // Filters are per tab: reset them when switching.
-        snapshotFlow { pagerState.currentPage }.collect { appListViewModel.selectedFilter = Filter.any }
+        // Filters and selection are per tab: reset them when the user switches
+        // tabs. The first emission is skipped: returning from the Presets screen
+        // recomposes MainScreen, and an applied preset populates the selection
+        // just before that navigation.
+        snapshotFlow { pagerState.currentPage }.drop(1).collect {
+            appListViewModel.selectedFilter = Filter.any
+            appListViewModel.selectedApps.clear()
+        }
     }
 
     Scaffold(
