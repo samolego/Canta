@@ -1,6 +1,7 @@
 package io.github.samolego.canta.core
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.compose.ui.graphics.ImageBitmap
@@ -19,6 +20,7 @@ import io.github.samolego.canta.packages.loadIconBitmap
 import io.github.samolego.canta.packages.readSafely
 import io.github.samolego.canta.packages.toPackageDetails
 import io.github.samolego.canta.ui.component.APP_ICON_SIZE
+import io.github.samolego.canta.util.LogUtils
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -37,6 +39,10 @@ import kotlin.math.roundToInt
 class AndroidCantaHandler(
     private val context: Context,
 ) : CantaHandler {
+
+    private companion object {
+        const val TAG = "AndroidCantaHandler"
+    }
 
     private val packageManager: PackageManager get() = context.packageManager
 
@@ -113,4 +119,16 @@ class AndroidCantaHandler(
 
     override suspend fun packageExists(packageName: String): Boolean =
         packageManager.getInfoForPackage(packageName) != null
+
+    override suspend fun openAppDetails(packageName: String) {
+        try {
+            val uri = android.net.Uri.fromParts("package", packageName, null)
+            val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, uri).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            LogUtils.e(TAG, "Failed to open app details for '$packageName'", e)
+        }
+    }
 }

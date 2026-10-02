@@ -14,17 +14,23 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.samolego.canta.core.CantaHandler
 import io.github.samolego.canta.core.CantaPlatform
 import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.app_icon
+import io.github.samolego.canta.generated.resources.app_settings
 import io.github.samolego.canta.generated.resources.app_size
 import io.github.samolego.canta.generated.resources.copy_package_name_to_clipboard
 import io.github.samolego.canta.generated.resources.no_description_available
@@ -33,6 +39,7 @@ import io.github.samolego.canta.ui.component.CantaDialog
 import io.github.samolego.canta.ui.component.text.UrlText
 import io.github.samolego.canta.ui.component.WIDE_DIALOG_WIDTH
 import io.github.samolego.canta.util.formatFileSize
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 /** Tallest the (scrolling) bloat description may get. */
@@ -42,9 +49,31 @@ private val DESCRIPTION_MAX_HEIGHT = 480.dp
 fun AppInfoDialog(
     appInfo: AppInfo,
     platform: CantaPlatform,
+    handler: CantaHandler,
     onDismiss: () -> Unit,
 ) {
-    CantaDialog(onDismissRequest = onDismiss, widthFraction = WIDE_DIALOG_WIDTH) {
+    val scope = rememberCoroutineScope()
+    CantaDialog(
+        onDismissRequest = onDismiss,
+        widthFraction = WIDE_DIALOG_WIDTH,
+        buttons = if (!appInfo.isUninstalled) ({
+            Button(
+                onClick = { scope.launch { handler.openAppDetails(appInfo.packageName) } },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            ) {
+                Icon(
+                    Icons.Default.Settings,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(stringResource(Res.string.app_settings))
+            }
+        }) else null,
+    ) {
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Row {
                 AppIconImage(

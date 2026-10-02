@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Weet u zeker dat u %1$s apps wilt verwijderen?</string>
     <string name="copy_package_name_to_clipboard">Kopieer pakketnaam naar klembord</string>
     <string name="no_description_available">Geen beschrijving beschikbaar</string>
+    <string name="app_settings">App info</string>
     <string name="uninstall">Verwijderen</string>
     <string name="reinstall">Herinstalleren</string>
     <string name="only_system">Alleen systeem</string>
@@ -84,6 +85,7 @@
     <string name="selected_apps">Geselecteerde apps</string>
     <string name="text">Tekst</string>
     <string name="install_shizuku">Shizuku app installeren</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
     <string name="start_shizuku_service">Shizuku service starten</string>
     <string name="grant_shizuku_permission_to_canta">Geef toestemming aan Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku vereist</string>

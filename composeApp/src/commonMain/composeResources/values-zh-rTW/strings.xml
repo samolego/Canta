@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">您確定要解除安裝 %1$s 個應用程式嗎？</string>
     <string name="copy_package_name_to_clipboard">將包名複製到剪貼簿</string>
     <string name="no_description_available">沒有可用的描述</string>
+    <string name="app_settings">應用程式資訊</string>
     <string name="uninstall">解除安裝</string>
     <string name="reinstall">重新安裝</string>
     <string name="only_system">僅系統</string>
@@ -80,6 +81,7 @@
     <string name="selected_apps">選定的應用程式</string>
     <string name="text">文本</string>
     <string name="install_shizuku">安裝 Shizuku 應用程式</string>
+    <string name="enable_usb_debugging">（可選）啟用 USB 除錯</string>
     <string name="start_shizuku_service">啟動 Shizuku 服務</string>
     <string name="grant_shizuku_permission_to_canta">在 Shizuku 中向 Canta 授予許可權</string>
     <string name="shizuku_required">需要 Shizuku</string>

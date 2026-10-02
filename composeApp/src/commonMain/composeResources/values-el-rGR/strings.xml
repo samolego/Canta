@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Σίγουρα θέλετε να απεγκαταστήσετε %1$s εφαρμογές;</string>
     <string name="copy_package_name_to_clipboard">Αντιγραφή ονόματος πακέτου στο πρόχειρο</string>
     <string name="no_description_available">Δεν υπάρχει διαθέσιμη περιγραφή</string>
+    <string name="app_settings">Πληρ. εφαρμογής</string>
     <string name="uninstall">Απεγκατάσταση</string>
     <string name="reinstall">Επανεγκατάσταση</string>
     <string name="only_system">Μόνο σύστημα</string>
@@ -84,6 +85,7 @@
     <string name="selected_apps">Selected apps</string>
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
     <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku Required</string>

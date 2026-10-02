@@ -48,6 +48,7 @@ import io.github.samolego.canta.generated.resources.num_selected_apps
 import io.github.samolego.canta.generated.resources.select_all
 import io.github.samolego.canta.generated.resources.selected_apps
 import io.github.samolego.canta.ui.AppsType
+import io.github.samolego.canta.core.CantaHandler
 import io.github.samolego.canta.core.CantaPlatform
 import io.github.samolego.canta.ui.dialog.AppInfoDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
@@ -66,6 +67,7 @@ fun AppList(
     appListModel: AppListViewModel,
     settingsViewModel: SettingsViewModel,
     platform: CantaPlatform,
+    handler: CantaHandler,
     enableSelectAll: Boolean = false,
 ) {
     var showAppDialog by remember { mutableStateOf<AppInfo?>(null) }
@@ -83,6 +85,7 @@ fun AppList(
             AppInfoDialog(
                 appInfo = showAppDialog!!,
                 platform = platform,
+                handler = handler,
                 onDismiss = { showAppDialog = null },
             )
         }

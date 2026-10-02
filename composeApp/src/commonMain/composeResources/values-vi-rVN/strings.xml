@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Bạn có chắc muốn xóa ứng dụng %1$s?</string>
     <string name="copy_package_name_to_clipboard">Sao chép tên gói vào bảng tạm</string>
     <string name="no_description_available">Không có mô tả</string>
+    <string name="app_settings">Thông tin ứng dụng</string>
     <string name="uninstall">Gỡ cài đặt</string>
     <string name="reinstall">Cài đặt lại</string>
     <string name="only_system">Chỉ ƯD hệ thống</string>
@@ -80,6 +81,7 @@
     <string name="selected_apps">Ứng dụng đã chọn</string>
     <string name="text">Văn bản</string>
     <string name="install_shizuku">Cài đặt Shizuku</string>
+    <string name="enable_usb_debugging">(Tùy chọn) Bật chế độ gỡ lỗi USB</string>
     <string name="start_shizuku_service">Khởi chạy dịch vụ Shizuku</string>
     <string name="grant_shizuku_permission_to_canta">Cấp quyền cho Canta trong Shizuku</string>
     <string name="shizuku_required">Yêu cầu Shizuku</string>

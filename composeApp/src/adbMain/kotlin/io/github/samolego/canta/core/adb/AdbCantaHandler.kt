@@ -20,7 +20,7 @@ import org.jetbrains.compose.resources.decodeToImageBitmap
  * All package work goes through the on-device [AdbHelper]; subclasses only
  * implement discovering and connecting devices.
  */
-abstract class AdbCantaHandler(transport: AdbTransport) : CantaHandler {
+abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandler {
 
     private companion object {
         const val TAG = "AdbCantaHandler"
@@ -92,5 +92,18 @@ abstract class AdbCantaHandler(transport: AdbTransport) : CantaHandler {
         if (!isConnected) return false
         if (packages.isEmpty()) loadApps()
         return packageName in packages
+    }
+
+    override suspend fun openAppDetails(packageName: String) {
+        if (!isConnected) return
+        if (packageName.any { !it.isLetterOrDigit() && it != '.' && it != '_' }) {
+            LogUtils.w(TAG, "Refusing to open app details for suspicious package name")
+            return
+        }
+        runCatching {
+            transport.shell(
+                "am start -a android.settings.APPLICATION_DETAILS_SETTINGS -d package:$packageName"
+            )
+        }.onFailure { LogUtils.e(TAG, "Failed to open app details for '$packageName'", it) }
     }
 }

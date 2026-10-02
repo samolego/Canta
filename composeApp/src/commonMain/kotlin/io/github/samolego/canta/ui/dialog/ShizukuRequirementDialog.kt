@@ -23,7 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.core.CantaHandler
@@ -41,6 +41,7 @@ import io.github.samolego.canta.ui.component.CantaDialog
 import io.github.samolego.canta.ui.component.WIDE_DIALOG_WIDTH
 import io.github.samolego.canta.ui.theme.GreenOk
 import io.github.samolego.canta.ui.theme.Orange
+import org.jetbrains.compose.resources.stringResource
 
 private const val SHIZUKU_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=moe.shizuku.privileged.api"
 private const val SHIZUKU_GITHUB_URL = "https://github.com/RikkaApps/Shizuku/releases"
@@ -48,12 +49,27 @@ private const val SHIZUKU_GITHUB_URL = "https://github.com/RikkaApps/Shizuku/rel
 /**
  * Walks the user through the Shizuku setup. [onClose] with `true` means
  * "request authorization and continue"; `false` means the user dismissed it.
+ *
+ * Android-only in practice (other targets pick a device instead of using
+ * Shizuku), with Android-only steps filled in per target; see the actuals.
  */
 @Composable
-fun ShizukuRequirementDialog(
+expect fun ShizukuRequirementDialog(
     onClose: (shouldProceed: Boolean) -> Unit,
     handler: CantaHandler,
     platform: CantaPlatform,
+)
+
+/**
+ * The shared Shizuku setup UI. [usbRequirementRow] is an Android-only slot
+ * rendered first in the requirements list; other targets leave it empty.
+ */
+@Composable
+internal fun ShizukuRequirementDialogContent(
+    onClose: (shouldProceed: Boolean) -> Unit,
+    handler: CantaHandler,
+    platform: CantaPlatform,
+    usbRequirementRow: @Composable () -> Unit = {},
 ) {
     // Re-read on resume: the user fixes these steps in the Shizuku app and comes back.
     var status by remember { mutableStateOf(handler.privilegeStatus) }
@@ -79,6 +95,7 @@ fun ShizukuRequirementDialog(
             modifier = Modifier.padding(bottom = 24.dp)
         )
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            usbRequirementRow()
             RequirementItem(
                 text = stringResource(Res.string.install_shizuku),
                 isCompleted = status != PrivilegeStatus.NOT_AVAILABLE,
@@ -99,13 +116,14 @@ fun ShizukuRequirementDialog(
 }
 
 @Composable
-private fun RequirementItem(
+internal fun RequirementItem(
     text: String,
     isCompleted: Boolean,
+    enabled: Boolean = true,
     onActionClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().alpha(if (enabled) 1f else 0.4f),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {

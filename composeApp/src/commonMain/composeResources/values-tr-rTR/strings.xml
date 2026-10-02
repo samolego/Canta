@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">%1$s adet uygulamayı kaldırmak istediğinizden emin misiniz?</string>
     <string name="copy_package_name_to_clipboard">Uygulama paket adını panoya kopyala</string>
     <string name="no_description_available">Açıklama mevcut değil</string>
+    <string name="app_settings">Uygulama bilgileri</string>
     <string name="uninstall">Kaldır</string>
     <string name="reinstall">Yeniden yükle</string>
     <string name="only_system">Sadece sistem</string>
@@ -84,6 +85,7 @@
     <string name="selected_apps">Seçili uygulamalar</string>
     <string name="text">Metin</string>
     <string name="install_shizuku">Shizuku uygulamasını yükleyin</string>
+    <string name="enable_usb_debugging">(İsteğe bağlı) USB hata ayıklamasını etkinleştir</string>
     <string name="start_shizuku_service">Shizuku hizmetini başlat</string>
     <string name="grant_shizuku_permission_to_canta">Shizuku'dan Canta'ya izin verin</string>
     <string name="shizuku_required">Shizuku Gerekli</string>

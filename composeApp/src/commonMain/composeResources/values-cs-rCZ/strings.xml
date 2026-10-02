@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Opravdu chcete odinstalovat %1$s aplikací?</string>
     <string name="copy_package_name_to_clipboard">Zkopírovat název balíčku do schránky</string>
     <string name="no_description_available">Popis není dostupný</string>
+    <string name="app_settings">Informace o aplikací</string>
     <string name="uninstall">Odinstalovat</string>
     <string name="reinstall">Znovu nainstalovat</string>
     <string name="only_system">Pouze systémové</string>
@@ -92,6 +93,7 @@
     <string name="selected_apps">Vybrané aplikace</string>
     <string name="text">Text</string>
     <string name="install_shizuku">Nainstalovat aplikaci Shizuku</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
     <string name="start_shizuku_service">Spustit službu Shizuku</string>
     <string name="grant_shizuku_permission_to_canta">Udělit oprávnění Canta v Shizuku</string>
     <string name="shizuku_required">Vyžaduje Shizuku</string>

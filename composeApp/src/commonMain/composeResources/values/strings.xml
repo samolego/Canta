@@ -9,6 +9,7 @@
         name="copy_package_name_to_clipboard"
     >Copy package name to clipboard</string>
     <string name="no_description_available">No description available</string>
+    <string name="app_settings">App info</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -131,6 +132,7 @@
     <string name="selected_apps">Selected apps</string>
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
     <string
         name="grant_shizuku_permission_to_canta"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="install_shizuku">Install Shizuku app</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
     <string
         name="grant_shizuku_permission_to_canta"
@@ -18,6 +19,7 @@
         name="copy_package_name_to_clipboard"
     >نام بسته را در کلیپ بورد کپی کنید</string>
     <string name="no_description_available">هیچ توضیحی در دسترس نیست</string>
+    <string name="app_settings">اطلاعات برنامه</string>
     <string name="uninstall">حذف کردن</string>
     <string name="reinstall">دوباره نصب کردن</string>
     <string name="only_system">فقط سیستم</string>

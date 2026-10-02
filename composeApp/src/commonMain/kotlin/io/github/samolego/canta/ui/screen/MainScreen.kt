@@ -120,6 +120,7 @@ fun MainScreen(
                         appListModel = appListViewModel,
                         settingsViewModel = settingsViewModel,
                         platform = platform,
+                        handler = handler,
                         enableSelectAll = enableSelectAll,
                     )
                 }

@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">להסיר %1$s יישומים?</string>
     <string name="copy_package_name_to_clipboard">שם החבילה הועתק ללוח הגזירים</string>
     <string name="no_description_available">אין תיאור זמין</string>
+    <string name="app_settings">פרטי יישום</string>
     <string name="uninstall">הסרת התקנה</string>
     <string name="reinstall">התקנה מחדש</string>
     <string name="only_system">יישומי מערכת בלבד</string>
@@ -92,6 +93,7 @@
     <string name="selected_apps">יישומים שנבחרו</string>
     <string name="text">טקסט</string>
     <string name="install_shizuku">התקנת היישום Shizuku</string>
+    <string name="enable_usb_debugging">הפעלת ניפוי שגיאות ב־USB (רשות)</string>
     <string name="start_shizuku_service">הפעלת שירות Shizuku</string>
     <string name="grant_shizuku_permission_to_canta">מתן הרשאה ל־Canta להשתמש ב־Shizuku</string>
     <string name="shizuku_required">יש צורך ב־Shizuku</string>

@@ -131,6 +131,13 @@ interface CantaHandler {
     suspend fun packageExists(packageName: String): Boolean
 
     /**
+     * Opens the system's app details (App info) page for [packageName]:
+     * the Settings screen on Android itself, the on-device Settings screen
+     * over ADB elsewhere. Only called for installed apps.
+     */
+    suspend fun openAppDetails(packageName: String) {}
+
+    /**
      * Requests authorization from the privileged runtime (Android: the
      * Shizuku permission prompt). Only used where [deviceDiscovery] is
      * [DeviceDiscovery.None].
