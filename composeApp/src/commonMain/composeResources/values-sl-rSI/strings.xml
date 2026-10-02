@@ -138,7 +138,7 @@
     <string name="pick_device">Izberi napravo</string>
     <string name="pick_device_description">Povežite svojo napravo Android preko USB kabla, nato pa jo izberite v brskalnikovem oknu. Vključite USB razhroščevanje na napravi in dovolite dostop na napravi.</string>
     <string name="webusb_not_supported_title">WebUSB ni podprt</string>
-    <string name="webusb_not_supported_description">Ta brskalnik žal ne podpira dostopa do USB naprav. Uporabite brskalnik, ki temelji na pogonu Chromium (npr. Chrome, Brave, Edge, Vivaldi ipd.)</string>
+    <string name="webusb_not_supported_description">This browser cannot access USB devices. Open Canta in Chromium based browser (e.g. Chrome, Brave, Edge, Vivaldi) on a computer to connect your phone.</string>
     <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with \"Pick device\", and make sure no other program (such as adb) is using the device.</string>
     <string name="device_access_denied_linux">Access to the USB device was denied. On Linux, browsers need permission to open USB devices: install udev rules for your phone (e.g. the android-udev-rules package), then unplug it and plug it back in.</string>
     <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone\'s ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
