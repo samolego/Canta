@@ -1,4 +1,4 @@
-package io.github.samolego.canta.ui.component
+package io.github.samolego.canta.ui.component.text
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer

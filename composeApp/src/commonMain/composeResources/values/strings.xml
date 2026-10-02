@@ -177,7 +177,7 @@
     <string name="webusb_not_supported_title">WebUSB is not supported</string>
     <string
         name="webusb_not_supported_description"
-    >This browser cannot access USB devices. Open Canta in Chrome or Edge on a computer to connect your phone.</string>
+    >This browser cannot access USB devices. Open Canta in Chromium based browser (e.g. Chrome, Brave, Edge, Vivaldi) on a computer to connect your phone.</string>
     <string
         name="device_access_denied"
     >Access to the USB device was denied. Unplug it and plug it back in, grant access again with "Pick device", and make sure no other program (such as adb) is using the device.</string>
