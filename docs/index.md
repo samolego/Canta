@@ -8,7 +8,7 @@ hero:
   text: "Uninstall any app without root!"
   tagline: Powered by Shizuku - safe and easy app removal
   image:
-    src: https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+    src: https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png
     alt: Canta
   actions:
     - theme: brand
