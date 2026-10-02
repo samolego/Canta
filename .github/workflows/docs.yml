@@ -10,10 +10,10 @@ on:
   # Allow manual trigger
   workflow_dispatch:
     inputs:
-      build_wasm:
-        description: "Rebuild WASM app and include it in the deploy"
-        type: boolean
-        default: true
+      wasm_ref:
+        description: "Git ref (tag/branch/SHA) to build WASM from. Empty = latest v* tag."
+        default: ""
+        required: false
 
 permissions:
   contents: read
@@ -29,25 +29,40 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout docs (current ref)
         uses: actions/checkout@v4
+        with:
+          path: repo-docs
+          fetch-depth: 0
+
+      - name: Checkout WASM source (latest v* tag or wasm_ref input)
+        uses: actions/checkout@v4
+        with:
+          path: repo-wasm
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ inputs.wasm_ref != '' && inputs.wasm_ref || github.event.release.tag_name || '' }}
+
+      - name: Resolve latest v* tag (when no explicit ref)
+        if: inputs.wasm_ref == '' && github.event_name != 'release'
+        run: |
+          cd repo-wasm
+          git fetch --tags --force
+          LATEST_TAG=$(git tag -l 'v*' --sort=-v:refname | head -n 1)
+          if [ -z "$LATEST_TAG" ]; then
+            echo "No v* tag found, staying on default branch"
+          else
+            echo "Checking out $LATEST_TAG"
+            git checkout "$LATEST_TAG"
+          fi
+          git rev-parse HEAD
 
       - name: Setup Java
-        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.build_wasm)
         uses: actions/setup-java@v4
         with:
           java-version: "21"
           distribution: "temurin"
           cache: "gradle"
-
-      - name: Restore cached WASM dist
-        if: github.event_name != 'release' && (github.event_name != 'workflow_dispatch' || !inputs.build_wasm)
-        uses: actions/cache/restore@v4
-        with:
-          path: webApp/build/dist/wasmJs/productionExecutable
-          key: wasm-app-${{ github.sha }}
-          restore-keys: |
-            wasm-app-
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -57,32 +72,34 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Build full site (WASM + docs)
-        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.build_wasm)
+      - name: Build WASM from tag source
         run: |
           chmod +x gradlew
-          cd docs
-          npm install --no-audit --no-fund
-          npm run site:build
+          ./gradlew :webApp:wasmJsBrowserDistribution --no-daemon
+        working-directory: repo-wasm
 
-      - name: Build docs (reuse cached WASM)
-        if: github.event_name != 'release' && (github.event_name != 'workflow_dispatch' || !inputs.build_wasm)
+      - name: Build full site (tagged WASM + current docs)
         run: |
+          WASM_DIST="$GITHUB_WORKSPACE/repo-wasm/webApp/build/dist/wasmJs/productionExecutable"
+          if [ ! -d "$WASM_DIST" ]; then
+            echo "WASM dist not found: $WASM_DIST"
+            exit 1
+          fi
+          mkdir -p "$GITHUB_WORKSPACE/wasm-dist"
+          cp -r "$WASM_DIST/." "$GITHUB_WORKSPACE/wasm-dist/"
+          # Point the docs build script at the prebuilt dist by overlaying it
+          # onto the expected location under repo-docs.
+          mkdir -p webApp/build/dist/wasmJs
+          cp -r "$GITHUB_WORKSPACE/wasm-dist" webApp/build/dist/wasmJs/productionExecutable
           cd docs
           npm install --no-audit --no-fund
           npm run site:build:no-wasm
-
-      - name: Save WASM dist to cache
-        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.build_wasm)
-        uses: actions/cache/save@v4
-        with:
-          path: webApp/build/dist/wasmJs/productionExecutable
-          key: wasm-app-${{ github.sha }}
+        working-directory: repo-docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist
+          path: repo-docs/docs/.vitepress/dist
 
   deploy:
     environment:
