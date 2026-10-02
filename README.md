@@ -22,6 +22,8 @@ Powered by [Shizuku](https://shizuku.rikka.app/) ([Android 16 fork](https://gith
 [![donate badge](https://img.shields.io/badge/Donate_via-Paypal-blue)](https://www.paypal.com/donate/?hosted_button_id=FD4R46ZZ5EWME)
 ---
 
+Don't want to download and have a data USB cable and a Chromium-based browser? Try Canta directly on the [web](https://samolego.github.io/Canta/app/), without installing anything!
+
 </div>
 
 > [!Warning]
