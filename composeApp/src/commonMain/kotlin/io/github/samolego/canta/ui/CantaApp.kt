@@ -2,6 +2,7 @@ package io.github.samolego.canta.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -66,6 +67,10 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
     val presetViewModel: PresetsViewModel = viewModel { PresetsViewModel(deps.presetStore, handler, platform) }
     val mainViewModel: MainViewModel = viewModel { MainViewModel(handler, platform, deps.settings, appListViewModel) }
 
+    // Hoisted so preset-applying (below) knows which tab is showing.
+    val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
+    val selectedAppsType = AppsType.entries[pagerState.currentPage]
+
     var versionTapCounter by remember { mutableIntStateOf(0) }
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -79,6 +84,7 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
                 MainScreen(
                     handler = handler,
                     platform = platform,
+                    pagerState = pagerState,
                     mainViewModel = mainViewModel,
                     appListViewModel = appListViewModel,
                     settingsViewModel = settingsViewModel,
@@ -133,9 +139,17 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
                     platform = platform,
                     presetViewModel = presetViewModel,
                     onNavigateBack = { appliedPreset ->
-                        appliedPreset?.let {
+                        appliedPreset?.let { preset ->
+                            // Select only preset apps shown on the current tab.
+                            // Unknown packages can't match any tab, so they are
+                            // dropped too: handlers couldn't act on them anyway.
+                            val byPackage = appListViewModel.apps.associateBy { it.packageName }
                             appListViewModel.selectedApps.clear()
-                            appListViewModel.selectedApps.addAll(it.apps)
+                            appListViewModel.selectedApps.addAll(
+                                preset.apps.filter { pkg ->
+                                    byPackage[pkg]?.let { selectedAppsType.matches(it) } == true
+                                }
+                            )
                         }
                         navController.navigateUp()
                     },

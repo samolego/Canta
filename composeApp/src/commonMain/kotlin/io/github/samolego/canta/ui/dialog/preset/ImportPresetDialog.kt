@@ -41,7 +41,7 @@ import io.github.samolego.canta.generated.resources.import_preset_description
 import io.github.samolego.canta.generated.resources.paste_preset_json
 import io.github.samolego.canta.generated.resources.paste_preset_json_here
 import io.github.samolego.canta.generated.resources.text
-import io.github.samolego.canta.ui.component.IconText
+import io.github.samolego.canta.ui.component.text.IconText
 
 /** Fixed height of the import tabs' content, so switching tabs doesn't resize the dialog. */
 private val IMPORT_CONTENT_HEIGHT = 400.dp

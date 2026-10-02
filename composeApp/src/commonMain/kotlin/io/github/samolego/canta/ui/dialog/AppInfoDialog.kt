@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
@@ -29,6 +30,7 @@ import io.github.samolego.canta.generated.resources.copy_package_name_to_clipboa
 import io.github.samolego.canta.generated.resources.no_description_available
 import io.github.samolego.canta.ui.component.AppIconImage
 import io.github.samolego.canta.ui.component.CantaDialog
+import io.github.samolego.canta.ui.component.text.UrlText
 import io.github.samolego.canta.ui.component.WIDE_DIALOG_WIDTH
 import io.github.samolego.canta.util.formatFileSize
 import org.jetbrains.compose.resources.stringResource
@@ -85,10 +87,11 @@ fun AppInfoDialog(
         }
         Spacer(modifier = Modifier.size(16.dp))
         Column(modifier = Modifier.heightIn(max = DESCRIPTION_MAX_HEIGHT).verticalScroll(rememberScrollState())) {
-            Text(
-                text = appInfo.description ?: stringResource(Res.string.no_description_available),
-                style = MaterialTheme.typography.bodySmall
-            )
+            SelectionContainer {
+                UrlText(
+                    text = appInfo.description ?: stringResource(Res.string.no_description_available),
+                )
+            }
         }
     }
 }

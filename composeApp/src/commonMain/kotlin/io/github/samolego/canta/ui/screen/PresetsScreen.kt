@@ -77,7 +77,7 @@ import io.github.samolego.canta.generated.resources.presets
 import io.github.samolego.canta.generated.resources.presets_description
 import io.github.samolego.canta.generated.resources.selected_apps
 import io.github.samolego.canta.generated.resources.share
-import io.github.samolego.canta.ui.component.IconText
+import io.github.samolego.canta.ui.component.text.IconText
 import io.github.samolego.canta.ui.component.ScreenTopBar
 import io.github.samolego.canta.ui.component.fab.ExpandableFAB
 import io.github.samolego.canta.ui.dialog.preset.ImportPresetDialog
