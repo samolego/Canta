@@ -131,7 +131,7 @@ Pega aquí el JSON del preajuste ...</string>
     <string name="pick_device">Elegir dispositivo</string>
     <string name="pick_device_description">Conecta tu dispositivo Android por USB y luego selecciónalo en el aviso del navegador. Activa la depuración USB en el dispositivo y acepta el aviso de autorización en su pantalla.</string>
     <string name="webusb_not_supported_title">WebUSB no es compatible</string>
-    <string name="webusb_not_supported_description">Este navegador no puede acceder a dispositivos USB. Abre Canta en Chrome o Edge en un ordenador para conectar tu teléfono.</string>
+    <string name="webusb_not_supported_description">This browser cannot access USB devices. Open Canta in Chromium based browser (e.g. Chrome, Brave, Edge, Vivaldi) on a computer to connect your phone.</string>
     <string name="device_access_denied">Se denegó el acceso al dispositivo USB. Desconéctalo y vuelve a conectarlo, concede el acceso de nuevo con “Elegir dispositivo” y asegúrate de que ningún otro programa (como adb) esté usando el dispositivo.</string>
     <string name="device_access_denied_linux">Se denegó el acceso al dispositivo USB. En Linux, los navegadores necesitan permiso para abrir dispositivos USB: instala las reglas udev para tu teléfono (por ejemplo, el paquete android-udev-rules), luego desconéctalo y vuelve a conectarlo.</string>
     <string name="device_access_denied_windows">Se denegó el acceso al dispositivo USB. En Windows, la interfaz ADB del teléfono necesita un controlador WinUSB: instálalo con Zadig y luego desconecta el teléfono y vuelve a conectarlo.</string>
