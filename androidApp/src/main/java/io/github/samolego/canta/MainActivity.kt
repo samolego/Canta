@@ -13,7 +13,7 @@ class MainActivity : FragmentActivity() {
         get() = application as CantaApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             enableEdgeToEdge()
         }
         super.onCreate(savedInstanceState)
