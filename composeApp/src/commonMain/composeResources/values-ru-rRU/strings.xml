@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Вы уверены, что хотите удалить %1$s приложений?</string>
     <string name="copy_package_name_to_clipboard">Скопировать имя пакета в буфер обмена</string>
     <string name="no_description_available">Описание отсутствует</string>
+    <string name="app_settings">Информация о приложении</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -110,6 +111,7 @@
     <string name="selected_apps">Выбранные приложения</string>
     <string name="text">Текст</string>
     <string name="install_shizuku">Установить приложение Shizuku</string>
+    <string name="enable_usb_debugging">(Необязательно) Включить USB отладку</string>
     <string name="start_shizuku_service">Запустить сервис Shizuku</string>
     <string name="grant_shizuku_permission_to_canta">Предоставить разрешение Canta в Shizuku</string>
     <string name="shizuku_required">Требуется Shizuku</string>
