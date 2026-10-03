@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Vai tiešām vēlaties noņemt %1$s lietotnes?</string>
     <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
     <string name="no_description_available">Apraksts nav pieejams</string>
+    <string name="app_settings">Informācija par lietotni</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -106,6 +107,7 @@
     <string name="selected_apps">Atlasītās lietotnes</string>
     <string name="text">Teksts</string>
     <string name="install_shizuku">Uzstādīt Shizuku lietotni</string>
+    <string name="enable_usb_debugging">(Pēc izvēles) Iespējot USB atkļūdošanu</string>
     <string name="start_shizuku_service">Palaist Shizuku pakalpojumu</string>
     <string name="grant_shizuku_permission_to_canta">Piešķirt atļauju Canta lietotnei Shizuku</string>
     <string name="shizuku_required">Nepieciešams Shizuku</string>
