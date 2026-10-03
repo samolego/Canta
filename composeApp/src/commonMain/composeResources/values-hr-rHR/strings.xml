@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Jeste li sigurni da želite deinstalirati %1$s aplikacija?</string>
     <string name="copy_package_name_to_clipboard">Kopiraj ime paketa u međuspremnik</string>
     <string name="no_description_available">Opis nije dostupan</string>
+    <string name="app_settings">Informacije o aplikaciji</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -106,6 +107,7 @@
     <string name="selected_apps">Odabrane aplikacije</string>
     <string name="text">Tekst</string>
     <string name="install_shizuku">Instalirajte Shizuku aplikaciju</string>
+    <string name="enable_usb_debugging">(Neobavezno) Omogući otklanjanje pogrešaka putem USB-a</string>
     <string name="start_shizuku_service">Pokrenite Shizuku servis</string>
     <string name="grant_shizuku_permission_to_canta">Dajte dopuštenje Canti u Shizuku aplikaciji</string>
     <string name="shizuku_required">Shizuku potreban</string>
