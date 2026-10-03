@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Tem a certeza que deseja desinstalar os %1$saplicativos?</string>
     <string name="copy_package_name_to_clipboard">Copiar nome do pacote para a área de transferência</string>
     <string name="no_description_available">Nenhuma descrição disponível</string>
+    <string name="app_settings">Informações do aplicativo</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -102,6 +103,7 @@
     <string name="selected_apps">Selecionar aplicativo</string>
     <string name="text">Texto</string>
     <string name="install_shizuku">Instalar aplicativo Shizuku</string>
+    <string name="enable_usb_debugging">(Opcional) Ative Depuração USB</string>
     <string name="start_shizuku_service">Iniciar serviço Shizuku</string>
     <string name="grant_shizuku_permission_to_canta">Conceder permissão para Canta no Shizuku</string>
     <string name="shizuku_required">Shizuku Necessário</string>
