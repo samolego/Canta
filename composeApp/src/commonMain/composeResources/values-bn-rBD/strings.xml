@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">%1$s টি অ্যাপ আনইনস্টল করা হবে, আপনি কি নিশ্চিত?</string>
     <string name="copy_package_name_to_clipboard">প্যাকেজের নাম ক্লিপবোর্ডে কপি করুন</string>
     <string name="no_description_available">কোনো ডেস্ক্রিপশন নেই</string>
+    <string name="app_settings">অ্যাপ ইনফো</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -102,6 +103,7 @@
     <string name="selected_apps">সিলেক্টেড অ্যাপ</string>
     <string name="text">টেক্সট</string>
     <string name="install_shizuku">Shizuku অ্যাপ ইনস্টল করুন</string>
+    <string name="enable_usb_debugging">(ঐচ্ছিক) ইউ. এস. বি. ডিবাগিং চালু করুন</string>
     <string name="start_shizuku_service">Shizuku সার্ভিস চালু করুন</string>
     <string name="grant_shizuku_permission_to_canta">Shizuku-তে Canta-র পারমিশন দিন</string>
     <string name="shizuku_required">Shizuku লাগবে</string>
