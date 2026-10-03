@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Haluatko varmasti poistaa %1$s sovellukset?</string>
     <string name="copy_package_name_to_clipboard">Kopioi paketin nimi leikepöydälle</string>
     <string name="no_description_available">Kuvausta ei ole saatavilla</string>
+    <string name="app_settings">Sovelluksen tiedot</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -102,6 +103,7 @@
     <string name="selected_apps">Valitut sovellukset</string>
     <string name="text">Teksti</string>
     <string name="install_shizuku">Asenna Shizuku-sovellus</string>
+    <string name="enable_usb_debugging">(Valinnainen) Ota USB-vianetsintä käyttöön</string>
     <string name="start_shizuku_service">Käynnistä Shizuku-palvelu</string>
     <string name="grant_shizuku_permission_to_canta">Myönnä lupa Cantalle Shizukussa</string>
     <string name="shizuku_required">Shizuku on pakollinen</string>
