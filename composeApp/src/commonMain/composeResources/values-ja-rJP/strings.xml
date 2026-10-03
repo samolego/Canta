@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">%1$s個のアプリをアンインストールしますか？</string>
     <string name="copy_package_name_to_clipboard">クリップボードにコピーしました</string>
     <string name="no_description_available">説明はありません</string>
+    <string name="app_settings">アプリ情報</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -98,6 +99,7 @@
     <string name="selected_apps">選択済みのアプリ</string>
     <string name="text">テキスト</string>
     <string name="install_shizuku">Shizuku アプリをインストール</string>
+    <string name="enable_usb_debugging">（任意）USBデバッグを有効にする</string>
     <string name="start_shizuku_service">Shizuku サービスを開始</string>
     <string name="grant_shizuku_permission_to_canta">Shizuku で Canta の権限を許可してください</string>
     <string name="shizuku_required">Shizuku が必要です</string>
