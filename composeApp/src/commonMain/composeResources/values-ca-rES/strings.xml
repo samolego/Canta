@@ -5,6 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">Estàs segur de desinstal·lar %1$s aplicacions?</string>
     <string name="copy_package_name_to_clipboard">Copia el nom del paquet al porta-retalls</string>
     <string name="no_description_available">Descripció no disponible</string>
+    <string name="app_settings">Informació de l\'aplicació</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -102,6 +103,7 @@
     <string name="selected_apps">Selected apps</string>
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
+    <string name="enable_usb_debugging">(Optional) Enable USB debugging</string>
     <string name="start_shizuku_service">Start Shizuku service</string>
     <string name="grant_shizuku_permission_to_canta">Grant permission to Canta in Shizuku</string>
     <string name="shizuku_required">Shizuku Required</string>
