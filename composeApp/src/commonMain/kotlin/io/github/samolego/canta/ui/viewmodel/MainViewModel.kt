@@ -109,7 +109,7 @@ class MainViewModel(
         if (type == AppsType.INSTALLED && settings.confirmBeforeUninstallFlow.first()) {
             val selected = appList.selectedApps.toList()
             if (selected.isEmpty()) return
-            val selectedAppsInfo = appList.selectedAppsSorted
+            val selectedAppsInfo = appList.apps.filter { it.packageName in appList.selectedApps }
             dialog = MainDialog.ConfirmUninstall(
                 appCount = selected.size,
                 canResetToFactory = selected.any { handler.canResetToFactory(it) },

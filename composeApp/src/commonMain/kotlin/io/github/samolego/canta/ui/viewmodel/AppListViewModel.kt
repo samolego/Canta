@@ -230,20 +230,21 @@ class AppListViewModel(
                     val disabled = disableSuccess.contains(pkg)
                     val enabled = enableSuccess.contains(pkg)
 
-                    if (uninstallApp) {
-                        if (uninstalled) {
-                            selectedApps.remove(pkg)
-                            actionCounts[AppAction.UNINSTALL] = (actionCounts[AppAction.UNINSTALL] ?: 0) + 1
-                        } else if (disabled) {
-                            // Uninstall failed, but disable succeeded
-                            actionCounts[AppAction.DISABLE] = (actionCounts[AppAction.DISABLE] ?: 0) + 1
-                        }
-                    } else if (disabled) {
+                    if (uninstalled) {
                         selectedApps.remove(pkg)
+                        actionCounts[AppAction.UNINSTALL] = (actionCounts[AppAction.UNINSTALL] ?: 0) + 1
+                    }
+                    if (disabled) {
                         actionCounts[AppAction.DISABLE] = (actionCounts[AppAction.DISABLE] ?: 0) + 1
-                    } else if (enabled) {
-                        selectedApps.remove(pkg)
+                        if (!uninstallApp) {
+                            selectedApps.remove(pkg)
+                        }
+                    }
+                    if (enabled) {
                         actionCounts[AppAction.ENABLE] = (actionCounts[AppAction.ENABLE] ?: 0) + 1
+                        if (!uninstallApp) {
+                            selectedApps.remove(pkg)
+                        }
                     }
                 }
             }
