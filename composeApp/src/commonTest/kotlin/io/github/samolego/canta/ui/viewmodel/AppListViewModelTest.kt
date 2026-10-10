@@ -6,6 +6,7 @@ import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.canta_description
 import io.github.samolego.canta.testing.FakeHandler
 import io.github.samolego.canta.testing.offlineBloatRepository
+import io.github.samolego.canta.ui.AppAction
 import io.github.samolego.canta.ui.AppsType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,13 +54,41 @@ class AppListViewModelTest {
         viewModel.loadApps().join()
         viewModel.selectedApps.addAll(listOf("com.a", "com.b"))
 
-        assertEquals(1, viewModel.applyToSelected(AppsType.INSTALLED))
+        assertEquals(mapOf(AppAction.UNINSTALL to 1), viewModel.applyToSelected(AppsType.INSTALLED))
 
         assertEquals(setOf("com.b"), viewModel.selectedApps.toSet(), "failed apps stay selected")
         assertEquals(
             mapOf("com.a" to true, "com.b" to false, "com.c" to false),
             viewModel.apps.associate { it.packageName to it.isUninstalled },
         )
+    }
+
+    @Test
+    fun disableAndEnableUpdatesDisabledStatus() = runVmTest {
+        val viewModel = viewModel()
+        viewModel.loadApps().join()
+        viewModel.selectedApps.add("com.a")
+
+        val disableResult = viewModel.applyToSelected(
+            AppsType.INSTALLED,
+            disableApp = true,
+            uninstallApp = false,
+        )
+        assertEquals(mapOf(AppAction.DISABLE to 1), disableResult)
+        assertEquals(listOf(listOf("com.a")), handler.disableCalls)
+        assertEquals(true, viewModel.apps.first { it.packageName == "com.a" }.isDisabled)
+        assertEquals(emptySet(), viewModel.selectedApps.toSet())
+
+        viewModel.selectedApps.add("com.a")
+        val enableResult = viewModel.applyToSelected(
+            AppsType.INSTALLED,
+            enableApp = true,
+            uninstallApp = false,
+        )
+        assertEquals(mapOf(AppAction.ENABLE to 1), enableResult)
+        assertEquals(listOf(listOf("com.a")), handler.enableCalls)
+        assertEquals(false, viewModel.apps.first { it.packageName == "com.a" }.isDisabled)
+        assertEquals(emptySet(), viewModel.selectedApps.toSet())
     }
 
     @Test

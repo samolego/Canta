@@ -34,6 +34,8 @@ class FakeHandler(
     val resettable = mutableSetOf<String>()
     val uninstallCalls = mutableListOf<Pair<List<String>, Boolean>>()
     val reinstallCalls = mutableListOf<List<String>>()
+    val disableCalls = mutableListOf<List<String>>()
+    val enableCalls = mutableListOf<List<String>>()
     var devices = emptyList<CantaDevice>()
     var connectFailure: DeviceConnectionFailure? = null
 
@@ -52,6 +54,16 @@ class FakeHandler(
 
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> {
         reinstallCalls += packageNames
+        return results(packageNames)
+    }
+
+    override fun disableApps(packageNames: List<String>): Flow<OperationResult> {
+        disableCalls += packageNames
+        return results(packageNames)
+    }
+
+    override fun enableApps(packageNames: List<String>): Flow<OperationResult> {
+        enableCalls += packageNames
         return results(packageNames)
     }
 

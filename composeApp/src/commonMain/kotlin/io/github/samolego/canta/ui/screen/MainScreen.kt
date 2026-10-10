@@ -204,13 +204,15 @@ private fun MainDialogs(
         is MainDialog.ConfirmUninstall -> UninstallAppsDialog(
             appCount = dialog.appCount,
             canResetToFactory = dialog.canResetToFactory,
+            hasDisabledApp = dialog.hasDisabledApp,
+            hasEnabledApp = dialog.hasEnabledApp,
             onDismiss = mainViewModel::dismissDialog,
             onAgree = mainViewModel::onUninstallConfirmed,
         )
         is MainDialog.Success -> SuccessDialog(
             platform = platform,
             count = dialog.count,
-            isReinstall = dialog.isReinstall,
+            action = dialog.action,
             onDismissRequest = mainViewModel::dismissDialog,
         )
         MainDialog.ShizukuSetup -> ShizukuRequirementDialog(
