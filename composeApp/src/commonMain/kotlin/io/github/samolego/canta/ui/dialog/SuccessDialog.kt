@@ -21,8 +21,11 @@ import io.github.samolego.canta.generated.resources.cancel
 import io.github.samolego.canta.generated.resources.canta_donate_request
 import io.github.samolego.canta.generated.resources.donate
 import io.github.samolego.canta.generated.resources.success
+import io.github.samolego.canta.generated.resources.success_disabled
+import io.github.samolego.canta.generated.resources.success_enabled
 import io.github.samolego.canta.generated.resources.success_reinstalled
 import io.github.samolego.canta.generated.resources.success_uninstalled
+import io.github.samolego.canta.ui.AppAction
 import io.github.samolego.canta.ui.component.CantaDialog
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
@@ -33,7 +36,7 @@ private const val DONATE_URL = "https://www.paypal.com/donate/?hosted_button_id=
 fun SuccessDialog(
     platform: CantaPlatform,
     count: Int,
-    isReinstall: Boolean = false,
+    action: AppAction = AppAction.UNINSTALL,
     onDismissRequest: () -> Unit
 ) {
     CantaDialog(
@@ -55,9 +58,15 @@ fun SuccessDialog(
             }
         },
     ) {
+        val messageRes = when (action) {
+            AppAction.UNINSTALL -> Res.plurals.success_uninstalled
+            AppAction.REINSTALL -> Res.plurals.success_reinstalled
+            AppAction.DISABLE -> Res.plurals.success_disabled
+            AppAction.ENABLE -> Res.plurals.success_enabled
+        }
         Text(
             text = pluralStringResource(
-                if (isReinstall) Res.plurals.success_reinstalled else Res.plurals.success_uninstalled,
+                messageRes,
                 count,
                 count
             ),

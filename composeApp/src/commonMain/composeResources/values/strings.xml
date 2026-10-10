@@ -28,6 +28,8 @@
     <string name="app_size">Size: %1$s</string>
     <string name="uninstall">Uninstall</string>
     <string name="reinstall">ReInstall</string>
+    <string name="disable">Disable</string>
+    <string name="enable">Enable</string>
     <string name="only_system">Only system</string>
     <string name="no_apps_found">No apps found</string>
     <string name="loading_apps">Loading apps</string>
@@ -43,6 +45,10 @@
         <item quantity="two">Clear %1$d selected</item>
         <item quantity="other">Clear %1$d selected</item>
     </plurals>
+    <plurals name="choose_action_for_apps">
+        <item quantity="one">Choose action for %1$d app</item>
+        <item quantity="other">Choose action for %1$d apps</item>
+    </plurals>
     <plurals name="num_selected_apps">
     <item quantity="one">%1$d app selected</item>
     <item quantity="other">%1$d apps selected</item>
@@ -54,6 +60,14 @@
 <plurals name="success_reinstalled">
     <item quantity="one">You have successfully reinstalled %1$d app!</item>
     <item quantity="other">You have successfully reinstalled %1$d apps!</item>
+</plurals>
+<plurals name="success_disabled">
+    <item quantity="one">You have successfully disabled %1$d app!</item>
+    <item quantity="other">You have successfully disabled %1$d apps!</item>
+</plurals>
+<plurals name="success_enabled">
+    <item quantity="one">You have successfully enabled %1$d app!</item>
+    <item quantity="other">You have successfully enabled %1$d apps!</item>
 </plurals>
     <string name="close">Close</string>
     <string
@@ -86,6 +100,9 @@
     <string
         name="select_all_enabled"
     >Select all has been enabled for filter type "Recommended".</string>
+    <string name="uninstall_app">Uninstall app</string>
+    <string name="disable_app">Disable app</string>
+    <string name="enable_app">Enable app</string>
     <string name="reset_to_factory_version">Reset to factory version</string>
     <string name="import_preset">Import preset</string>
     <string

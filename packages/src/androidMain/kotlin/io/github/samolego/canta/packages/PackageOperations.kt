@@ -96,6 +96,32 @@ class PackageOperations(
         if (result.status == STATUS_NO_RESULT && isInstalled(packageName)) result.copy(success = true) else result
     }
 
+    /** Disables [packageName] for the user. */
+    fun disable(packageName: String): OperationResult = reportingFailure(packageName) {
+        Log.i(TAG, "Disabling '$packageName'")
+        privilegedPackageManager.setApplicationEnabledSetting(
+            packageName,
+            PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER,
+            0,
+            services.userId,
+            INSTALLER_PACKAGE,
+        )
+        OperationResult(packageName, success = true, status = PackageInstaller.STATUS_SUCCESS)
+    }
+
+    /** Enables [packageName] for the user. */
+    fun enable(packageName: String): OperationResult = reportingFailure(packageName) {
+        Log.i(TAG, "Enabling '$packageName'")
+        privilegedPackageManager.setApplicationEnabledSetting(
+            packageName,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            0,
+            services.userId,
+            INSTALLER_PACKAGE,
+        )
+        OperationResult(packageName, success = true, status = PackageInstaller.STATUS_SUCCESS)
+    }
+
     private fun invokeUninstall(installer: PackageInstaller, packageName: String, flags: Int, sender: IntentSender) {
         PackageInstaller::class.java
             .getMethod("uninstall", String::class.java, Int::class.javaPrimitiveType, IntentSender::class.java)

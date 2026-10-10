@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.packages.OperationResult
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 /**
  * Status of the privileged runtime (Shizuku / Sui on Android).
@@ -126,6 +127,12 @@ interface CantaHandler {
 
     /** Reinstalls apps previously uninstalled for the user; one result per package. */
     fun reinstallApps(packageNames: List<String>): Flow<OperationResult>
+
+    /** Disables [packageNames] for the user; one result per package. */
+    fun disableApps(packageNames: List<String>): Flow<OperationResult> = emptyFlow()
+
+    /** Enables [packageNames] for the user; one result per package. */
+    fun enableApps(packageNames: List<String>): Flow<OperationResult> = emptyFlow()
 
     /** Whether the given package is on the device (installed or uninstalled for the user). */
     suspend fun packageExists(packageName: String): Boolean
