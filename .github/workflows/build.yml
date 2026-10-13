@@ -6,7 +6,13 @@ on:
     branches:
       - master
     paths:
-      - "app/**"
+      - "androidApp/**"
+      - "composeApp/**"
+      - "packages/**"
+      - "helper/**"
+      - "gradle/**"
+      - "*.gradle.kts"
+      - "gradle.properties"
 
 jobs:
   buildAndroid:
@@ -44,21 +50,21 @@ jobs:
 
       - name: 🤖📦 Create Android release
         run: |
-          ./gradlew app:assembleRelease
+          ./gradlew :androidApp:assembleRelease
 
       - name: 📝 Generate build date
         id: date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
       - name: 📝 Generate SHA-256
         run: |
-          cd app/build/outputs/apk/release/
+          cd androidApp/build/outputs/apk/release/
           sha256sum *.apk > SHA256SUMS.txt
       - name: "Echo SHA-256 sums"
-        run: cat app/build/outputs/apk/release/SHA256SUMS.txt
+        run: cat androidApp/build/outputs/apk/release/SHA256SUMS.txt
       - name: 📦 Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release
           # Include both the APK and the SHA-256 sums
-          path: app/build/outputs/apk/release/
+          path: androidApp/build/outputs/apk/release/
           retention-days: 7

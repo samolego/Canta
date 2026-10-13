@@ -75,6 +75,7 @@ export default defineConfig({
     logo: "https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
     nav: [
       { text: "Home", link: "/" },
+      { text: "Web App", link: "/app/", target: "_self" },
       { text: "Install", link: "/install" },
       { text: "Features", link: "/features" },
       { text: "Presets", link: "/presets" },

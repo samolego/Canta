@@ -1,3 +1,13 @@
 files:
-  - source: /app/src/main/res/values/strings.xml
-    translation: /app/src/main/res/values-%android_code%/%original_file_name%
+  - source: /composeApp/src/commonMain/composeResources/values/strings.xml
+    translation: /composeApp/src/commonMain/composeResources/values-%android_code%/%original_file_name%
+    # Compose Multiplatform resources don't unescape Android's \' and \", but
+    # Crowdin's Android XML export always adds them (escape_quotes and
+    # escape_special_characters only apply to .properties files). Strip them
+    # manually after each sync.
+    escape_quotes: 0
+    escape_special_characters: 0
+    languages_mapping:
+      android_code:
+        he: he-rIL
+        sr: sr

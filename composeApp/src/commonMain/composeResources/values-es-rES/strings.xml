@@ -60,13 +60,13 @@
     <string name="app_version">Versión de la aplicación: %1$s</string>
     <string name="no_warranty_content">Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con tu dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicios continuos del dispositivo, pérdida de datos, etc. El desarrollador de esta aplicación no se hace responsable de cualquier daño causado a tu dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
     <string name="disclaimer">Descargo de responsabilidad - Sin garantía</string>
-    <string name="proceed_at_own_risk">Al hacer clic en \"Continuar\", aceptas utilizar esta aplicación bajo tu propia responsabilidad.</string>
+    <string name="proceed_at_own_risk">Al hacer clic en "Continuar", aceptas utilizar esta aplicación bajo tu propia responsabilidad.</string>
     <string name="never_show_again">No volver a mostrar este mensaje</string>
     <string name="proceed">Continuar</string>
     <string name="confirm_uninstall_description">Indicar si se debe mostrar el diálogo para confirmar la desinstalación.</string>
     <string name="select_all">Seleccionar todo</string>
     <string name="select_all_tip">Toca %1$d veces más para activar la función de seleccionar todo.</string>
-    <string name="select_all_enabled">Se ha activado Seleccionar todo para el tipo de filtro \"Recomendado\".</string>
+    <string name="select_all_enabled">Se ha activado Seleccionar todo para el tipo de filtro "Recomendado".</string>
     <string name="reset_to_factory_version">Restablecer a la versión de fábrica</string>
     <string name="import_preset">Importar preajuste</string>
     <string name="import_preset_description">Importa un preajuste desde el portapapeles o pega directamente el texto JSON.</string>

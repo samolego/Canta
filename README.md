@@ -2,7 +2,7 @@
 
 # Canta
 
-[![](https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)](https://samolego.github.io/Canta/)
+[![](https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png)](https://samolego.github.io/Canta/)
 
 Uninstall any\* app without root!
 Powered by [Shizuku](https://shizuku.rikka.app/) ([Android 16 fork](https://github.com/thedjchi/Shizuku)).
@@ -21,6 +21,8 @@ Powered by [Shizuku](https://shizuku.rikka.app/) ([Android 16 fork](https://gith
 [<img src="https://shields.rbtlog.dev/simple/io.github.samolego.canta" alt="badge">](https://shields.rbtlog.dev/io.github.samolego.canta)
 [![donate badge](https://img.shields.io/badge/Donate_via-Paypal-blue)](https://www.paypal.com/donate/?hosted_button_id=FD4R46ZZ5EWME)
 ---
+
+Don't want to download and have a data USB cable and a Chromium-based browser? Try Canta directly on the [web](https://samolego.github.io/Canta/app/), without installing anything!
 
 </div>
 
@@ -89,4 +91,4 @@ https://crowdin.com/project/canta
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=samolego/Canta&type=Date)](https://star-history.com/#samolego/Canta&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=samolego/Canta&type=Date)](https://star-history.dera.page/#samolego/Canta&Date)

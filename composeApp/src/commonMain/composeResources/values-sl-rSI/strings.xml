@@ -68,13 +68,13 @@
     <string name="app_version">Verzija: %1$s</string>
     <string name="no_warranty_content">Ta aplikacija zagotavlja priporočila za odstranitev aplikacij na podlagi informacij tretjih oseb. Ta priporočila so informativne narave in ne zagotavljajo varnosti ali združljivosti z vašo napravo. Odstranjevanje sistemskih aplikacij lahko povzroči nepričakovane težave, med drugim: izgubo funkcionalnosti, nestabilnost sistema, nezmožnost zagona naprave - bootloop, izgubo podatkov itd. Razvijalec te aplikacije ni odgovoren za morebitno škodo, ki bi nastala na vaši napravi zaradi upoštevanja navedenih priporočil oz. opisov.</string>
     <string name="disclaimer">Izjava o omejitvi odgovornosti - ni garancije</string>
-    <string name="proceed_at_own_risk">S klikom na gumb \"Nadaljuj\" se strinjate z uporabo aplikacije na lastno odgovornost.</string>
+    <string name="proceed_at_own_risk">S klikom na gumb "Nadaljuj" se strinjate z uporabo aplikacije na lastno odgovornost.</string>
     <string name="never_show_again">Nikoli več ne prikaži tega obvestila</string>
     <string name="proceed">Nadaljuj</string>
     <string name="confirm_uninstall_description">Ali naj se prikaže pogovorno okno za potrditev odstranjevanja.</string>
     <string name="select_all">Izberi vse</string>
     <string name="select_all_tip">Kliknite še %1$d-krat, da omogočite možnost izbora vseh aplikacij.</string>
-    <string name="select_all_enabled">Za vrsto filtra \"Priporočeno\" je sedaj omogočena možnost \"Izberi vse\".</string>
+    <string name="select_all_enabled">Za vrsto filtra "Priporočeno" je sedaj omogočena možnost "Izberi vse".</string>
     <string name="reset_to_factory_version">Ponastavi na tovarniško verzijo</string>
     <string name="import_preset">Uvozi predlogo</string>
     <string name="import_preset_description">Uvozite predlogo z odložišča ali prilepite JSON.</string>
@@ -141,9 +141,9 @@
     <string name="pick_device_description">Povežite svojo napravo Android preko USB kabla, nato pa jo izberite v brskalnikovem oknu. Vključite USB razhroščevanje na napravi in dovolite dostop na napravi.</string>
     <string name="webusb_not_supported_title">WebUSB ni podprt</string>
     <string name="webusb_not_supported_description">This browser cannot access USB devices. Open Canta in Chromium based browser (e.g. Chrome, Brave, Edge, Vivaldi) on a computer to connect your phone.</string>
-    <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with \"Pick device\", and make sure no other program (such as adb) is using the device.</string>
+    <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with "Pick device", and make sure no other program (such as adb) is using the device.</string>
     <string name="device_access_denied_linux">Access to the USB device was denied. On Linux, browsers need permission to open USB devices: install udev rules for your phone (e.g. the android-udev-rules package), then unplug it and plug it back in.</string>
-    <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone\'s ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
+    <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone's ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
     <string name="device_connection_failed">Could not connect to the device: %1$s</string>
     <string name="device_no_longer_available">The selected device is no longer available. Please pick it again.</string>
     <string name="device_busy">The device is already in use by another program or browser tab. Close anything else using it, unplug the device and plug it back in, then pick it again.</string>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canta</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+        @media (prefers-color-scheme: dark) {
+            html, body {
+                background-color: #131318;
+            }
+        }
+        #cantaApp {
+            width: 100%;
+            height: 100%;
+        }
+        /* Shown only until Compose appends its canvas. */
+        #cantaApp:empty::after {
+            content: "Loading Canta ...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: sans-serif;
+            color: #888888;
+        }
+        #cantaApp > canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+            outline: none;
+        }
+    </style>
+    <script type="application/javascript" src="webApp.js"></script>
+</head>
+<body>
+<div id="cantaApp"></div>
+</body>
+</html>

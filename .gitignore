@@ -9,11 +9,15 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 .DS_Store
-/build
+build/
+release/
 /captures
 .externalNativeBuild
 .cxx
 local.properties
-icon.html
 key.properties
+icon.html
 .kotlin
+
+# Legacy app module build artifacts (module is not part of the build anymore)
+app/release/
