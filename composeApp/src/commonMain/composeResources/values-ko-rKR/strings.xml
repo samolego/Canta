@@ -19,7 +19,7 @@
     <string name="helper_unavailable">기기에 Canta의 도우미를 설정할 수 없습니다. 기기가 연결 및 승인되었는지 확인한 후 다시 시도하세요.</string>
     <string name="tab_installed">설치된 앱</string>
     <string name="tab_uninstalled">제거된 앱</string>
-    <string name="cannot_uninstall_canta">Can'ta ouch this!</string>
+    <string name="cannot_uninstall_canta">Can\'ta ouch this!</string>
     <string name="device_unreachable">장치에 연결하지 못했습니다. 장치가 연결되어 있고 권한이 부여되었는지 확인하십시오.</string>
     <string name="app_size">크기: %1$s</string>
     <string name="uninstall">제거</string>
@@ -47,7 +47,7 @@
         <item quantity="other">%1$d개의 앱이 성공적으로 재설치되었습니다!</item>
     </plurals>
     <string name="close">닫기</string>
-    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %1$s.\nCanta would't be the same without their work.</string>
+    <string name="canta_description">Canta is an open source uninstaller app that uses Shizuku to remove system and user apps.\nIt allows you to debloat your device as you wish, no PC required.\n\nSpecial thanks to %1$s.\nCanta would\'t be the same without their work.</string>
     <string name="search_apps">앱 검색</string>
     <string name="auto_update_bloat_list">블로트 목록 자동 업데이트</string>
     <string name="auto_update_bloat_list_description">앱 블로트 정보의 새 버전을 자동으로 가져옵니다. 이를 통해 최신 배지와 앱 설명을 보장합니다.</string>
@@ -129,7 +129,7 @@
     <string name="pick_device_description">USB로 Android 기기를 연결한 다음, 브라우저에 표시되는 창에서 해당 기기를 선택하세요. 기기에서 USB 디버깅을 활성화하고 화면에 나타나는 승인 요청을 수락하세요.</string>
     <string name="webusb_not_supported_title">WebUSB가 지원하지 않습니다</string>
     <string name="webusb_not_supported_description">이 브라우저는 USB 장치에 접근할 수 없습니다. 휴대폰을 연결하려면 컴퓨터에서 Chromium 기반 브라우저(예: Chrome, Brave, Edge, Vivaldi)를 사용하여 Canta를 실행하세요.</string>
-    <string name="device_access_denied">USB 장치에 대한 액세스가 거부되었습니다. 장치를 분리했다가 다시 연결하고, "장치 선택"을 통해 다시 액세스 권한을 부여한 다음, 다른 프로그램(예: adb)이 해당 장치를 사용하고 있지 않은지 확인하십시오.</string>
+    <string name="device_access_denied">USB 장치에 대한 액세스가 거부되었습니다. 장치를 분리했다가 다시 연결하고, \"장치 선택\"을 통해 다시 액세스 권한을 부여한 다음, 다른 프로그램(예: adb)이 해당 장치를 사용하고 있지 않은지 확인하십시오.</string>
     <string name="device_access_denied_linux">USB 장치에 대한 접근이 거부되었습니다. Linux 환경에서 브라우저가 USB 장치를 열려면 권한이 필요합니다. 사용 중인 휴대폰에 맞는 udev 규칙(예: android-udev-rules 패키지)을 설치한 다음, 장치를 분리했다가 다시 연결하십시오.</string>
     <string name="device_access_denied_windows">USB 장치에 대한 접근이 거부되었습니다. Windows 환경에서는 휴대폰의 ADB 인터페이스에 WinUSB 드라이버가 필요합니다. Zadig를 사용하여 드라이버를 설치한 다음, 휴대폰을 연결 해제했다가 다시 연결하십시오.</string>
     <string name="device_connection_failed">장치에 연결할 수 없습니다: %1$s</string>
