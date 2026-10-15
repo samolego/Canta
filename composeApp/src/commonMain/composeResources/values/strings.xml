@@ -23,6 +23,8 @@
     <string name="helper_unavailable">Couldn't set up Canta's helper on the device. Check that it is connected and authorized, then try again.</string>
     <string name="tab_installed">Installed apps</string>
     <string name="tab_uninstalled">Uninstalled apps</string>
+    <string name="tab_enabled">Enabled apps</string>
+    <string name="tab_disabled">Frozen apps</string>
     <string name="cannot_uninstall_canta">Can'ta ouch this!</string>
     <string name="device_unreachable">Failed to reach the device. Check that it is connected and authorized.</string>
     <string name="app_size">Size: %1$s</string>
@@ -30,6 +32,14 @@
     <string name="reinstall">ReInstall</string>
     <string name="disable">Disable</string>
     <string name="enable">Enable</string>
+    <string name="freeze">Freeze</string>
+    <string name="unfreeze">Unfreeze</string>
+    <string name="operation_mode">Operation mode</string>
+    <string name="mode_uninstaller">Uninstaller</string>
+    <string name="mode_uninstaller_description">Uninstall or reinstall apps for user 0.</string>
+    <string name="mode_freeze">Freeze</string>
+    <string name="mode_freeze_description">Freeze (disable) or unfreeze (enable) apps without uninstalling.</string>
+    <string name="are_you_sure_to_freeze_apps">Are you sure to freeze %1$s apps?</string>
     <string name="only_system">Only system</string>
     <string name="no_apps_found">No apps found</string>
     <string name="loading_apps">Loading apps</string>

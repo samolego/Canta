@@ -15,6 +15,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AcUnit
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,7 +39,9 @@ import io.github.samolego.canta.core.CantaHandler
 import io.github.samolego.canta.core.CantaPlatform
 import io.github.samolego.canta.data.app.Filter
 import io.github.samolego.canta.generated.resources.Res
+import io.github.samolego.canta.generated.resources.freeze
 import io.github.samolego.canta.generated.resources.reinstall
+import io.github.samolego.canta.generated.resources.unfreeze
 import io.github.samolego.canta.generated.resources.uninstall
 import io.github.samolego.canta.ui.AppsType
 import io.github.samolego.canta.ui.component.AppList
@@ -45,6 +49,7 @@ import io.github.samolego.canta.ui.component.CantaTopBar
 import io.github.samolego.canta.ui.component.fab.PresetEditFAB
 import io.github.samolego.canta.ui.dialog.DeviceChooserDialog
 import io.github.samolego.canta.ui.dialog.ExplainBadgesDialog
+import io.github.samolego.canta.ui.dialog.FreezeAppsDialog
 import io.github.samolego.canta.ui.dialog.NoWarrantyDialog
 import io.github.samolego.canta.ui.dialog.ShizukuRequirementDialog
 import io.github.samolego.canta.ui.dialog.SuccessDialog
@@ -71,9 +76,10 @@ fun MainScreen(
     navigateToPage: (route: String) -> Unit,
     closeApp: () -> Unit,
     enableSelectAll: Boolean,
+    tabs: List<AppsType> = listOf(AppsType.INSTALLED, AppsType.UNINSTALLED),
 ) {
     // Pager state is hoisted to CantaNavigation so preset-applying knows the tab.
-    val selectedAppsType = AppsType.entries[pagerState.currentPage]
+    val selectedAppsType = tabs[pagerState.currentPage.coerceIn(0, tabs.size - 1)]
 
     LaunchedEffect(pagerState) {
         // Filters and selection are per tab: reset them when the user switches
@@ -83,6 +89,14 @@ fun MainScreen(
         snapshotFlow { pagerState.currentPage }.drop(1).collect {
             appListViewModel.selectedFilter = Filter.any
             appListViewModel.selectedApps.clear()
+        }
+    }
+
+    LaunchedEffect(tabs) {
+        appListViewModel.selectedFilter = Filter.any
+        appListViewModel.selectedApps.clear()
+        if (pagerState.currentPage >= tabs.size) {
+            pagerState.scrollToPage(0)
         }
     }
 
@@ -106,7 +120,7 @@ fun MainScreen(
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-            AppsTabs(pagerState)
+            AppsTabs(pagerState, tabs)
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.weight(1f).fillMaxWidth(),
@@ -116,7 +130,7 @@ fun MainScreen(
                     onRefresh = appListViewModel::loadApps,
                 ) {
                     AppList(
-                        appType = AppsType.entries[page],
+                        appType = tabs[page],
                         appListModel = appListViewModel,
                         settingsViewModel = settingsViewModel,
                         platform = platform,
@@ -152,6 +166,8 @@ private fun MainFab(
             containerColor = when (appsType) {
                 AppsType.INSTALLED -> MaterialTheme.colorScheme.errorContainer
                 AppsType.UNINSTALLED -> MaterialTheme.colorScheme.tertiaryContainer
+                AppsType.ENABLED -> MaterialTheme.colorScheme.secondaryContainer
+                AppsType.DISABLED -> MaterialTheme.colorScheme.tertiaryContainer
             },
             shape = RoundedCornerShape(32.dp),
             modifier = Modifier.padding(16.dp).navigationBarsPadding(),
@@ -160,6 +176,8 @@ private fun MainFab(
             when (appsType) {
                 AppsType.INSTALLED -> Icon(Icons.Default.Delete, stringResource(Res.string.uninstall))
                 AppsType.UNINSTALLED -> Icon(Icons.Default.InstallMobile, stringResource(Res.string.reinstall))
+                AppsType.ENABLED -> Icon(Icons.Default.AcUnit, stringResource(Res.string.freeze))
+                AppsType.DISABLED -> Icon(Icons.Default.CheckCircle, stringResource(Res.string.unfreeze))
             }
         }
     }
@@ -167,17 +185,17 @@ private fun MainFab(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AppsTabs(pagerState: PagerState) {
+private fun AppsTabs(pagerState: PagerState, tabs: List<AppsType>) {
     val coroutineScope = rememberCoroutineScope()
     PrimaryTabRow(
-        selectedTabIndex = pagerState.currentPage,
+        selectedTabIndex = pagerState.currentPage.coerceIn(0, tabs.size - 1),
         contentColor = MaterialTheme.colorScheme.primary,
         containerColor = MaterialTheme.colorScheme.primaryContainer,
     ) {
-        AppsType.entries.forEach { tab ->
+        tabs.forEachIndexed { index, tab ->
             Tab(
-                selected = pagerState.currentPage == tab.ordinal,
-                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(tab.ordinal) } },
+                selected = pagerState.currentPage == index,
+                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
                 icon = { Icon(tab.icon, contentDescription = stringResource(tab.label)) },
             )
         }
@@ -204,10 +222,13 @@ private fun MainDialogs(
         is MainDialog.ConfirmUninstall -> UninstallAppsDialog(
             appCount = dialog.appCount,
             canResetToFactory = dialog.canResetToFactory,
-            hasDisabledApp = dialog.hasDisabledApp,
-            hasEnabledApp = dialog.hasEnabledApp,
             onDismiss = mainViewModel::dismissDialog,
             onAgree = mainViewModel::onUninstallConfirmed,
+        )
+        is MainDialog.ConfirmFreeze -> FreezeAppsDialog(
+            appCount = dialog.appCount,
+            onDismiss = mainViewModel::dismissDialog,
+            onAgree = mainViewModel::onFreezeConfirmed,
         )
         is MainDialog.Success -> SuccessDialog(
             platform = platform,

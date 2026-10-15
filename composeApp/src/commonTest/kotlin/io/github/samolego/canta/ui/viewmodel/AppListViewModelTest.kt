@@ -69,22 +69,14 @@ class AppListViewModelTest {
         viewModel.loadApps().join()
         viewModel.selectedApps.add("com.a")
 
-        val disableResult = viewModel.applyToSelected(
-            AppsType.INSTALLED,
-            disableApp = true,
-            uninstallApp = false,
-        )
+        val disableResult = viewModel.applyToSelected(AppsType.ENABLED)
         assertEquals(mapOf(AppAction.DISABLE to 1), disableResult)
         assertEquals(listOf(listOf("com.a")), handler.disableCalls)
         assertEquals(true, viewModel.apps.first { it.packageName == "com.a" }.isDisabled)
         assertEquals(emptySet(), viewModel.selectedApps.toSet())
 
         viewModel.selectedApps.add("com.a")
-        val enableResult = viewModel.applyToSelected(
-            AppsType.INSTALLED,
-            enableApp = true,
-            uninstallApp = false,
-        )
+        val enableResult = viewModel.applyToSelected(AppsType.DISABLED)
         assertEquals(mapOf(AppAction.ENABLE to 1), enableResult)
         assertEquals(listOf(listOf("com.a")), handler.enableCalls)
         assertEquals(false, viewModel.apps.first { it.packageName == "com.a" }.isDisabled)

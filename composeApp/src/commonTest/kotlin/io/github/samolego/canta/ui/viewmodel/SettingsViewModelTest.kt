@@ -1,5 +1,6 @@
 package io.github.samolego.canta.ui.viewmodel
 
+import io.github.samolego.canta.data.AppMode
 import io.github.samolego.canta.data.CantaSettings
 import io.github.samolego.canta.testing.MemoryStorage
 import kotlinx.coroutines.Dispatchers
@@ -53,5 +54,15 @@ class SettingsViewModelTest {
         val viewModel = SettingsViewModel(settings)
         settings.setAutoUpdateBloatList(false)
         assertEquals(false, viewModel.autoUpdateBloatList.value)
+    }
+
+    @Test
+    fun appModeReflectsStoredValueAndSaves() = runTest {
+        val settings = CantaSettings(MemoryStorage())
+        val viewModel = SettingsViewModel(settings)
+        assertEquals(AppMode.UNINSTALLER, viewModel.appMode.value)
+
+        viewModel.saveAppMode(AppMode.FREEZE)
+        assertEquals(AppMode.FREEZE, settings.appModeFlow.first { it == AppMode.FREEZE })
     }
 }

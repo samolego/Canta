@@ -97,16 +97,26 @@ class MainViewModelTest {
     }
 
     @Test
-    fun disableAppReportsDisableSuccess() = runVmTest {
+    fun freezeAppReportsDisableSuccess() = runVmTest {
         val (main, appList) = mainViewModel()
         appList.selectedApps.add("com.a")
 
-        main.applyToSelected(AppsType.INSTALLED)
-        assertEquals(MainDialog.ConfirmUninstall(appCount = 1, canResetToFactory = false), main.dialog)
+        main.applyToSelected(AppsType.ENABLED)
+        assertEquals(MainDialog.ConfirmFreeze(appCount = 1), main.dialog)
 
-        main.onUninstallConfirmed(disableApp = true, uninstallApp = false)
+        main.onFreezeConfirmed()
         assertEquals(listOf(listOf("com.a")), handler.disableCalls)
         assertEquals(MainDialog.Success(count = 1, action = AppAction.DISABLE), main.dialog)
+    }
+
+    @Test
+    fun unfreezeAppReportsEnableSuccess() = runVmTest {
+        val (main, appList) = mainViewModel()
+        appList.selectedApps.add("com.a")
+
+        main.applyToSelected(AppsType.DISABLED)
+        assertEquals(listOf(listOf("com.a")), handler.enableCalls)
+        assertEquals(MainDialog.Success(count = 1, action = AppAction.ENABLE), main.dialog)
     }
 
     @Test

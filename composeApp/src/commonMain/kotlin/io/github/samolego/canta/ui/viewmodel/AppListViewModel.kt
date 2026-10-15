@@ -171,80 +171,54 @@ class AppListViewModel(
     }
 
     /**
-     * Uninstalls ([AppsType.INSTALLED]) or reinstalls ([AppsType.UNINSTALLED])
-     * every selected app, alongside optional disable/enable operations.
+     * Applies the appropriate action based on the tab [type] to every selected app.
+     * In uninstaller mode ([AppsType.INSTALLED]): uninstalls apps and disables them as fallback.
+     * In reinstall mode ([AppsType.UNINSTALLED]): reinstalls apps and enables them.
+     * In freeze mode:
+     * - [AppsType.ENABLED]: disables (freezes) selected apps.
+     * - [AppsType.DISABLED]: enables (unfreezes) selected apps.
      * Returns a map of [AppAction] to the number of apps that succeeded.
      */
     suspend fun applyToSelected(
         type: AppsType,
         resetToFactory: Boolean = false,
-        disableApp: Boolean = false,
-        enableApp: Boolean = false,
-        uninstallApp: Boolean = true,
     ): Map<AppAction, Int> {
         val packageNames = selectedApps.toList()
         val actionCounts = mutableMapOf<AppAction, Int>()
 
         when (type) {
             AppsType.INSTALLED -> {
-                val enableSuccess = mutableSetOf<String>()
+                // Also disable apps when uninstalling so stubborn apps that cannot be uninstalled
+                // are at least frozen/disabled.
                 val disableSuccess = mutableSetOf<String>()
+                cantaHandler.disableApps(packageNames).collect { result ->
+                    if (result.success) {
+                        disableSuccess.add(result.packageName)
+                        changeAppEnabledStatus(result.packageName, false)
+                    } else {
+                        LogUtils.w(TAG, "disable '${result.packageName}' failed: ${result.message} (${result.status})")
+                    }
+                }
+
                 val uninstallSuccess = mutableSetOf<String>()
-
-                if (enableApp) {
-                    cantaHandler.enableApps(packageNames).collect { result ->
-                        if (result.success) {
-                            enableSuccess.add(result.packageName)
-                            changeAppEnabledStatus(result.packageName, true)
-                        } else {
-                            LogUtils.w(TAG, "enable '${result.packageName}' failed: ${result.message} (${result.status})")
-                        }
+                cantaHandler.uninstallApps(packageNames, resetToFactory).collect { result ->
+                    if (result.success) {
+                        uninstallSuccess.add(result.packageName)
+                        toggleUninstalled(result.packageName)
+                    } else {
+                        LogUtils.w(TAG, "uninstall '${result.packageName}' failed: ${result.message} (${result.status})")
                     }
                 }
 
-                if (disableApp) {
-                    cantaHandler.disableApps(packageNames).collect { result ->
-                        if (result.success) {
-                            disableSuccess.add(result.packageName)
-                            changeAppEnabledStatus(result.packageName, false)
-                        } else {
-                            LogUtils.w(TAG, "disable '${result.packageName}' failed: ${result.message} (${result.status})")
-                        }
-                    }
-                }
-
-                if (uninstallApp) {
-                    cantaHandler.uninstallApps(packageNames, resetToFactory).collect { result ->
-                        if (result.success) {
-                            uninstallSuccess.add(result.packageName)
-                            toggleUninstalled(result.packageName)
-                        } else {
-                            LogUtils.w(TAG, "uninstall '${result.packageName}' failed: ${result.message} (${result.status})")
-                        }
-                    }
-                }
-
-                // Track action outcomes independently and clear selection only for successful outcomes
                 packageNames.forEach { pkg ->
                     val uninstalled = uninstallSuccess.contains(pkg)
                     val disabled = disableSuccess.contains(pkg)
-                    val enabled = enableSuccess.contains(pkg)
 
                     if (uninstalled) {
                         selectedApps.remove(pkg)
                         actionCounts[AppAction.UNINSTALL] = (actionCounts[AppAction.UNINSTALL] ?: 0) + 1
-                    }
-                    if (disabled) {
+                    } else if (disabled) {
                         actionCounts[AppAction.DISABLE] = (actionCounts[AppAction.DISABLE] ?: 0) + 1
-                        if (!uninstallApp) {
-                            selectedApps.remove(pkg)
-                        }
-                    }
-                    if (enabled) {
-                        actionCounts[AppAction.ENABLE] = (actionCounts[AppAction.ENABLE] ?: 0) + 1
-                        if (!uninstallApp) {
-                            selectedApps.remove(pkg)
-                        }
                     }
                 }
             }
@@ -257,6 +231,35 @@ class AppListViewModel(
                         selectedApps.remove(result.packageName)
                     } else {
                         LogUtils.w(TAG, "reinstall '${result.packageName}' failed: ${result.message} (${result.status})")
+                    }
+                }
+                cantaHandler.enableApps(packageNames).collect { result ->
+                    if (result.success) {
+                        changeAppEnabledStatus(result.packageName, true)
+                    }
+                }
+            }
+
+            AppsType.ENABLED -> {
+                cantaHandler.disableApps(packageNames).collect { result ->
+                    if (result.success) {
+                        actionCounts[AppAction.DISABLE] = (actionCounts[AppAction.DISABLE] ?: 0) + 1
+                        changeAppEnabledStatus(result.packageName, false)
+                        selectedApps.remove(result.packageName)
+                    } else {
+                        LogUtils.w(TAG, "freeze '${result.packageName}' failed: ${result.message} (${result.status})")
+                    }
+                }
+            }
+
+            AppsType.DISABLED -> {
+                cantaHandler.enableApps(packageNames).collect { result ->
+                    if (result.success) {
+                        actionCounts[AppAction.ENABLE] = (actionCounts[AppAction.ENABLE] ?: 0) + 1
+                        changeAppEnabledStatus(result.packageName, true)
+                        selectedApps.remove(result.packageName)
+                    } else {
+                        LogUtils.w(TAG, "unfreeze '${result.packageName}' failed: ${result.message} (${result.status})")
                     }
                 }
             }

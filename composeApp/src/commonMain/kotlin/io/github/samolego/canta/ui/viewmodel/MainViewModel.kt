@@ -28,9 +28,8 @@ sealed interface MainDialog {
     data class ConfirmUninstall(
         val appCount: Int,
         val canResetToFactory: Boolean,
-        val hasDisabledApp: Boolean = false,
-        val hasEnabledApp: Boolean = true,
     ) : MainDialog
+    data class ConfirmFreeze(val appCount: Int) : MainDialog
     data class Success(val count: Int, val action: AppAction = AppAction.UNINSTALL) : MainDialog
     data object ShizukuSetup : MainDialog
     data object ExplainBadges : MainDialog
@@ -106,45 +105,50 @@ class MainViewModel(
     }
 
     private suspend fun confirm(type: AppsType) {
-        if (type == AppsType.INSTALLED && settings.confirmBeforeUninstallFlow.first()) {
-            val selected = appList.selectedApps.toList()
-            if (selected.isEmpty()) return
-            val selectedAppsInfo = appList.apps.filter { it.packageName in appList.selectedApps }
-            dialog = MainDialog.ConfirmUninstall(
-                appCount = selected.size,
-                canResetToFactory = selected.any { handler.canResetToFactory(it) },
-                hasDisabledApp = selectedAppsInfo.any { it.isDisabled },
-                hasEnabledApp = selectedAppsInfo.any { !it.isDisabled },
-            )
-        } else {
-            authenticateAndApply(type, resetToFactory = false)
+        val selected = appList.selectedApps.toList()
+        if (selected.isEmpty()) return
+
+        when (type) {
+            AppsType.INSTALLED -> {
+                if (settings.confirmBeforeUninstallFlow.first()) {
+                    dialog = MainDialog.ConfirmUninstall(
+                        appCount = selected.size,
+                        canResetToFactory = selected.any { handler.canResetToFactory(it) },
+                    )
+                } else {
+                    authenticateAndApply(type, resetToFactory = false)
+                }
+            }
+            AppsType.ENABLED -> {
+                if (settings.confirmBeforeUninstallFlow.first()) {
+                    dialog = MainDialog.ConfirmFreeze(appCount = selected.size)
+                } else {
+                    authenticateAndApply(type, resetToFactory = false)
+                }
+            }
+            AppsType.UNINSTALLED, AppsType.DISABLED -> {
+                authenticateAndApply(type, resetToFactory = false)
+            }
         }
     }
 
-    fun onUninstallConfirmed(
-        resetToFactory: Boolean = false,
-        disableApp: Boolean = false,
-        enableApp: Boolean = false,
-        uninstallApp: Boolean = true,
-    ) {
+    fun onUninstallConfirmed(resetToFactory: Boolean = false) {
         dialog = null
         viewModelScope.launch {
-            authenticateAndApply(
-                AppsType.INSTALLED,
-                resetToFactory = resetToFactory,
-                disableApp = disableApp,
-                enableApp = enableApp,
-                uninstallApp = uninstallApp
-            )
+            authenticateAndApply(AppsType.INSTALLED, resetToFactory = resetToFactory)
+        }
+    }
+
+    fun onFreezeConfirmed() {
+        dialog = null
+        viewModelScope.launch {
+            authenticateAndApply(AppsType.ENABLED, resetToFactory = false)
         }
     }
 
     private suspend fun authenticateAndApply(
         type: AppsType,
-        resetToFactory: Boolean,
-        disableApp: Boolean = false,
-        enableApp: Boolean = false,
-        uninstallApp: Boolean = true,
+        resetToFactory: Boolean = false,
     ) {
         if (settings.authEnabledFlow.first()) {
             platform.requireBiometric(
@@ -152,47 +156,28 @@ class MainViewModel(
                 subtitle = getString(Res.string.auth_required_description),
             ) {
                 viewModelScope.launch {
-                    apply(
-                        type,
-                        resetToFactory = resetToFactory,
-                        disableApp = disableApp,
-                        enableApp = enableApp,
-                        uninstallApp = uninstallApp
-                    )
+                    apply(type, resetToFactory = resetToFactory)
                 }
             }
         } else {
-            apply(
-                type,
-                resetToFactory = resetToFactory,
-                disableApp = disableApp,
-                enableApp = enableApp,
-                uninstallApp = uninstallApp
-            )
+            apply(type, resetToFactory = resetToFactory)
         }
     }
 
     private suspend fun apply(
         type: AppsType,
-        resetToFactory: Boolean,
-        disableApp: Boolean = false,
-        enableApp: Boolean = false,
-        uninstallApp: Boolean = true,
+        resetToFactory: Boolean = false,
     ) {
-        val actionCounts = appList.applyToSelected(
-            type,
-            resetToFactory = resetToFactory,
-            disableApp = disableApp,
-            enableApp = enableApp,
-            uninstallApp = uninstallApp
-        )
+        val actionCounts = appList.applyToSelected(type, resetToFactory = resetToFactory)
         if (actionCounts.isNotEmpty() && !settings.hideSuccessDialogFlow.first()) {
-            val primaryAction = when {
-                type == AppsType.UNINSTALLED -> AppAction.REINSTALL
-                actionCounts.containsKey(AppAction.UNINSTALL) -> AppAction.UNINSTALL
-                actionCounts.containsKey(AppAction.DISABLE) -> AppAction.DISABLE
-                actionCounts.containsKey(AppAction.ENABLE) -> AppAction.ENABLE
-                else -> actionCounts.keys.first()
+            val primaryAction = when (type) {
+                AppsType.INSTALLED -> {
+                    if (actionCounts.containsKey(AppAction.UNINSTALL)) AppAction.UNINSTALL
+                    else AppAction.DISABLE
+                }
+                AppsType.UNINSTALLED -> AppAction.REINSTALL
+                AppsType.ENABLED -> AppAction.DISABLE
+                AppsType.DISABLED -> AppAction.ENABLE
             }
             val count = actionCounts[primaryAction] ?: 0
             if (count > 0) {

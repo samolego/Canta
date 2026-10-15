@@ -2,6 +2,7 @@ package io.github.samolego.canta.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.samolego.canta.data.AppMode
 import io.github.samolego.canta.data.CantaSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +34,7 @@ class SettingsViewModel(
     val allowUnsafeUninstalls = settingsStore.allowUnsafeUninstallsFlow.state(false)
     val hideSuccessDialog = settingsStore.hideSuccessDialogFlow.state(false)
     val authEnabled = settingsStore.authEnabledFlow.state(false)
+    val appMode = settingsStore.appModeFlow.state(AppMode.UNINSTALLER)
 
     /** Set once the user accepted the disclaimer without "never show again". */
     private val riskAcceptedThisSession = MutableStateFlow(false)
@@ -58,5 +60,6 @@ class SettingsViewModel(
     fun saveAllowUnsafeUninstalls(allow: Boolean) = save { setAllowUnsafeUninstalls(allow) }
     fun saveHideSuccessDialog(hide: Boolean) = save { setHideSuccessDialog(hide) }
     fun saveAuthEnabled(enabled: Boolean) = save { setAuthEnabled(enabled) }
+    fun saveAppMode(mode: AppMode) = save { setAppMode(mode) }
 
 }
