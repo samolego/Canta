@@ -50,6 +50,13 @@ class ProtoModelsTest {
         assertEquals(AppSettingsProto(), ProtoBuf.decodeFromByteArray(AppSettingsProto.serializer(), bytes(0x50, 0x01)))
     }
 
+    @Test
+    fun encodesAndDecodesAppMode() {
+        val freezeSettings = AppSettingsProto(appMode = 1)
+        val encoded = ProtoBuf.encodeToByteArray(AppSettingsProto.serializer(), freezeSettings)
+        assertEquals(freezeSettings, ProtoBuf.decodeFromByteArray(AppSettingsProto.serializer(), encoded))
+    }
+
 
     @Test
     fun decodesLegacyPresets() {

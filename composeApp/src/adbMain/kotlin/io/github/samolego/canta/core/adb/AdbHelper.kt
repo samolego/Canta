@@ -116,6 +116,12 @@ class AdbHelper(private val transport: AdbTransport) {
     /** Reinstalls [packageNames] for the user; one result per package, as each completes. */
     fun reinstall(packageNames: List<String>): Flow<OperationResult> = operate("reinstall", packageNames)
 
+    /** Disables [packageNames] for the user; one result per package, as each completes. */
+    fun disable(packageNames: List<String>): Flow<OperationResult> = operate("disable", packageNames)
+
+    /** Enables [packageNames] for the user; one result per package, as each completes. */
+    fun enable(packageNames: List<String>): Flow<OperationResult> = operate("enable", packageNames)
+
     /**
      * Runs a package [command] in chunks of [OPERATION_CHUNK_SIZE] names and
      * streams its results. Every package gets exactly one result: invalid

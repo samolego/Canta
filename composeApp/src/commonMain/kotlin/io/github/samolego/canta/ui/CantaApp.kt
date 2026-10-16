@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -67,9 +68,12 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
     val presetViewModel: PresetsViewModel = viewModel { PresetsViewModel(deps.presetStore, handler, platform) }
     val mainViewModel: MainViewModel = viewModel { MainViewModel(handler, platform, deps.settings, appListViewModel) }
 
+    val appMode by settingsViewModel.appMode.collectAsStateWithLifecycle()
+    val tabs = appMode.tabs()
+
     // Hoisted so preset-applying (below) knows which tab is showing.
-    val pagerState = rememberPagerState(pageCount = { AppsType.entries.size })
-    val selectedAppsType = AppsType.entries[pagerState.currentPage]
+    val pagerState = rememberPagerState(pageCount = { tabs.size })
+    val selectedAppsType = tabs[pagerState.currentPage.coerceIn(0, tabs.size - 1)]
 
     var versionTapCounter by remember { mutableIntStateOf(0) }
 
@@ -108,6 +112,7 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
                     navigateToPage = { navController.navigate(it) },
                     closeApp = closeApp,
                     enableSelectAll = versionTapCounter >= SECRET_TAPS,
+                    tabs = tabs,
                 )
             }
             composable(route = Screen.Logs.route) {

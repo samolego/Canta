@@ -30,6 +30,7 @@ data class AppSettingsProto(
     @ProtoNumber(8) val hideSuccessDialog: Boolean = false,
     @ProtoNumber(9) val authEnabled: Boolean = false,
     // 10 (disable_adb_helper) was used by development builds: never reuse it.
+    @ProtoNumber(11) val appMode: Int = 0,
 )
 
 @Serializable

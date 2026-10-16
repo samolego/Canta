@@ -38,6 +38,7 @@ class CantaSettings(storage: AppBlobStorage) {
     val allowUnsafeUninstallsFlow = field { it.allowUnsafeUninstalls }
     val hideSuccessDialogFlow = field { it.hideSuccessDialog }
     val authEnabledFlow = field { it.authEnabled }
+    val appModeFlow = field { AppMode.fromId(it.appMode) }
 
     suspend fun setAutoUpdateBloatList(autoUpdate: Boolean) = update { it.copy(autoUpdateBloatList = autoUpdate) }
     suspend fun setConfirmBeforeUninstall(needsConfirm: Boolean) = update { it.copy(confirmBeforeUninstall = needsConfirm) }
@@ -48,4 +49,5 @@ class CantaSettings(storage: AppBlobStorage) {
     suspend fun setAllowUnsafeUninstalls(allow: Boolean) = update { it.copy(allowUnsafeUninstalls = allow) }
     suspend fun setHideSuccessDialog(hide: Boolean) = update { it.copy(hideSuccessDialog = hide) }
     suspend fun setAuthEnabled(enabled: Boolean) = update { it.copy(authEnabled = enabled) }
+    suspend fun setAppMode(mode: AppMode) = update { it.copy(appMode = mode.id) }
 }

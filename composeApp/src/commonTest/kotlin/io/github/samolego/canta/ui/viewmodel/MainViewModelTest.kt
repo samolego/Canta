@@ -14,6 +14,7 @@ import io.github.samolego.canta.testing.FakeHandler
 import io.github.samolego.canta.testing.FakePlatform
 import io.github.samolego.canta.testing.MemoryStorage
 import io.github.samolego.canta.testing.offlineBloatRepository
+import io.github.samolego.canta.ui.AppAction
 import io.github.samolego.canta.ui.AppsType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -92,7 +93,30 @@ class MainViewModelTest {
 
         main.onUninstallConfirmed(resetToFactory = true)
         assertEquals(listOf(listOf("com.a") to true), handler.uninstallCalls)
-        assertEquals(MainDialog.Success(count = 1, isReinstall = false), main.dialog)
+        assertEquals(MainDialog.Success(count = 1, action = AppAction.UNINSTALL), main.dialog)
+    }
+
+    @Test
+    fun freezeAppReportsDisableSuccess() = runVmTest {
+        val (main, appList) = mainViewModel()
+        appList.selectedApps.add("com.a")
+
+        main.applyToSelected(AppsType.ENABLED)
+        assertEquals(MainDialog.ConfirmFreeze(appCount = 1), main.dialog)
+
+        main.onFreezeConfirmed()
+        assertEquals(listOf(listOf("com.a")), handler.disableCalls)
+        assertEquals(MainDialog.Success(count = 1, action = AppAction.DISABLE), main.dialog)
+    }
+
+    @Test
+    fun unfreezeAppReportsEnableSuccess() = runVmTest {
+        val (main, appList) = mainViewModel()
+        appList.selectedApps.add("com.a")
+
+        main.applyToSelected(AppsType.DISABLED)
+        assertEquals(listOf(listOf("com.a")), handler.enableCalls)
+        assertEquals(MainDialog.Success(count = 1, action = AppAction.ENABLE), main.dialog)
     }
 
     @Test

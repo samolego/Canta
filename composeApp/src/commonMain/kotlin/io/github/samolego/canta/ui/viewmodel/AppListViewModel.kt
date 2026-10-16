@@ -17,6 +17,7 @@ import io.github.samolego.canta.data.bloat.BloatData
 import io.github.samolego.canta.data.bloat.BloatRepository
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.canta_description
+import io.github.samolego.canta.ui.AppAction
 import io.github.samolego.canta.ui.AppsType
 import io.github.samolego.canta.util.LogUtils
 import io.github.samolego.canta.util.currentTimeMillis
@@ -161,28 +162,142 @@ class AppListViewModel(
         }
     }
 
-    /**
-     * Uninstalls ([AppsType.INSTALLED]) or reinstalls ([AppsType.UNINSTALLED])
-     * every selected app, updating the list as each one succeeds. Returns how
-     * many succeeded.
-     */
-    suspend fun applyToSelected(type: AppsType, resetToFactory: Boolean = false): Int {
-        val packageNames = selectedApps.toList()
-        val results = when (type) {
-            AppsType.INSTALLED -> cantaHandler.uninstallApps(packageNames, resetToFactory)
-            AppsType.UNINSTALLED -> cantaHandler.reinstallApps(packageNames)
+    fun changeAppEnabledStatus(packageName: String, enabled: Boolean) {
+        val index = _apps.indexOfFirst { it.packageName == packageName }
+        if (index >= 0) {
+            val current = _apps[index]
+            _apps[index] = current.withDisabled(!enabled)
         }
-        var succeeded = 0
-        results.collect { result ->
-            if (result.success) {
-                succeeded++
-                toggleUninstalled(result.packageName)
-                selectedApps.remove(result.packageName)
-            } else {
-                LogUtils.w(TAG, "${type.name.lowercase()} '${result.packageName}' failed: ${result.message} (${result.status})")
+    }
+
+    /**
+     * Applies the appropriate action based on the tab [type] to every selected app.
+     * In uninstaller mode ([AppsType.INSTALLED]): uninstalls apps and disables them as fallback.
+     * In reinstall mode ([AppsType.UNINSTALLED]): reinstalls apps and enables them.
+     * In freeze mode:
+     * - [AppsType.ENABLED]: disables (freezes) selected apps.
+     * - [AppsType.DISABLED]: enables (unfreezes) selected apps.
+     * Returns a map of [AppAction] to the number of apps that succeeded.
+     */
+    suspend fun applyToSelected(
+        type: AppsType,
+        resetToFactory: Boolean = false,
+    ): Map<AppAction, Int> {
+        val packageNames = selectedApps.toList()
+        val actionCounts = mutableMapOf<AppAction, Int>()
+
+        when (type) {
+            AppsType.INSTALLED -> {
+                // Also disable apps when uninstalling so stubborn apps that cannot be uninstalled
+                // are at least frozen/disabled. Only system apps should be disabled as a fallback;
+                // user apps must not be disabled.
+                val systemApps = packageNames.filter { pkg ->
+                    _apps.any { it.packageName == pkg && it.isSystemApp }
+                }
+
+                val disableSuccess = mutableSetOf<String>()
+                if (systemApps.isNotEmpty()) {
+                    cantaHandler.disableApps(systemApps).collect { result ->
+                        if (result.success) {
+                            disableSuccess.add(result.packageName)
+                            changeAppEnabledStatus(result.packageName, false)
+                        } else {
+                            LogUtils.w(TAG, "disable '${result.packageName}' failed: ${result.message} (${result.status})")
+                        }
+                    }
+                }
+
+                val uninstallSuccess = mutableSetOf<String>()
+                cantaHandler.uninstallApps(packageNames, resetToFactory).collect { result ->
+                    if (result.success) {
+                        uninstallSuccess.add(result.packageName)
+                        toggleUninstalled(result.packageName)
+                    } else {
+                        LogUtils.w(TAG, "uninstall '${result.packageName}' failed: ${result.message} (${result.status})")
+                    }
+                }
+
+                packageNames.forEach { pkg ->
+                    val uninstalled = uninstallSuccess.contains(pkg)
+                    val disabled = disableSuccess.contains(pkg)
+
+                    if (uninstalled) {
+                        selectedApps.remove(pkg)
+                        actionCounts[AppAction.UNINSTALL] = (actionCounts[AppAction.UNINSTALL] ?: 0) + 1
+                    } else if (disabled) {
+                        selectedApps.remove(pkg)
+                        actionCounts[AppAction.DISABLE] = (actionCounts[AppAction.DISABLE] ?: 0) + 1
+                    }
+                }
+            }
+
+            AppsType.UNINSTALLED -> {
+                val systemApps = packageNames.filter { pkg ->
+                    _apps.any { it.packageName == pkg && it.isSystemApp }
+                }
+
+                val enableSuccess = mutableSetOf<String>()
+                if (systemApps.isNotEmpty()) {
+                    cantaHandler.enableApps(systemApps).collect { result ->
+                        if (result.success) {
+                            enableSuccess.add(result.packageName)
+                            changeAppEnabledStatus(result.packageName, true)
+                        } else {
+                            LogUtils.w(TAG, "enable '${result.packageName}' failed: ${result.message} (${result.status})")
+                        }
+                    }
+                }
+
+                val reinstallSuccess = mutableSetOf<String>()
+                cantaHandler.reinstallApps(packageNames).collect { result ->
+                    if (result.success) {
+                        reinstallSuccess.add(result.packageName)
+                        toggleUninstalled(result.packageName)
+                        selectedApps.remove(result.packageName)
+                    } else {
+                        LogUtils.w(TAG, "reinstall '${result.packageName}' failed: ${result.message} (${result.status})")
+                    }
+                }
+
+                packageNames.forEach { pkg ->
+                    val reinstalled = reinstallSuccess.contains(pkg)
+                    val enabled = enableSuccess.contains(pkg)
+
+                    if (reinstalled) {
+                        actionCounts[AppAction.REINSTALL] = (actionCounts[AppAction.REINSTALL] ?: 0) + 1
+                    } else if (enabled) {
+                        selectedApps.remove(pkg)
+                        actionCounts[AppAction.ENABLE] = (actionCounts[AppAction.ENABLE] ?: 0) + 1
+                    }
+                }
+            }
+
+            AppsType.ENABLED -> {
+                cantaHandler.disableApps(packageNames).collect { result ->
+                    if (result.success) {
+                        actionCounts[AppAction.DISABLE] = (actionCounts[AppAction.DISABLE] ?: 0) + 1
+                        changeAppEnabledStatus(result.packageName, false)
+                        selectedApps.remove(result.packageName)
+                    } else {
+                        LogUtils.w(TAG, "freeze '${result.packageName}' failed: ${result.message} (${result.status})")
+                    }
+                }
+            }
+
+            AppsType.DISABLED -> {
+                cantaHandler.enableApps(packageNames).collect { result ->
+                    if (result.success) {
+                        actionCounts[AppAction.ENABLE] = (actionCounts[AppAction.ENABLE] ?: 0) + 1
+                        changeAppEnabledStatus(result.packageName, true)
+                        selectedApps.remove(result.packageName)
+                    } else {
+                        LogUtils.w(TAG, "unfreeze '${result.packageName}' failed: ${result.message} (${result.status})")
+                    }
+                }
             }
         }
-        return succeeded
+
+        return actionCounts
     }
 
     private fun toggleUninstalled(packageName: String) {

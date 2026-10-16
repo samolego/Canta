@@ -88,6 +88,12 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> =
         if (isConnected) helper.reinstall(packageNames) else emptyFlow()
 
+    override fun disableApps(packageNames: List<String>): Flow<OperationResult> =
+        if (isConnected) helper.disable(packageNames) else emptyFlow()
+
+    override fun enableApps(packageNames: List<String>): Flow<OperationResult> =
+        if (isConnected) helper.enable(packageNames) else emptyFlow()
+
     override suspend fun packageExists(packageName: String): Boolean {
         if (!isConnected) return false
         if (packages.isEmpty()) loadApps()

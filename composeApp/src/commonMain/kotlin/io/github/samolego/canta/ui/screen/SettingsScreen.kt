@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
+import androidx.compose.material.icons.filled.AcUnit
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Link
@@ -57,7 +58,14 @@ import io.github.samolego.canta.generated.resources.hide_success_dialog
 import io.github.samolego.canta.generated.resources.hide_success_dialog_description
 import io.github.samolego.canta.generated.resources.require_auth_setting
 import io.github.samolego.canta.generated.resources.require_auth_setting_desc
+import io.github.samolego.canta.data.AppMode
+import io.github.samolego.canta.generated.resources.mode_freeze
+import io.github.samolego.canta.generated.resources.mode_freeze_description
+import io.github.samolego.canta.generated.resources.mode_uninstaller
+import io.github.samolego.canta.generated.resources.mode_uninstaller_description
+import io.github.samolego.canta.generated.resources.operation_mode
 import io.github.samolego.canta.generated.resources.settings
+import io.github.samolego.canta.ui.component.RadioSettingsItem
 import io.github.samolego.canta.ui.component.SettingsItem
 import io.github.samolego.canta.ui.component.SwitchSettingsItem
 import io.github.samolego.canta.ui.component.ScreenTopBar
@@ -79,6 +87,7 @@ fun SettingsScreen(
     val allowUnsafe by settingsViewModel.allowUnsafeUninstalls.collectAsStateWithLifecycle()
     val hideSuccessDialog by settingsViewModel.hideSuccessDialog.collectAsStateWithLifecycle()
     val authEnabled by settingsViewModel.authEnabled.collectAsStateWithLifecycle()
+    val appMode by settingsViewModel.appMode.collectAsStateWithLifecycle()
     val bloatListUrl by settingsViewModel.bloatListUrl.collectAsStateWithLifecycle()
     val commitsUrl by settingsViewModel.commitsUrl.collectAsStateWithLifecycle()
     var advancedSettingsExpanded by rememberSaveable { mutableStateOf(false) }
@@ -96,6 +105,28 @@ fun SettingsScreen(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Text(
+                text = stringResource(Res.string.operation_mode),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp),
+            )
+            RadioSettingsItem(
+                title = stringResource(Res.string.mode_uninstaller),
+                description = stringResource(Res.string.mode_uninstaller_description),
+                icon = Icons.Default.Delete,
+                selected = appMode == AppMode.UNINSTALLER,
+                onClick = { settingsViewModel.saveAppMode(AppMode.UNINSTALLER) },
+            )
+            RadioSettingsItem(
+                title = stringResource(Res.string.mode_freeze),
+                description = stringResource(Res.string.mode_freeze_description),
+                icon = Icons.Default.AcUnit,
+                selected = appMode == AppMode.FREEZE,
+                onClick = { settingsViewModel.saveAppMode(AppMode.FREEZE) },
+            )
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+
             SwitchSettingsItem(
                 title = stringResource(Res.string.auto_update_bloat_list),
                 description = stringResource(Res.string.auto_update_bloat_list_description),

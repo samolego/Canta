@@ -2,10 +2,12 @@ package io.github.samolego.canta.ui.viewmodel
 
 import androidx.compose.ui.graphics.ImageBitmap
 import io.github.samolego.canta.data.app.AppBadgeInfo
+import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.canta_description
 import io.github.samolego.canta.testing.FakeHandler
 import io.github.samolego.canta.testing.offlineBloatRepository
+import io.github.samolego.canta.ui.AppAction
 import io.github.samolego.canta.ui.AppsType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,13 +55,63 @@ class AppListViewModelTest {
         viewModel.loadApps().join()
         viewModel.selectedApps.addAll(listOf("com.a", "com.b"))
 
-        assertEquals(1, viewModel.applyToSelected(AppsType.INSTALLED))
+        assertEquals(mapOf(AppAction.UNINSTALL to 1), viewModel.applyToSelected(AppsType.INSTALLED))
 
         assertEquals(setOf("com.b"), viewModel.selectedApps.toSet(), "failed apps stay selected")
         assertEquals(
             mapOf("com.a" to true, "com.b" to false, "com.c" to false),
             viewModel.apps.associate { it.packageName to it.isUninstalled },
         )
+    }
+
+    @Test
+    fun uninstallingSystemAppAlsoDisablesIt() = runVmTest {
+        handler.apps = listOf(
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.sys", installed = true, isSystem = true)),
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.user", installed = true, isSystem = false)),
+        )
+        val viewModel = viewModel()
+        viewModel.loadApps().join()
+        viewModel.selectedApps.addAll(listOf("com.sys", "com.user"))
+
+        val result = viewModel.applyToSelected(AppsType.INSTALLED)
+        assertEquals(mapOf(AppAction.UNINSTALL to 2), result)
+        assertEquals(listOf(listOf("com.sys")), handler.disableCalls, "only system apps should be disabled on uninstall")
+    }
+
+    @Test
+    fun reinstallingSystemAppAlsoEnablesIt() = runVmTest {
+        handler.apps = listOf(
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.sys", installed = false, isSystem = true, disabled = true)),
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.user", installed = false, isSystem = false)),
+        )
+        val viewModel = viewModel()
+        viewModel.loadApps().join()
+        viewModel.selectedApps.addAll(listOf("com.sys", "com.user"))
+
+        val result = viewModel.applyToSelected(AppsType.UNINSTALLED)
+        assertEquals(mapOf(AppAction.REINSTALL to 2), result)
+        assertEquals(listOf(listOf("com.sys")), handler.enableCalls, "only system apps should be enabled on reinstall")
+    }
+
+    @Test
+    fun disableAndEnableUpdatesDisabledStatus() = runVmTest {
+        val viewModel = viewModel()
+        viewModel.loadApps().join()
+        viewModel.selectedApps.add("com.a")
+
+        val disableResult = viewModel.applyToSelected(AppsType.ENABLED)
+        assertEquals(mapOf(AppAction.DISABLE to 1), disableResult)
+        assertEquals(listOf(listOf("com.a")), handler.disableCalls)
+        assertEquals(true, viewModel.apps.first { it.packageName == "com.a" }.isDisabled)
+        assertEquals(emptySet(), viewModel.selectedApps.toSet())
+
+        viewModel.selectedApps.add("com.a")
+        val enableResult = viewModel.applyToSelected(AppsType.DISABLED)
+        assertEquals(mapOf(AppAction.ENABLE to 1), enableResult)
+        assertEquals(listOf(listOf("com.a")), handler.enableCalls)
+        assertEquals(false, viewModel.apps.first { it.packageName == "com.a" }.isDisabled)
+        assertEquals(emptySet(), viewModel.selectedApps.toSet())
     }
 
     @Test

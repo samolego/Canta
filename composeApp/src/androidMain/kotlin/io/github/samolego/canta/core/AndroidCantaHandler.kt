@@ -107,6 +107,12 @@ class AndroidCantaHandler(
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> =
         flow { packageNames.forEach { emit(operations.reinstall(it)) } }.flowOn(Dispatchers.IO)
 
+    override fun disableApps(packageNames: List<String>): Flow<OperationResult> =
+        flow { packageNames.forEach { emit(operations.disable(it)) } }.flowOn(Dispatchers.IO)
+
+    override fun enableApps(packageNames: List<String>): Flow<OperationResult> =
+        flow { packageNames.forEach { emit(operations.enable(it)) } }.flowOn(Dispatchers.IO)
+
     override suspend fun requestAuthorization() {
         val deferred = CompletableDeferred<Boolean>()
         withContext(Dispatchers.Main) {

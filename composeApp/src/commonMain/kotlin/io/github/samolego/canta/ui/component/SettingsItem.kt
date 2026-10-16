@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -100,6 +101,24 @@ fun SwitchSettingsItem(
         icon = icon,
         modifier = Modifier.toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange),
         trailing = { Switch(checked = checked, onCheckedChange = null) },
+    )
+}
+
+/** A [SettingsItem] with a radio button. */
+@Composable
+fun RadioSettingsItem(
+    title: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    description: String? = null,
+    icon: ImageVector? = null,
+) {
+    SettingsItem(
+        title = title,
+        description = description,
+        icon = icon,
+        onClick = onClick,
+        trailing = { RadioButton(selected = selected, onClick = null) },
     )
 }
 

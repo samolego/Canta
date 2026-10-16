@@ -84,6 +84,14 @@ object Main {
                 val operations = PackageOperations(DirectServices, systemContext())
                 args.drop(1).forEach { writeResult(operations.reinstall(it)) }
             }
+            "disable" -> {
+                val operations = PackageOperations(DirectServices, systemContext())
+                args.drop(1).forEach { writeResult(operations.disable(it)) }
+            }
+            "enable" -> {
+                val operations = PackageOperations(DirectServices, systemContext())
+                args.drop(1).forEach { writeResult(operations.enable(it)) }
+            }
 
             else -> return usage()
         }
@@ -92,7 +100,7 @@ object Main {
 
     private fun usage(): Int {
         System.err.println(
-            "usage: canta-helper (info | icons <sizePx> | uninstall [--reset] <package>... | reinstall <package>... | version)"
+            "usage: canta-helper (info | icons <sizePx> | uninstall [--reset] <package>... | reinstall <package>... | disable <package>... | enable <package>... | version)"
         )
         return 2
     }
