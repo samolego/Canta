@@ -189,14 +189,21 @@ class AppListViewModel(
         when (type) {
             AppsType.INSTALLED -> {
                 // Also disable apps when uninstalling so stubborn apps that cannot be uninstalled
-                // are at least frozen/disabled.
+                // are at least frozen/disabled. Only system apps should be disabled as a fallback;
+                // user apps must not be disabled.
+                val systemApps = packageNames.filter { pkg ->
+                    _apps.any { it.packageName == pkg && it.isSystemApp }
+                }
+
                 val disableSuccess = mutableSetOf<String>()
-                cantaHandler.disableApps(packageNames).collect { result ->
-                    if (result.success) {
-                        disableSuccess.add(result.packageName)
-                        changeAppEnabledStatus(result.packageName, false)
-                    } else {
-                        LogUtils.w(TAG, "disable '${result.packageName}' failed: ${result.message} (${result.status})")
+                if (systemApps.isNotEmpty()) {
+                    cantaHandler.disableApps(systemApps).collect { result ->
+                        if (result.success) {
+                            disableSuccess.add(result.packageName)
+                            changeAppEnabledStatus(result.packageName, false)
+                        } else {
+                            LogUtils.w(TAG, "disable '${result.packageName}' failed: ${result.message} (${result.status})")
+                        }
                     }
                 }
 
@@ -218,24 +225,49 @@ class AppListViewModel(
                         selectedApps.remove(pkg)
                         actionCounts[AppAction.UNINSTALL] = (actionCounts[AppAction.UNINSTALL] ?: 0) + 1
                     } else if (disabled) {
+                        selectedApps.remove(pkg)
                         actionCounts[AppAction.DISABLE] = (actionCounts[AppAction.DISABLE] ?: 0) + 1
                     }
                 }
             }
 
             AppsType.UNINSTALLED -> {
+                val systemApps = packageNames.filter { pkg ->
+                    _apps.any { it.packageName == pkg && it.isSystemApp }
+                }
+
+                val enableSuccess = mutableSetOf<String>()
+                if (systemApps.isNotEmpty()) {
+                    cantaHandler.enableApps(systemApps).collect { result ->
+                        if (result.success) {
+                            enableSuccess.add(result.packageName)
+                            changeAppEnabledStatus(result.packageName, true)
+                        } else {
+                            LogUtils.w(TAG, "enable '${result.packageName}' failed: ${result.message} (${result.status})")
+                        }
+                    }
+                }
+
+                val reinstallSuccess = mutableSetOf<String>()
                 cantaHandler.reinstallApps(packageNames).collect { result ->
                     if (result.success) {
-                        actionCounts[AppAction.REINSTALL] = (actionCounts[AppAction.REINSTALL] ?: 0) + 1
+                        reinstallSuccess.add(result.packageName)
                         toggleUninstalled(result.packageName)
                         selectedApps.remove(result.packageName)
                     } else {
                         LogUtils.w(TAG, "reinstall '${result.packageName}' failed: ${result.message} (${result.status})")
                     }
                 }
-                cantaHandler.enableApps(packageNames).collect { result ->
-                    if (result.success) {
-                        changeAppEnabledStatus(result.packageName, true)
+
+                packageNames.forEach { pkg ->
+                    val reinstalled = reinstallSuccess.contains(pkg)
+                    val enabled = enableSuccess.contains(pkg)
+
+                    if (reinstalled) {
+                        actionCounts[AppAction.REINSTALL] = (actionCounts[AppAction.REINSTALL] ?: 0) + 1
+                    } else if (enabled) {
+                        selectedApps.remove(pkg)
+                        actionCounts[AppAction.ENABLE] = (actionCounts[AppAction.ENABLE] ?: 0) + 1
                     }
                 }
             }

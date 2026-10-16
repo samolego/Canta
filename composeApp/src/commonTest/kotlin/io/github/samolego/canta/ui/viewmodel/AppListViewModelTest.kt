@@ -2,6 +2,7 @@ package io.github.samolego.canta.ui.viewmodel
 
 import androidx.compose.ui.graphics.ImageBitmap
 import io.github.samolego.canta.data.app.AppBadgeInfo
+import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.canta_description
 import io.github.samolego.canta.testing.FakeHandler
@@ -61,6 +62,36 @@ class AppListViewModelTest {
             mapOf("com.a" to true, "com.b" to false, "com.c" to false),
             viewModel.apps.associate { it.packageName to it.isUninstalled },
         )
+    }
+
+    @Test
+    fun uninstallingSystemAppAlsoDisablesIt() = runVmTest {
+        handler.apps = listOf(
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.sys", installed = true, isSystem = true)),
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.user", installed = true, isSystem = false)),
+        )
+        val viewModel = viewModel()
+        viewModel.loadApps().join()
+        viewModel.selectedApps.addAll(listOf("com.sys", "com.user"))
+
+        val result = viewModel.applyToSelected(AppsType.INSTALLED)
+        assertEquals(mapOf(AppAction.UNINSTALL to 2), result)
+        assertEquals(listOf(listOf("com.sys")), handler.disableCalls, "only system apps should be disabled on uninstall")
+    }
+
+    @Test
+    fun reinstallingSystemAppAlsoEnablesIt() = runVmTest {
+        handler.apps = listOf(
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.sys", installed = false, isSystem = true, disabled = true)),
+            AppInfo(io.github.samolego.canta.packages.PackageDetails(packageName = "com.user", installed = false, isSystem = false)),
+        )
+        val viewModel = viewModel()
+        viewModel.loadApps().join()
+        viewModel.selectedApps.addAll(listOf("com.sys", "com.user"))
+
+        val result = viewModel.applyToSelected(AppsType.UNINSTALLED)
+        assertEquals(mapOf(AppAction.REINSTALL to 2), result)
+        assertEquals(listOf(listOf("com.sys")), handler.enableCalls, "only system apps should be enabled on reinstall")
     }
 
     @Test

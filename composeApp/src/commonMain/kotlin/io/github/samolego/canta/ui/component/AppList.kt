@@ -72,8 +72,8 @@ fun AppList(
 ) {
     var showAppDialog by remember { mutableStateOf<AppInfo?>(null) }
 
-    val appList by remember { derivedStateOf { appListModel.appList.filter(appType::matches) } }
-    val selectedAppList by remember { derivedStateOf { appListModel.selectedAppsSorted.filter(appType::matches) } }
+    val appList by remember(appType) { derivedStateOf { appListModel.appList.filter(appType::matches) } }
+    val selectedAppList by remember(appType) { derivedStateOf { appListModel.selectedAppsSorted.filter(appType::matches) } }
     val allowUnsafeUninstalls by settingsViewModel.allowUnsafeUninstalls.collectAsStateWithLifecycle()
 
     Column(

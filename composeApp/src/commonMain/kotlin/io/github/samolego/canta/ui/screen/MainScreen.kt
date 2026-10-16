@@ -123,6 +123,7 @@ fun MainScreen(
             AppsTabs(pagerState, tabs)
             HorizontalPager(
                 state = pagerState,
+                key = { page -> tabs[page] },
                 modifier = Modifier.weight(1f).fillMaxWidth(),
             ) { page ->
                 PullToRefreshBox(
