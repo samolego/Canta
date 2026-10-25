@@ -129,6 +129,48 @@
     <string name="delete">Delete</string>
     <string name="apply_preset">Apply Preset</string>
     <string name="preset_save_error">Error saving preset</string>
+    <string name="folders_to_delete">Folders to delete (optional)</string>
+    <string
+        name="folders_to_delete_hint"
+    >One absolute path per line. For safety, only user storage paths are allowed (/sdcard, /storage, /data/media, /data/local/tmp).</string>
+    <string name="invalid_folder_paths">These paths are not allowed: %1$s</string>
+    <string name="remove_canta_after_run">Uninstall Canta itself after the preset runs</string>
+    <string name="removes_canta">Also removes Canta</string>
+    <plurals name="num_folders">
+        <item quantity="one">%1$d folder</item>
+        <item quantity="other">%1$d folders</item>
+    </plurals>
+    <string name="create_shortcut">Add shortcut</string>
+    <string name="shortcut_created">Shortcut created</string>
+    <string name="shortcut_unsupported">Shortcuts are not supported by this launcher or platform</string>
+    <string name="shortcut_failed">Could not create the shortcut</string>
+    <string name="run_now">Run now</string>
+    <string name="run">Run</string>
+    <string name="run_preset_title">Run %1$s?</string>
+    <string name="slide_to_confirm">Slide all the way right to confirm</string>
+    <string
+        name="run_preset_confirm"
+    >This will uninstall %1$d app(s) and permanently delete %2$d folder path(s) on the device.</string>
+    <string name="run_preset_confirm_self">Canta itself will also be uninstalled at the end.</string>
+    <string name="preset_run_started">Running preset %1$s…</string>
+    <string name="preset_run_done">Preset finished: removed %1$d app(s) and %2$d folder path(s).</string>
+    <string
+        name="preset_run_done_failures"
+    >Preset finished: removed %1$d app(s) and %2$d folder path(s); %3$d operation(s) failed.</string>
+    <string name="preset_not_found">The preset no longer exists</string>
+    <string
+        name="preset_run_not_authorized"
+    >Shizuku is not running or has not authorized Canta; the preset could not run.</string>
+    <string name="files_access_title">All-files access needed</string>
+    <string
+        name="files_access_body"
+    >To delete folders on this device, Canta needs the "Allow management of all files" permission. Open Android settings to grant it now?</string>
+    <string name="open_settings">Open settings</string>
+    <string name="later">Later</string>
+    <string
+        name="files_access_required"
+    >Folder deletion needs "All files access" — grant it in Android settings first.</string>
+    <string name="pick_folder">Pick a folder…</string>
     <string name="selected_apps">Selected apps</string>
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>
