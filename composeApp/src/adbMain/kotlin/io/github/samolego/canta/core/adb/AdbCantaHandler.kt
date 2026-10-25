@@ -7,10 +7,14 @@ import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.packages.OperationResult
 import io.github.samolego.canta.packages.PackageDetails
 import io.github.samolego.canta.packages.canResetToFactory
+import io.github.samolego.canta.packages.isSafeDeletionPath
+import io.github.samolego.canta.packages.normalizeFsPath
+import io.github.samolego.canta.packages.shellQuote
 import io.github.samolego.canta.util.LogUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapNotNull
 import org.jetbrains.compose.resources.decodeToImageBitmap
@@ -87,6 +91,40 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
 
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> =
         if (isConnected) helper.reinstall(packageNames) else emptyFlow()
+
+    override fun deletePaths(paths: List<String>): Flow<OperationResult> = flow {
+        for (path in paths) {
+            emit(deletePath(path))
+        }
+    }.flowOn(Dispatchers.Default)
+
+    /**
+     * Deletes [path] through `adb shell rm -rf`. The normalized path is
+     * single-quoted for the remote shell and re-checked against the
+     * user-storage allowlist.
+     */
+    private suspend fun deletePath(path: String): OperationResult {
+        val normalized = normalizeFsPath(path)
+        if (normalized == null || !isSafeDeletionPath(path)) {
+            LogUtils.w(TAG, "Refusing to delete '$path'")
+            return failed(path, "Path is not in a user-storage area")
+        }
+        if (!isConnected) return failed(path, "Not connected")
+        return try {
+            val result = transport.shell("rm -rf ${shellQuote(normalized)}")
+            if (result.exitCode == 0) {
+                OperationResult(path, success = true, status = 0)
+            } else {
+                failed(path, result.stderr.ifBlank { "rm exited with ${result.exitCode}" })
+            }
+        } catch (e: Exception) {
+            LogUtils.e(TAG, "Deleting '$path' failed", e)
+            failed(path, e.message ?: e.toString())
+        }
+    }
+
+    private fun failed(path: String, message: String) =
+        OperationResult(path, success = false, status = OperationResult.STATUS_NO_RESULT, message = message)
 
     override suspend fun packageExists(packageName: String): Boolean {
         if (!isConnected) return false

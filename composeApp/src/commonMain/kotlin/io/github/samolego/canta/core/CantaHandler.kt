@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.packages.OperationResult
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 /**
  * Status of the privileged runtime (Shizuku / Sui on Android).
@@ -126,6 +127,25 @@ interface CantaHandler {
 
     /** Reinstalls apps previously uninstalled for the user; one result per package. */
     fun reinstallApps(packageNames: List<String>): Flow<OperationResult>
+
+    /**
+     * Deletes device filesystem paths (files or directories); one result per
+     * path, with [OperationResult.packageName] carrying the path. Only paths
+     * passing `isSafeDeletionPath` are attempted. The default reports every
+     * path as failed, for platforms that cannot delete files.
+     */
+    fun deletePaths(paths: List<String>): Flow<OperationResult> = flow {
+        paths.forEach {
+            emit(
+                OperationResult(
+                    packageName = it,
+                    success = false,
+                    status = OperationResult.STATUS_NO_RESULT,
+                    message = "Deleting files is not supported on this platform",
+                )
+            )
+        }
+    }
 
     /** Whether the given package is on the device (installed or uninstalled for the user). */
     suspend fun packageExists(packageName: String): Boolean
