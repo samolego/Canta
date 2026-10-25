@@ -22,16 +22,21 @@ class PresetRunDelegate(
     private val platform: AndroidCantaPlatform,
 ) {
 
+    /** Finds the saved preset by UUID, returning null if it has been deleted. */
     suspend fun loadPreset(uuid: String): CantaPresetData? =
         deps.presetStore.presetsFlow.first().find { it.uuid == uuid }
 
+    /** Returns the localized message for a shortcut whose preset no longer exists. */
     suspend fun presetNotFoundText(): String = getString(Res.string.preset_not_found)
 
+    /** Returns the localized message for unavailable Shizuku authorization. */
     suspend fun unauthorizedText(): String = getString(Res.string.preset_run_not_authorized)
 
+    /** Formats the localized start message with the preset's name. */
     suspend fun startedText(preset: CantaPresetData): String =
         getString(Res.string.preset_run_started, preset.name)
 
+    /** Formats the shared localized completion summary for a shortcut run. */
     suspend fun resultText(result: PresetRunResult): String = result.describe()
 
     /** Asks Shizuku for permission when needed; reports whether we may proceed. */
@@ -58,6 +63,7 @@ class PresetRunDelegate(
         )
     }
 
+    /** Runs the confirmed preset through the execution engine shared with the in-app action. */
     suspend fun run(preset: CantaPresetData): PresetRunResult =
         PresetRunner(deps.handler).run(preset)
 }

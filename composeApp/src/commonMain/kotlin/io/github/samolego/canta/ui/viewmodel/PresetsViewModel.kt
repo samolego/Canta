@@ -64,6 +64,7 @@ class PresetsViewModel(
         }
     }
 
+    /** Saves a new preset and invokes the callback corresponding to the persistence result. */
     fun savePreset(
         name: String,
         description: String,
@@ -76,9 +77,11 @@ class PresetsViewModel(
         savePreset(newPreset(name, description, apps).copy(folders = folders, removeCantaAfterRun = removeCantaAfterRun))
     }
 
+    /** Deletes a saved preset and reports persistence success through the callbacks. */
     fun deletePreset(preset: CantaPresetData, onSuccess: () -> Unit, onError: () -> Unit) =
         persist("Deleting preset '${preset.name}'", onSuccess, onError) { deletePreset(preset) }
 
+    /** Persists edited metadata and deletion options while preserving the app selection. */
     fun updatePreset(
         oldPreset: CantaPresetData,
         newName: String,
@@ -99,6 +102,7 @@ class PresetsViewModel(
         )
     }
 
+    /** Persists the app selection supplied by the main screen's preset editor. */
     fun setPresetApps(preset: CantaPresetData, newApps: Set<String>, onSuccess: () -> Unit, onError: () -> Unit) =
         persist("Updating apps of preset '${preset.name}'", onSuccess, onError) { setPresetApps(preset, newApps) }
 
@@ -122,6 +126,7 @@ class PresetsViewModel(
         }
     }
 
+    /** Runs all preset operations, reports partial failures, and always resets the running state. */
     private suspend fun executeRun(preset: CantaPresetData) {
         runningPreset = true
         try {
@@ -132,10 +137,12 @@ class PresetsViewModel(
         }
     }
 
+    /** Copies the preset's shareable JSON representation to the clipboard. */
     fun exportToClipboard(preset: CantaPresetData) {
         platform.copyToClipboard(exportPresetToJson(preset))
     }
 
+    /** Imports clipboard text, reporting absent or invalid content through [onError]. */
     fun importFromClipboard(onSuccess: () -> Unit, onError: () -> Unit) =
         importFromJson(platform.readClipboard().orEmpty(), onSuccess, onError)
 

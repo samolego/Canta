@@ -48,6 +48,7 @@ import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.data.preset.CantaPresetData
 
+/** Edits preset metadata and deletion options, validating paths before calling [onConfirm]. */
 @Composable
 private fun PresetDialog(
     title: String,
@@ -205,6 +206,7 @@ private fun PresetDialog(
     }
 }
 
+/** Creates a preset from all currently uninstalled apps and the selected deletion options. */
 @Composable
 fun PresetCreateDialog(
     platform: CantaPlatform,
@@ -237,6 +239,7 @@ fun PresetCreateDialog(
     )
 }
 
+/** Edits preset metadata and deletion options without replacing its app selection. */
 @Composable
 fun PresetEditDialog(
     platform: CantaPlatform,

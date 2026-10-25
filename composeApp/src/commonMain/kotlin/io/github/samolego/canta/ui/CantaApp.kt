@@ -54,6 +54,7 @@ fun CantaApp(deps: CantaAppDependencies, closeApp: () -> Unit) {
     }
 }
 
+/** Owns shared view models and routes navigation, selection, and preset-editing actions. */
 @Composable
 private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
     val handler = deps.handler

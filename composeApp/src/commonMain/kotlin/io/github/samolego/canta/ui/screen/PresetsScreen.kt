@@ -102,6 +102,7 @@ import io.github.samolego.canta.ui.dialog.preset.PresetRunConfirmDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 
+/** Lists saved presets and connects their editing, sharing, shortcut, and execution actions. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PresetsScreen(
@@ -231,6 +232,7 @@ fun PresetsScreen(
     currentDialog?.let { it() }
 }
 
+/** Imports preset JSON through the view model and reports unsuccessful imports. */
 @Composable
 private fun ImportDialog(
     platform: CantaPlatform,
@@ -246,6 +248,7 @@ private fun ImportDialog(
     )
 }
 
+/** Offers creation and import actions when no presets have been saved. */
 @Composable
 private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Unit) {
     Column(
@@ -299,6 +302,7 @@ private fun EmptyPresetsState(onCreateClick: () -> Unit, onImportClick: () -> Un
     }
 }
 
+/** Displays preset metadata and exposes its editing and execution actions. */
 @Composable
 private fun PresetCard(
     preset: CantaPresetData,

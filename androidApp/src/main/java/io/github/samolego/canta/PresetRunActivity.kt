@@ -50,6 +50,7 @@ class PresetRunActivity : FragmentActivity() {
     @Volatile
     private var started = false
 
+    /** Loads the requested preset and opens confirmation, with a timeout for abandoned prompts. */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val uuid = intent
@@ -85,11 +86,13 @@ class PresetRunActivity : FragmentActivity() {
         }
     }
 
+    /** Cancels pending setup while allowing an already-started run to finish. */
     override fun onDestroy() {
         super.onDestroy()
         if (!started) runScope.cancel()
     }
 
+    /** Checks Shizuku and the authentication setting before starting the confirmed preset. */
     private fun authorize(preset: CantaPresetData) {
         lifecycleScope.launch {
             if (!delegate.ensureAuthorized()) {
@@ -101,6 +104,7 @@ class PresetRunActivity : FragmentActivity() {
         }
     }
 
+    /** Executes the preset outside the activity lifecycle and reports its outcome on the main thread. */
     private fun startRun(preset: CantaPresetData) {
         started = true
         runScope.launch {
@@ -110,9 +114,11 @@ class PresetRunActivity : FragmentActivity() {
         }
     }
 
+    /** Displays a runner message; callers must be on the main thread. */
     private fun toast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
+    /** Switches to the main thread before displaying a runner message. */
     private suspend fun toastOnMain(message: String) = withContext(Dispatchers.Main) { toast(message) }
 }

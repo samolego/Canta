@@ -80,6 +80,7 @@ class AndroidCantaHandler(
     override val privilegeStatus: PrivilegeStatus
         get() = ShizukuPermission.privilegeStatus(packageManager)
 
+    /** Loads installed and previously uninstalled packages, skipping unreadable entries. */
     override suspend fun loadApps(): List<AppInfo> = withContext(packageDispatcher) {
         // Reading labels loads each app's resources, which is slow on a cold
         // start; read packages in parallel, like the ADB helper does.
@@ -109,15 +110,19 @@ class AndroidCantaHandler(
         }
     }
 
+    /** Checks whether the package has a system-app update that can be removed. */
     override suspend fun canResetToFactory(packageName: String): Boolean =
         packageManager.getInfoForPackage(packageName)?.applicationInfo?.canResetToFactory == true
 
+    /** Performs privileged uninstalls on the IO dispatcher, emitting each package's result. */
     override fun uninstallApps(packageNames: List<String>, resetToFactory: Boolean): Flow<OperationResult> =
         flow { packageNames.forEach { emit(operations.uninstall(it, resetToFactory)) } }.flowOn(Dispatchers.IO)
 
+    /** Restores existing device packages on the IO dispatcher, emitting each result. */
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> =
         flow { packageNames.forEach { emit(operations.reinstall(it)) } }.flowOn(Dispatchers.IO)
 
+    /** Deletes each path on the IO dispatcher, reporting failures without skipping later paths. */
     override fun deletePaths(paths: List<String>): Flow<OperationResult> =
         flow { paths.forEach { emit(deletePath(it)) } }.flowOn(Dispatchers.IO)
 
@@ -142,9 +147,11 @@ class AndroidCantaHandler(
         }
     }
 
+    /** Creates a failed deletion result whose package-name field identifies the path. */
     private fun failed(path: String, message: String) =
         OperationResult(path, success = false, status = OperationResult.STATUS_NO_RESULT, message = message)
 
+    /** Validates the resolved storage target and deletes it without traversing descendant symlinks. */
     private fun deleteViaFileApi(path: String, normalized: String): OperationResult {
         if (!hasAllFilesAccess()) {
             return failed(path, "All files access is not granted")
@@ -167,6 +174,7 @@ class AndroidCantaHandler(
         }
     }
 
+    /** Checks all-files access on API 30+, or the legacy write permission on older devices. */
     private fun hasAllFilesAccess(): Boolean =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Environment.isExternalStorageManager()
@@ -177,6 +185,7 @@ class AndroidCantaHandler(
             ) == PackageManager.PERMISSION_GRANTED
         }
 
+    /** Deletes a temporary-directory target as Shizuku's identity with a bounded wait. */
     private fun deleteViaShizuku(path: String, normalized: String): OperationResult {
         return try {
             val result = ShizukuProcess.execForResult(DELETE_PATH_TIMEOUT_MS, "rm", "-rf", normalized)
@@ -191,6 +200,7 @@ class AndroidCantaHandler(
         }
     }
 
+    /** Requests Shizuku permission on the main thread and waits for the user's response. */
     override suspend fun requestAuthorization() {
         val deferred = CompletableDeferred<Boolean>()
         withContext(Dispatchers.Main) {
@@ -201,9 +211,11 @@ class AndroidCantaHandler(
         deferred.await()
     }
 
+    /** Checks device metadata, including packages uninstalled only for the current user. */
     override suspend fun packageExists(packageName: String): Boolean =
         packageManager.getInfoForPackage(packageName) != null
 
+    /** Opens Android's package settings, logging failures instead of propagating them. */
     override suspend fun openAppDetails(packageName: String) {
         try {
             val uri = android.net.Uri.fromParts("package", packageName, null)

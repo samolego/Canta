@@ -22,6 +22,7 @@ class MainActivity : FragmentActivity() {
     private val storagePermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
 
+    /** Registers activity-owned pickers and mounts the shared application UI. */
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             enableEdgeToEdge()
@@ -39,6 +40,7 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    /** Releases the main activity's biometric owner and result launchers. */
     override fun onDestroy() {
         super.onDestroy()
         app.platform.detachActivity(this)

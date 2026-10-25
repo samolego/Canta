@@ -61,6 +61,7 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
         return false
     }
 
+    /** Reads packages through the helper and caches them for subsequent lookups. */
     override suspend fun loadApps(): List<AppInfo> {
         if (!isConnected) return emptyList()
         val details = helper.packages()
@@ -72,6 +73,7 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
         return details.map { AppInfo(it) }
     }
 
+    /** Streams helper icons, dropping undecodable images without aborting the stream. */
     override fun loadIcons(): Flow<Pair<String, ImageBitmap>> {
         if (!isConnected) return emptyFlow()
         return helper.icons(ICON_SIZE_PX)
@@ -83,15 +85,19 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
             .flowOn(Dispatchers.Default) // Decoding PNGs is CPU work; keep it off the UI thread.
     }
 
+    /** Checks the cached package metadata for a removable system-app update. */
     override suspend fun canResetToFactory(packageName: String): Boolean =
         packages[packageName]?.canResetToFactory == true
 
+    /** Streams helper uninstall results, or emits nothing when disconnected. */
     override fun uninstallApps(packageNames: List<String>, resetToFactory: Boolean): Flow<OperationResult> =
         if (isConnected) helper.uninstall(packageNames, resetToFactory) else emptyFlow()
 
+    /** Streams helper reinstall results, or emits nothing when disconnected. */
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> =
         if (isConnected) helper.reinstall(packageNames) else emptyFlow()
 
+    /** Deletes each requested device path and emits one result per path, including failures. */
     override fun deletePaths(paths: List<String>): Flow<OperationResult> = flow {
         for (path in paths) {
             emit(deletePath(path))
@@ -123,15 +129,18 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
         }
     }
 
+    /** Creates a failed deletion result whose package-name field identifies the path. */
     private fun failed(path: String, message: String) =
         OperationResult(path, success = false, status = OperationResult.STATUS_NO_RESULT, message = message)
 
+    /** Checks cached packages, loading them first when the cache is empty. */
     override suspend fun packageExists(packageName: String): Boolean {
         if (!isConnected) return false
         if (packages.isEmpty()) loadApps()
         return packageName in packages
     }
 
+    /** Opens device settings for a validated package name while connected. */
     override suspend fun openAppDetails(packageName: String) {
         if (!isConnected) return
         if (packageName.any { !it.isLetterOrDigit() && it != '.' && it != '_' }) {

@@ -53,10 +53,12 @@ class AndroidCantaPlatform(
         }
     }
 
+    /** Displays a transient Android toast using the application context. */
     override fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
+    /** Opens the URL in another activity from the application context. */
     override fun openUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -64,6 +66,7 @@ class AndroidCantaPlatform(
         context.startActivity(intent)
     }
 
+    /** Authenticates with the registered main activity; fails closed if no owner is attached. */
     override fun requireBiometric(title: String, subtitle: String, onSuccess: () -> Unit) {
         val activity = biometricActivity
         if (activity == null) {
@@ -91,10 +94,12 @@ class AndroidCantaPlatform(
             activity,
             executor,
             object : BiometricPrompt.AuthenticationCallback() {
+                /** Invokes the pending action only after successful system authentication. */
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     onSuccess()
                 }
 
+                /** Logs terminal authentication errors without invoking the pending action. */
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     LogUtils.e(
                         TAG,
@@ -102,6 +107,7 @@ class AndroidCantaPlatform(
                     )
                 }
 
+                /** Logs an unsuccessful biometric attempt while the system prompt remains active. */
                 override fun onAuthenticationFailed() {
                     LogUtils.w(TAG, "Biometric authentication failed!")
                 }
@@ -110,11 +116,13 @@ class AndroidCantaPlatform(
         biometricPrompt.authenticate(promptInfo)
     }
 
+    /** Copies text as plain clipboard data when the clipboard service is available. */
     override fun copyToClipboard(text: String) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
         clipboard.setPrimaryClip(ClipData.newPlainText("Canta", text))
     }
 
+    /** Returns the first clipboard item's text, or null when unavailable. */
     override fun readClipboard(): String? {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return null
         val clip = clipboard.primaryClip ?: return null
@@ -163,6 +171,7 @@ class AndroidCantaPlatform(
             ) == PackageManager.PERMISSION_GRANTED
         }
 
+    /** Opens all-files settings on API 30+, or requests the legacy storage permission. */
     override fun requestAllFilesAccess() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val intent = Intent(
@@ -178,6 +187,7 @@ class AndroidCantaPlatform(
     override val supportsFolderPicker: Boolean
         get() = folderPickerLauncher != null
 
+    /** Launches the registered folder picker and retains the callback until its result arrives. */
     override fun pickFolder(onPicked: (String?) -> Unit) {
         val launcher = folderPickerLauncher ?: return onPicked(null)
         folderCallback = onPicked

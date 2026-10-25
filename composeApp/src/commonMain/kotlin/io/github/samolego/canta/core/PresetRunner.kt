@@ -34,6 +34,7 @@ class PresetRunner(private val handler: CantaHandler) {
         const val TAG = "PresetRunner"
     }
 
+    /** Removes matching apps, deletes folders, then attempts explicit self-removal; returns operation counts. */
     suspend fun run(preset: CantaPresetData): PresetRunResult {
         var appsRemoved = 0
         var appsFailed = 0

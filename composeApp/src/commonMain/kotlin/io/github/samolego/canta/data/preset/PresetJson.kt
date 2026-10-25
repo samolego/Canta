@@ -21,6 +21,7 @@ import kotlin.time.Instant
 
 private val presetJson = Json { prettyPrint = true }
 
+/** Serializes a shareable preset with sorted package names and folder paths. */
 fun exportPresetToJson(preset: CantaPresetData): String {
     val json =
         buildJsonObject {

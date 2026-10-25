@@ -28,7 +28,9 @@ interface CantaPlatform {
      */
     fun requireBiometric(title: String, subtitle: String, onSuccess: () -> Unit)
 
+    /** Copies plain text to the platform clipboard. */
     fun copyToClipboard(text: String)
+    /** Returns clipboard text, or null when clipboard access is unavailable. */
     fun readClipboard(): String?
 
     /**

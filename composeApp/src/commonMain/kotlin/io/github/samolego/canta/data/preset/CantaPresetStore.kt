@@ -31,24 +31,30 @@ class CantaPresetStore(storage: AppBlobStorage) {
     val presetsFlow: Flow<List<CantaPresetData>> =
         store.state.map { list -> list.presets.map { it.toPresetData() } }
 
+    /** Persists a transformed preset list, returning false if storage cannot be written. */
     private suspend fun update(transform: (List<CantaPresetData>) -> List<CantaPresetData>): Boolean =
         store.update { list ->
             PresetsListProto(transform(list.presets.map { it.toPresetData() }).map { it.toProto() })
         }
 
+    /** Appends the preset, assigning a UUID when missing, and reports persistence success. */
     suspend fun savePreset(preset: CantaPresetData): Boolean =
         update { it + preset.ensureUuid() }
 
+    /** Removes matching saved presets and reports persistence success. */
     suspend fun deletePreset(preset: CantaPresetData): Boolean =
         update { presets -> presets.filterNot { it.matches(preset) } }
 
+    /** Replaces matching presets, retaining a valid UUID, and reports persistence success. */
     suspend fun updatePreset(oldPreset: CantaPresetData, newPreset: CantaPresetData): Boolean =
         update { presets -> presets.map { if (it.matches(oldPreset)) newPreset.ensureUuid() else it } }
 
+    /** Replaces the app selection while preserving the preset's other fields. */
     suspend fun setPresetApps(preset: CantaPresetData, newApps: Set<String>): Boolean =
         updatePreset(preset, preset.copy(apps = newApps))
 }
 
+/** Restores stored fields and excludes Canta from the ordinary app selection. */
 private fun CantaPresetProto.toPresetData(): CantaPresetData = CantaPresetData(
     name = name,
     description = description,
@@ -62,6 +68,7 @@ private fun CantaPresetProto.toPresetData(): CantaPresetData = CantaPresetData(
     removeCantaAfterRun = removeCantaAfterRun,
 )
 
+/** Encodes preset fields while keeping self-removal separate from the ordinary app selection. */
 private fun CantaPresetData.toProto(): CantaPresetProto = CantaPresetProto(
     name = name,
     description = description,
