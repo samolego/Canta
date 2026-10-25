@@ -14,8 +14,48 @@ A preset is a saved collection of apps that you want to uninstall. Each preset c
 - **Name**: A descriptive name for your preset (e.g., "Samsung Bloatware")
 - **Description**: Optional details about what the preset removes
 - **App List**: The specific apps (package names) to be uninstalled
+- **Folders** (optional): Filesystem paths to delete when the preset runs
+- **Self-removal** (optional): Whether the preset uninstalls Canta itself at the end
 - **Creation Date**: When the preset was created
 - **Version**: Format version for compatibility
+
+## Deleting folders
+
+Presets can also delete folders on the device when they run — useful for
+wiping leftover data after debloating. In the preset editor, type one
+absolute path per line or use **Pick a folder…** to select one in the system
+file picker. For safety, only paths inside user storage are allowed:
+`/sdcard`, `/storage`, `/data/media` and `/data/local/tmp`. Paths outside
+these roots (e.g. `/system`, `/data/data`, `/data/system`) are refused, both
+in the editor and when importing a preset.
+
+On Android, deleting shared-storage folders needs the **"All files access"**
+permission (`MANAGE_EXTERNAL_STORAGE`). Canta asks for it the first time you
+try to add a folder to a preset (focusing the path field or tapping "Pick a
+folder…"), not at app startup. If it isn't granted, folder deletion in a run
+fails with a clear message (uninstalls still work — they use Shizuku, not the
+storage permission). On API 28/29 the classic storage permission is used
+instead.
+
+## Removing Canta after a run
+
+Enabling "Uninstall Canta itself after the preset runs" makes a run remove
+Canta as its very last action — after the apps are uninstalled and the
+folders are deleted. Canta is never removed through the preset's plain app
+list: if a preset contains Canta's own package it is skipped unless this
+option is enabled.
+
+## Shortcuts and headless runs
+
+From a preset's menu, **Run now** executes it immediately (with a
+confirmation dialog; if "require authentication" is enabled in settings, the
+system credential prompt appears first). **Add shortcut** pins a home-screen
+shortcut that runs the preset without opening Canta's interface. The shortcut
+first shows a slide-to-confirm prompt so a stray tap can't trigger a
+destructive run; the Shizuku and authentication checks then apply as usual.
+
+Both the shortcut and the in-app run honor the authentication setting, and
+all deletions go through the same safety checks as a normal preset run.
 
 ## Creating presets
 
