@@ -18,9 +18,6 @@ import io.github.samolego.canta.data.preset.CantaPresetData
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.auth_required
 import io.github.samolego.canta.generated.resources.auth_required_description
-import io.github.samolego.canta.generated.resources.files_access_required
-import io.github.samolego.canta.generated.resources.preset_run_done
-import io.github.samolego.canta.generated.resources.preset_run_done_failures
 import io.github.samolego.canta.util.LogUtils
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -126,10 +123,6 @@ class PresetsViewModel(
     }
 
     private suspend fun executeRun(preset: CantaPresetData) {
-        if (preset.folders.isNotEmpty() && platform.needsAllFilesAccess) {
-            platform.showMessage(getString(Res.string.files_access_required))
-            return
-        }
         runningPreset = true
         try {
             val result = PresetRunner(cantaHandler).run(preset)

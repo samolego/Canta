@@ -87,7 +87,6 @@ class PresetRunActivity : FragmentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        app.platform.detachActivity(this)
         if (!started) runScope.cancel()
     }
 

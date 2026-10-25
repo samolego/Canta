@@ -1,5 +1,9 @@
 package io.github.samolego.canta.ui.dialog.preset
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -51,6 +55,19 @@ fun PresetRunConfirmDialog(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        if (preset.folders.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .fillMaxWidth()
+                    .heightIn(max = 160.dp)
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                preset.folders.sorted().forEach { path ->
+                    Text(text = path, style = MaterialTheme.typography.bodySmall)
+                }
+            }
+        }
         if (preset.removeCantaAfterRun) {
             Text(
                 text = stringResource(Res.string.run_preset_confirm_self),

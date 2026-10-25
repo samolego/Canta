@@ -34,6 +34,7 @@ class FakeHandler(
     val resettable = mutableSetOf<String>()
     val uninstallCalls = mutableListOf<Pair<List<String>, Boolean>>()
     val reinstallCalls = mutableListOf<List<String>>()
+    val deletePathsCalls = mutableListOf<List<String>>()
     var devices = emptyList<CantaDevice>()
     var connectFailure: DeviceConnectionFailure? = null
 
@@ -55,6 +56,11 @@ class FakeHandler(
         return results(packageNames)
     }
 
+    override fun deletePaths(paths: List<String>): Flow<OperationResult> {
+        deletePathsCalls += paths
+        return results(paths)
+    }
+
     private fun results(packageNames: List<String>) =
         packageNames.map { OperationResult(it, success = it !in failing) }.asFlow()
 
@@ -69,6 +75,7 @@ class FakeHandler(
 /** A [CantaPlatform] that records messages and holds back biometric prompts until [approveBiometric]. */
 class FakePlatform : CantaPlatform {
     val shownMessages = mutableListOf<String>()
+    override var needsAllFilesAccess = false
     private var pendingBiometric: (() -> Unit)? = null
 
     val biometricRequested get() = pendingBiometric != null

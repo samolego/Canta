@@ -50,8 +50,6 @@ class AndroidCantaPlatform(
     fun detachActivity(activity: FragmentActivity) {
         if (biometricActivity === activity) {
             biometricActivity = null
-            folderPickerLauncher = null
-            storagePermissionLauncher = null
         }
     }
 
@@ -73,6 +71,11 @@ class AndroidCantaPlatform(
             LogUtils.e(TAG, "No FragmentActivity attached; cannot authenticate")
             return
         }
+        requireBiometric(activity, title, subtitle, onSuccess)
+    }
+
+    /** Authenticates with [activity] without changing the main activity's registered owner. */
+    fun requireBiometric(activity: FragmentActivity, title: String, subtitle: String, onSuccess: () -> Unit) {
         val executor = ContextCompat.getMainExecutor(context)
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
@@ -131,13 +134,13 @@ class AndroidCantaPlatform(
         val intent = Intent(PresetRunContract.ACTION_RUN_PRESET)
             .setClassName(context.packageName, PresetRunContract.RUN_ACTIVITY_CLASS)
             .putExtra(PresetRunContract.EXTRA_PRESET_UUID, presetUuid)
-        val shortcut = ShortcutInfoCompat.Builder(context, PresetRunContract.SHORTCUT_ID_PREFIX + presetUuid)
-            .setShortLabel(presetName)
-            .setLongLabel("Canta: $presetName")
-            .setIcon(IconCompat.createWithResource(context, context.applicationInfo.icon))
-            .setIntent(intent)
-            .build()
         return try {
+            val shortcut = ShortcutInfoCompat.Builder(context, PresetRunContract.SHORTCUT_ID_PREFIX + presetUuid)
+                .setShortLabel(presetName)
+                .setLongLabel("Canta: $presetName")
+                .setIcon(IconCompat.createWithResource(context, context.applicationInfo.icon))
+                .setIntent(intent)
+                .build()
             ShortcutManagerCompat.requestPinShortcut(context, shortcut, null)
         } catch (e: Exception) {
             // e.g. IllegalStateException when called without a foreground activity

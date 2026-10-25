@@ -50,8 +50,8 @@ class PresetRunDelegate(
             onSuccess()
             return
         }
-        platform.attachActivity(activity)
         platform.requireBiometric(
+            activity = activity,
             title = getString(Res.string.auth_required),
             subtitle = getString(Res.string.auth_required_description),
             onSuccess = onSuccess,

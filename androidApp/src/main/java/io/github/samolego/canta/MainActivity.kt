@@ -42,5 +42,7 @@ class MainActivity : FragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         app.platform.detachActivity(this)
+        app.platform.folderPickerLauncher = null
+        app.platform.storagePermissionLauncher = null
     }
 }

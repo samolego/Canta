@@ -43,6 +43,14 @@ fun normalizeFsPath(path: String): String? {
     return if (segments.isEmpty()) null else "/" + segments.joinToString("/")
 }
 
+/** Whole-volume and per-user roots, including aliases of /sdcard. */
+private val VOLUME_ROOTS = listOf(
+    Regex("/storage/[^/]+"),
+    Regex("/storage/emulated/[^/]+"),
+    Regex("/storage/self/primary"),
+    Regex("/data/media/[^/]+"),
+)
+
 /**
  * Whether [path] may be deleted by a preset run. Only normalized paths strictly
  * inside [DELETABLE_ROOTS] qualify — the roots themselves are refused (wiping
@@ -51,6 +59,7 @@ fun normalizeFsPath(path: String): String? {
  */
 fun isSafeDeletionPath(path: String): Boolean {
     val normalized = normalizeFsPath(path) ?: return false
+    if (VOLUME_ROOTS.any { it.matches(normalized) }) return false
     return DELETABLE_ROOTS.any { normalized.startsWith("$it/") }
 }
 

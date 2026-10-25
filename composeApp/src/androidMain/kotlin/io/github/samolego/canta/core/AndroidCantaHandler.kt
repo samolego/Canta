@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.nio.file.Files
 import kotlin.math.roundToInt
 
 /**
@@ -149,11 +150,17 @@ class AndroidCantaHandler(
             return failed(path, "All files access is not granted")
         }
         return try {
-            if (File(normalized).deleteRecursively()) {
-                OperationResult(path, success = true, status = 0)
-            } else {
-                failed(path, "Could not delete $normalized")
+            val file = File(normalized)
+            if (Files.isSymbolicLink(file.toPath())) {
+                return failed(path, "Deletion target is a symbolic link")
             }
+            val canonical = file.canonicalFile
+            if (!isSafeDeletionPath(canonical.path)) {
+                LogUtils.w(TAG, "Refusing to delete '$path': resolves to '${canonical.path}'")
+                return failed(path, "Path resolves outside an allowed storage directory")
+            }
+            deleteWithoutFollowingLinks(canonical.toPath())
+            OperationResult(path, success = true, status = 0)
         } catch (e: Exception) {
             LogUtils.e(TAG, "Deleting '$path' failed", e)
             failed(path, e.message ?: e.toString())
