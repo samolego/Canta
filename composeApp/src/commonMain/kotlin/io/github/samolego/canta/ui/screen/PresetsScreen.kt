@@ -17,15 +17,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AppShortcut
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -42,6 +46,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,27 +67,38 @@ import io.github.samolego.canta.data.preset.formatPresetDate
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.add_apps
 import io.github.samolego.canta.generated.resources.apply_preset
+import io.github.samolego.canta.generated.resources.cancel
 import io.github.samolego.canta.generated.resources.create_preset
+import io.github.samolego.canta.generated.resources.create_shortcut
 import io.github.samolego.canta.generated.resources.delete
 import io.github.samolego.canta.generated.resources.edit
 import io.github.samolego.canta.generated.resources.import_failed
 import io.github.samolego.canta.generated.resources.import_preset
 import io.github.samolego.canta.generated.resources.more_options
 import io.github.samolego.canta.generated.resources.no_presets
+import io.github.samolego.canta.generated.resources.num_folders
 import io.github.samolego.canta.generated.resources.num_selected_apps
 import io.github.samolego.canta.generated.resources.preset_copied
 import io.github.samolego.canta.generated.resources.preset_delete_error
 import io.github.samolego.canta.generated.resources.preset_deleted
 import io.github.samolego.canta.generated.resources.presets
 import io.github.samolego.canta.generated.resources.presets_description
+import io.github.samolego.canta.generated.resources.removes_canta
+import io.github.samolego.canta.generated.resources.run
+import io.github.samolego.canta.generated.resources.run_now
 import io.github.samolego.canta.generated.resources.selected_apps
 import io.github.samolego.canta.generated.resources.share
+import io.github.samolego.canta.generated.resources.shortcut_created
+import io.github.samolego.canta.generated.resources.shortcut_failed
+import io.github.samolego.canta.generated.resources.shortcut_unsupported
+import io.github.samolego.canta.ui.component.CantaDialog
 import io.github.samolego.canta.ui.component.text.IconText
 import io.github.samolego.canta.ui.component.ScreenTopBar
 import io.github.samolego.canta.ui.component.fab.ExpandableFAB
 import io.github.samolego.canta.ui.dialog.preset.ImportPresetDialog
 import io.github.samolego.canta.ui.dialog.preset.PresetCreateDialog
 import io.github.samolego.canta.ui.dialog.preset.PresetEditDialog
+import io.github.samolego.canta.ui.dialog.preset.PresetRunConfirmDialog
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 
@@ -95,6 +111,7 @@ fun PresetsScreen(
     appListViewModel: AppListViewModel,
 ) {
     var currentDialog by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+    var runCandidate by remember { mutableStateOf<CantaPresetData?>(null) }
     val presets by presetViewModel.presets.collectAsStateWithLifecycle()
 
     val createConfigDialog =
@@ -145,6 +162,9 @@ fun PresetsScreen(
                 val presetDeletedText = stringResource(Res.string.preset_deleted)
                 val presetDeleteErrorText = stringResource(Res.string.preset_delete_error)
                 val presetCopiedText = stringResource(Res.string.preset_copied)
+                val shortcutCreatedText = stringResource(Res.string.shortcut_created)
+                val shortcutUnsupportedText = stringResource(Res.string.shortcut_unsupported)
+                val shortcutFailedText = stringResource(Res.string.shortcut_failed)
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(16.dp),
@@ -180,11 +200,32 @@ fun PresetsScreen(
                                 presetViewModel.exportToClipboard(preset)
                                 platform.showMessage(presetCopiedText)
                             },
+                            onShortcut = {
+                                when {
+                                    !platform.supportsPresetShortcuts ->
+                                        platform.showMessage(shortcutUnsupportedText)
+                                    platform.installPresetShortcut(preset.name, preset.uuid) ->
+                                        platform.showMessage(shortcutCreatedText)
+                                    else -> platform.showMessage(shortcutFailedText)
+                                }
+                            },
+                            onRun = { runCandidate = preset },
                         )
                     }
                 }
             }
         }
+    }
+
+    runCandidate?.let { preset ->
+        PresetRunConfirmDialog(
+            preset = preset,
+            onConfirm = {
+                runCandidate = null
+                presetViewModel.runPreset(preset)
+            },
+            onCancel = { runCandidate = null },
+        )
     }
 
     currentDialog?.let { it() }
@@ -266,6 +307,8 @@ private fun PresetCard(
     onExport: () -> Unit,
     onDelete: () -> Unit,
     onApply: () -> Unit,
+    onShortcut: () -> Unit,
+    onRun: () -> Unit,
     formatDate: (Long) -> String
 ) {
     Card(
@@ -328,6 +371,43 @@ private fun PresetCard(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
+
+                    if (preset.folders.isNotEmpty() || preset.removeCantaAfterRun) {
+                        Row(
+                            modifier = Modifier.padding(top = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            if (preset.folders.isNotEmpty()) {
+                                Icon(
+                                    Icons.Default.Folder,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(14.dp),
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = pluralStringResource(Res.plurals.num_folders, preset.folders.size, preset.folders.size),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
+                            if (preset.removeCantaAfterRun) {
+                                if (preset.folders.isNotEmpty()) Spacer(modifier = Modifier.width(12.dp))
+                                Icon(
+                                    Icons.Default.Warning,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(14.dp),
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = stringResource(Res.string.removes_canta),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
+                        }
+                    }
                 }
 
                 var showMenu by remember { mutableStateOf(false) }
@@ -366,6 +446,26 @@ private fun PresetCard(
                             },
                             leadingIcon = {
                                 Icon(Icons.Default.Share, contentDescription = stringResource(Res.string.share))
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(Res.string.run_now)) },
+                            onClick = {
+                                showMenu = false
+                                onRun()
+                            },
+                            leadingIcon = {
+                                Icon(Icons.Default.PlayCircle, contentDescription = stringResource(Res.string.run_now))
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(Res.string.create_shortcut)) },
+                            onClick = {
+                                showMenu = false
+                                onShortcut()
+                            },
+                            leadingIcon = {
+                                Icon(Icons.Default.AppShortcut, contentDescription = stringResource(Res.string.create_shortcut))
                             }
                         )
                         HorizontalDivider()
