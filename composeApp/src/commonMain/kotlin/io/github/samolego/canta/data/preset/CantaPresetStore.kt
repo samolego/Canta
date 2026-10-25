@@ -1,5 +1,6 @@
 package io.github.samolego.canta.data.preset
 
+import io.github.samolego.canta.CANTA_PACKAGE_NAME
 import io.github.samolego.canta.data.AppBlobStorage
 import io.github.samolego.canta.data.proto.CantaPresetProto
 import io.github.samolego.canta.data.proto.PresetsListProto
@@ -52,16 +53,22 @@ private fun CantaPresetProto.toPresetData(): CantaPresetData = CantaPresetData(
     name = name,
     description = description,
     createdDate = createdDate,
-    apps = apps.toSet(),
+    // Canta's own package is never a preset app: self-removal goes through
+    // removeCantaAfterRun, and counting it would show a phantom app.
+    apps = apps.toSet() - CANTA_PACKAGE_NAME,
     version = version.ifEmpty { "1.0" },
     uuid = uuid,
+    folders = folders.toSet(),
+    removeCantaAfterRun = removeCantaAfterRun,
 )
 
 private fun CantaPresetData.toProto(): CantaPresetProto = CantaPresetProto(
     name = name,
     description = description,
     createdDate = createdDate,
-    apps = apps.toList(),
+    apps = (apps - CANTA_PACKAGE_NAME).toList(),
     version = version,
     uuid = uuid,
+    folders = folders.toList(),
+    removeCantaAfterRun = removeCantaAfterRun,
 )
