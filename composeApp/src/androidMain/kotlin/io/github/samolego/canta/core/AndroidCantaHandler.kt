@@ -4,9 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Environment
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.content.ContextCompat
 import io.github.samolego.canta.core.shizuku.ShizukuPermission
+import io.github.samolego.canta.core.shizuku.ShizukuProcess
 import io.github.samolego.canta.core.shizuku.ShizukuServices
 import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.packages.OperationResult
@@ -16,7 +20,9 @@ import io.github.samolego.canta.packages.canResetToFactory
 import io.github.samolego.canta.packages.getAllPackages
 import io.github.samolego.canta.packages.getInfoForPackage
 import io.github.samolego.canta.packages.inDisplayOrder
+import io.github.samolego.canta.packages.isSafeDeletionPath
 import io.github.samolego.canta.packages.loadIconBitmap
+import io.github.samolego.canta.packages.normalizeFsPath
 import io.github.samolego.canta.packages.readSafely
 import io.github.samolego.canta.packages.toPackageDetails
 import io.github.samolego.canta.ui.component.APP_ICON_SIZE
@@ -30,6 +36,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.nio.file.Files
 import kotlin.math.roundToInt
 
 /**
@@ -42,6 +50,9 @@ class AndroidCantaHandler(
 
     private companion object {
         const val TAG = "AndroidCantaHandler"
+
+        /** A large folder tree can take a while for `rm -rf`; give it a generous bound. */
+        const val DELETE_PATH_TIMEOUT_MS = 300_000L
     }
 
     private val packageManager: PackageManager get() = context.packageManager
@@ -69,6 +80,7 @@ class AndroidCantaHandler(
     override val privilegeStatus: PrivilegeStatus
         get() = ShizukuPermission.privilegeStatus(packageManager)
 
+    /** Loads installed and previously uninstalled packages, skipping unreadable entries. */
     override suspend fun loadApps(): List<AppInfo> = withContext(packageDispatcher) {
         // Reading labels loads each app's resources, which is slow on a cold
         // start; read packages in parallel, like the ADB helper does.
@@ -98,15 +110,97 @@ class AndroidCantaHandler(
         }
     }
 
+    /** Checks whether the package has a system-app update that can be removed. */
     override suspend fun canResetToFactory(packageName: String): Boolean =
         packageManager.getInfoForPackage(packageName)?.applicationInfo?.canResetToFactory == true
 
+    /** Performs privileged uninstalls on the IO dispatcher, emitting each package's result. */
     override fun uninstallApps(packageNames: List<String>, resetToFactory: Boolean): Flow<OperationResult> =
         flow { packageNames.forEach { emit(operations.uninstall(it, resetToFactory)) } }.flowOn(Dispatchers.IO)
 
+    /** Restores existing device packages on the IO dispatcher, emitting each result. */
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> =
         flow { packageNames.forEach { emit(operations.reinstall(it)) } }.flowOn(Dispatchers.IO)
 
+    /** Deletes each path on the IO dispatcher, reporting failures without skipping later paths. */
+    override fun deletePaths(paths: List<String>): Flow<OperationResult> =
+        flow { paths.forEach { emit(deletePath(it)) } }.flowOn(Dispatchers.IO)
+
+    /**
+     * Deletes [path]. Shared-storage targets go through the filesystem API,
+     * which needs "All files access" (`MANAGE_EXTERNAL_STORAGE`, or
+     * WRITE_EXTERNAL_STORAGE before API 30). `/data/local/tmp` — unreachable
+     * via the File API — stays on `rm -rf` under Shizuku's identity; the
+     * command is passed as argv to [ShizukuProcess.exec], and every path is
+     * re-checked against the user-storage allowlist first.
+     */
+    private fun deletePath(path: String): OperationResult {
+        val normalized = normalizeFsPath(path)
+        if (normalized == null || !isSafeDeletionPath(path)) {
+            LogUtils.w(TAG, "Refusing to delete '$path'")
+            return failed(path, "Path is not in a user-storage area")
+        }
+        return if (normalized.startsWith("/data/local/tmp/")) {
+            deleteViaShizuku(path, normalized)
+        } else {
+            deleteViaFileApi(path, normalized)
+        }
+    }
+
+    /** Creates a failed deletion result whose package-name field identifies the path. */
+    private fun failed(path: String, message: String) =
+        OperationResult(path, success = false, status = OperationResult.STATUS_NO_RESULT, message = message)
+
+    /** Validates the resolved storage target and deletes it without traversing descendant symlinks. */
+    private fun deleteViaFileApi(path: String, normalized: String): OperationResult {
+        if (!hasAllFilesAccess()) {
+            return failed(path, "All files access is not granted")
+        }
+        return try {
+            val file = File(normalized)
+            if (Files.isSymbolicLink(file.toPath())) {
+                return failed(path, "Deletion target is a symbolic link")
+            }
+            val canonical = file.canonicalFile
+            if (!isSafeDeletionPath(canonical.path)) {
+                LogUtils.w(TAG, "Refusing to delete '$path': resolves to '${canonical.path}'")
+                return failed(path, "Path resolves outside an allowed storage directory")
+            }
+            deleteWithoutFollowingLinks(canonical.toPath())
+            OperationResult(path, success = true, status = 0)
+        } catch (e: Exception) {
+            LogUtils.e(TAG, "Deleting '$path' failed", e)
+            failed(path, e.message ?: e.toString())
+        }
+    }
+
+    /** Checks all-files access on API 30+, or the legacy write permission on older devices. */
+    private fun hasAllFilesAccess(): Boolean =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        } else {
+            ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+
+    /** Deletes a temporary-directory target as Shizuku's identity with a bounded wait. */
+    private fun deleteViaShizuku(path: String, normalized: String): OperationResult {
+        return try {
+            val result = ShizukuProcess.execForResult(DELETE_PATH_TIMEOUT_MS, "rm", "-rf", normalized)
+            when {
+                result == null -> failed(path, "Deletion timed out")
+                result.first == 0 -> OperationResult(path, success = true, status = 0)
+                else -> OperationResult(path, success = false, status = result.first, message = result.second)
+            }
+        } catch (e: Exception) {
+            LogUtils.e(TAG, "Deleting '$path' failed", e)
+            failed(path, e.message ?: e.toString())
+        }
+    }
+
+    /** Requests Shizuku permission on the main thread and waits for the user's response. */
     override suspend fun requestAuthorization() {
         val deferred = CompletableDeferred<Boolean>()
         withContext(Dispatchers.Main) {
@@ -117,9 +211,11 @@ class AndroidCantaHandler(
         deferred.await()
     }
 
+    /** Checks device metadata, including packages uninstalled only for the current user. */
     override suspend fun packageExists(packageName: String): Boolean =
         packageManager.getInfoForPackage(packageName) != null
 
+    /** Opens Android's package settings, logging failures instead of propagating them. */
     override suspend fun openAppDetails(packageName: String) {
         try {
             val uri = android.net.Uri.fromParts("package", packageName, null)

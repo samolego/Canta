@@ -1,5 +1,7 @@
 package io.github.samolego.canta.data.preset
 
+import io.github.samolego.canta.CANTA_PACKAGE_NAME
+import io.github.samolego.canta.packages.isSafeDeletionPath
 import io.github.samolego.canta.packages.isValidPackageName
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -19,6 +21,7 @@ import kotlin.time.Instant
 
 private val presetJson = Json { prettyPrint = true }
 
+/** Serializes a shareable preset with sorted package names and folder paths. */
 fun exportPresetToJson(preset: CantaPresetData): String {
     val json =
         buildJsonObject {
@@ -32,6 +35,13 @@ fun exportPresetToJson(preset: CantaPresetData): String {
                     preset.apps.sorted().forEach { add(JsonPrimitive(it)) }
                 }
             )
+            put(
+                "folders",
+                buildJsonArray {
+                    preset.folders.sorted().forEach { add(JsonPrimitive(it)) }
+                }
+            )
+            put("removeCantaAfterRun", preset.removeCantaAfterRun)
         }
     return presetJson.encodeToString(JsonObject.serializer(), json)
 }
@@ -62,8 +72,16 @@ suspend fun importPresetFromJson(
                     element.jsonObject["packageName"]?.jsonPrimitive?.content
                 }
             // Imported presets are untrusted: package names end up in shell commands.
-            if (packageName == null || !isValidPackageName(packageName) || !packageExists(packageName)) continue
+            // Canta's own package is excluded — self-removal is removeCantaAfterRun's job.
+            if (packageName == null || packageName == CANTA_PACKAGE_NAME || !isValidPackageName(packageName) || !packageExists(packageName)) continue
             apps.add(packageName)
+        }
+
+        // Same for filesystem paths: anything outside user storage is dropped.
+        val folders = mutableSetOf<String>()
+        runCatching { root["folders"]?.jsonArray }.getOrNull()?.forEach { element ->
+            val path = runCatching { element.jsonPrimitive.content }.getOrNull()
+            if (path != null && isSafeDeletionPath(path)) folders.add(path)
         }
 
         CantaPresetData(
@@ -72,7 +90,11 @@ suspend fun importPresetFromJson(
             createdDate = root["createdDate"]?.jsonPrimitive?.content?.toLongOrNull() ?: 0L,
             apps = apps,
             version = root["version"]?.jsonPrimitive?.content ?: "1.0",
-            uuid = generateUuid()
+            uuid = generateUuid(),
+            folders = folders,
+            removeCantaAfterRun = runCatching {
+                root["removeCantaAfterRun"]?.jsonPrimitive?.content?.toBooleanStrictOrNull()
+            }.getOrNull() ?: false,
         )
     } catch (_: Exception) {
         null
