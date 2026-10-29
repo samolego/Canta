@@ -121,6 +121,8 @@
     <string name="auth_required_description">Thao tác này yêu cầu quyền cao hơn.</string>
     <string name="require_auth_setting_desc">Cần xác thực trước khi gỡ hoặc cài đặt lại ứng dụng.</string>
     <string name="require_auth_setting">Yêu cầu xác thực</string>
+    <string name="device_user">Device user</string>
+    <string name="device_user_description">Which user or profile on the device Canta manages</string>
     <string name="select_device">Select device</string>
     <string name="select_device_description">Choose which Android device Canta should manage. Enable USB debugging on the device and authorize this computer when prompted.</string>
     <string name="no_devices_found">No devices found. Check the connection and try again.</string>
