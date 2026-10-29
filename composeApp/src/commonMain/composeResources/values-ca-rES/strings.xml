@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cancel">Cancel·la</string>
-    <string name="ok">D'acord</string>
+    <string name="ok">D\'acord</string>
     <string name="are_you_sure_to_uninstall_apps">Estàs segur de desinstal·lar %1$s aplicacions?</string>
     <string name="copy_package_name_to_clipboard">Copia el nom del paquet al porta-retalls</string>
     <string name="no_description_available">Descripció no disponible</string>
-    <string name="app_settings">Informació de l'aplicació</string>
+    <string name="app_settings">Informació de l\'aplicació</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
@@ -15,17 +15,17 @@
     <string name="collapse">Collapse</string>
     <string name="badge_disabled">DISABLED</string>
     <string name="helper_notice">Canta places a small helper in /data/local/tmp on the device to read and manage apps. It runs only while Canta uses it.</string>
-    <string name="device_android_too_old">This device runs an Android version older than 9, which Canta doesn't support.</string>
-    <string name="helper_unavailable">Couldn't set up Canta's helper on the device. Check that it is connected and authorized, then try again.</string>
+    <string name="device_android_too_old">This device runs an Android version older than 9, which Canta doesn\'t support.</string>
+    <string name="helper_unavailable">Couldn\'t set up Canta\'s helper on the device. Check that it is connected and authorized, then try again.</string>
     <string name="tab_installed">Installed apps</string>
     <string name="tab_uninstalled">Uninstalled apps</string>
-    <string name="cannot_uninstall_canta">Can'ta ouch this!</string>
+    <string name="cannot_uninstall_canta">Can\'ta ouch this!</string>
     <string name="device_unreachable">Failed to reach the device. Check that it is connected and authorized.</string>
     <string name="app_size">Size: %1$s</string>
     <string name="uninstall">Desinstal·la</string>
     <string name="reinstall">Reinstal·la</string>
     <string name="only_system">Només sistema</string>
-    <string name="no_apps_found">No s'ha trobat cap aplicació</string>
+    <string name="no_apps_found">No s\'ha trobat cap aplicació</string>
     <string name="loading_apps">Carregant aplicacions</string>
     <string name="badge_info">Informació dels distintius</string>
     <string name="got_it">Entesos</string>
@@ -51,22 +51,22 @@
         <item quantity="other">You have successfully reinstalled %1$d apps!</item>
     </plurals>
     <string name="close">Tanca</string>
-    <string name="canta_description">Canta és una aplicació de desinstal·lació d'aplicacions de codi obert que usa Shizuku per desinstal·lar tant les aplicacions de l'usuari com les del sistema. Et permet desinstal·lar les aplicacions no desitjades sense necessitat d'un ordinador.\n\nUn agraïment especial a %1$s.\nCanta no seria el mateix sense el seu treball.</string>
+    <string name="canta_description">Canta és una aplicació de desinstal·lació d\'aplicacions de codi obert que usa Shizuku per desinstal·lar tant les aplicacions de l\'usuari com les del sistema. Et permet desinstal·lar les aplicacions no desitjades sense necessitat d\'un ordinador.\n\nUn agraïment especial a %1$s.\nCanta no seria el mateix sense el seu treball.</string>
     <string name="search_apps">Cerca aplicacions</string>
-    <string name="auto_update_bloat_list">Actualitzar automàticament la llista d'aplicacions no desitjades</string>
+    <string name="auto_update_bloat_list">Actualitzar automàticament la llista d\'aplicacions no desitjades</string>
     <string name="auto_update_bloat_list_description">Obté automàticament la informació actualitzada de les aplicacions no desitjades. Això garanteix tenir al dia els distintius i les descripcions de les aplicacions.</string>
     <string name="settings">Paràmetres</string>
     <string name="confirm_uninstall">Confirma les desinstal·lacions</string>
-    <string name="app_version">Versió de l'aplicació %1$s</string>
-    <string name="no_warranty_content">Aquesta aplicació ofereix les recomanacions per esborrar les aplicacions a partir d'una informació obtinguda de tercers. Aquestes recomanacions són purament informatives i no garanteixen la seguretat ni la compatibilitat amb el vostre dispositiu. Desinstal·lar aplicacions del sistema pot produir problemes inesperats, com ara: pèrdua de funcionalitat, inestabilitat del sistema, reinici en bucle, pèrdua de dades, etc.  El desenvolupador d'aquesta aplicació no es fa responsable dels danys que es puguin produir al vostre dispositiu si seguiu les recomanacions  donades.</string>
+    <string name="app_version">Versió de l\'aplicació %1$s</string>
+    <string name="no_warranty_content">Aquesta aplicació ofereix les recomanacions per esborrar les aplicacions a partir d\'una informació obtinguda de tercers. Aquestes recomanacions són purament informatives i no garanteixen la seguretat ni la compatibilitat amb el vostre dispositiu. Desinstal·lar aplicacions del sistema pot produir problemes inesperats, com ara: pèrdua de funcionalitat, inestabilitat del sistema, reinici en bucle, pèrdua de dades, etc.  El desenvolupador d\'aquesta aplicació no es fa responsable dels danys que es puguin produir al vostre dispositiu si seguiu les recomanacions  donades.</string>
     <string name="disclaimer">Exempció de responsabilitat - Sense garantia</string>
-    <string name="proceed_at_own_risk">En clicar "Continua" acceptes usar aquesta aplicació assumint-ne el risc.</string>
+    <string name="proceed_at_own_risk">En clicar \"Continua\" acceptes usar aquesta aplicació assumint-ne el risc.</string>
     <string name="never_show_again">No tornis a mostrar aquest missatge</string>
     <string name="proceed">Continua</string>
     <string name="confirm_uninstall_description">Indica si vols que es mostri el diàleg per confirmar la desinstal·lació.</string>
     <string name="select_all">Selecciona-ho tot</string>
-    <string name="select_all_tip">Pitja %1$d vegades més per activar la funció "Selecciona-ho tot"</string>
-    <string name="select_all_enabled">Selecciona-ho tot" s'ha activat per al filtre "Recomanat</string>
+    <string name="select_all_tip">Pitja %1$d vegades més per activar la funció \"Selecciona-ho tot\"</string>
+    <string name="select_all_enabled">Selecciona-ho tot\" s\'ha activat per al filtre \"Recomanat</string>
     <string name="reset_to_factory_version">Restableix la versió de fàbrica</string>
     <string name="import_preset">Import preset</string>
     <string name="import_preset_description">Import a preset from clipboard or paste JSON text directly.</string>
@@ -117,7 +117,7 @@
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
     <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
     <string name="donate">Donate</string>
-    <string name="canta_donate_request">Enjoying Canta? It's built in my free time with privacy in mind - no ads, no tracking. If you find it useful, please consider supporting its development!</string>
+    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, please consider supporting its development!</string>
     <string name="success">Success %1$s!</string>
     <string name="hide_success_dialog">Hide success dialog</string>
     <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
@@ -133,9 +133,9 @@
     <string name="pick_device_description">Connect your Android device over USB, then pick it in the browser prompt. Enable USB debugging on the device and accept the authorization prompt on its screen.</string>
     <string name="webusb_not_supported_title">WebUSB is not supported</string>
     <string name="webusb_not_supported_description">This browser cannot access USB devices. Open Canta in Chromium based browser (e.g. Chrome, Brave, Edge, Vivaldi) on a computer to connect your phone.</string>
-    <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with "Pick device", and make sure no other program (such as adb) is using the device.</string>
+    <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with \"Pick device\", and make sure no other program (such as adb) is using the device.</string>
     <string name="device_access_denied_linux">Access to the USB device was denied. On Linux, browsers need permission to open USB devices: install udev rules for your phone (e.g. the android-udev-rules package), then unplug it and plug it back in.</string>
-    <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone's ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
+    <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone\'s ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
     <string name="device_connection_failed">Could not connect to the device: %1$s</string>
     <string name="device_no_longer_available">The selected device is no longer available. Please pick it again.</string>
     <string name="device_busy">The device is already in use by another program or browser tab. Close anything else using it, unplug the device and plug it back in, then pick it again.</string>
