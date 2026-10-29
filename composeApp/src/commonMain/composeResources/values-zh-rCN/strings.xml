@@ -121,6 +121,8 @@
     <string name="auth_required_description">本次操作需要更高的权限。</string>
     <string name="require_auth_setting_desc">要卸载或重新安装应用，需要身份认证。</string>
     <string name="require_auth_setting">需要身份认证</string>
+    <string name="device_user">Device user</string>
+    <string name="device_user_description">Which user or profile on the device Canta manages</string>
     <string name="select_device">Select device</string>
     <string name="select_device_description">Choose which Android device Canta should manage. Enable USB debugging on the device and authorize this computer when prompted.</string>
     <string name="no_devices_found">No devices found. Check the connection and try again.</string>

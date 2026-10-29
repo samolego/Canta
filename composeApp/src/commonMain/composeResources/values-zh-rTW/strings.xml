@@ -121,6 +121,8 @@
     <string name="auth_required_description">此操作需要更高的權限。</string>
     <string name="require_auth_setting_desc">解除安裝或重新安裝應用程式時需要驗證。</string>
     <string name="require_auth_setting">需要驗證</string>
+    <string name="device_user">Device user</string>
+    <string name="device_user_description">Which user or profile on the device Canta manages</string>
     <string name="select_device">選取裝置</string>
     <string name="select_device_description">選擇要讓 Canta 管理的 Android 裝置。請在裝置上啟用 USB 偵錯，並在系統提示時授權這台電腦。</string>
     <string name="no_devices_found">找不到任何裝置。請檢查連線狀態，然後再試一次。</string>

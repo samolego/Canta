@@ -129,6 +129,8 @@
     <string name="auth_required_description">פעולה זו דורשת הרשאות גבוהות יותר.</string>
     <string name="require_auth_setting_desc">נדרש אימות לצורך הסרה או התקנה מחדש של יישומים.</string>
     <string name="require_auth_setting">דרישת אימות</string>
+    <string name="device_user">Device user</string>
+    <string name="device_user_description">Which user or profile on the device Canta manages</string>
     <string name="select_device">Select device</string>
     <string name="select_device_description">Choose which Android device Canta should manage. Enable USB debugging on the device and authorize this computer when prompted.</string>
     <string name="no_devices_found">No devices found. Check the connection and try again.</string>
