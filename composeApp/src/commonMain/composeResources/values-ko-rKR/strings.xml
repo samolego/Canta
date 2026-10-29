@@ -121,6 +121,8 @@
     <string name="auth_required_description">이 작업을 수행하려면 더 높은 권한이 필요합니다.</string>
     <string name="require_auth_setting_desc">앱 제거 또는 재설치 시 인증을 요구합니다.</string>
     <string name="require_auth_setting">인증 요구</string>
+    <string name="device_user">Device user</string>
+    <string name="device_user_description">Which user or profile on the device Canta manages</string>
     <string name="select_device">기기 선택</string>
     <string name="select_device_description">Canta가 관리할 Android 기기를 선택하세요. 해당 기기에서 USB 디버깅을 활성화하고, 메시지가 표시되면 이 컴퓨터를 승인하세요.</string>
     <string name="no_devices_found">장치를 찾을 수 없습니다. 연결을 확인하고 다시 시도하세요.</string>
