@@ -133,6 +133,8 @@
     <string name="auth_required_description">To dejanje zahteva višje pravice.</string>
     <string name="require_auth_setting_desc">Zahtevaj avtentikacijo za odstranitve ali namestitve aplikacij.</string>
     <string name="require_auth_setting">Zahtevaj avtentikacijo</string>
+    <string name="device_user">Device user</string>
+    <string name="device_user_description">Which user or profile on the device Canta manages</string>
     <string name="select_device">Izberite napravo</string>
     <string name="select_device_description">Izberite, katero izmed naprav Android naj Canta upravlja. Na napravi morate omogočiti nastavitev USB razhroščevanje in odobriti ta računalnik.</string>
     <string name="no_devices_found">Ni najdenih naprav. Prosimo, preverite povezavo z vašo mobilno napravo.</string>
