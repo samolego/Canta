@@ -1,8 +1,8 @@
 [versions]
 # Build
 agp = "9.4.1"
-kotlin = "2.4.20"
-composeMultiplatform = "1.12.1"
+kotlin = "2.4.21"
+composeMultiplatform = "1.12.2"
 jvm = "21"
 android-compileSdk = "37"
 android-targetSdk = "37"
@@ -12,16 +12,16 @@ android-minSdk = "28"
 
 # Libraries
 androidxLifecycle = "2.11.0"
-navigationMpp = "2.9.2"
-kotlinxSerialization = "1.11.0"
+navigationMpp = "2.10.0"
+kotlinxSerialization = "1.12.0"
 kotlinxDatetime = "0.8.0"
 kotlinxCoroutines = "1.11.0"
-ktor = "3.6.0"
+ktor = "3.6.1"
 activityCompose = "1.13.0"
 biometric = "1.4.0-alpha07"
 coreKtx = "1.19.1"
 fragment = "1.9.1"
-hiddenapibypass = "6.1"
+hiddenapibypass = "6.2"
 shizuku = "13.1.5"
 dadb = "2.0.0"
 
