@@ -25,7 +25,6 @@ class PackageOperations(
         const val TAG = "PackageOperations"
 
         // Hidden PackageManager constants.
-        const val DELETE_ALL_USERS = 0x00000002
         const val DELETE_SYSTEM_APP = 0x00000004
         const val INSTALL_ALL_WHITELIST_RESTRICTED_PERMISSIONS = 0x00400000
 
@@ -55,7 +54,8 @@ class PackageOperations(
     fun uninstall(packageName: String, resetToFactory: Boolean): OperationResult = reportingFailure(packageName) {
         val appInfo = packageManager.getInfoForPackage(packageName)?.applicationInfo
             ?: return OperationResult(packageName, success = false, status = PackageInstaller.STATUS_FAILURE_INVALID, message = "Unknown package")
-        val flags = if (appInfo.isSystem) DELETE_SYSTEM_APP else DELETE_ALL_USERS
+        // Only for services.userId: other users and profiles keep their copy.
+        val flags = if (appInfo.isSystem) DELETE_SYSTEM_APP else 0
         val installer = packageInstaller()
         Log.i(TAG, "Uninstalling '$packageName' [system: ${appInfo.isSystem}, update: ${appInfo.hasSystemUpdate}, reset: $resetToFactory]")
 
