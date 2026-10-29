@@ -1,0 +1,37 @@
+name: 🧹 Strip Crowdin Escapes
+
+on:
+  push:
+    branches:
+      - l10n_master
+
+# Crowdin pushes one commit per language in quick succession; only the latest run matters
+concurrency:
+  group: crowdin-escapes
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  strip:
+    name: 🧹 Strip Android escapes
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🧹 Strip escapes
+        run: .github/scripts/strip-crowdin-escapes.sh
+
+      # Pushes made with GITHUB_TOKEN don't trigger workflows, so this can't loop
+      - name: 📤 Commit & push
+        run: |
+          if git diff --quiet; then
+            echo "No escapes to strip"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Strip Android escapes from Crowdin translations [ci skip]"
+          git push
