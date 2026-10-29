@@ -1,5 +1,6 @@
 package io.github.samolego.canta.core.adb
 
+import io.github.samolego.canta.core.DeviceUser
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.packages.AppIcon
 import io.github.samolego.canta.packages.HelperFraming
@@ -24,6 +25,8 @@ import kotlinx.serialization.KSerializer
  *
  * The bundled APK is pushed to [REMOTE_PATH] only when the copy on the device
  * is missing or its SHA-256 differs from [AdbHelperArtifact.SHA256].
+ *
+ * Every helper command acts on [userId].
  */
 class AdbHelper(private val transport: AdbTransport) {
 
@@ -40,6 +43,9 @@ class AdbHelper(private val transport: AdbTransport) {
          */
         private const val FILE_MODE = 0x8000 or 0b110_100_100
     }
+
+    /** The Android user the helper commands act on. */
+    var userId: Int = 0
 
     private val installMutex = Mutex()
 
@@ -81,6 +87,16 @@ class AdbHelper(private val transport: AdbTransport) {
         }
         installed
     }
+
+    /** The users and profiles on the device, or an empty list if they can't be read. */
+    suspend fun users(): List<DeviceUser> =
+        runCatching { parseUsers(transport.shell("pm list users").stdout) }
+            .onFailure { LogUtils.w(TAG, "Could not list users: $it") }
+            .getOrDefault(emptyList())
+
+    /** The id of the user in the foreground, or null if it can't be read. */
+    suspend fun currentUserId(): Int? =
+        runCatching { transport.shell("am get-current-user").stdout.trim().toIntOrNull() }.getOrNull()
 
     /** All installed and uninstalled packages, or null if the helper failed. */
     suspend fun packages(): List<PackageDetails>? {
@@ -147,7 +163,8 @@ class AdbHelper(private val transport: AdbTransport) {
     private fun failed(packageName: String, message: String) =
         OperationResult(packageName, success = false, status = OperationResult.STATUS_NO_RESULT, message = message)
 
-    private fun helperCommand(command: String) = "CLASSPATH=$REMOTE_PATH app_process /system/bin $MAIN_CLASS $command"
+    private fun helperCommand(command: String) =
+        "CLASSPATH=$REMOTE_PATH app_process /system/bin $MAIN_CLASS --user $userId $command"
 
     private suspend fun <T> runCommand(command: String, serializer: KSerializer<T>): T? {
         if (!ensureInstalled()) return null
@@ -172,3 +189,21 @@ class AdbHelper(private val transport: AdbTransport) {
         return result.stdout.trim().substringBefore(' ').takeIf { result.exitCode == 0 && it.length == 64 }
     }
 }
+
+/**
+ * Parses the output of `pm list users`, whose user lines look like
+ * `\tUserInfo{10:Delovni profil:1030} running`. The name may contain spaces
+ * and colons, so the id is what precedes the first colon and the flags what
+ * follow the last one. Lines that aren't users are skipped.
+ */
+internal fun parseUsers(output: String): List<DeviceUser> =
+    output.lineSequence().mapNotNull { line ->
+        val body = line.trim().removePrefix("UserInfo{").takeIf { it != line.trim() } ?: return@mapNotNull null
+        val inner = body.substringBeforeLast('}', missingDelimiterValue = "").takeIf { it.isNotEmpty() }
+            ?: return@mapNotNull null
+        val id = inner.substringBefore(':').toIntOrNull() ?: return@mapNotNull null
+        val rest = inner.substringAfter(':', missingDelimiterValue = "")
+        // Without the trailing flags there is no way to tell them from the name.
+        if (':' !in rest) return@mapNotNull null
+        DeviceUser(id, rest.substringBeforeLast(':'))
+    }.toList()

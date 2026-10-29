@@ -3,6 +3,7 @@ package io.github.samolego.canta.core.adb
 import androidx.compose.ui.graphics.ImageBitmap
 import io.github.samolego.canta.core.CantaHandler
 import io.github.samolego.canta.core.DeviceConnectionFailure
+import io.github.samolego.canta.core.DeviceUser
 import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.packages.OperationResult
 import io.github.samolego.canta.packages.PackageDetails
@@ -32,6 +33,9 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
     /** The packages from the last [loadApps], for lookups that need no device round trip. */
     private var packages: Map<String, PackageDetails> = emptyMap()
 
+    override val selectedUserId: Int
+        get() = helper.userId
+
     /** Whether a device is connected and the transport can reach it. */
     protected abstract val isConnected: Boolean
 
@@ -45,16 +49,24 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
      * Call once a device is connected: sets up the helper, without which
      * nothing works. Returns false (with [lastConnectionFailure] set) if the
      * device is too old for it or it can't be set up; the caller should then
-     * drop the connection.
+     * drop the connection. The managed user is reset to the device's current one.
      */
     protected suspend fun onConnected(): Boolean {
         packages = emptyMap()
+        helper.userId = helper.currentUserId() ?: 0
         lastConnectionFailure = when {
             !helper.supportsDevice() -> DeviceConnectionFailure.UnsupportedAndroidVersion
             !helper.ensureInstalled() -> DeviceConnectionFailure.HelperUnavailable
             else -> return true
         }
         return false
+    }
+
+    override suspend fun availableUsers(): List<DeviceUser> = if (isConnected) helper.users() else emptyList()
+
+    override suspend fun selectUser(id: Int) {
+        helper.userId = id
+        packages = emptyMap()
     }
 
     override suspend fun loadApps(): List<AppInfo> {
@@ -102,7 +114,7 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
         }
         runCatching {
             transport.shell(
-                "am start -a android.settings.APPLICATION_DETAILS_SETTINGS -d package:$packageName"
+                "am start --user ${helper.userId} -a android.settings.APPLICATION_DETAILS_SETTINGS -d package:$packageName"
             )
         }.onFailure { LogUtils.e(TAG, "Failed to open app details for '$packageName'", it) }
     }

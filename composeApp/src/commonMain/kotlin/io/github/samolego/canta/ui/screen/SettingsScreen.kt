@@ -13,12 +13,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Update
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -26,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.samolego.canta.BuildInfo
 import io.github.samolego.canta.core.CantaPlatform
+import io.github.samolego.canta.core.DeviceUser
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.advanced_settings
 import io.github.samolego.canta.generated.resources.allow_unsafe_selections
@@ -53,6 +58,8 @@ import io.github.samolego.canta.generated.resources.commits_url
 import io.github.samolego.canta.generated.resources.commits_url_description
 import io.github.samolego.canta.generated.resources.confirm_uninstall
 import io.github.samolego.canta.generated.resources.confirm_uninstall_description
+import io.github.samolego.canta.generated.resources.device_user
+import io.github.samolego.canta.generated.resources.device_user_description
 import io.github.samolego.canta.generated.resources.hide_success_dialog
 import io.github.samolego.canta.generated.resources.hide_success_dialog_description
 import io.github.samolego.canta.generated.resources.require_auth_setting
@@ -73,6 +80,9 @@ fun SettingsScreen(
     onNavigateBack: () -> Unit,
     settingsViewModel: SettingsViewModel,
     onVersionTap: () -> Unit,
+    deviceUsers: List<DeviceUser> = emptyList(),
+    selectedUserId: Int? = null,
+    onUserSelected: (Int) -> Unit = {},
 ) {
     val autoUpdateBloatList by settingsViewModel.autoUpdateBloatList.collectAsStateWithLifecycle()
     val confirmBeforeUninstall by settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
@@ -96,6 +106,9 @@ fun SettingsScreen(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
+            if (deviceUsers.size > 1) {
+                DeviceUserItem(deviceUsers, selectedUserId, onUserSelected)
+            }
             SwitchSettingsItem(
                 title = stringResource(Res.string.auto_update_bloat_list),
                 description = stringResource(Res.string.auto_update_bloat_list_description),
@@ -195,3 +208,35 @@ fun SettingsScreen(
         }
     }
 }
+
+/** The "device user" row: the selected user, with a dropdown to switch to another one. */
+@Composable
+private fun DeviceUserItem(users: List<DeviceUser>, selectedId: Int?, onSelected: (Int) -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    SettingsItem(
+        title = stringResource(Res.string.device_user),
+        description = stringResource(Res.string.device_user_description),
+        icon = Icons.Default.AccountCircle,
+        onClick = { expanded = true },
+        trailing = {
+            Text(
+                text = users.firstOrNull { it.id == selectedId }?.label().orEmpty(),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                users.forEach { user ->
+                    DropdownMenuItem(
+                        text = { Text(user.label()) },
+                        onClick = {
+                            expanded = false
+                            if (user.id != selectedId) onSelected(user.id)
+                        },
+                    )
+                }
+            }
+        },
+    )
+}
+
+/** "Name (id)", or just the id when the user has no name. */
+private fun DeviceUser.label() = if (name.isBlank()) "$id" else "$name ($id)"

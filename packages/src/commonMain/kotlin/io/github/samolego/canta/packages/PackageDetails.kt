@@ -11,7 +11,7 @@ import kotlinx.serialization.protobuf.ProtoNumber
  * The helper artifact is re-pushed by checksum anyway; this is reported by
  * the helper's `version` command for diagnostics.
  */
-const val PROTOCOL_VERSION = 3
+const val PROTOCOL_VERSION = 4
 
 /*
  * Wire format between the on-device ADB helper and Canta, encoded with

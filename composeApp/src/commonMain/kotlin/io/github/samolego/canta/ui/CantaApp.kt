@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -21,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import io.github.samolego.canta.core.CantaAppDependencies
+import io.github.samolego.canta.core.DeviceUser
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.preset_save_error
 import io.github.samolego.canta.generated.resources.select_all_enabled
@@ -117,10 +119,28 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
                 )
             }
             composable(route = Screen.Settings.route) {
+                var deviceUsers by remember { mutableStateOf(emptyList<DeviceUser>()) }
+                var selectedUserId by remember { mutableStateOf(handler.selectedUserId) }
+                LaunchedEffect(Unit) {
+                    if (handler.isAuthorized) {
+                        deviceUsers = handler.availableUsers()
+                        selectedUserId = handler.selectedUserId
+                    }
+                }
                 SettingsScreen(
                     platform = platform,
                     onNavigateBack = { navController.navigateUp() },
                     settingsViewModel = settingsViewModel,
+                    deviceUsers = deviceUsers,
+                    selectedUserId = selectedUserId,
+                    onUserSelected = { id ->
+                        coroutineScope.launch {
+                            handler.selectUser(id)
+                            selectedUserId = handler.selectedUserId
+                            appListViewModel.selectedApps.clear()
+                            appListViewModel.loadApps()
+                        }
+                    },
                     onVersionTap = {
                         versionTapCounter += 1
                         coroutineScope.launch {

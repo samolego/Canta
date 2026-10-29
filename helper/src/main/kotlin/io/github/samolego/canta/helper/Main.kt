@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.IBinder
 import android.os.Looper
+import android.os.UserHandle
 import io.github.samolego.canta.packages.AppIcon
 import io.github.samolego.canta.packages.HelperFraming
 import io.github.samolego.canta.packages.PROTOCOL_VERSION
@@ -28,12 +29,15 @@ import kotlin.system.exitProcess
 /**
  * Entry point of the on-device ADB helper, started by desktop/web Canta:
  *
- *     CLASSPATH=<apk> app_process /system/bin io.github.samolego.canta.helper.Main <command>
+ *     CLASSPATH=<apk> app_process /system/bin io.github.samolego.canta.helper.Main [--user <id>] <command>
  *
  * It runs as the shell user with the real Android framework, so labels and
  * icons come from [PackageManager] exactly as on the Android build. Results
  * go to stdout as one [HelperFraming] line per message; diagnostics go to
  * stderr, so stdout only ever carries protocol data.
+ *
+ * `--user <id>` picks the Android user or profile to act on (default 0): its
+ * packages are listed and its copies uninstalled or reinstalled.
  *
  * Commands:
  *  - `info`: a [PackageDetailsList] with every installed and uninstalled package
@@ -44,6 +48,8 @@ import kotlin.system.exitProcess
  *  - `version`: the [PROTOCOL_VERSION]
  */
 object Main {
+
+    private const val DEFAULT_USER_ID = 0
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -57,11 +63,17 @@ object Main {
         exitProcess(exitCode)
     }
 
-    private fun run(args: Array<String>): Int {
+    private fun run(allArgs: Array<String>): Int {
+        var args = allArgs.toList()
+        var userId = DEFAULT_USER_ID
+        if (args.firstOrNull() == "--user") {
+            userId = args.getOrNull(1)?.toIntOrNull() ?: return usage()
+            args = args.drop(2)
+        }
         when (args.firstOrNull()) {
             "version" -> println(PROTOCOL_VERSION)
             "info" -> {
-                val packages = packageManager().readPackages().map { it.second }
+                val packages = userContext(userId).packageManager.readPackages().map { it.second }
                 writeLine(
                     HelperFraming.encodeLine(
                         PackageDetailsList.serializer(),
@@ -72,16 +84,16 @@ object Main {
 
             "icons" -> {
                 val sizePx = args.getOrNull(1)?.toIntOrNull() ?: return usage()
-                packageManager().streamIcons(sizePx)
+                userContext(userId).packageManager.streamIcons(sizePx)
             }
             "uninstall" -> {
                 val reset = args.getOrNull(1) == "--reset"
                 val packageNames = args.drop(if (reset) 2 else 1)
-                val operations = PackageOperations(DirectServices, systemContext())
+                val operations = PackageOperations(DirectServices(userId), userContext(userId))
                 packageNames.forEach { writeResult(operations.uninstall(it, reset)) }
             }
             "reinstall" -> {
-                val operations = PackageOperations(DirectServices, systemContext())
+                val operations = PackageOperations(DirectServices(userId), userContext(userId))
                 args.drop(1).forEach { writeResult(operations.reinstall(it)) }
             }
 
@@ -92,7 +104,7 @@ object Main {
 
     private fun usage(): Int {
         System.err.println(
-            "usage: canta-helper (info | icons <sizePx> | uninstall [--reset] <package>... | reinstall <package>... | version)"
+            "usage: canta-helper [--user <id>] (info | icons <sizePx> | uninstall [--reset] <package>... | reinstall <package>... | version)"
         )
         return 2
     }
@@ -151,19 +163,29 @@ object Main {
         return activityThreadClass.getMethod("getSystemContext").invoke(activityThread) as Context
     }
 
-    private fun packageManager(): PackageManager = systemContext().packageManager
+    /**
+     * A context whose [PackageManager] answers for user [userId]: the
+     * `android` package's context, created as that user. `createPackageContextAsUser`
+     * is hidden API, which is not restricted for `app_process` programs.
+     */
+    @SuppressLint("PrivateApi")
+    private fun userContext(userId: Int): Context {
+        val system = systemContext()
+        if (userId == DEFAULT_USER_ID) return system
+        return Context::class.java
+            .getMethod("createPackageContextAsUser", String::class.java, Int::class.javaPrimitiveType, UserHandle::class.java)
+            .invoke(system, "android", 0, UserHandle::class.java.getMethod("of", Int::class.javaPrimitiveType).invoke(null, userId)) as Context
+    }
 
     /**
      * The helper already runs as the shell user: system services are used
-     * directly, on user 0.
+     * directly, acting on user [userId].
      */
-    private object DirectServices : SystemServices {
+    private class DirectServices(override val userId: Int) : SystemServices {
         @SuppressLint("PrivateApi")
         override fun service(name: String): IBinder =
             Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java).invoke(null, name) as IBinder
 
         override fun wrap(binder: IBinder): IBinder = binder
-
-        override val userId: Int = 0
     }
 }

@@ -1,6 +1,7 @@
 package io.github.samolego.canta.core.adb
 
 import io.github.samolego.canta.core.DeviceConnectionFailure
+import io.github.samolego.canta.core.DeviceUser
 import io.github.samolego.canta.packages.AppIcon
 import io.github.samolego.canta.packages.HelperFraming
 import io.github.samolego.canta.packages.OperationResult
@@ -29,6 +30,7 @@ class AdbCantaHandlerTest {
         val failing: Set<String> = emptySet(),
         val infoLine: String = INFO_LINE,
         val sdk: Int = 34,
+        val currentUser: Int = 0,
         var crashAfterResults: Int? = null,
     ) : AdbTransport {
         val commands = mutableListOf<String>()
@@ -39,6 +41,8 @@ class AdbCantaHandlerTest {
             return when {
                 command.startsWith("sha256sum ") ->
                     remoteHash?.let { ShellResult(0, "$it  ${AdbHelper.REMOTE_PATH}\n") } ?: ShellResult(1, "")
+                command == "am get-current-user" -> ShellResult(0, "$currentUser\n")
+                command == "pm list users" -> ShellResult(0, USERS_OUTPUT)
                 command.endsWith(" info") -> ShellResult(0, infoLine + "\n")
                 command == "getprop ro.build.version.sdk" -> ShellResult(0, "$sdk\n")
                 else -> ShellResult(127, "", "unexpected: $command")
@@ -47,7 +51,7 @@ class AdbCantaHandlerTest {
 
         override fun shellLines(command: String): Flow<String> = flow {
             commands += command
-            val args = command.substringAfter("helper.Main ").split(" ")
+            val args = command.substringAfter("helper.Main --user ").split(" ").drop(1)
             when (args.first()) {
                 "icons" -> {
                     emit("WARNING: linker: something unrelated")
@@ -79,6 +83,7 @@ class AdbCantaHandlerTest {
     }
 
     private companion object {
+        const val USERS_OUTPUT = "Users:\n\tUserInfo{0:Owner:4c13} running\n\tUserInfo{10:Work profile:1030} running\n"
         val INFO_LINE = infoLine(PROTOCOL_VERSION)
 
         fun infoLine(protocolVersion: Int) = HelperFraming.encodeLine(
@@ -222,5 +227,31 @@ class AdbCantaHandlerTest {
         assertTrue(handler.uninstallApps(listOf("com.a")).toList().isEmpty())
         assertFalse(handler.packageExists("com.a"))
         assertTrue(device.commands.isEmpty())
+    }
+
+    @Test
+    fun usersDefaultToTheCurrentOneAndTheSelectionReachesTheCommands() = runTest {
+        val device = FakeDevice(currentUser = 10)
+        val handler = TestHandler(device)
+        assertTrue(handler.connect())
+
+        assertEquals(10, handler.selectedUserId)
+        assertEquals(listOf(DeviceUser(0, "Owner"), DeviceUser(10, "Work profile")), handler.availableUsers())
+        handler.loadApps()
+        handler.selectUser(0)
+        handler.uninstallApps(listOf("com.a")).toList()
+        handler.openAppDetails("com.a")
+
+        assertTrue(device.commands.any { it.endsWith("Main --user 10 info") })
+        assertTrue(device.commands.any { it.endsWith("Main --user 0 uninstall com.a") })
+        assertTrue(device.commands.any { it.startsWith("am start --user 0 ") })
+    }
+
+    @Test
+    fun reconnectingResetsTheSelectedUser() = runTest {
+        val handler = TestHandler(FakeDevice(currentUser = 0))
+        handler.selectUser(10)
+        handler.connect()
+        assertEquals(0, handler.selectedUserId)
     }
 }

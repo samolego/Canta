@@ -73,6 +73,18 @@ data class CantaDevice(
     val detail: String? = null,
 )
 
+/**
+ * An Android user or profile (e.g. a work profile) on the device, whose apps
+ * Canta can manage.
+ *
+ * @param id the Android user id (0 is the main user).
+ * @param name the user's display name; may be empty.
+ */
+data class DeviceUser(
+    val id: Int,
+    val name: String,
+)
+
 /** How the user picks the device Canta manages. */
 enum class DeviceDiscovery {
     /** Always the local device (Android, through Shizuku). */
@@ -163,6 +175,16 @@ interface CantaHandler {
      * ([DeviceDiscovery.SystemPicker] only). Returns null when cancelled/failed.
      */
     suspend fun pickSystemDevice(): CantaDevice? = null
+
+    /** Users and profiles on the device whose apps can be managed; empty when the choice doesn't exist (Android). */
+    suspend fun availableUsers(): List<DeviceUser> = emptyList()
+
+    /** The id of the user whose apps are managed, or null when there is no choice. Not persisted. */
+    val selectedUserId: Int?
+        get() = null
+
+    /** Switches to the user [id] from [availableUsers]; apps must then be reloaded. */
+    suspend fun selectUser(id: Int) {}
 
     /**
      * Whether the platform can reach devices at all. Web returns false when
