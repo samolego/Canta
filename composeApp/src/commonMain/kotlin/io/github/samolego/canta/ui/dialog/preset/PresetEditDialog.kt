@@ -31,22 +31,27 @@ import io.github.samolego.canta.generated.resources.preset_name
 import io.github.samolego.canta.generated.resources.preset_name_missing_error
 import io.github.samolego.canta.generated.resources.preset_name_placeholder
 import io.github.samolego.canta.generated.resources.preset_save_error
+import io.github.samolego.canta.generated.resources.remove_canta_after_run
 import io.github.samolego.canta.generated.resources.save
+import io.github.samolego.canta.ui.component.CheckboxRow
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.data.preset.CantaPresetData
 
+/** Edits preset metadata and self-removal before calling [onConfirm]. */
 @Composable
 private fun PresetDialog(
     title: String,
     description: String,
     initialName: String,
     initialDescription: String,
+    initialRemoveCanta: Boolean,
     onDismiss: () -> Unit,
-    onConfirm: (name: String, description: String) -> Unit
+    onConfirm: (name: String, description: String, removeCanta: Boolean) -> Unit
 ) {
     var name by remember { mutableStateOf(initialName) }
     var presetDescription by remember { mutableStateOf(initialDescription) }
+    var removeCanta by remember { mutableStateOf(initialRemoveCanta) }
     var nameError by remember { mutableStateOf(false) }
 
     AlertDialog(
@@ -91,11 +96,17 @@ private fun PresetDialog(
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 3
                 )
+
+                CheckboxRow(
+                    checked = removeCanta,
+                    onCheckedChange = { removeCanta = it },
+                    label = stringResource(Res.string.remove_canta_after_run),
+                )
             }
         },
         confirmButton = {
             Button(
-                onClick = { onConfirm(name.trim(), presetDescription.trim()) },
+                onClick = { onConfirm(name.trim(), presetDescription.trim(), removeCanta) },
                 enabled = name.isNotBlank()
             ) { Text(stringResource(Res.string.save)) }
         },
@@ -107,6 +118,7 @@ private fun PresetDialog(
     )
 }
 
+/** Creates a preset from all currently uninstalled apps and the selected options. */
 @Composable
 fun PresetCreateDialog(
     platform: CantaPlatform,
@@ -120,13 +132,15 @@ fun PresetCreateDialog(
         description = stringResource(Res.string.create_preset_description),
         initialName = "",
         initialDescription = "",
+        initialRemoveCanta = false,
         onDismiss = closeDialog,
-        onConfirm = { name, description ->
+        onConfirm = { name, description, removeCanta ->
             presetViewModel.savePreset(
                 name = name,
                 description = description,
                 // All uninstalled apps, not just the ones the current search/filter shows.
                 apps = appListViewModel.apps.filter { it.isUninstalled }.mapTo(mutableSetOf()) { it.packageName },
+                removeCantaAfterRun = removeCanta,
                 onSuccess = { closeDialog() },
                 onError = { platform.showMessage(presetSaveErrorText) },
             )
@@ -134,6 +148,7 @@ fun PresetCreateDialog(
     )
 }
 
+/** Edits preset metadata and self-removal without replacing its app selection. */
 @Composable
 fun PresetEditDialog(
     platform: CantaPlatform,
@@ -147,12 +162,14 @@ fun PresetEditDialog(
         description = stringResource(Res.string.edit_preset_description),
         initialName = preset.name,
         initialDescription = preset.description,
+        initialRemoveCanta = preset.removeCantaAfterRun,
         onDismiss = closeDialog,
-        onConfirm = { name, description ->
+        onConfirm = { name, description, removeCanta ->
             presetViewModel.updatePreset(
                 oldPreset = preset,
                 newName = name,
                 newDescription = description,
+                newRemoveCantaAfterRun = removeCanta,
                 onSuccess = { closeDialog() },
                 onError = { platform.showMessage(presetSaveErrorText) },
             )

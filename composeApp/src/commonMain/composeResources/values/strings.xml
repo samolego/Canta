@@ -129,6 +129,29 @@
     <string name="delete">Delete</string>
     <string name="apply_preset">Apply Preset</string>
     <string name="preset_save_error">Error saving preset</string>
+    <string name="remove_canta_after_run">Uninstall Canta itself after the preset runs</string>
+    <string name="removes_canta">Also removes Canta</string>
+    <string name="create_shortcut">Add shortcut</string>
+    <string name="shortcut_created">Shortcut created</string>
+    <string name="shortcut_unsupported">Shortcuts are not supported by this launcher or platform</string>
+    <string name="shortcut_failed">Could not create the shortcut</string>
+    <string name="run_now">Run now</string>
+    <string name="run">Run</string>
+    <string name="run_preset_title">Run %1$s?</string>
+    <string name="slide_to_confirm">Slide all the way right to confirm</string>
+    <string
+        name="run_preset_confirm"
+    >This will uninstall %1$d app(s) on the device.</string>
+    <string name="run_preset_confirm_self">Canta itself will also be uninstalled at the end.</string>
+    <string name="preset_run_started">Running preset %1$s…</string>
+    <string name="preset_run_done">Preset finished: removed %1$d app(s).</string>
+    <string
+        name="preset_run_done_failures"
+    >Preset finished: removed %1$d app(s); %2$d failed.</string>
+    <string name="preset_not_found">The preset no longer exists</string>
+    <string
+        name="preset_run_not_authorized"
+    >Shizuku is not running or has not authorized Canta; the preset could not run.</string>
     <string name="selected_apps">Selected apps</string>
     <string name="text">Text</string>
     <string name="install_shizuku">Install Shizuku app</string>

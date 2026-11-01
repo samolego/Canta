@@ -1,5 +1,6 @@
 package io.github.samolego.canta.ui.viewmodel
 
+import io.github.samolego.canta.data.CantaSettings
 import io.github.samolego.canta.data.preset.CantaPresetStore
 import io.github.samolego.canta.testing.FakeHandler
 import io.github.samolego.canta.testing.FakePlatform
@@ -29,8 +30,12 @@ class PresetsViewModelTest {
 
     private val storage = MemoryStorage()
     private val store = CantaPresetStore(storage)
+    private val handler = FakeHandler(apps = installedApps("com.a"))
+    private val platform = FakePlatform()
     // Lazy: viewModelScope picks its dispatcher on creation, which must come after setMain.
-    private val viewModel by lazy { PresetsViewModel(store, FakeHandler(apps = installedApps("com.a")), FakePlatform()) }
+    private val viewModel by lazy {
+        PresetsViewModel(store, handler, platform, CantaSettings(MemoryStorage()))
+    }
 
     /** "success" or "error", whichever callback ran. */
     private fun import(json: String): List<String> {

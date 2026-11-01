@@ -40,6 +40,8 @@ data class CantaPresetProto(
     @ProtoNumber(4) val apps: List<String> = emptyList(),
     @ProtoNumber(5) val version: String = "",
     @ProtoNumber(6) val uuid: String = "",
+    // 7 (folders) was used by development builds: never reuse it.
+    @ProtoNumber(8) val removeCantaAfterRun: Boolean = false,
 )
 
 @Serializable

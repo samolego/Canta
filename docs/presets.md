@@ -14,8 +14,28 @@ A preset is a saved collection of apps that you want to uninstall. Each preset c
 - **Name**: A descriptive name for your preset (e.g., "Samsung Bloatware")
 - **Description**: Optional details about what the preset removes
 - **App List**: The specific apps (package names) to be uninstalled
+- **Self-removal** (optional): Whether the preset uninstalls Canta itself at the end
 - **Creation Date**: When the preset was created
 - **Version**: Format version for compatibility
+
+## Removing Canta after a run
+
+Enabling "Uninstall Canta itself after the preset runs" makes a run remove
+Canta as its very last action — after the apps are uninstalled. Canta is
+never removed through the preset's plain app list: if a preset contains
+Canta's own package it is skipped unless this option is enabled.
+
+## Shortcuts and headless runs
+
+From a preset's menu, **Run now** executes it immediately (with a
+confirmation dialog; if "require authentication" is enabled in settings, the
+system credential prompt appears first). **Add shortcut** pins a home-screen
+shortcut that runs the preset without opening Canta's interface. The shortcut
+first shows a slide-to-confirm prompt so a stray tap can't trigger a
+destructive run; the Shizuku and authentication checks then apply as usual.
+
+Both the shortcut and the in-app run honor the authentication setting and go
+through the same checks as a normal preset run.
 
 ## Creating presets
 
