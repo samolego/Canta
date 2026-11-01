@@ -54,6 +54,7 @@ fun CantaApp(deps: CantaAppDependencies, closeApp: () -> Unit) {
     }
 }
 
+/** Owns shared view models and routes navigation, selection, and preset-editing actions. */
 @Composable
 private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
     val handler = deps.handler
@@ -64,7 +65,7 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
 
     val appListViewModel: AppListViewModel = viewModel { AppListViewModel(handler, deps.bloatRepository) }
     val settingsViewModel: SettingsViewModel = viewModel { SettingsViewModel(deps.settings) }
-    val presetViewModel: PresetsViewModel = viewModel { PresetsViewModel(deps.presetStore, handler, platform) }
+    val presetViewModel: PresetsViewModel = viewModel { PresetsViewModel(deps.presetStore, handler, platform, deps.settings) }
     val mainViewModel: MainViewModel = viewModel { MainViewModel(handler, platform, deps.settings, appListViewModel) }
 
     // Hoisted so preset-applying (below) knows which tab is showing.
