@@ -1,5 +1,6 @@
 package io.github.samolego.canta.ui.dialog
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -10,6 +11,7 @@ import androidx.compose.runtime.setValue
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.are_you_sure_to_uninstall_apps
 import io.github.samolego.canta.generated.resources.cancel
+import io.github.samolego.canta.generated.resources.community_bootloop_warning
 import io.github.samolego.canta.generated.resources.ok
 import io.github.samolego.canta.generated.resources.reset_to_factory_version
 import io.github.samolego.canta.ui.component.CantaDialog
@@ -20,6 +22,7 @@ import org.jetbrains.compose.resources.stringResource
 fun UninstallAppsDialog(
     appCount: Int,
     canResetToFactory: Boolean = false,
+    bootloopRisk: Boolean = false,
     onDismiss: () -> Unit,
     onAgree: (resetToFactory: Boolean) -> Unit,
 ) {
@@ -33,6 +36,12 @@ fun UninstallAppsDialog(
         },
     ) {
         Text(stringResource(Res.string.are_you_sure_to_uninstall_apps, appCount))
+        if (bootloopRisk) {
+            Text(
+                text = stringResource(Res.string.community_bootloop_warning),
+                color = MaterialTheme.colorScheme.error,
+            )
+        }
         if (canResetToFactory) {
             CheckboxRow(
                 checked = resetToFactory,

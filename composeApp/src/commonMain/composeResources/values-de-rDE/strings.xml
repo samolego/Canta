@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Diese App bietet App-Entfernungs-Empfehlungen basierend auf Informationen Dritter. Diese Empfehlungen sind rein informativer Natur und garantieren keine Sicherheit oder Kompatibilität mit deinem spezifischen Gerät. Das Deinstallieren von Systemapps kann unerwartete Probleme verursachen, einschließlich aber nicht beschränkt auf: Funktionsverlust, Systeminstabilität, Bootloops des Geräts, Datenverlust usw. Der Entwickler dieser App ist nicht verantwortlich für Schäden an deinem Gerät, die durch das Befolgen der bereitgestellten Empfehlungen entstehen.</string>
     <string name="disclaimer">Haftungsausschluss – Keine Gewährleistung</string>
     <string name="proceed_at_own_risk">Durch Klicken auf „Weiter“ erklärst du dich einverstanden, die App auf eigene Verantwortung zu nutzen.</string>
-    <string name="never_show_again">Diese Nachricht nicht mehr anzeigen</string>
-    <string name="proceed">Weiter</string>
     <string name="confirm_uninstall_description">Ob der Dialog zur Bestätigung der Deinstallationsaktion angezeigt werden soll.</string>
     <string name="select_all">Alle auswählen</string>
     <string name="select_all_tip">Tippe noch %1$d Mal, um die „Alle auswählen“-Funktion zu aktivieren.</string>

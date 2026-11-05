@@ -57,8 +57,6 @@
     <string name="no_warranty_content">此應用程式根據第三方資訊提供應用程式刪除建議。這些建議僅供參考，並不保證您的特定設備的安全性或相容性。解除安裝系統應用程式可能會導致意外問題，包括但不限於：功能喪失、系統不穩定、裝置循環啟動、資料遺失等。</string>
     <string name="disclaimer">免責聲明 不負責任</string>
     <string name="proceed_at_own_risk">點擊“繼續”，您同意自行承擔使用此應用程式的風險。</string>
-    <string name="never_show_again">不要再顯示此訊息</string>
-    <string name="proceed">繼續</string>
     <string name="confirm_uninstall_description">是否顯示確認解除安裝的對話框。</string>
     <string name="select_all">全選</string>
     <string name="select_all_tip">點選 %1$d 更多次即可啟用全選功能。</string>

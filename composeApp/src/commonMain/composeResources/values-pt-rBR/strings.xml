@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Este aplicativo fornece recomendações de remoção de aplicativos com base em informações de terceiros. Essas recomendações são de natureza informativa e não garantem a segurança ou compatibilidade com o seu dispositivo específico. Desinstalar aplicativos do sistema pode causar problemas inesperados, incluindo, entre outros: perda de funcionalidade, instabilidade do sistema, bootloops do dispositivo, perda de dados, etc. O desenvolvedor deste aplicativo não se responsabiliza por quaisquer danos causados ao seu dispositivo resultantes da observância das recomendações fornecidas.</string>
     <string name="disclaimer">Aviso - Sem Garantia</string>
     <string name="proceed_at_own_risk">Ao clicar em \"Continuar\", você concorda em usar este aplicativo por sua conta e risco.</string>
-    <string name="never_show_again">Não mostre esta mensagem novamente</string>
-    <string name="proceed">Proceder</string>
     <string name="confirm_uninstall_description">Se deve ou não mostrar a caixa de diálogo para confirmar a ação de desinstalação.</string>
     <string name="select_all">Selecionar todos</string>
     <string name="select_all_tip">Toque em %1$d mais vezes para habilitar a funcionalidade selecionar tudo.</string>

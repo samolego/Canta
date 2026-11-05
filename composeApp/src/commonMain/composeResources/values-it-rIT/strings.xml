@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Questa app promuove suggerimenti di rimozioni delle app basati su informazioni di terze parti. Questi suggerimenti sono di natura informativa e non garantiscono sicurezza o compatibilità con il tuo dispositivo. Disinstallare app di sistema può causare problemi inaspettati, incluso ma non limitato a: perdita di funzionalità, instabilità di sistema, bootloops, perdita di dati, ecc. Il creatore di questa app non è responsabile per nessun danno fatto al tuo dispositivo risultato dal seguire i suggerimenti provvisti.</string>
     <string name="disclaimer">Esclusione di responsabilità - Nessuna Garanzia</string>
     <string name="proceed_at_own_risk">Cliccando \"Procedi\", acconsenti all\'utilizzo di quest\'app a tuo rischio.</string>
-    <string name="never_show_again">Non mostrare più questo messaggio</string>
-    <string name="proceed">Procedi</string>
     <string name="confirm_uninstall_description">Indica se mostrare la finestra di dialogo per confermare l\'azione di disinstallazione.</string>
     <string name="select_all">Seleziona tutto</string>
     <string name="select_all_tip">Tocca %1$d più volte per abilitare la selezione di tutte le funzionalità.</string>

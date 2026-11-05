@@ -30,12 +30,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.CANTA_PACKAGE_NAME
 import io.github.samolego.canta.data.app.AppInfo
+import io.github.samolego.canta.util.CommunityScore
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AppTile(
     modifier: Modifier = Modifier,
     appInfo: AppInfo,
+    score: CommunityScore? = null,
     isSelected: Boolean,
     enabled: Boolean = true,
     onCheckChanged: (Boolean) -> Unit,
@@ -83,6 +85,7 @@ fun AppTile(
                         if (appInfo.badgeInfo != null) {
                             AppBadge(type = appInfo.badgeInfo!!)
                         }
+                        score?.let { CommunityBadge(it.verdict) }
                         if (appInfo.isSystemApp) {
                             SystemBadge()
                         }
@@ -117,12 +120,14 @@ fun AppTile(
 fun SelectedAppTile(
     modifier: Modifier = Modifier,
     appInfo: AppInfo,
+    score: CommunityScore? = null,
     onCheckChanged: (Boolean) -> Unit,
     onShowDialog: () -> Unit,
 ) {
     AppTile(
         modifier = modifier,
         appInfo = appInfo,
+        score = score,
         isSelected = true,
         showBorder = false,
         onCheckChanged = onCheckChanged,

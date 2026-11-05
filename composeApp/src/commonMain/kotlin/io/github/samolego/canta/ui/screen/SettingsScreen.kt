@@ -14,6 +14,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Analytics
+import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Link
@@ -26,6 +28,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +42,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.samolego.canta.BuildFlags
 import io.github.samolego.canta.BuildInfo
 import io.github.samolego.canta.core.CantaPlatform
 import io.github.samolego.canta.core.DeviceUser
@@ -58,13 +62,22 @@ import io.github.samolego.canta.generated.resources.commits_url
 import io.github.samolego.canta.generated.resources.commits_url_description
 import io.github.samolego.canta.generated.resources.confirm_uninstall
 import io.github.samolego.canta.generated.resources.confirm_uninstall_description
+import io.github.samolego.canta.generated.resources.debug_section
 import io.github.samolego.canta.generated.resources.device_user
+import io.github.samolego.canta.generated.resources.fake_community_scores
+import io.github.samolego.canta.generated.resources.fake_community_scores_description
 import io.github.samolego.canta.generated.resources.device_user_description
 import io.github.samolego.canta.generated.resources.hide_success_dialog
 import io.github.samolego.canta.generated.resources.hide_success_dialog_description
 import io.github.samolego.canta.generated.resources.require_auth_setting
 import io.github.samolego.canta.generated.resources.require_auth_setting_desc
+import io.github.samolego.canta.generated.resources.analytics_section
 import io.github.samolego.canta.generated.resources.settings
+import io.github.samolego.canta.generated.resources.share_package_data
+import io.github.samolego.canta.generated.resources.share_package_data_description
+import io.github.samolego.canta.generated.resources.show_whats_sent
+import io.github.samolego.canta.ui.dialog.ShareDataConfirmDialog
+import io.github.samolego.canta.ui.dialog.TelemetryPreviewDialog
 import io.github.samolego.canta.ui.component.SettingsItem
 import io.github.samolego.canta.ui.component.SwitchSettingsItem
 import io.github.samolego.canta.ui.component.ScreenTopBar
@@ -83,6 +96,8 @@ fun SettingsScreen(
     deviceUsers: List<DeviceUser> = emptyList(),
     selectedUserId: Int? = null,
     onUserSelected: (Int) -> Unit = {},
+    fakeScores: Boolean = false,
+    onFakeScoresChange: (Boolean) -> Unit = {},
 ) {
     val autoUpdateBloatList by settingsViewModel.autoUpdateBloatList.collectAsStateWithLifecycle()
     val confirmBeforeUninstall by settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
@@ -92,6 +107,9 @@ fun SettingsScreen(
     val bloatListUrl by settingsViewModel.bloatListUrl.collectAsStateWithLifecycle()
     val commitsUrl by settingsViewModel.commitsUrl.collectAsStateWithLifecycle()
     var advancedSettingsExpanded by rememberSaveable { mutableStateOf(false) }
+    val analyticsEnabled by settingsViewModel.analyticsEnabled.collectAsStateWithLifecycle()
+    var showShareConfirm by rememberSaveable { mutableStateOf(false) }
+    var showPreview by rememberSaveable { mutableStateOf(false) }
     val authRequiredTitle = stringResource(Res.string.auth_required)
     val authRequiredSubtitle = stringResource(Res.string.auth_required_description)
 
@@ -100,6 +118,17 @@ fun SettingsScreen(
             ScreenTopBar(onNavigateBack = onNavigateBack, title = { Text(stringResource(Res.string.settings)) })
         }
     ) { padding ->
+        if (showShareConfirm) {
+            ShareDataConfirmDialog(
+                onConfirm = {
+                    settingsViewModel.setAnalyticsEnabled(true)
+                    showShareConfirm = false
+                },
+                onDismiss = { showShareConfirm = false },
+            )
+        }
+        if (showPreview) TelemetryPreviewDialog(onDismiss = { showPreview = false })
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -143,6 +172,28 @@ fun SettingsScreen(
             )
             HorizontalDivider(modifier = Modifier.padding(16.dp))
 
+            Text(
+                text = stringResource(Res.string.analytics_section),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            SwitchSettingsItem(
+                title = stringResource(Res.string.share_package_data),
+                description = stringResource(Res.string.share_package_data_description),
+                icon = Icons.Default.Analytics,
+                checked = analyticsEnabled,
+                // Turning it on asks first; turning it off applies immediately.
+                onCheckedChange = { enabled ->
+                    if (enabled) showShareConfirm = true else settingsViewModel.setAnalyticsEnabled(false)
+                },
+            )
+            TextButton(
+                onClick = { showPreview = true },
+                modifier = Modifier.padding(horizontal = 8.dp),
+            ) { Text(stringResource(Res.string.show_whats_sent)) }
+            HorizontalDivider(modifier = Modifier.padding(16.dp))
+
             SettingsItem(
                 title = stringResource(Res.string.advanced_settings),
                 description = stringResource(Res.string.click_to_expand),
@@ -181,6 +232,23 @@ fun SettingsScreen(
                         onCommit = settingsViewModel::saveCommitsUrl,
                     )
                 }
+            }
+
+            if (BuildFlags.IS_DEBUG) {
+                HorizontalDivider(modifier = Modifier.padding(16.dp))
+                Text(
+                    text = stringResource(Res.string.debug_section),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                )
+                SwitchSettingsItem(
+                    title = stringResource(Res.string.fake_community_scores),
+                    description = stringResource(Res.string.fake_community_scores_description),
+                    icon = Icons.Default.BugReport,
+                    checked = fakeScores,
+                    onCheckedChange = onFakeScoresChange,
+                )
             }
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))

@@ -65,8 +65,6 @@
     <string name="no_warranty_content">Această aplicație oferă recomandări de eliminare a aplicațiilor bazate pe informații despre terți. Aceste recomandări sunt de natură informativă și nu garantează siguranța sau compatibilitatea cu dispozitivul dvs. specific. Dezinstalarea aplicațiilor de sistem poate cauza probleme neașteptate, inclusiv, dar nelimitându-se la: pierderea funcționalității, instabilitatea sistemului, bootloop-uri ale dispozitivului, pierderea datelor etc. Dezvoltatorul acestei aplicații nu este responsabil pentru nicio defecțiune efectuată pe dispozitiv ca urmare a recomandărilor furnizate.</string>
     <string name="disclaimer">Avertisment - Fără garanție</string>
     <string name="proceed_at_own_risk">Apăsând pe \"Proceed\", sunteți de acord să folosiți această aplicație pe propriul risc.</string>
-    <string name="never_show_again">Nu mai arăta acest mesaj</string>
-    <string name="proceed">Continuați</string>
     <string name="confirm_uninstall_description">Dacă se afişează dialogul pentru confirmarea acțiunii de dezinstalare.</string>
     <string name="select_all">Selectați tot</string>
     <string name="select_all_tip">Apăsați %1$d de mai multe ori pentru a activa toate funcționalitățile.</string>

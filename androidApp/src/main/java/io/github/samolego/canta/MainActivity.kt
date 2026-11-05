@@ -21,7 +21,11 @@ class MainActivity : FragmentActivity() {
         app.platform.attachActivity(this)
 
         setContent {
-            CantaApp(deps = app.dependencies, closeApp = { finishAndRemoveTask() })
+            CantaApp(
+                deps = app.dependencies,
+                closeApp = { finishAndRemoveTask() },
+                crashReports = app.crashReports,
+            )
         }
     }
 

@@ -3,6 +3,7 @@ package io.github.samolego.canta.core
 import androidx.compose.ui.graphics.ImageBitmap
 import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.packages.OperationResult
+import io.github.samolego.canta.util.DeviceContext
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -138,6 +139,37 @@ interface CantaHandler {
 
     /** Reinstalls apps previously uninstalled for the user; one result per package. */
     fun reinstallApps(packageNames: List<String>): Flow<OperationResult>
+
+    /**
+     * The device's boot id (changes on every boot), or null when it can't be
+     * read. Used to tell whether a reboot happened since an uninstall.
+     */
+    suspend fun bootId(): String? = null
+
+    /**
+     * The device's build fingerprint, or null when it can't be read. Only compared
+     * locally to tell an OS update from anything else; never sent.
+     */
+    suspend fun buildFingerprint(): String? = null
+
+    /**
+     * Identifies the connected device (a hash, never sent) so pending uninstalls are only
+     * resolved against the device they happened on; null when the handler always talks to
+     * the same device or it can't be read.
+     */
+    suspend fun deviceKey(): String? = null
+
+    /**
+     * Whether [packageName] was (re)installed for the current user after the
+     * current boot started, or null when the platform can't tell.
+     */
+    suspend fun installedSinceBoot(packageName: String): Boolean? = null
+
+    /**
+     * Coarse description of the connected device (brand, ROM family and
+     * version, Android API level), or null when it can't be read.
+     */
+    suspend fun deviceContext(): DeviceContext? = null
 
     /** Whether the given package is on the device (installed or uninstalled for the user). */
     suspend fun packageExists(packageName: String): Boolean

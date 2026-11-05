@@ -17,9 +17,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import io.github.samolego.canta.core.CantaAppDependencies
 import io.github.samolego.canta.core.DeviceUser
@@ -27,16 +31,20 @@ import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.preset_save_error
 import io.github.samolego.canta.generated.resources.select_all_enabled
 import io.github.samolego.canta.generated.resources.select_all_tip
+import io.github.samolego.canta.ui.dialog.CrashReportDialog
 import io.github.samolego.canta.ui.navigation.Screen
 import io.github.samolego.canta.ui.screen.LogsScreen
 import io.github.samolego.canta.ui.screen.MainScreen
+import io.github.samolego.canta.ui.screen.OnboardingScreen
 import io.github.samolego.canta.ui.screen.PresetsScreen
 import io.github.samolego.canta.ui.screen.SettingsScreen
 import io.github.samolego.canta.ui.theme.CantaTheme
 import io.github.samolego.canta.ui.viewmodel.AppListViewModel
+import io.github.samolego.canta.ui.viewmodel.CURRENT_ONBOARDING_VERSION
 import io.github.samolego.canta.ui.viewmodel.MainViewModel
 import io.github.samolego.canta.ui.viewmodel.PresetsViewModel
 import io.github.samolego.canta.ui.viewmodel.SettingsViewModel
+import io.github.samolego.canta.util.CrashReportStore
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -48,24 +56,26 @@ private const val SECRET_TAPS_HINT_AFTER = 3
 
 /** The app's root composable, shared by the Android, desktop and web entry points. */
 @Composable
-fun CantaApp(deps: CantaAppDependencies, closeApp: () -> Unit) {
+fun CantaApp(deps: CantaAppDependencies, closeApp: () -> Unit, crashReports: CrashReportStore? = null) {
     CantaTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            CantaNavigation(deps, closeApp)
+            CantaNavigation(deps, closeApp, crashReports)
         }
     }
 }
 
 @Composable
-private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
+private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit, crashReports: CrashReportStore?) {
     val handler = deps.handler
     val platform = deps.platform
 
     val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
-    val appListViewModel: AppListViewModel = viewModel { AppListViewModel(handler, deps.bloatRepository) }
-    val settingsViewModel: SettingsViewModel = viewModel { SettingsViewModel(deps.settings) }
+    val appListViewModel: AppListViewModel = viewModel {
+        AppListViewModel(handler, deps.bloatRepository, deps.packageTelemetry)
+    }
+    val settingsViewModel: SettingsViewModel = viewModel { SettingsViewModel(deps.settings, deps.packageTelemetry) }
     val presetViewModel: PresetsViewModel = viewModel { PresetsViewModel(deps.presetStore, handler, platform) }
     val mainViewModel: MainViewModel = viewModel { MainViewModel(handler, platform, deps.settings, appListViewModel) }
 
@@ -75,13 +85,39 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
 
     var versionTapCounter by remember { mutableIntStateOf(0) }
 
+    // Send queued analytics when the app goes to the background.
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) {
+        coroutineScope.launch { deps.telemetry.flush() }
+    }
+
     val snackbarHostState = remember { SnackbarHostState() }
     LaunchedEffect(platform) {
         platform.messages.collect { snackbarHostState.showSnackbar(it) }
     }
 
+    // Null until the stored settings have loaded, so the wrong screen never flashes.
+    val onboardingVersion by settingsViewModel.onboardingVersion.collectAsStateWithLifecycle()
+    val storedOnboardingVersion = onboardingVersion ?: return
+
+    // Fixed at first composition: finishing onboarding navigates explicitly.
+    val startDestination = remember {
+        if (storedOnboardingVersion >= CURRENT_ONBOARDING_VERSION) Screen.Main.route else Screen.Onboarding.route
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
-        NavHost(navController = navController, startDestination = Screen.Main.route) {
+        NavHost(navController = navController, startDestination = startDestination) {
+            composable(Screen.Onboarding.route) {
+                OnboardingScreen(
+                    platform = platform,
+                    closeApp = closeApp,
+                    onFinish = { contribute ->
+                        settingsViewModel.completeOnboarding(contribute)
+                        navController.navigate(Screen.Main.route) {
+                            popUpTo(Screen.Onboarding.route) { inclusive = true }
+                        }
+                    },
+                )
+            }
             composable(Screen.Main.route) {
                 MainScreen(
                     handler = handler,
@@ -119,6 +155,7 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
                 )
             }
             composable(route = Screen.Settings.route) {
+                val fakeScores by appListViewModel.fakeScoresEnabled.collectAsStateWithLifecycle()
                 var deviceUsers by remember { mutableStateOf(emptyList<DeviceUser>()) }
                 var selectedUserId by remember { mutableStateOf(handler.selectedUserId) }
                 LaunchedEffect(Unit) {
@@ -133,6 +170,8 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
                     settingsViewModel = settingsViewModel,
                     deviceUsers = deviceUsers,
                     selectedUserId = selectedUserId,
+                    fakeScores = fakeScores,
+                    onFakeScoresChange = appListViewModel::setFakeScores,
                     onUserSelected = { id ->
                         coroutineScope.launch {
                             handler.selectUser(id)
@@ -174,6 +213,22 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit) {
                         navController.navigateUp()
                     },
                     appListViewModel = appListViewModel,
+                )
+            }
+        }
+
+        // Read once at launch; shown only after onboarding, never on top of it.
+        var crashReport by remember { mutableStateOf(crashReports?.read()) }
+        val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+        crashReport?.let { report ->
+            if (currentRoute != null && currentRoute != Screen.Onboarding.route) {
+                CrashReportDialog(
+                    report = report,
+                    platform = platform,
+                    onClose = {
+                        crashReports?.delete()
+                        crashReport = null
+                    },
                 )
             }
         }

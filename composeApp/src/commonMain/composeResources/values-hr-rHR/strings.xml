@@ -65,8 +65,6 @@
     <string name="no_warranty_content">Ova aplikacija pruža preporuke za deinstalaciju aplikacija na temelju informacija trećih strana. Ove preporuke su isključivo informativnog karaktera i ne jamče sigurnost ili kompatibilnost s vašim uređajem. Deinstalacija sistemskih aplikacija može uzrokovati neočekivane probleme, uključujući: gubitak funkcionalnosti, nestabilnost sustava, onemogućnost pokretanja, gubitak podataka i slično. Razvojni programer ove aplikacije nije odgovoran za bilo kakvu štetu na vašem uređaju koja može nastati kao posljedica pridržavanja pruženih preporuka.</string>
     <string name="disclaimer">Napomena - nema garancije</string>
     <string name="proceed_at_own_risk">Klikom na gumb \"Nastavi\" prihvaćate korištenje ove aplikacije na vlastitu odgovornost.</string>
-    <string name="never_show_again">Više ne prikazuj ovu poruku</string>
-    <string name="proceed">Nastavi</string>
     <string name="confirm_uninstall_description">Prikažite dijalog za potvrdu deinstalacije.</string>
     <string name="select_all">Odaberi sve</string>
     <string name="select_all_tip">Pritisnite još %1$d puta kako biste omogućili funkcionalnost \"Odaberi sve\".</string>

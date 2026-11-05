@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Cette application fournit des recommandations de suppression d’applications basées sur des informations tierces. Ces recommandations ont un caractère informatif et ne garantissent pas la sécurité ni la compatibilité avec votre appareil spécifique. La désinstallation d’applications système peut entraîner des problèmes inattendus, notamment (mais sans s’y limiter) : perte de fonctionnalités, instabilité du système, boucles de démarrage (bootloops), perte de données, etc. Le développeur de cette application décline toute responsabilité en cas de dommages causés à votre appareil suite à la mise en œuvre des recommandations fournies.</string>
     <string name="disclaimer">Avertissement - Aucune garantie</string>
     <string name="proceed_at_own_risk">En cliquant sur \"Continuer\", vous acceptez d\'utiliser cette application à vos propres risques.</string>
-    <string name="never_show_again">Ne plus afficher ce message</string>
-    <string name="proceed">Continuer</string>
     <string name="confirm_uninstall_description">Afficher ou non la boîte de dialogue pour confirmer l\'action de désinstallation.</string>
     <string name="select_all">Tout sélectionner</string>
     <string name="select_all_tip">Appuyez sur %1$d de plus pour activer toutes les fonctionnalités.</string>

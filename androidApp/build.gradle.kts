@@ -41,6 +41,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Installs next to the release app.
+            applicationIdSuffix = ".debug"
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -122,4 +126,6 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.kotlinx.serialization.protobuf)
 }

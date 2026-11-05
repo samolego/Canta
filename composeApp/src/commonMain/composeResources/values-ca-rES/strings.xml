@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Aquesta aplicació ofereix les recomanacions per esborrar les aplicacions a partir d\'una informació obtinguda de tercers. Aquestes recomanacions són purament informatives i no garanteixen la seguretat ni la compatibilitat amb el vostre dispositiu. Desinstal·lar aplicacions del sistema pot produir problemes inesperats, com ara: pèrdua de funcionalitat, inestabilitat del sistema, reinici en bucle, pèrdua de dades, etc.  El desenvolupador d\'aquesta aplicació no es fa responsable dels danys que es puguin produir al vostre dispositiu si seguiu les recomanacions  donades.</string>
     <string name="disclaimer">Exempció de responsabilitat - Sense garantia</string>
     <string name="proceed_at_own_risk">En clicar \"Continua\" acceptes usar aquesta aplicació assumint-ne el risc.</string>
-    <string name="never_show_again">No tornis a mostrar aquest missatge</string>
-    <string name="proceed">Continua</string>
     <string name="confirm_uninstall_description">Indica si vols que es mostri el diàleg per confirmar la desinstal·lació.</string>
     <string name="select_all">Selecciona-ho tot</string>
     <string name="select_all_tip">Pitja %1$d vegades més per activar la funció \"Selecciona-ho tot\"</string>

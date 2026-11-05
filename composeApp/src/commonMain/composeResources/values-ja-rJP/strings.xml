@@ -57,8 +57,6 @@
     <string name="no_warranty_content">このアプリは、サードパーティーの情報に基づいてアプリの削除を推奨します。これらの推奨はあくまで参考情報であり、特定のデバイスにおける安全性や互換性を保証するものではありません。システムアプリをアンインストールすると機能の喪失、システムの不安定化、デバイスのブートループ、データの損失などの予期しない問題が発生する可能性があります。このアプリの開発者は、提供された推奨に従った結果やデバイスに損害が発生した場合でも責任を一切負いません。</string>
     <string name="disclaimer">免責事項 - 自己責任</string>
     <string name="proceed_at_own_risk">「続行」をタップすることでこのアプリを自己責任での利用に同意するものとします。</string>
-    <string name="never_show_again">このメッセージを再度表示しない</string>
-    <string name="proceed">続行</string>
     <string name="confirm_uninstall_description">アンインストールの操作を確認するためのダイアログを表示するかどうかを設定します。</string>
     <string name="select_all">すべて選択</string>
     <string name="select_all_tip">あと %1$d 回タップするとすべての機能が有効になります。</string>

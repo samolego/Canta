@@ -32,7 +32,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.samolego.canta.core.CantaHandler
 import io.github.samolego.canta.core.CantaPlatform
 import io.github.samolego.canta.data.app.Filter
@@ -45,7 +44,6 @@ import io.github.samolego.canta.ui.component.CantaTopBar
 import io.github.samolego.canta.ui.component.fab.PresetEditFAB
 import io.github.samolego.canta.ui.dialog.DeviceChooserDialog
 import io.github.samolego.canta.ui.dialog.ExplainBadgesDialog
-import io.github.samolego.canta.ui.dialog.NoWarrantyDialog
 import io.github.samolego.canta.ui.dialog.ShizukuRequirementDialog
 import io.github.samolego.canta.ui.dialog.SuccessDialog
 import io.github.samolego.canta.ui.dialog.UninstallAppsDialog
@@ -128,7 +126,7 @@ fun MainScreen(
         }
     }
 
-    MainDialogs(handler, platform, mainViewModel, settingsViewModel, closeApp)
+    MainDialogs(handler, platform, mainViewModel)
 }
 
 @Composable
@@ -184,26 +182,19 @@ private fun AppsTabs(pagerState: PagerState) {
     }
 }
 
-/** Renders [MainViewModel.dialog] (once, outside the pager) and the startup disclaimer. */
+/** Renders [MainViewModel.dialog] (once, outside the pager) */
 @Composable
 private fun MainDialogs(
     handler: CantaHandler,
     platform: CantaPlatform,
     mainViewModel: MainViewModel,
-    settingsViewModel: SettingsViewModel,
-    closeApp: () -> Unit,
 ) {
-    val showRiskDialog by settingsViewModel.showRiskDialog.collectAsStateWithLifecycle()
-
-    if (showRiskDialog) {
-        NoWarrantyDialog(onProceed = settingsViewModel::acceptRiskDialog, onCancel = closeApp)
-    }
-
     when (val dialog = mainViewModel.dialog) {
         null -> {}
         is MainDialog.ConfirmUninstall -> UninstallAppsDialog(
             appCount = dialog.appCount,
             canResetToFactory = dialog.canResetToFactory,
+            bootloopRisk = dialog.bootloopRisk,
             onDismiss = mainViewModel::dismissDialog,
             onAgree = mainViewModel::onUninstallConfirmed,
         )

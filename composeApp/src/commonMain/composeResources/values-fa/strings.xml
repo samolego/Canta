@@ -51,8 +51,6 @@
     <string
         name="proceed_at_own_risk"
     >با کلیک روی \ "ادامه " ، شما موافقت می کنید از این برنامه در معرض خطر خود استفاده کنید.</string>
-    <string name="never_show_again">دوباره این پیام را نشان ندهید</string>
-    <string name="proceed">ادامه دادن</string>
     <string
         name="confirm_uninstall_description"
     >اینکه آیا می توان گفتگوی را برای تأیید عملکرد حذف نشان داد.</string>

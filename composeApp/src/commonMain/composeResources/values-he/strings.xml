@@ -59,8 +59,6 @@
     <string
         name="proceed_at_own_risk"
     >בלחיצה על "המשך", אתה מסכים להשתמש באפליקציה זו על אחריותך בלבד.</string>
-    <string name="never_show_again">אל תציג הודעה זו שנית</string>
-    <string name="proceed">המשך</string>
     <string
         name="confirm_uninstall_description"
     >האם להציג את תיבת הדו-שיח לאישור פעולת הסרת ההתקנה.</string>

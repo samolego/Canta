@@ -74,6 +74,7 @@ fun AppList(
 
     val appList by remember { derivedStateOf { appListModel.appList.filter(appType::matches) } }
     val selectedAppList by remember { derivedStateOf { appListModel.selectedAppsSorted.filter(appType::matches) } }
+    val scores by appListModel.scores.collectAsStateWithLifecycle()
     val allowUnsafeUninstalls by settingsViewModel.allowUnsafeUninstalls.collectAsStateWithLifecycle()
 
     Column(
@@ -84,6 +85,7 @@ fun AppList(
         if (showAppDialog != null) {
             AppInfoDialog(
                 appInfo = showAppDialog!!,
+                score = scores[showAppDialog!!.packageName],
                 platform = platform,
                 handler = handler,
                 onDismiss = { showAppDialog = null },
@@ -155,6 +157,7 @@ fun AppList(
                                 ) {
                                     SelectedAppTile(
                                         appInfo = appInfo,
+                                        score = scores[appInfo.packageName],
                                         onCheckChanged = {
                                             appListModel.selectedApps.remove(appInfo.packageName)
                                         },
@@ -184,6 +187,7 @@ fun AppList(
                         AppTile(
                             modifier = Modifier.padding(vertical = 2.dp),
                             appInfo = appInfo,
+                            score = scores[appInfo.packageName],
                             isSelected =
                                 appListModel.selectedApps.contains(appInfo.packageName),
                             enabled = appInfo.badgeInfo != AppBadgeInfo.UNSAFE || allowUnsafeUninstalls,

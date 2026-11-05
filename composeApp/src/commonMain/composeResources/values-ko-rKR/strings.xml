@@ -57,8 +57,6 @@
     <string name="no_warranty_content">이 앱은 제3자 정보를 바탕으로 앱 삭제 권장 사항을 제공합니다. 이러한 권장 사항은 참고용일 뿐이며, 안전성이나 사용자의 특정 기기와의 호환성을 보장하지 않습니다. 시스템 앱을 삭제하면 기능 상실, 시스템 불안정, 기기 무한부팅, 데이터 손실 등을 포함한 예기치 못한 문제가 발생할 수 있습니다. 이 앱의 개발자는 제공된 권장 사항을 따르는 과정에서 기기에 발생한 어떠한 손해에 대해서도 책임을 지지 않습니다.</string>
     <string name="disclaimer">면책 조항 - 보증 없음</string>
     <string name="proceed_at_own_risk">“계속”을 클릭하면, 본 앱을 사용하는 데 따른 모든 위험은 전적으로 귀하가 감수한다는 데 동의하는 것입니다.</string>
-    <string name="never_show_again">다시 보지 않기</string>
-    <string name="proceed">계속</string>
     <string name="confirm_uninstall_description">제거 작업을 확인하는 대화 상자를 표시할지 여부.</string>
     <string name="select_all">전체 선택</string>
     <string name="select_all_tip">전체 선택 기능을 사용하려면 %1$d번 더 탭하세요.</string>

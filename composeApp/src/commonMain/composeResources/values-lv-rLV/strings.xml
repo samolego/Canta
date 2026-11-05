@@ -65,8 +65,6 @@
     <string name="no_warranty_content">Šī lietotne sniedz trešās puses ieteikumus, uz kā pamata noteikt lietotnes turpmāko likteni - noņemt vai atstāt. Šiem ieteikumiem ir informatīvs raksturs un tie negarantē drošību vai saderību ar jūsu konkrēto ierīci. Sistēmas lietotņu noņemšana var radīt neparedzamas problēmas, tostarp, bet ne tikai: funkcionalitātes zudumu, sistēmas nestabilitāti, ierīces ciklisku atsāknēšanos, datu zudumu utt. Lietotnes izstrādātājs nav atbildīgs par jebkādiem nodarītajiem zaudējumiem jūsu ierīcei, kas radušies, pamatojoties uz sniegtajiem ieteikumiem.</string>
     <string name="disclaimer">Atruna - Nav garantijas</string>
     <string name="proceed_at_own_risk">Noklikšķinot uz \"Turpināt\", Jūs piekrītat izmantot šo lietotni uz savu risku un atbildību.</string>
-    <string name="never_show_again">Vairs nerādīt šo paziņojumu</string>
-    <string name="proceed">Turpināt</string>
     <string name="confirm_uninstall_description">Vai rādīt dialoglogu, lai apstiprinātu noņemšanu.</string>
     <string name="select_all">Atlasīt visas</string>
     <string name="select_all_tip">Tap %1$d more times to enable select all functionality.</string>

@@ -37,6 +37,17 @@ Enable this setting to ensure you have the most accurate information about which
 We recommend keeping this enabled to avoid accidentally uninstalling important apps.
 :::
 
+### Package analytics
+
+**Description:** Lets Canta anonymously report what happens to the **system packages** you uninstall, so everyone can get community safety scores for packages.
+
+- **Disabled (Default unless you chose "Contribute" during onboarding):** Nothing is sent, and community scores are not shown.
+- **Enabled:** When you uninstall or reinstall a system package, when Canta starts after a reboot, and in the background once the phone has booted (Android only), it sends the package name, the event (uninstalled / survived a reboot / reinstalled / voided, the latter when the package came back without you reinstalling it in Canta, e.g. through a system update), the ISO week, a coarse batch-size bucket (1, 2-10, 11+), the platform and a coarse device description (phone brand (the lowercased manufacturer name, which the server maps to a known brand or "other"), ROM family and major version such as HyperOS 1, and the Android API level such as 34). The device model, build number, fingerprint (Canta only compares it locally to detect system updates), serial number and security patch level are never sent. No device or install IDs, no user-installed apps, no account info. The background check after boot only runs while this is enabled.
+
+Community scores are shown for all devices and, once at least 30 reports exist for your ROM version, for your own ROM version too (the latter is used for warnings and badges).
+
+Turning the switch off deletes any queued data that was not sent yet. See the [privacy policy](https://github.com/samolego/Canta/blob/master/privacy_policy.md) for details.
+
 ## Advanced Settings
 
 Canta includes advanced settings for power users who need more control over the app's behavior.

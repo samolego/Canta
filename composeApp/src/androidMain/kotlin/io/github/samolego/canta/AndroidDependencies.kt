@@ -25,6 +25,7 @@ fun provideAndroidDependencies(context: Context, platform: AndroidCantaPlatform)
             FileAppStorage(File(directory, name))
         },
         platform = platform,
+        platformName = "android",
         handler = { AndroidCantaHandler(appContext) },
     )
 }

@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Tämä sovellus tarjoaa sovellusten poistosuosituksia kolmannen osapuolen tietojen perusteella. Nämä suositukset ovat luonteeltaan informatiivisia eivätkä takaa turvallisuutta tai yhteensopivuutta tietyn laitteen kanssa. Järjestelmäsovellusten poistaminen voi aiheuttaa odottamattomia ongelmia, kuten toiminnallisuuden, järjestelmän epävakauden, laitteen käynnistyssilmukoiden, tietojen häviämisen jne. Tämän sovelluksen kehittäjä ei ole vastuussa mistään vahingoista, joita laitteellesi on aiheutunut annettujen suositusten noudattamisesta.</string>
     <string name="disclaimer">Vastuuvapauslauseke - Ei Takuuta</string>
     <string name="proceed_at_own_risk">Klikkaamalla \"Jatka\", suostut käyttämään tätä sovellusta omalla vastuullasi.</string>
-    <string name="never_show_again">Älä näytä tätä viestiä uudelleen</string>
-    <string name="proceed">Jatka</string>
     <string name="confirm_uninstall_description">Näytetään valintaikkuna, jossa varmistat sovelluksen poiston.</string>
     <string name="select_all">Valitse kaikki</string>
     <string name="select_all_tip">Napauta %1$d kertaa ottaaksesi käyttöön valitse kaikki toiminnot.</string>

@@ -73,9 +73,49 @@
     <string name="disclaimer">Disclaimer - No Warranty</string>
     <string
         name="proceed_at_own_risk"
-    >By clicking "Proceed", you agree to use this app at your own risk.</string>
-    <string name="never_show_again">Don't show this message again</string>
-    <string name="proceed">Proceed</string>
+    >By clicking "Accept", you agree to use this app at your own risk.</string>
+    <string name="accept">Accept</string>
+    <string name="exit">Exit</string>
+    <string name="onboarding_contribute_title">Help make debloating safer</string>
+    <string name="onboarding_contribute_intro">Canta can anonymously report which system packages you uninstall, whether your phone restarted fine afterwards, and whether you reinstalled them. This builds community safety scores for packages.</string>
+    <string name="onboarding_never_sent_title">Never sent</string>
+    <string name="onboarding_never_sent">Your installed user apps, device model, device or install IDs, and any account information.</string>
+    <string name="onboarding_ip_note">Your IP address is only used to prevent spam, as a hash that is deleted daily.</string>
+    <string name="onboarding_change_later">You can change this anytime in Settings.</string>
+    <string name="onboarding_opt_out_note">If you don't share, you simply won't get community safety scores. UAD badges stay available for everyone.</string>
+    <string name="onboarding_dont_share">Don't share</string>
+    <string name="onboarding_welcome_title">Welcome to Canta</string>
+    <string name="onboarding_welcome_subtitle">Before you start, please read this.</string>
+    <string name="onboarding_contribute_subtitle">Share a little, and everyone can debloat with more confidence.</string>
+    <string name="onboarding_shared_title">What is shared</string>
+    <string name="onboarding_shared">Which system packages you uninstall, whether your phone restarted fine afterwards, and whether you reinstalled them. Also your phone brand and OS version, for example "Xiaomi, HyperOS 1, Android 14".</string>
+    <string name="onboarding_ip_title">Spam protection</string>
+    <string name="onboarding_badges_title">Your badges</string>
+    <string name="onboarding_change_title">Your choice</string>
+    <string name="community_title">Community</string>
+    <string name="community_on_device">On %1$s: %2$s (%3$s reports)</string>
+    <string name="community_on_family">On %1$s (all versions): %2$s (%3$s reports)</string>
+    <string name="community_mostly_on_other">Reported mostly on %1$s: %2$s (%3$s reports) — may not apply to your device</string>
+    <string name="community_mostly_on_version">Reported mostly on %1$s: %2$s (%3$s reports) — may not apply to your version</string>
+    <string name="community_all_devices">All devices: %1$s (%2$s reports)</string>
+    <string name="debug_section">Debug</string>
+    <string name="fake_community_scores">Fake community scores</string>
+    <string name="fake_community_scores_description">Show made-up scores for system apps instead of fetching any. Nothing is sent or saved.</string>
+    <string name="community_note">Community data, shown next to the info above and never replacing it.</string>
+    <string name="community_verdict_safe">Likely safe</string>
+    <string name="community_verdict_bootloop">Possible bootloop</string>
+    <string name="community_verdict_breaks">Breaks features</string>
+    <string name="community_verdict_unclear">Unclear</string>
+    <string name="community_bootloop_warning">Community reports say at least one of these apps can cause a bootloop.</string>
+    <string name="show_whats_sent">Show what's sent</string>
+    <string name="whats_sent_title">What's sent</string>
+    <string name="whats_sent_description">This is an example of the data Canta sends. Nothing else leaves your device.</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="analytics_section">Package analytics</string>
+    <string name="share_package_data">Share anonymous package data</string>
+    <string name="share_package_data_description">Get community safety scores by sharing which system packages you remove, plus your phone brand and OS version. No IDs.</string>
+    <string name="share_package_data_confirm_title">Share anonymous package data?</string>
+    <string name="contribute">Contribute</string>
     <string
         name="confirm_uninstall_description"
     >Whether to show the dialog for confirming uninstall action.</string>
@@ -199,4 +239,9 @@
     <string
         name="device_busy_linux"
     >The device is busy: another program on this computer has claimed it. On Linux this is often ModemManager, an adb server, or a file-transfer (MTP) monitor. Stop them (e.g. sudo systemctl stop ModemManager), unplug the phone and plug it back in, then pick it again.</string>
+    <string name="crash_report_title">Canta crashed last time</string>
+    <string name="crash_report_description">This report stays on your device. It contains only the app version, platform, OS version, time and the error. You can share it as a GitHub issue to help fix the bug.</string>
+    <string name="crash_report_open_issue">Open GitHub issue</string>
+    <string name="crash_report_copy">Copy</string>
+    <string name="crash_report_dismiss">Dismiss</string>
 </resources>

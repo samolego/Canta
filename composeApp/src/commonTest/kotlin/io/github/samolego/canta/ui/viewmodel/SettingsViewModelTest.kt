@@ -1,6 +1,7 @@
 package io.github.samolego.canta.ui.viewmodel
 
 import io.github.samolego.canta.data.CantaSettings
+import io.github.samolego.canta.data.proto.PendingUninstallProto
 import io.github.samolego.canta.testing.MemoryStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,27 +25,28 @@ class SettingsViewModelTest {
     fun tearDown() = Dispatchers.resetMain()
 
     @Test
-    fun disclaimerShowsUntilAcceptedForTheSession() = runTest {
-        val settings = CantaSettings(MemoryStorage())
-        val viewModel = SettingsViewModel(settings)
-        assertEquals(true, viewModel.showRiskDialog.value)
+    fun onboardingCompletionPersistsChoice() = runTest {
+        val storage = MemoryStorage()
+        val settings = CantaSettings(storage)
+        SettingsViewModel(settings).completeOnboarding(contribute = true)
+        settings.onboardingVersionFlow.first { it == CURRENT_ONBOARDING_VERSION }
 
-        viewModel.acceptRiskDialog(neverShowAgain = false)
-
-        assertEquals(false, viewModel.showRiskDialog.value)
-        assertEquals(false, settings.disableRiskDialogFlow.first(), "only accepted for this session")
+        val reopened = SettingsViewModel(CantaSettings(storage))
+        assertEquals(CURRENT_ONBOARDING_VERSION, reopened.onboardingVersion.first { it != null })
+        assertEquals(true, settings.analyticsEnabledFlow.first())
     }
 
     @Test
-    fun neverShowAgainPersists() = runTest {
-        val storage = MemoryStorage()
-        val settings = CantaSettings(storage)
-        SettingsViewModel(settings).acceptRiskDialog(neverShowAgain = true)
-        // The store's state only changes once the write succeeded.
-        settings.disableRiskDialogFlow.first { it }
+    fun disablingAnalyticsClearsPendingReboot() = runTest {
+        val settings = CantaSettings(MemoryStorage())
+        settings.setAnalyticsEnabled(true)
+        settings.setPendingReboot(listOf(PendingUninstallProto(pkg = "a.b")))
+        val viewModel = SettingsViewModel(settings)
 
-        val reopened = SettingsViewModel(CantaSettings(storage))
-        assertEquals(false, reopened.showRiskDialog.value)
+        viewModel.setAnalyticsEnabled(false)
+        settings.pendingRebootFlow.first { it.isEmpty() }
+
+        assertEquals(false, settings.analyticsEnabledFlow.first())
     }
 
     @Test

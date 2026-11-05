@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.github.samolego.canta.core.CantaHandler
 import io.github.samolego.canta.core.CantaPlatform
@@ -32,12 +33,23 @@ import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.app_icon
 import io.github.samolego.canta.generated.resources.app_settings
 import io.github.samolego.canta.generated.resources.app_size
+import io.github.samolego.canta.generated.resources.community_all_devices
+import io.github.samolego.canta.generated.resources.community_mostly_on_other
+import io.github.samolego.canta.generated.resources.community_mostly_on_version
+import io.github.samolego.canta.generated.resources.community_on_device
+import io.github.samolego.canta.generated.resources.community_on_family
+import io.github.samolego.canta.generated.resources.community_note
+import io.github.samolego.canta.generated.resources.community_title
 import io.github.samolego.canta.generated.resources.copy_package_name_to_clipboard
 import io.github.samolego.canta.generated.resources.no_description_available
 import io.github.samolego.canta.ui.component.AppIconImage
 import io.github.samolego.canta.ui.component.CantaDialog
+import io.github.samolego.canta.ui.component.label
 import io.github.samolego.canta.ui.component.text.UrlText
 import io.github.samolego.canta.ui.component.WIDE_DIALOG_WIDTH
+import io.github.samolego.canta.util.CommunityScore
+import io.github.samolego.canta.util.VerdictScope
+import io.github.samolego.canta.util.displayed
 import io.github.samolego.canta.util.formatFileSize
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -48,6 +60,8 @@ private val DESCRIPTION_MAX_HEIGHT = 480.dp
 @Composable
 fun AppInfoDialog(
     appInfo: AppInfo,
+    /** Community score, shown below the bloat info; null when analytics is off or there is none. */
+    score: CommunityScore? = null,
     platform: CantaPlatform,
     handler: CantaHandler,
     onDismiss: () -> Unit,
@@ -115,6 +129,10 @@ fun AppInfoDialog(
             }
         }
         Spacer(modifier = Modifier.size(16.dp))
+        if (score != null && score.hasInfo) {
+            CommunityInfo(score.displayed(appInfo.badgeInfo))
+            Spacer(modifier = Modifier.size(16.dp))
+        }
         Column(modifier = Modifier.heightIn(max = DESCRIPTION_MAX_HEIGHT).verticalScroll(rememberScrollState())) {
             SelectionContainer {
                 UrlText(
@@ -124,3 +142,53 @@ fun AppInfoDialog(
         }
     }
 }
+
+@Composable
+private fun CommunityInfo(score: CommunityScore) {
+    val chosen = score.chosen
+    val rows = listOf(
+        VerdictScope.VERSION to score.device,
+        VerdictScope.FAMILY to score.family,
+        VerdictScope.OVERALL to score.overall,
+    ).filter { (_, row) -> row?.verdict?.label() != null }
+        // The chosen scope goes first.
+        .sortedBy { (scope, _) -> if (scope == chosen?.scope) 0 else 1 }
+    if (rows.isEmpty()) return
+    Column {
+        Text(text = stringResource(Res.string.community_title), style = MaterialTheme.typography.titleSmall)
+        rows.forEachIndexed { index, (scope, row) ->
+            row!!
+            val verdict = row.verdict.label().orEmpty()
+            val count = reportCountLabel(row.uninstalls)
+            val infoOnly = scope == VerdictScope.OVERALL && chosen?.scope == scope && chosen.actionable.not()
+            val familyInfoOnly = scope == VerdictScope.FAMILY && chosen?.scope == scope && chosen.actionable.not()
+            val text = when {
+                familyInfoOnly -> stringResource(
+                    Res.string.community_mostly_on_version, chosen?.otherRomLabel.orEmpty(), verdict, count,
+                )
+                scope == VerdictScope.VERSION ->
+                    stringResource(Res.string.community_on_device, score.deviceLabel, verdict, count)
+                scope == VerdictScope.FAMILY ->
+                    stringResource(Res.string.community_on_family, score.familyLabel, verdict, count)
+                infoOnly -> stringResource(
+                    Res.string.community_mostly_on_other, chosen?.otherRomLabel.orEmpty(), verdict, count,
+                )
+                else -> stringResource(Res.string.community_all_devices, verdict, count)
+            }
+            Text(
+                text = text,
+                style = if (index == 0) MaterialTheme.typography.bodyMedium else MaterialTheme.typography.bodySmall,
+                color = if (infoOnly || familyInfoOnly) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified,
+            )
+        }
+        Text(
+            text = stringResource(Res.string.community_note),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/** The server floors counts to hundreds, so 0 means fewer than 100. */
+private fun reportCountLabel(uninstalls: Int): String =
+    if (uninstalls < 100) "<100" else "$uninstalls+"

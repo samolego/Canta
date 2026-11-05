@@ -18,13 +18,19 @@ import io.github.samolego.canta.generated.resources.cannot_uninstall_canta
 import io.github.samolego.canta.generated.resources.device_unreachable
 import io.github.samolego.canta.ui.AppsType
 import io.github.samolego.canta.ui.dialog.message
+import io.github.samolego.canta.util.Verdict
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
 /** The dialog the main screen is showing; at most one at a time. */
 sealed interface MainDialog {
-    data class ConfirmUninstall(val appCount: Int, val canResetToFactory: Boolean) : MainDialog
+    data class ConfirmUninstall(
+        val appCount: Int,
+        val canResetToFactory: Boolean,
+        /** The community reports that at least one of the apps can cause a bootloop. */
+        val bootloopRisk: Boolean = false,
+    ) : MainDialog
     data class Success(val count: Int, val isReinstall: Boolean) : MainDialog
     data object ShizukuSetup : MainDialog
     data object ExplainBadges : MainDialog
@@ -106,6 +112,7 @@ class MainViewModel(
             dialog = MainDialog.ConfirmUninstall(
                 appCount = selected.size,
                 canResetToFactory = selected.any { handler.canResetToFactory(it) },
+                bootloopRisk = selected.any { appList.scores.value[it]?.verdict == Verdict.BOOTLOOP },
             )
         } else {
             authenticateAndApply(type, resetToFactory = false)

@@ -57,8 +57,6 @@
     <string name="no_warranty_content">本应用基于第三方来源提供应用卸载的相关建议。这些建议仅供参考，不保证安全性，及与您的特定设备兼容。卸载系统应用可能导致意外问题，包括但不限于功能缺失、系统不稳定、设备无限重启、数据丢失等。对于您因遵循上述第三方卸载建议而造成的任何设备损坏，本应用开发者概不负责。</string>
     <string name="disclaimer">免责声明 - 无保障</string>
     <string name="proceed_at_own_risk">点击“继续”，即表示您同意自行承担使用此应用程序的风险。</string>
-    <string name="never_show_again">不再提示此信息</string>
-    <string name="proceed">继续</string>
     <string name="confirm_uninstall_description">是否显示用于确认卸载的显示框。</string>
     <string name="select_all">全选</string>
     <string name="select_all_tip">再次点击 %1$d 以启用全选功能。</string>

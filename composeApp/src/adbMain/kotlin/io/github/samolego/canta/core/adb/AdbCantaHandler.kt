@@ -8,7 +8,12 @@ import io.github.samolego.canta.data.app.AppInfo
 import io.github.samolego.canta.packages.OperationResult
 import io.github.samolego.canta.packages.PackageDetails
 import io.github.samolego.canta.packages.canResetToFactory
+import io.github.samolego.canta.util.DeviceContext
 import io.github.samolego.canta.util.LogUtils
+import io.github.samolego.canta.util.deviceContextOf
+import io.github.samolego.canta.util.parseGetprop
+import io.github.samolego.canta.util.payloadHash
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -53,6 +58,7 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
      */
     protected suspend fun onConnected(): Boolean {
         packages = emptyMap()
+        deviceContext = null
         helper.userId = helper.currentUserId() ?: 0
         lastConnectionFailure = when {
             !helper.supportsDevice() -> DeviceConnectionFailure.UnsupportedAndroidVersion
@@ -99,6 +105,48 @@ abstract class AdbCantaHandler(private val transport: AdbTransport) : CantaHandl
 
     override fun reinstallApps(packageNames: List<String>): Flow<OperationResult> =
         if (isConnected) helper.reinstall(packageNames) else emptyFlow()
+
+    /** Trimmed output of [cmd]'s output, or null if disconnected, it failed or printed nothing. */
+    private suspend fun shellLine(cmd: String, what: String): String? {
+        if (!isConnected) return null
+        return try {
+            transport.shell(cmd).takeIf { it.exitCode == 0 }?.stdout?.trim()?.takeIf { it.isNotEmpty() }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            LogUtils.w(TAG, "Could not read the $what: $e")
+            null
+        }
+    }
+
+    override suspend fun bootId(): String? = shellLine("cat /proc/sys/kernel/random/boot_id", "boot id")
+
+    override suspend fun buildFingerprint(): String? = shellLine("getprop ro.build.fingerprint", "build fingerprint")
+
+    /** SHA-256 of the device's serial number plus the selected user; never sent. */
+    override suspend fun deviceKey(): String? =
+        shellLine("getprop ro.serialno", "device serial")?.let { payloadHash(it) + ":" + helper.userId }
+
+    /** Read once per connected device; reset in [onConnected]. */
+    private var deviceContext: DeviceContext? = null
+
+    override suspend fun deviceContext(): DeviceContext? {
+        deviceContext?.let { return it }
+        if (!isConnected) return null
+        return try {
+            val result = transport.shell("getprop")
+            if (result.exitCode != 0) return null
+            deviceContextOf(parseGetprop(result.stdout)).also {
+                LogUtils.i(TAG, "Device context: $it")
+                deviceContext = it
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            LogUtils.w(TAG, "Could not read the device context: $e")
+            null
+        }
+    }
 
     override suspend fun packageExists(packageName: String): Boolean {
         if (!isConnected) return false

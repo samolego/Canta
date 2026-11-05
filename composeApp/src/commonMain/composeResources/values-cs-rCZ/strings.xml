@@ -69,8 +69,6 @@
     <string name="no_warranty_content">Tato aplikace poskytuje doporučení pro odstraňování aplikací na základě informací třetích stran. Tato doporučení jsou informační povahy a nezaručují bezpečnost nebo kompatibilitu s vaším konkrétním zařízením. Odinstalace systémových aplikací může způsobit neočekávané problémy, mimo jiné: ztráta funkce, systémové nestability, zaváděcí smyčky, ztráta dat atd. Vývojář této aplikace není odpovědný za žádné škody způsobené na vašem zařízení v důsledku dodržení poskytnutých doporučení.</string>
     <string name="disclaimer">Odmítnutí odpovědnosti - bez záruky</string>
     <string name="proceed_at_own_risk">Kliknutím na tlačítko \"Pokračovat\" souhlasíte s používáním této aplikace na vlastní riziko.</string>
-    <string name="never_show_again">Tuto zprávu příště nezobrazovat</string>
-    <string name="proceed">Provést</string>
     <string name="confirm_uninstall_description">Zvolte, zda zobrazit dialogové okno pro potvrzení odinstalace.</string>
     <string name="select_all">Vybrat vše</string>
     <string name="select_all_tip">Klepněte na %1$d vícekrát pro povolení funkce vybrat vše.</string>

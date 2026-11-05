@@ -61,7 +61,7 @@ fun CantaBadge() {
 }
 
 @Composable
-private fun AppBadgeContent(
+internal fun AppBadgeContent(
     label: String,
     icon: ImageVector,
     color: Color,

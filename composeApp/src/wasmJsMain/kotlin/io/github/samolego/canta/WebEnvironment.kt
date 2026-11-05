@@ -14,5 +14,6 @@ fun provideWebDependencies(): CantaAppDependencies =
     cantaAppDependencies(
         storage = { name -> LocalStorageAppStorage("canta/$name") },
         platform = WebCantaPlatform(),
+        platformName = "web",
         handler = { WebCantaHandler() },
     )

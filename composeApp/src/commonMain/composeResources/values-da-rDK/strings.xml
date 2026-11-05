@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Denne app leverer app-fjernelsesanbefalinger baseret på tredjepartsoplysninger. Disse anbefalinger er informative af natur og garanterer ikke sikkerhed eller kompatibilitet med nogen specifik enhed. Afinstallering af system-apps kan forårsage uventede problemer, herunder, men ikke begrænset til: Mistet funktionalitet, systemustabilitet, enheds-bootloops, datatab mv. App-udvikleren er ikke ansvarlig for evt. skader forårsaget på nogen enhed som konsekvens af at følge de givne anbefalinger.</string>
     <string name="disclaimer">Ansvarsfraskrivelse - Ingen garanti</string>
     <string name="proceed_at_own_risk">Ved at klikke på \"Fortsæt\", accepterer man at bruge denne app på egen risiko.</string>
-    <string name="never_show_again">Vis ikke denne besked igen</string>
-    <string name="proceed">Fortsæt</string>
     <string name="confirm_uninstall_description">Om dialogen til bekræftelse af afinstallationshandlingen skal vises.</string>
     <string name="select_all">Vælg alle</string>
     <string name="select_all_tip">Tryk %1$d gange mere for at aktivere valg af alle funktioner.</string>

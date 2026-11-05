@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Deze app biedt aanbevelingen voor app-verwijdering op basis van informatie van derden. Deze aanbevelingen zijn informatief van aard en garanderen geen veiligheid of compatibiliteit met uw specifiek apparaat. Verwijderen van systeem apps kan onverwachte problemen veroorzaken, waaronder maar niet gelimiteerd: verlies van functionaliteit, systeem instabiliteit, bootloops, gegevensverlies, etc. De ontwikkelaar van deze app is niet verantwoordelijk voor eventuele schade aan uw apparaat als gevolg van de gegeven aanbevelingen.</string>
     <string name="disclaimer">Disclaimer - Geen garantie</string>
     <string name="proceed_at_own_risk">Door te klikken op \"Doorgaan\", gaat u ermee akkoord deze app op eigen risico te gebruiken.</string>
-    <string name="never_show_again">Dit bericht niet meer tonen</string>
-    <string name="proceed">Ga verder</string>
     <string name="confirm_uninstall_description">Of het dialoogvenster voor het bevestigen van de verwijderingsactie moet worden weergegeven.</string>
     <string name="select_all">Selecteer alles</string>
     <string name="select_all_tip">Tik nog %1$d keer om selecteer alles in te schakelen.</string>

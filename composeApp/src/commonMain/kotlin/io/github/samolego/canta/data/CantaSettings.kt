@@ -3,6 +3,7 @@ package io.github.samolego.canta.data
 import io.github.samolego.canta.data.bloat.DEFAULT_BLOAT_COMMITS_URL
 import io.github.samolego.canta.data.bloat.DEFAULT_BLOAT_URL
 import io.github.samolego.canta.data.proto.AppSettingsProto
+import io.github.samolego.canta.data.proto.PendingUninstallProto
 import io.github.samolego.canta.data.proto.ProtoBlobStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -31,21 +32,25 @@ class CantaSettings(storage: AppBlobStorage) {
 
     val autoUpdateBloatListFlow = field { it.autoUpdateBloatList }
     val confirmBeforeUninstallFlow = field { it.confirmBeforeUninstall }
-    val disableRiskDialogFlow = field { it.disableRiskDialog }
     val latestCommitHashFlow = field { it.latestBloatCommitHash }
     val bloatListUrlFlow = field { it.bloatListUrl.ifEmpty { DEFAULT_BLOAT_URL } }
     val commitsUrlFlow = field { it.commitsUrl.ifEmpty { DEFAULT_BLOAT_COMMITS_URL } }
     val allowUnsafeUninstallsFlow = field { it.allowUnsafeUninstalls }
     val hideSuccessDialogFlow = field { it.hideSuccessDialog }
     val authEnabledFlow = field { it.authEnabled }
+    val analyticsEnabledFlow = field { it.analyticsEnabled }
+    val onboardingVersionFlow = field { it.onboardingVersion }
+    val pendingRebootFlow: Flow<List<PendingUninstallProto>> = field { it.pendingReboot }
 
     suspend fun setAutoUpdateBloatList(autoUpdate: Boolean) = update { it.copy(autoUpdateBloatList = autoUpdate) }
     suspend fun setConfirmBeforeUninstall(needsConfirm: Boolean) = update { it.copy(confirmBeforeUninstall = needsConfirm) }
-    suspend fun setDisableRiskDialog(disable: Boolean) = update { it.copy(disableRiskDialog = disable) }
     suspend fun setLatestCommitHash(hash: String) = update { it.copy(latestBloatCommitHash = hash) }
     suspend fun setBloatListUrl(url: String) = update { it.copy(bloatListUrl = url) }
     suspend fun setCommitsUrl(url: String) = update { it.copy(commitsUrl = url) }
     suspend fun setAllowUnsafeUninstalls(allow: Boolean) = update { it.copy(allowUnsafeUninstalls = allow) }
     suspend fun setHideSuccessDialog(hide: Boolean) = update { it.copy(hideSuccessDialog = hide) }
     suspend fun setAuthEnabled(enabled: Boolean) = update { it.copy(authEnabled = enabled) }
+    suspend fun setAnalyticsEnabled(enabled: Boolean) = update { it.copy(analyticsEnabled = enabled) }
+    suspend fun setOnboardingVersion(version: Int) = update { it.copy(onboardingVersion = version) }
+    suspend fun setPendingReboot(pending: List<PendingUninstallProto>) = update { it.copy(pendingReboot = pending) }
 }

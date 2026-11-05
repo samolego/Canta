@@ -69,8 +69,6 @@
     <string name="no_warranty_content">Ta aplikacija zagotavlja priporočila za odstranitev aplikacij na podlagi informacij tretjih oseb. Ta priporočila so informativne narave in ne zagotavljajo varnosti ali združljivosti z vašo napravo. Odstranjevanje sistemskih aplikacij lahko povzroči nepričakovane težave, med drugim: izgubo funkcionalnosti, nestabilnost sistema, nezmožnost zagona naprave - bootloop, izgubo podatkov itd. Razvijalec te aplikacije ni odgovoren za morebitno škodo, ki bi nastala na vaši napravi zaradi upoštevanja navedenih priporočil oz. opisov.</string>
     <string name="disclaimer">Izjava o omejitvi odgovornosti - ni garancije</string>
     <string name="proceed_at_own_risk">S klikom na gumb \"Nadaljuj\" se strinjate z uporabo aplikacije na lastno odgovornost.</string>
-    <string name="never_show_again">Nikoli več ne prikaži tega obvestila</string>
-    <string name="proceed">Nadaljuj</string>
     <string name="confirm_uninstall_description">Ali naj se prikaže pogovorno okno za potrditev odstranjevanja.</string>
     <string name="select_all">Izberi vse</string>
     <string name="select_all_tip">Kliknite še %1$d-krat, da omogočite možnost izbora vseh aplikacij.</string>

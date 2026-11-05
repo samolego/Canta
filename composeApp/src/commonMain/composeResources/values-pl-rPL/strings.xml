@@ -69,8 +69,6 @@
     <string name="no_warranty_content">Ta aplikacja dostarcza rekomendacje dotyczące usuwania aplikacji na podstawie informacji od stron trzecich. Te rekomendacje mają charakter informacyjny i nie gwarantują bezpieczeństwa ani kompatybilności z Twoim konkretnym urządzeniem. Odinstalowywanie aplikacji systemowych może prowadzić do nieoczekiwanych problemów, w tym między innymi: utratę funkcjonalności, niestabilność systemu, bootlopów, utratę danych itp. Twórca tej aplikacji nie ponosi odpowiedzialności za jakiekolwiek szkody wyrządzone Twojemu urządzeniu w wyniku stosowania się do dostarczonych rekomendacji.</string>
     <string name="disclaimer">Uwaga! Brak gwarancji</string>
     <string name="proceed_at_own_risk">Wybierając „Kontynuuj”, zgadzasz się na korzystanie z tej aplikacji na własne ryzyko.</string>
-    <string name="never_show_again">Nie pokazuj ponownie</string>
-    <string name="proceed">Kontynuuj</string>
     <string name="confirm_uninstall_description">Czy pokazywać okno dialogowe w celu potwierdzenia odinstalowania?</string>
     <string name="select_all">Zaznacz wszystko</string>
     <string name="select_all_tip">Stuknij jeszcze %1$d razy, aby włączyć funkcję zaznaczania wszystkiego.</string>

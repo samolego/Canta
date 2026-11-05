@@ -57,8 +57,6 @@
     <string name="no_warranty_content">Ứng dụng này cung cấp các đề xuất gỡ bỏ ứng dụng dựa trên thông tin của bên thứ ba. Những đề xuất này chỉ mang tính chất tham khảo và không đảm bảo tính an toàn hoặc khả năng tương thích với thiết bị cụ thể của bạn. Việc gỡ cài đặt ứng dụng hệ thống có thể gây ra các sự cố không mong muốn, bao gồm nhưng không giới hạn ở: mất chức năng, hệ thống không ổn định, vòng lặp khởi động thiết bị, mất dữ liệu, v.v. Nhà phát triển ứng dụng này không chịu trách nhiệm cho bất kỳ thiệt hại nào gây ra cho thiết bị của bạn do làm theo các đề xuất được cung cấp.</string>
     <string name="disclaimer">Tuyên bố từ chối trách nhiệm - Không bảo hành</string>
     <string name="proceed_at_own_risk">Khi nhấp vào \"Tiếp tục\", bạn đồng ý sử dụng ứng dụng này theo rủi ro của riêng bạn.</string>
-    <string name="never_show_again">Không hiển thị thông báo này nữa</string>
-    <string name="proceed">Tiếp tục </string>
     <string name="confirm_uninstall_description">Có hiển thị hộp thoại để xác nhận hành động gỡ cài đặt hay không.</string>
     <string name="select_all">Chọn tất cả</string>
     <string name="select_all_tip">Chạm %1$d lần nữa để bật chức năng chọn tất cả.</string>

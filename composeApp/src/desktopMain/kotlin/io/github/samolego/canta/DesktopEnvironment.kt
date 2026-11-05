@@ -13,6 +13,7 @@ fun provideDesktopDependencies(): CantaAppDependencies {
     return cantaAppDependencies(
         storage = { name -> FileAppStorage(File(directory, name)) },
         platform = DesktopCantaPlatform(),
+        platformName = "desktop",
         handler = { DesktopCantaHandler() },
     )
 }

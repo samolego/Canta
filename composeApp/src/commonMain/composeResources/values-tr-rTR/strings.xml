@@ -61,8 +61,6 @@
     <string name="no_warranty_content">Bu uygulama, üçüncü taraf bilgilerine dayalı olarak uygulama kaldırma önerileri sunar. Bu öneriler doğası gereği bilgi amaçlıdır ve belirli cihazınızla güvenlik veya uyumluluğu garanti etmez. Sistem uygulamalarının kaldırılması, işlevsellik kaybı, sistem kararsızlığı, cihaz önyüklemeleri, veri kaybı vb. dahil ancak bunlarla sınırlı olmamak üzere beklenmedik sorunlara neden olabilir. Bu uygulamanın geliştiricisi, verilen tavsiyelere uyulması sonucunda cihazınızda meydana gelen herhangi bir hasardan sorumlu değildir.</string>
     <string name="disclaimer">Sorumluluk Reddi - Garanti Yok</string>
     <string name="proceed_at_own_risk">“Devam Et” seçeneğine tıklayarak, bu uygulamayı riski size ait olmak üzere kullanmayı kabul etmiş olursunuz.</string>
-    <string name="never_show_again">Bu mesajı bir daha gösterme</string>
-    <string name="proceed">Devam Et</string>
     <string name="confirm_uninstall_description">Kaldırma eylemini onaylamak için iletişim kutusunun gösterilip gösterilmeyeceği.</string>
     <string name="select_all">Tümünü seç</string>
     <string name="select_all_tip">Tümünü seç işlevini etkinleştirmek için %1$d bir kez daha dokunun.</string>
