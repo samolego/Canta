@@ -19,7 +19,7 @@
     <string name="helper_unavailable">기기에 Canta의 도우미를 설정할 수 없습니다. 기기가 연결 및 승인되었는지 확인한 후 다시 시도하세요.</string>
     <string name="tab_installed">설치된 앱</string>
     <string name="tab_uninstalled">제거된 앱</string>
-    <string name="cannot_uninstall_canta">Can\'ta ouch this!</string>
+    <string name="cannot_uninstall_canta">이앱은 못지움 ㅅㄱ</string>
     <string name="device_unreachable">장치에 연결하지 못했습니다. 장치가 연결되어 있고 권한이 부여되었는지 확인하십시오.</string>
     <string name="app_size">크기: %1$s</string>
     <string name="uninstall">제거</string>
