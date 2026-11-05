@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Canta"
         android:name=".CantaApplication"
-        tools:targetApi="35">
+        tools:targetApi="37">
         <activity
             android:name=".MainActivity"
             android:exported="true"
