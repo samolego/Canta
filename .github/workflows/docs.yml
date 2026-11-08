@@ -75,6 +75,15 @@ jobs:
       - name: Build WASM from tag source
         run: |
           chmod +x gradlew
+          # Give the wrapper a longer timeout than the 10 s default
+          grep -q '^networkTimeout=' gradle/wrapper/gradle-wrapper.properties \
+            || printf '\nnetworkTimeout=120000\n' >> gradle/wrapper/gradle-wrapper.properties
+          # Download the distribution with retries (handles slow GitHub release CDN)
+          for i in 1 2 3 4 5; do
+            ./gradlew --version --no-daemon && break
+            echo "Gradle wrapper download failed (attempt $i), retrying in $((i*15))s..."
+            sleep $((i*15))
+          done
           ./gradlew :webApp:wasmJsBrowserDistribution --no-daemon
         working-directory: repo-wasm
 
