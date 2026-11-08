@@ -1,5 +1,6 @@
 package io.github.samolego.canta.data.preset
 
+import io.github.samolego.canta.CANTA_PACKAGE_NAME
 import io.github.samolego.canta.packages.isValidPackageName
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -19,6 +20,7 @@ import kotlin.time.Instant
 
 private val presetJson = Json { prettyPrint = true }
 
+/** Serializes a shareable preset with sorted package names. */
 fun exportPresetToJson(preset: CantaPresetData): String {
     val json =
         buildJsonObject {
@@ -32,6 +34,7 @@ fun exportPresetToJson(preset: CantaPresetData): String {
                     preset.apps.sorted().forEach { add(JsonPrimitive(it)) }
                 }
             )
+            put("removeCantaAfterRun", preset.removeCantaAfterRun)
         }
     return presetJson.encodeToString(JsonObject.serializer(), json)
 }
@@ -62,7 +65,8 @@ suspend fun importPresetFromJson(
                     element.jsonObject["packageName"]?.jsonPrimitive?.content
                 }
             // Imported presets are untrusted: package names end up in shell commands.
-            if (packageName == null || !isValidPackageName(packageName) || !packageExists(packageName)) continue
+            // Canta's own package is excluded — self-removal is removeCantaAfterRun's job.
+            if (packageName == null || packageName == CANTA_PACKAGE_NAME || !isValidPackageName(packageName) || !packageExists(packageName)) continue
             apps.add(packageName)
         }
 
@@ -72,7 +76,10 @@ suspend fun importPresetFromJson(
             createdDate = root["createdDate"]?.jsonPrimitive?.content?.toLongOrNull() ?: 0L,
             apps = apps,
             version = root["version"]?.jsonPrimitive?.content ?: "1.0",
-            uuid = generateUuid()
+            uuid = generateUuid(),
+            removeCantaAfterRun = runCatching {
+                root["removeCantaAfterRun"]?.jsonPrimitive?.content?.toBooleanStrictOrNull()
+            }.getOrNull() ?: false,
         )
     } catch (_: Exception) {
         null

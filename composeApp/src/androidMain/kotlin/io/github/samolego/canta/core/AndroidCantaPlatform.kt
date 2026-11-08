@@ -8,8 +8,12 @@ import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
+import io.github.samolego.canta.PresetRunContract
 import io.github.samolego.canta.util.LogUtils
 
 class AndroidCantaPlatform(
@@ -35,10 +39,12 @@ class AndroidCantaPlatform(
         }
     }
 
+    /** Displays a transient Android toast using the application context. */
     override fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
+    /** Opens the URL in another activity from the application context. */
     override fun openUrl(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -46,6 +52,7 @@ class AndroidCantaPlatform(
         context.startActivity(intent)
     }
 
+    /** Authenticates with the registered main activity; fails closed if no owner is attached. */
     override fun requireBiometric(title: String, subtitle: String, onSuccess: () -> Unit) {
         val activity = biometricActivity
         if (activity == null) {
@@ -53,6 +60,11 @@ class AndroidCantaPlatform(
             LogUtils.e(TAG, "No FragmentActivity attached; cannot authenticate")
             return
         }
+        requireBiometric(activity, title, subtitle, onSuccess)
+    }
+
+    /** Authenticates with [activity] without changing the main activity's registered owner. */
+    fun requireBiometric(activity: FragmentActivity, title: String, subtitle: String, onSuccess: () -> Unit) {
         val executor = ContextCompat.getMainExecutor(context)
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
@@ -68,10 +80,12 @@ class AndroidCantaPlatform(
             activity,
             executor,
             object : BiometricPrompt.AuthenticationCallback() {
+                /** Invokes the pending action only after successful system authentication. */
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     onSuccess()
                 }
 
+                /** Logs terminal authentication errors without invoking the pending action. */
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     LogUtils.e(
                         TAG,
@@ -79,6 +93,7 @@ class AndroidCantaPlatform(
                     )
                 }
 
+                /** Logs an unsuccessful biometric attempt while the system prompt remains active. */
                 override fun onAuthenticationFailed() {
                     LogUtils.w(TAG, "Biometric authentication failed!")
                 }
@@ -87,15 +102,44 @@ class AndroidCantaPlatform(
         biometricPrompt.authenticate(promptInfo)
     }
 
+    /** Copies text as plain clipboard data when the clipboard service is available. */
     override fun copyToClipboard(text: String) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
         clipboard.setPrimaryClip(ClipData.newPlainText("Canta", text))
     }
 
+    /** Returns the first clipboard item's text, or null when unavailable. */
     override fun readClipboard(): String? {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return null
         val clip = clipboard.primaryClip ?: return null
         if (clip.itemCount == 0) return null
         return clip.getItemAt(0).text?.toString()
+    }
+
+    override val supportsPresetShortcuts: Boolean
+        get() = ShortcutManagerCompat.isRequestPinShortcutSupported(context)
+
+    /**
+     * Pins a launcher shortcut that runs the preset headlessly through
+     * `PresetRunActivity`. The system asks the user to confirm the pin.
+     */
+    override fun installPresetShortcut(presetName: String, presetUuid: String): Boolean {
+        if (!supportsPresetShortcuts) return false
+        val intent = Intent(PresetRunContract.ACTION_RUN_PRESET)
+            .setClassName(context.packageName, PresetRunContract.RUN_ACTIVITY_CLASS)
+            .putExtra(PresetRunContract.EXTRA_PRESET_UUID, presetUuid)
+        return try {
+            val shortcut = ShortcutInfoCompat.Builder(context, PresetRunContract.SHORTCUT_ID_PREFIX + presetUuid)
+                .setShortLabel(presetName)
+                .setLongLabel("Canta: $presetName")
+                .setIcon(IconCompat.createWithResource(context, context.applicationInfo.icon))
+                .setIntent(intent)
+                .build()
+            ShortcutManagerCompat.requestPinShortcut(context, shortcut, null)
+        } catch (e: Exception) {
+            // e.g. IllegalStateException when called without a foreground activity
+            LogUtils.e(TAG, "Failed to pin preset shortcut", e)
+            false
+        }
     }
 }

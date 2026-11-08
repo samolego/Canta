@@ -28,6 +28,21 @@ interface CantaPlatform {
      */
     fun requireBiometric(title: String, subtitle: String, onSuccess: () -> Unit)
 
+    /** Copies plain text to the platform clipboard. */
     fun copyToClipboard(text: String)
+    /** Returns clipboard text, or null when clipboard access is unavailable. */
     fun readClipboard(): String?
+
+    /**
+     * Whether the platform can install a shortcut that runs a preset without
+     * opening the UI, such as a pinned launcher shortcut on Android.
+     */
+    val supportsPresetShortcuts: Boolean
+        get() = false
+
+    /**
+     * Installs a shortcut that runs the preset identified by [presetUuid]
+     * headlessly. Returns whether the shortcut was created/requested.
+     */
+    fun installPresetShortcut(presetName: String, presetUuid: String): Boolean = false
 }
