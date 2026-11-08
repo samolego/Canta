@@ -42,7 +42,7 @@ export default defineConfig({
       {
         property: "og:image",
         content:
-          "https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+          "https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
       },
     ],
     [
@@ -62,7 +62,7 @@ export default defineConfig({
       "link",
       {
         rel: "icon",
-        href: "https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+        href: "https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
       },
     ],
   ],
@@ -72,7 +72,7 @@ export default defineConfig({
   lastUpdated: true,
   // Theme customization
   themeConfig: {
-    logo: "https://raw.githubusercontent.com/samolego/Canta/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+    logo: "https://raw.githubusercontent.com/samolego/Canta/master/androidApp/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
     nav: [
       { text: "Home", link: "/" },
       { text: "Web App", link: "/app/", target: "_self" },
