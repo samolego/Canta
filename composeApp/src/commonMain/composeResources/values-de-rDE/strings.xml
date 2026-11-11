@@ -6,7 +6,7 @@
     <string name="copy_package_name_to_clipboard">Appnamen in die Zwischenablage kopieren</string>
     <string name="no_description_available">Keine Beschreibung verfügbar</string>
     <string name="app_settings">App-Infos</string>
-    <string name="app_icon">%1$s icon</string>
+    <string name="app_icon">%1$s</string>
     <string name="take_action">Take action</string>
     <string name="search">Search</string>
     <string name="clear_search">Clear search</string>
@@ -21,7 +21,7 @@
     <string name="tab_uninstalled">Uninstalled apps</string>
     <string name="cannot_uninstall_canta">Can\'ta ouch this!</string>
     <string name="device_unreachable">Failed to reach the device. Check that it is connected and authorized.</string>
-    <string name="app_size">Size: %1$s</string>
+    <string name="app_size"></string>
     <string name="uninstall">Deinstallieren</string>
     <string name="reinstall">Neu installieren</string>
     <string name="only_system">Nur Systemapps</string>
