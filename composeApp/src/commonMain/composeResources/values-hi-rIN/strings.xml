@@ -16,10 +16,10 @@
     <string name="badge_disabled">निष्क्रिय</string>
     <string name="helper_notice">Canta ऐप्स को पढ़ने और मैनेज करने के लिए डिवाइस के /data/local/tmp फोल्डर में एक छोटा हेल्पर रखता है। यह केवल तभी चलता है जब Canta इसका उपयोग करता है।</string>
     <string name="device_android_too_old">यह डिवाइस एन्ड्रॉएड 9 से पुराने संस्करण को चलाता है, जिसे Canta समर्थित नहीं करता है।</string>
-    <string name="helper_unavailable">Couldn\'t set up Canta\'s helper on the device. Check that it is connected and authorized, then try again.</string>
-    <string name="tab_installed">Installed apps</string>
-    <string name="tab_uninstalled">Uninstalled apps</string>
-    <string name="cannot_uninstall_canta">Can\'ta ouch this!</string>
+    <string name="helper_unavailable">डिवाइस पर Canta के हेल्पर को सेट नहीं कर सकते। जांच लें कि यह जुड़ा हुआ और अधिकृत है, फिर पुनः प्रयास करें।</string>
+    <string name="tab_installed">इंस्‍टॉल किए गए ऐप</string>
+    <string name="tab_uninstalled">हटाए गये एप</string>
+    <string name="cannot_uninstall_canta">इसे नहीं छू सकते!</string>
     <string name="device_unreachable">Failed to reach the device. Check that it is connected and authorized.</string>
     <string name="app_size">Size: %1$s</string>
     <string name="uninstall">अनइंस्टॉल करें</string>
