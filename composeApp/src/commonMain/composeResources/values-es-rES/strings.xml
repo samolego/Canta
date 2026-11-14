@@ -125,8 +125,8 @@
     <string name="auth_required_description">Esta acción requiere privilegios más altos.</string>
     <string name="require_auth_setting_desc">Requerir autenticación para desinstalar o reinstalar aplicaciones.</string>
     <string name="require_auth_setting">Requerir autenticación</string>
-    <string name="device_user">Device user</string>
-    <string name="device_user_description">Which user or profile on the device Canta manages</string>
+    <string name="device_user">Usuario del dispositivo</string>
+    <string name="device_user_description">Usuario o perfil del dispositivo que gestiona Canta</string>
     <string name="select_device">Seleccionar dispositivo</string>
     <string name="select_device_description">Elige qué dispositivo Android debe gestionar Canta. Activa la depuración USB en el dispositivo y autoriza este ordenador cuando se te solicite.</string>
     <string name="no_devices_found">No se encontraron dispositivos. Comprueba la conexión e inténtalo de nuevo.</string>

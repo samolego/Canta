@@ -62,7 +62,7 @@
     <string name="disclaimer">Disclaimer - No Warranty</string>
     <string name="proceed_at_own_risk">By clicking \"Proceed\", you agree to use this app at your own risk.</string>
     <string name="never_show_again">Don\'t show this message again</string>
-    <string name="proceed">Proceed</string>
+    <string name="proceed"></string>
     <string name="confirm_uninstall_description">Whether to show the dialog for confirming uninstall action.</string>
     <string name="select_all">Select all</string>
     <string name="select_all_tip">Tap %1$d more times to enable select all functionality.</string>
