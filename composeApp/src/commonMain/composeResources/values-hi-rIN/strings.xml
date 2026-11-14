@@ -138,8 +138,8 @@
     <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with \"Pick device\", and make sure no other program (such as adb) is using the device.</string>
     <string name="device_access_denied_linux">Access to the USB device was denied. On Linux, browsers need permission to open USB devices: install udev rules for your phone (e.g. the android-udev-rules package), then unplug it and plug it back in.</string>
     <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone\'s ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
-    <string name="device_connection_failed">Could not connect to the device: %1$s</string>
-    <string name="device_no_longer_available">The selected device is no longer available. Please pick it again.</string>
-    <string name="device_busy">The device is already in use by another program or browser tab. Close anything else using it, unplug the device and plug it back in, then pick it again.</string>
-    <string name="device_busy_linux">The device is busy: another program on this computer has claimed it. On Linux this is often ModemManager, an adb server, or a file-transfer (MTP) monitor. Stop them (e.g. sudo systemctl stop ModemManager), unplug the phone and plug it back in, then pick it again.</string>
+    <string name="device_connection_failed">डिवाइस से कनेक्ट नहीं हो सका: %1$s</string>
+    <string name="device_no_longer_available">चुना गया डिवाइस अब उपलब्ध नहीं है. कृपया इसे फिर से चुनें.</string>
+    <string name="device_busy">यह डिवाइस पहले से ही किसी अन्य प्रोग्राम या ब्राउज़र टैब द्वारा इस्तेमाल की जा रही है. इसका इस्तेमाल करने वाली बाकी सभी चीज़ों को बंद करें, डिवाइस को अनप्लग करके फिर से प्लग करें, और फिर इसे दोबारा चुनें.</string>
+    <string name="device_busy_linux">डिवाइस व्यस्त है: इस कंप्यूटर पर किसी अन्य प्रोग्राम ने इसे इस्तेमाल में ले रखा है. लिनक्स पर अक्सर ऐसा \'मॉडेममैनेजर\', ए.डी.बी सर्वर\', या \'फ़ाइल-ट्रांसफ़र -एम.टी.पी मॉनिटर\' की वजह से होता है. इन्हें बंद करें - उदाहरण के लिए: sudo systemctl stop ModemManager, फ़ोन को अनप्लग करके फिर से प्लग करें, और फिर इसे दोबारा चुनें.</string>
 </resources>
