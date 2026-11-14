@@ -5,7 +5,7 @@
     <string name="are_you_sure_to_uninstall_apps">क्या आप %1$s ऐप्स को अनइंस्टॉल करने के लिए सुनिश्चित हैं?</string>
     <string name="copy_package_name_to_clipboard">पैकेज का नाम क्लिपबोर्ड पर कॉपी करें</string>
     <string name="no_description_available">कोई विवरण उपलब्ध नहीं है</string>
-    <string name="app_settings">ऐप की जानकारी.</string>
+    <string name="app_settings">ऐप की जानकारी</string>
     <string name="app_icon">%1$s आइकॉन</string>
     <string name="take_action">कदम उठाएं</string>
     <string name="search">खोजें</string>
@@ -20,8 +20,8 @@
     <string name="tab_installed">इंस्‍टॉल किए गए ऐप</string>
     <string name="tab_uninstalled">हटाए गये एप</string>
     <string name="cannot_uninstall_canta">इसे नहीं छू सकते!</string>
-    <string name="device_unreachable">Failed to reach the device. Check that it is connected and authorized.</string>
-    <string name="app_size">Size: %1$s</string>
+    <string name="device_unreachable">डिवाइस से कनेक्ट नहीं हो सका. जांच लें कि यह जुड़ा हुआ है और इसे अनुमति मिली हुई है.</string>
+    <string name="app_size">आकार: %1$s</string>
     <string name="uninstall">अनइंस्टॉल करें</string>
     <string name="reinstall">रीइंस्टॉल करें</string>
     <string name="only_system">सिर्फ सिस्टम</string>
@@ -44,7 +44,7 @@
     </plurals>
     <plurals name="success_uninstalled">
         <item quantity="one">You have successfully uninstalled %1$d app!</item>
-        <item quantity="other">You have successfully uninstalled %1$d apps!</item>
+        <item quantity="other">आपने %1$d ऐप्स सफलतापूर्वक अनइंस्टॉल कर दिए हैं!</item>
     </plurals>
     <plurals name="success_reinstalled">
         <item quantity="one">You have successfully reinstalled %1$d app!</item>
@@ -138,8 +138,8 @@
     <string name="device_access_denied">Access to the USB device was denied. Unplug it and plug it back in, grant access again with \"Pick device\", and make sure no other program (such as adb) is using the device.</string>
     <string name="device_access_denied_linux">Access to the USB device was denied. On Linux, browsers need permission to open USB devices: install udev rules for your phone (e.g. the android-udev-rules package), then unplug it and plug it back in.</string>
     <string name="device_access_denied_windows">Access to the USB device was denied. On Windows, the phone\'s ADB interface needs a WinUSB driver: install it with Zadig, then unplug the phone and plug it back in.</string>
-    <string name="device_connection_failed">डिवाइस से कनेक्ट नहीं हो सका: %1$s</string>
+    <string name="device_connection_failed">उपकरण से संपर्क स्थापित नहीं किया जा सका: %1$s</string>
     <string name="device_no_longer_available">चुना गया डिवाइस अब उपलब्ध नहीं है. कृपया इसे फिर से चुनें.</string>
     <string name="device_busy">यह डिवाइस पहले से ही किसी अन्य प्रोग्राम या ब्राउज़र टैब द्वारा इस्तेमाल की जा रही है. इसका इस्तेमाल करने वाली बाकी सभी चीज़ों को बंद करें, डिवाइस को अनप्लग करके फिर से प्लग करें, और फिर इसे दोबारा चुनें.</string>
-    <string name="device_busy_linux">डिवाइस व्यस्त है: इस कंप्यूटर पर किसी अन्य प्रोग्राम ने इसे इस्तेमाल में ले रखा है. लिनक्स पर अक्सर ऐसा \'मॉडेममैनेजर\', ए.डी.बी सर्वर\', या \'फ़ाइल-ट्रांसफ़र -एम.टी.पी मॉनिटर\' की वजह से होता है. इन्हें बंद करें - उदाहरण के लिए: sudo systemctl stop ModemManager, फ़ोन को अनप्लग करके फिर से प्लग करें, और फिर इसे दोबारा चुनें.</string>
+    <string name="device_busy_linux">उपकरण व्यस्त है: इस कंप्यूटर के किसी अन्य प्रोग्राम ने इसे अपने नियंत्रण में ले लिया है. लिनक्स पर यह अक्सर मॉडेममैनेजर, एडीबी सर्वर या फ़ाइल-ट्रांसफ़र (एमटीपी) मॉनिटर होता है. इन्हें रोकें (उदाहरण के लिए सुडो सिस्टमसीटीएल स्टॉप मॉडेममैनेजर), फ़ोन को अनप्लग करें और वापस प्लग इन करें, फिर इसे दोबारा चुनें.</string>
 </resources>
