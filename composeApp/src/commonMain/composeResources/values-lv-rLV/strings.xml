@@ -3,7 +3,7 @@
     <string name="cancel">Atcelt</string>
     <string name="ok">Labi</string>
     <string name="are_you_sure_to_uninstall_apps">Vai tiešām vēlaties noņemt %1$s lietotnes?</string>
-    <string name="copy_package_name_to_clipboard">Copy package name to clipboard</string>
+    <string name="copy_package_name_to_clipboard">Kopēt lietotnes unikālo nosaukumu starpliktuvē</string>
     <string name="no_description_available">Apraksts nav pieejams</string>
     <string name="app_settings">Informācija par lietotni</string>
     <string name="app_icon">%1$s ikona</string>
@@ -121,7 +121,7 @@
     <string name="allow_unsafe_selections">Allow unsafe selections</string>
     <string name="allow_unsafe_uninstalls_description">Whether to allow selecting apps marked as unsafe (applying presets bypasses this already).</string>
     <string name="donate">Ziedot</string>
-    <string name="canta_donate_request">Enjoying Canta? It\'s built in my free time with privacy in mind - no ads, no tracking. If you find it useful, please consider supporting its development!</string>
+    <string name="canta_donate_request">Vai jums patīk Canta? Es to izstrādāju brīvajā laikā, rūpējoties par jūsu konfidencialitāti — bez reklāmām un izsekošanas. Ja lietotne jums noder, apsveriet iespēju atbalstīt tās izstrādi!</string>
     <string name="success">Lietotne %1$s veiksmīgi noņemta!</string>
     <string name="hide_success_dialog">Hide success dialog</string>
     <string name="hide_success_dialog_description">Hides the success dialog after uninstall / reinstall.</string>
