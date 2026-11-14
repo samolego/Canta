@@ -52,7 +52,8 @@ private fun fingerprintChanged(then: String, now: String?) = then.isNotEmpty() &
  *    build changed: an OS update restored it)
  *  - rebooted, not reported yet, installed again:
  *    - build changed ([currentFingerprint] differs): `voided` (an OS update restored it), dropped
- *    - [ResolveMode.BOOT]: nothing, dropped (it was back before the boot completed: a bootloop recovery)
+ *    - [ResolveMode.BOOT]: `voided`, dropped (an OS restore at boot can't be told apart from a
+ *      bootloop rescue, so it leaves the survival count)
  *    - [ResolveMode.START]: `survived_reboot` + `reinstalled` if it was reinstalled after the boot
  *      started, else `voided` (can't tell), dropped
  */
@@ -92,7 +93,8 @@ fun resolvePending(
                 remaining += entry.copy(survived = true)
             }
             fingerprintChanged(entry.buildFingerprint, currentFingerprint) -> report(TelemetryEventType.VOIDED)
-            mode == ResolveMode.BOOT -> {}
+            // installedSinceBoot is ignored here: it can't be told apart from a bootloop rescue.
+            mode == ResolveMode.BOOT -> report(TelemetryEventType.VOIDED)
             state.installedSinceBoot == true -> {
                 report(TelemetryEventType.SURVIVED_REBOOT)
                 report(TelemetryEventType.REINSTALLED)
@@ -206,7 +208,7 @@ class PackageTelemetry(
     /**
      * Called when the device finished booting (no privileged access then, so the caller reads
      * the package states): the states of the pending packages, read at that moment so that a later
-     * reinstall outside Canta doesn't look like a bootloop recovery; null if there is nothing to
+     * reinstall outside Canta isn't mistaken for a restore at boot; null if there is nothing to
      * check or analytics is off.
      */
     suspend fun snapshotAtBoot(

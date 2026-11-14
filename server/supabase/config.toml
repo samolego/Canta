@@ -1,0 +1,2 @@
+# Marks server/ as a Supabase project for the CLI (used by the migrations workflow).
+project_id = "canta"

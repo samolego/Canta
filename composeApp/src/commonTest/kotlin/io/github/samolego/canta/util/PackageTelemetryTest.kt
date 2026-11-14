@@ -108,15 +108,15 @@ class PackageTelemetryTest {
     }
 
     @Test
-    fun bootCheckBackBeforeBootCompletedIsSilent() {
+    fun bootCheckBackAtBootCompletedIsVoided() {
         val e = entry("com.a").copy(buildFingerprint = "fp")
-        assertResult(resolve(e, installed(), ResolveMode.BOOT, fingerprint = "fp"), none, gone)
+        assertResult(resolve(e, installed(), ResolveMode.BOOT, fingerprint = "fp"), listOf(ev("com.a", TelemetryEventType.VOIDED)), gone)
     }
 
     @Test
-    fun bootCheckUnknownFingerprintIsSilent() {
-        assertResult(resolve(entry("com.a").copy(buildFingerprint = "fp"), installed(), ResolveMode.BOOT, fingerprint = null), none, gone)
-        assertResult(resolve(entry("com.a"), installed(), ResolveMode.BOOT, fingerprint = "fp"), none, gone)
+    fun bootCheckUnknownFingerprintIsVoided() {
+        assertResult(resolve(entry("com.a").copy(buildFingerprint = "fp"), installed(), ResolveMode.BOOT, fingerprint = null), listOf(ev("com.a", TelemetryEventType.VOIDED)), gone)
+        assertResult(resolve(entry("com.a"), installed(), ResolveMode.BOOT, fingerprint = "fp"), listOf(ev("com.a", TelemetryEventType.VOIDED)), gone)
     }
 
     @Test
@@ -127,7 +127,7 @@ class PackageTelemetryTest {
 
     @Test
     fun bootCheckIgnoresTheReinstallSignal() {
-        assertResult(resolve(entry("com.a"), installed(true), ResolveMode.BOOT, fingerprint = "fp"), none, gone)
+        assertResult(resolve(entry("com.a"), installed(true), ResolveMode.BOOT, fingerprint = "fp"), listOf(ev("com.a", TelemetryEventType.VOIDED)), gone)
     }
 
     @Test
@@ -203,7 +203,7 @@ class PackageTelemetryTest {
         val b = entry("com.b")
         val c = entry("com.c")
         val (events, remaining) = resolvePending(listOf(a, b, c), ResolveMode.BOOT, "boot2", null, states, now)
-        assertEquals(listOf(ev("com.a", TelemetryEventType.SURVIVED_REBOOT)), events)
+        assertEquals(listOf(ev("com.a", TelemetryEventType.SURVIVED_REBOOT), ev("com.b", TelemetryEventType.VOIDED)), events)
         assertEquals(listOf(a.copy(survived = true), c), remaining)
     }
 

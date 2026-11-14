@@ -80,7 +80,7 @@
     <string name="onboarding_contribute_intro">Canta can anonymously report which system packages you uninstall, whether your phone restarted fine afterwards, and whether you reinstalled them. This builds community safety scores for packages.</string>
     <string name="onboarding_never_sent_title">Never sent</string>
     <string name="onboarding_never_sent">Your installed user apps, device model, device or install IDs, and any account information.</string>
-    <string name="onboarding_ip_note">Your IP address is only used to prevent spam, as a hash that is deleted daily.</string>
+    <string name="onboarding_ip_note">Your IP address is only used to prevent spam, as a hash that is deleted within a week.</string>
     <string name="onboarding_change_later">You can change this anytime in Settings.</string>
     <string name="onboarding_opt_out_note">If you don't share, you simply won't get community safety scores. UAD badges stay available for everyone.</string>
     <string name="onboarding_dont_share">Don't share</string>

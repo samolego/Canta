@@ -1,0 +1,43 @@
+name: Apply Supabase Migrations
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "server/supabase/migrations/**"
+  # Allow manual trigger
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never run two migration pushes at once
+concurrency:
+  group: supabase-migrations
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    env:
+      # Scoped token for this project only. No database password: the CLI asks the
+      # Management API for a short-lived login role instead.
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      # Not a secret (it is in the app's API URL).
+      SUPABASE_PROJECT_ID: aahwoixjjlopftjqnner
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Link project
+        run: supabase link --project-ref "$SUPABASE_PROJECT_ID"
+        working-directory: server
+
+      - name: Apply migrations
+        run: supabase db push
+        working-directory: server
