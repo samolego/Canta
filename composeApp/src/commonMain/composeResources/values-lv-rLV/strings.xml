@@ -8,9 +8,9 @@
     <string name="app_settings">Informācija par lietotni</string>
     <string name="app_icon">%1$s icon</string>
     <string name="take_action">Take action</string>
-    <string name="search">Search</string>
+    <string name="search">Meklēt</string>
     <string name="clear_search">Clear search</string>
-    <string name="filter">Filter</string>
+    <string name="filter">Atlasīt</string>
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="badge_disabled">DISABLED</string>
@@ -30,7 +30,7 @@
     <string name="badge_info">Badge info</string>
     <string name="got_it">Skaidrs</string>
     <string name="loading_badges">Loading badges ...</string>
-    <string name="logs">Žurnāls</string>
+    <string name="logs">Žurnāli</string>
     <string name="back">Atpakaļ</string>
     <string name="copy_logs">Copy logs</string>
     <string name="log_copied">Žurnāla notikums kopēts starpliktuvē</string>
