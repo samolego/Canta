@@ -43,15 +43,15 @@
         <item quantity="other">%1$d aplicaciones seleccionadas</item>
     </plurals>
     <plurals name="success_uninstalled">
-        <item quantity="one">¡Has desinstalado correctamente %1$d aplicación!</item>
-        <item quantity="other">¡Has desinstalado correctamente %1$d aplicaciones!</item>
+        <item quantity="one">¡%1$d aplicación desinstalada!</item>
+        <item quantity="other">¡%1$d aplicaciones desinstaladas!</item>
     </plurals>
     <plurals name="success_reinstalled">
-        <item quantity="one">¡Has reinstalado correctamente %1$d aplicación!</item>
-        <item quantity="other">¡Has reinstalado correctamente %1$d aplicaciones!</item>
+        <item quantity="one">¡%1$d aplicación reinstalada!</item>
+        <item quantity="other">¡%1$d aplicaciones reinstaladas!</item>
     </plurals>
     <string name="close">Cerrar</string>
-    <string name="canta_description">Canta es una aplicación de desinstalación de código abierto que utiliza Shizuku para eliminar aplicaciones del sistema y de usuario. Te permite desinstalar aplicaciones innecesarias de tu dispositivo como quieras, sin necesidad de un PC.\n\nUn agradecimiento especial a %1$s.\nCanta no sería lo mismo sin su trabajo.</string>
+    <string name="canta_description">Canta es un desinstalador de código abierto que usa Shizuku para eliminar aplicaciones del sistema y de usuario. Te permite limpiar tu dispositivo como quieras y sin usar un PC.\n\nAgradecimiento especial a %1$s.\nCanta no sería lo mismo sin su trabajo.</string>
     <string name="search_apps">Buscar aplicaciones</string>
     <string name="auto_update_bloat_list">Actualizar automáticamente la lista de aplicaciones innecesarias</string>
     <string name="auto_update_bloat_list_description">Obtener automáticamente la información actualizada sobre las aplicaciones innecesarias. Esto garantiza que los distintivos y las descripciones de las aplicaciones estén actualizados.</string>
@@ -59,9 +59,9 @@
     <string name="confirm_uninstall">Confirmar las desinstalaciones</string>
     <string name="app_version">Versión de la aplicación: %1$s</string>
     <string name="no_warranty_content">Esta aplicación proporciona recomendaciones para desinstalar aplicaciones según información de terceros. Estas recomendaciones son solo con fines informativos y no garantizan la seguridad ni la compatibilidad con tu dispositivo. La eliminación de aplicaciones del sistema puede causar problemas inesperados, incluidos, entre otros: pérdida de funcionalidad, inestabilidad del sistema, reinicios continuos del dispositivo, pérdida de datos, etc. El desarrollador de esta aplicación no se hace responsable de cualquier daño causado a tu dispositivo como resultado de seguir las recomendaciones proporcionadas.</string>
-    <string name="disclaimer">Descargo de responsabilidad - Sin garantía</string>
-    <string name="proceed_at_own_risk">Al hacer clic en \"Continuar\", aceptas utilizar esta aplicación bajo tu propia responsabilidad.</string>
-    <string name="never_show_again">No volver a mostrar este mensaje</string>
+    <string name="disclaimer">Exención de responsabilidad - Sin garantía</string>
+    <string name="proceed_at_own_risk">Si pulsas «Continuar», aceptas usar esta app bajo tu propia responsabilidad.</string>
+    <string name="never_show_again">No volver a mostrar</string>
     <string name="proceed">Continuar</string>
     <string name="confirm_uninstall_description">Indicar si se debe mostrar el diálogo para confirmar la desinstalación.</string>
     <string name="select_all">Seleccionar todo</string>
@@ -99,21 +99,21 @@
     <string name="share">Compartir</string>
     <string name="delete">Eliminar</string>
     <string name="apply_preset">Aplicar preajuste</string>
-    <string name="preset_save_error">Error al guardar el preajuste</string>
+    <string name="preset_save_error">Error al guardar la configuración preestablecida</string>
     <string name="selected_apps">Aplicaciones seleccionadas</string>
     <string name="text">Texto</string>
     <string name="install_shizuku">Instalar la aplicación Shizuku</string>
     <string name="enable_usb_debugging">(Opcional) Activar la depuración USB</string>
-    <string name="start_shizuku_service">Iniciar el servicio Shizuku</string>
-    <string name="grant_shizuku_permission_to_canta">Conceder permiso a Canta en Shizuku</string>
+    <string name="start_shizuku_service">Iniciar Shizuku</string>
+    <string name="grant_shizuku_permission_to_canta">Permitir Canta en Shizuku</string>
     <string name="shizuku_required">Se requiere Shizuku</string>
     <string name="shizuku_requirement_description">Canta utiliza Shizuku para desinstalar aplicaciones sin necesidad de acceso root. Shizuku proporciona una forma segura de acceder a los SDK a nivel del sistema.</string>
-    <string name="commits_url">URL de Commits</string>
-    <string name="commits_url_description">Dónde obtener información de los commits para las actualizaciones</string>
+    <string name="commits_url">URL del historial de cambios</string>
+    <string name="commits_url_description">De dónde obtener los cambios para las actualizaciones</string>
     <string name="advanced_settings">Configuración avanzada</string>
     <string name="click_to_expand">Haz clic para expandir</string>
     <string name="bloat_list_url">URL de la lista de aplicaciones innecesarias</string>
-    <string name="bloat_list_url_description">Dónde obtener los distintivos y las descripciones.</string>
+    <string name="bloat_list_url_description">De dónde descargar las etiquetas y descripciones.</string>
     <string name="allow_unsafe_selections">Permitir selecciones no seguras</string>
     <string name="allow_unsafe_uninstalls_description">Indica si se permite seleccionar aplicaciones marcadas como no seguras (al aplicar preajustes esto ya se omite).</string>
     <string name="donate">Donar</string>
