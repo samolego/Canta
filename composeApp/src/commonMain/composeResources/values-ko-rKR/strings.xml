@@ -19,7 +19,7 @@
     <string name="helper_unavailable">기기에 Canta의 도우미를 설정할 수 없습니다. 기기가 연결 및 승인되었는지 확인한 후 다시 시도하세요.</string>
     <string name="tab_installed">설치된 앱</string>
     <string name="tab_uninstalled">제거된 앱</string>
-    <string name="cannot_uninstall_canta">이앱은 못지움 ㅅㄱ</string>
+    <string name="cannot_uninstall_canta">이건 못만져!</string>
     <string name="device_unreachable">장치에 연결하지 못했습니다. 장치가 연결되어 있고 권한이 부여되었는지 확인하십시오.</string>
     <string name="app_size">크기: %1$s</string>
     <string name="uninstall">제거</string>
@@ -28,7 +28,7 @@
     <string name="no_apps_found">앱을 찾을 수 없음</string>
     <string name="loading_apps">앱 불러오는 중</string>
     <string name="badge_info">배지 정보</string>
-    <string name="got_it">확인</string>
+    <string name="got_it">알겠습니다</string>
     <string name="loading_badges">배지 불러오는 중 ...</string>
     <string name="logs">로그</string>
     <string name="back">뒤로</string>
@@ -67,9 +67,9 @@
     <string name="import_preset">프리셋 가져오기</string>
     <string name="import_preset_description">클립보드에서 프리셋을 가져오거나 JSON 텍스트를 직접 붙여넣으세요.</string>
     <string name="clipboard">클립보드</string>
-    <string name="import_preset_clipboard_description">클립보드에서 프리셋을 가져옵니다. 유효한 Canta 프리셋 JSON 파일을 복사했는지 확인하십시오.</string>
+    <string name="import_preset_clipboard_description">클립보드에서 프리셋을 가져옵니다. 유효한 Canta 프리셋 JSON 파일을 복사했는지 확인하세요.</string>
     <string name="paste_preset_json">JSON 프리셋 붙여넣기</string>
-    <string name="paste_preset_json_here">여기에 JSON 프리셋을 붙여넣으세요 ...</string>
+    <string name="paste_preset_json_here">여기에 JSON 프리셋 붙여넣기...</string>
     <string name="import_button">가져오기</string>
     <string name="create_preset">프리셋 생성</string>
     <string name="edit_preset">프리셋 편집</string>
