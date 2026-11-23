@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import java.security.MessageDigest
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -101,6 +102,10 @@ abstract class GenerateBuildFlags : DefaultTask() {
     @get:Input
     abstract val debug: Property<Boolean>
 
+    /** Developer-only key for preview scores; empty unless this is a debug build. */
+    @get:Input
+    abstract val previewKey: Property<String>
+
     @get:OutputDirectory
     abstract val sourcesDirectory: DirectoryProperty
 
@@ -117,6 +122,9 @@ abstract class GenerateBuildFlags : DefaultTask() {
                 |object BuildFlags {
                 |    /** Debug-only features (fake community scores) are shown only when true. */
                 |    const val IS_DEBUG = ${debug.get()}
+                |
+                |    /** Key for the preview-scores RPCs, from local.properties; empty in release builds. */
+                |    const val PREVIEW_KEY = "${previewKey.get()}"
                 |}
                 |""".trimMargin()
             )
@@ -147,6 +155,19 @@ val generateBuildFlags = tasks.register<GenerateBuildFlags>("generateBuildFlags"
                 }
             }
         )
+    )
+    // The key comes from `-Pcanta.previewKey=` or `canta.previewKey` in local.properties (gitignored),
+    // is hex only (anything else is dropped) and is never set unless this is a debug build.
+    val localProperties = providers.fileContents(rootProject.layout.projectDirectory.file("local.properties")).asText
+    val configuredKey = providers.gradleProperty("canta.previewKey").orElse(
+        localProperties.map { text ->
+            Properties().apply { load(text.reader()) }.getProperty("canta.previewKey").orEmpty()
+        }
+    ).orElse("")
+    previewKey.set(
+        debug.zip(configuredKey) { isDebug, key ->
+            key.trim().takeIf { isDebug && Regex("[0-9a-fA-F]+").matches(it) }.orEmpty()
+        }
     )
     sourcesDirectory.set(layout.buildDirectory.dir("generated/buildFlags/kotlin"))
 }

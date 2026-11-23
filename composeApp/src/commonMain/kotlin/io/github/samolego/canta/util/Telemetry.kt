@@ -25,13 +25,16 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonObjectBuilder
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.doubleOrNull
 import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -396,11 +399,20 @@ class Telemetry(
      * fetched. With a known ROM in [device] the scores for the ROM family and
      * for its version are fetched too; if either fails, those rows are left out.
      */
-    suspend fun fetchScores(device: DeviceContext? = null): Map<String, CommunityScore>? {
-        val overall = fetchRows("package_scores", "{}") ?: return null
+    suspend fun fetchScores(device: DeviceContext? = null, previewKey: String? = null): Map<String, CommunityScore>? {
+        val preview = previewKey != null
+        fun body(block: JsonObjectBuilder.() -> Unit) = buildJsonObject {
+            if (previewKey != null) put("p_key", previewKey)
+            block()
+        }
+        val overall = fetchRows(if (preview) "package_scores_preview" else "package_scores", body {}) ?: return null
         val known = device != null && device.hasRom
         suspend fun forRom(version: Int) = fetchRows(
-            "package_scores_for", """{"p_rom":"${device!!.rom}","p_rom_version":$version}""",
+            if (preview) "package_scores_preview_for" else "package_scores_for",
+            body {
+                put("p_rom", device!!.rom)
+                put("p_rom_version", version)
+            },
         ).orEmpty()
         val family = if (known) forRom(-1) else emptyMap()
         val forDevice = if (known) forRom(device!!.romVersion) else emptyMap()
@@ -412,17 +424,29 @@ class Telemetry(
         }
     }
 
-    private suspend fun fetchRows(function: String, body: String): Map<String, PackageScore>? = try {
-        val response = client.post(TelemetryConfig.BASE_URL + function) {
-            rpcHeaders()
-            setBody(body)
+    /** All rows of [function], fetched page by page (the server caps each response); null if any page fails. */
+    private suspend fun fetchRows(function: String, body: JsonObject): Map<String, PackageScore>? = try {
+        val size = TelemetryConfig.SCORES_PAGE_SIZE
+        val rows = LinkedHashMap<String, PackageScore>()
+        var complete = false
+        var page = 0
+        while (!complete && page < TelemetryConfig.SCORES_MAX_PAGES) {
+            val response = client.post(
+                "${TelemetryConfig.BASE_URL}$function?limit=$size&offset=${page * size}&order=pkg"
+            ) {
+                rpcHeaders()
+                setBody(body.toString())
+            }
+            if (!response.status.isSuccess()) {
+                LogUtils.w(TAG, "Fetching $function failed: ${response.status}")
+                return null
+            }
+            val text = response.bodyAsText()
+            rows += parseScores(text)
+            complete = Json.parseToJsonElement(text).jsonArray.size < size
+            page++
         }
-        if (!response.status.isSuccess()) {
-            LogUtils.w(TAG, "Fetching $function failed: ${response.status}")
-            null
-        } else {
-            parseScores(response.bodyAsText())
-        }
+        rows
     } catch (e: CancellationException) {
         throw e
     } catch (e: Exception) {

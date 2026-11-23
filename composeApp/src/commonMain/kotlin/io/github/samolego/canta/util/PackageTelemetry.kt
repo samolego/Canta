@@ -1,5 +1,6 @@
 package io.github.samolego.canta.util
 
+import io.github.samolego.canta.BuildFlags
 import io.github.samolego.canta.core.CantaHandler
 import io.github.samolego.canta.data.CantaSettings
 import io.github.samolego.canta.data.app.AppInfo
@@ -132,8 +133,12 @@ class PackageTelemetry(
     suspend fun deviceContext(): DeviceContext? = handler.deviceContext()
 
     /** Community scores, or null when analytics is off or they couldn't be fetched. */
-    suspend fun fetchScores() =
-        if (settings.analyticsEnabledFlow.first()) telemetry.fetchScores(handler.deviceContext()) else null
+    suspend fun fetchScores(preview: Boolean = false): Map<String, CommunityScore>? {
+        if (!settings.analyticsEnabledFlow.first()) return null
+        // The key only exists in debug builds; release builds never ask for preview scores.
+        val key = BuildFlags.PREVIEW_KEY.takeIf { preview && BuildFlags.IS_DEBUG && it.isNotEmpty() }
+        return telemetry.fetchScores(handler.deviceContext(), key)
+    }
 
     /** Forgets everything queued and pending (analytics turned off). */
     suspend fun clearPending() {

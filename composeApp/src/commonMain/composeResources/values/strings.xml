@@ -101,6 +101,8 @@
     <string name="debug_section">Debug</string>
     <string name="fake_community_scores">Fake community scores</string>
     <string name="fake_community_scores_description">Show made-up scores for system apps instead of fetching any. Nothing is sent or saved.</string>
+    <string name="preview_scores">Preview scores</string>
+    <string name="preview_scores_description">Fetch provisional scores from recent data (not yet published). Needs canta.previewKey in local.properties.</string>
     <string name="community_note">Community data, shown next to the info above and never replacing it.</string>
     <string name="community_verdict_safe">Likely safe</string>
     <string name="community_verdict_bootloop">Possible bootloop</string>

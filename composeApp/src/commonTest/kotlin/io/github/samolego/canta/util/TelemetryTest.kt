@@ -175,6 +175,55 @@ class TelemetryTest {
     }
 
     @Test
+    fun previewScoresUsePreviewFunctionsAndKey() = runTest {
+        val paths = mutableListOf<String>()
+        val bodies = mutableListOf<String>()
+        val engine = MockEngine { request ->
+            paths += request.url.encodedPath
+            bodies += (request.body as? TextContent)?.text.orEmpty()
+            respond("[]", HttpStatusCode.OK, headersOf(HttpHeaders.ContentType, "application/json"))
+        }
+        val t = Telemetry(HttpClient(engine), "web", CoroutineScope(Job()), { true })
+        assertNotNull(t.fetchScores(device, previewKey = "abc123"))
+        assertEquals(
+            listOf("package_scores_preview", "package_scores_preview_for", "package_scores_preview_for"),
+            paths.map { it.substringAfterLast('/') },
+        )
+        assertEquals("""{"p_key":"abc123"}""", bodies[0])
+        assertEquals("""{"p_key":"abc123","p_rom":"hyperos","p_rom_version":-1}""", bodies[1])
+        assertEquals("""{"p_key":"abc123","p_rom":"hyperos","p_rom_version":1}""", bodies[2])
+    }
+
+    @Test
+    fun scoresArePagedUntilAShortPage() = runTest {
+        val queries = mutableListOf<String>()
+        val engine = MockEngine { request ->
+            queries += request.url.encodedQuery
+            val offset = request.url.parameters["offset"]!!.toInt()
+            val count = if (offset == 0) TelemetryConfig.SCORES_PAGE_SIZE else 5
+            val rows = (offset until offset + count).joinToString(",", "[", "]") {
+                """{"pkg":"p.$it","uninstalls":1,"small_batch":false,"verdict":"safe"}"""
+            }
+            respond(rows, HttpStatusCode.OK, headersOf(HttpHeaders.ContentType, "application/json"))
+        }
+        val t = Telemetry(HttpClient(engine), "web", CoroutineScope(Job()), { true })
+        val scores = assertNotNull(t.fetchScores())
+        assertEquals(TelemetryConfig.SCORES_PAGE_SIZE + 5, scores.size)
+        assertEquals(
+            listOf("limit=1000&offset=0&order=pkg", "limit=1000&offset=1000&order=pkg"),
+            queries,
+        )
+
+        val failing = MockEngine { request ->
+            if (request.url.parameters["offset"] == "0") respond(
+                (0 until TelemetryConfig.SCORES_PAGE_SIZE).joinToString(",", "[", "]") { """{"pkg":"p.$it"}""" },
+                HttpStatusCode.OK, headersOf(HttpHeaders.ContentType, "application/json"),
+            ) else respondError(HttpStatusCode.InternalServerError)
+        }
+        assertNull(Telemetry(HttpClient(failing), "web", CoroutineScope(Job()), { true }).fetchScores())
+    }
+
+    @Test
     fun failedFamilyOrVersionCallDropsOnlyThoseRows() = runTest {
         val engine = MockEngine { request ->
             if (request.url.encodedPath.endsWith("package_scores_for")) respondError(HttpStatusCode.InternalServerError)

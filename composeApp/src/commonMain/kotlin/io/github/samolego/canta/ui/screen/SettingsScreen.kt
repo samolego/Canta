@@ -54,6 +54,8 @@ import io.github.samolego.canta.generated.resources.app_version
 import io.github.samolego.canta.generated.resources.auth_required
 import io.github.samolego.canta.generated.resources.auth_required_description
 import io.github.samolego.canta.generated.resources.auto_update_bloat_list
+import io.github.samolego.canta.generated.resources.preview_scores
+import io.github.samolego.canta.generated.resources.preview_scores_description
 import io.github.samolego.canta.generated.resources.auto_update_bloat_list_description
 import io.github.samolego.canta.generated.resources.bloat_list_url
 import io.github.samolego.canta.generated.resources.bloat_list_url_description
@@ -98,6 +100,8 @@ fun SettingsScreen(
     onUserSelected: (Int) -> Unit = {},
     fakeScores: Boolean = false,
     onFakeScoresChange: (Boolean) -> Unit = {},
+    previewScores: Boolean = false,
+    onPreviewScoresChange: (Boolean) -> Unit = {},
 ) {
     val autoUpdateBloatList by settingsViewModel.autoUpdateBloatList.collectAsStateWithLifecycle()
     val confirmBeforeUninstall by settingsViewModel.confirmBeforeUninstall.collectAsStateWithLifecycle()
@@ -248,6 +252,14 @@ fun SettingsScreen(
                     icon = Icons.Default.BugReport,
                     checked = fakeScores,
                     onCheckedChange = onFakeScoresChange,
+                )
+                // SwitchSettingsItem has no `enabled`: without a key the switch is a no-op (the view model ignores it).
+                SwitchSettingsItem(
+                    title = stringResource(Res.string.preview_scores),
+                    description = stringResource(Res.string.preview_scores_description),
+                    icon = Icons.Default.BugReport,
+                    checked = previewScores && BuildFlags.PREVIEW_KEY.isNotEmpty(),
+                    onCheckedChange = { if (BuildFlags.PREVIEW_KEY.isNotEmpty()) onPreviewScoresChange(it) },
                 )
             }
 

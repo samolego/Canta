@@ -151,4 +151,12 @@ where c.pkg in ('com.fx.oldbusy', 'com.fx.oldrare')
 group by c.pkg
 order by c.pkg;
 
+-- Preview scores (every week but the current one, spread rules off), scope 'all'.
+refresh materialized view private.package_scores_preview;
+
+select 'preview' as phase, 'all' as scope, pkg, uninstalls, small_batch, verdict
+from private.package_scores_preview
+where rom = 'all' and pkg like 'com.fx.%' and (pkg not like 'com.fx.base%' or pkg = 'com.fx.base1')
+order by pkg;
+
 rollback;

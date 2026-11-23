@@ -10,6 +10,12 @@ object TelemetryConfig {
     /** Supabase publishable key; meant to be public. */
     const val PUBLISHABLE_KEY = "sb_publishable_2gyUfMGAKMro9MtNgVXxjg_uv8vxGy-"
 
+    /** Rows per score page; the server returns at most this many rows per request. */
+    const val SCORES_PAGE_SIZE = 1000
+
+    /** Most score pages fetched per function, as a safety cap. */
+    const val SCORES_MAX_PAGES = 50
+
     /** Proof-of-work difficulty: about this many hashes per event. */
     const val POW_K = 10_000L
 

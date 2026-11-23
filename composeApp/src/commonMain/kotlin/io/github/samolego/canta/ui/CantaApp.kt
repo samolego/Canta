@@ -156,6 +156,7 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit, cr
             }
             composable(route = Screen.Settings.route) {
                 val fakeScores by appListViewModel.fakeScoresEnabled.collectAsStateWithLifecycle()
+                val previewScores by appListViewModel.previewScoresEnabled.collectAsStateWithLifecycle()
                 var deviceUsers by remember { mutableStateOf(emptyList<DeviceUser>()) }
                 var selectedUserId by remember { mutableStateOf(handler.selectedUserId) }
                 LaunchedEffect(Unit) {
@@ -172,6 +173,8 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit, cr
                     selectedUserId = selectedUserId,
                     fakeScores = fakeScores,
                     onFakeScoresChange = appListViewModel::setFakeScores,
+                    previewScores = previewScores,
+                    onPreviewScoresChange = appListViewModel::setPreviewScores,
                     onUserSelected = { id ->
                         coroutineScope.launch {
                             handler.selectUser(id)

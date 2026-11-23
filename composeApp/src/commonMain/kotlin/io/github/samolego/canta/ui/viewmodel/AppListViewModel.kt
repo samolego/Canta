@@ -72,6 +72,17 @@ class AppListViewModel(
         viewModelScope.launch { applyScores() }
     }
 
+    private val _previewScores = MutableStateFlow(false)
+
+    /** Debug only, never persisted: fetch provisional scores (needs a preview key) instead of the published ones. */
+    val previewScoresEnabled: StateFlow<Boolean> = _previewScores
+
+    fun setPreviewScores(enabled: Boolean) {
+        _previewScores.value = enabled && BuildFlags.IS_DEBUG && BuildFlags.PREVIEW_KEY.isNotEmpty()
+        val telemetry = telemetry ?: return
+        viewModelScope.launch { if (analyticsOn) fetchRealScores(telemetry) }
+    }
+
     private var analyticsOn = false
 
     /** The device the [realScores] were fetched for; they are fetched again once a different one is known. */
@@ -79,7 +90,7 @@ class AppListViewModel(
 
     private suspend fun fetchRealScores(telemetry: PackageTelemetry) {
         scoresFor = telemetry.deviceContext()
-        realScores = telemetry.fetchScores().orEmpty()
+        realScores = telemetry.fetchScores(preview = _previewScores.value).orEmpty()
         applyScores()
     }
 
