@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -28,8 +27,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import io.github.samolego.canta.CANTA_PACKAGE_NAME
 import io.github.samolego.canta.data.app.AppInfo
+import io.github.samolego.canta.ui.badge.BadgeRow
+import io.github.samolego.canta.ui.badge.badgesFor
+import io.github.samolego.canta.util.Verdict
+import io.github.samolego.canta.util.displayVerdict
 import io.github.samolego.canta.util.CommunityScore
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -81,21 +83,7 @@ fun AppTile(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) { Text(appInfo.packageName, modifier = Modifier.weight(9f)) }
 
-                    FlowRow {
-                        if (appInfo.badgeInfo != null) {
-                            AppBadge(type = appInfo.badgeInfo!!)
-                        }
-                        score?.let { CommunityBadge(it.verdict) }
-                        if (appInfo.isSystemApp) {
-                            SystemBadge()
-                        }
-                        if (appInfo.isDisabled) {
-                            DisabledBadge()
-                        }
-                        if (appInfo.packageName == CANTA_PACKAGE_NAME) {
-                            CantaBadge()
-                        }
-                    }
+                    BadgeRow(badgesFor(appInfo, displayVerdict(score?.verdict ?: Verdict.UNKNOWN, appInfo.removalLevel)))
                 }
             },
             leadingContent = { AppIconImage(appInfo) },

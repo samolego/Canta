@@ -33,6 +33,7 @@ import io.github.samolego.canta.generated.resources.select_all_enabled
 import io.github.samolego.canta.generated.resources.select_all_tip
 import io.github.samolego.canta.ui.dialog.CrashReportDialog
 import io.github.samolego.canta.ui.navigation.Screen
+import io.github.samolego.canta.ui.screen.BadgesScreen
 import io.github.samolego.canta.ui.screen.LogsScreen
 import io.github.samolego.canta.ui.screen.MainScreen
 import io.github.samolego.canta.ui.screen.OnboardingScreen
@@ -153,6 +154,9 @@ private fun CantaNavigation(deps: CantaAppDependencies, closeApp: () -> Unit, cr
                     platform = platform,
                     onNavigateBack = { navController.navigateUp() },
                 )
+            }
+            composable(route = Screen.Badges.route) {
+                BadgesScreen(onNavigateBack = { navController.navigateUp() })
             }
             composable(route = Screen.Settings.route) {
                 val fakeScores by appListViewModel.fakeScoresEnabled.collectAsStateWithLifecycle()

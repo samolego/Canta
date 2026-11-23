@@ -33,7 +33,6 @@ sealed interface MainDialog {
     ) : MainDialog
     data class Success(val count: Int, val isReinstall: Boolean) : MainDialog
     data object ShizukuSetup : MainDialog
-    data object ExplainBadges : MainDialog
     data class DeviceChooser(val devices: List<CantaDevice> = emptyList(), val isLoading: Boolean = false) : MainDialog
 }
 
@@ -66,10 +65,6 @@ class MainViewModel(
     fun dismissDialog() {
         dialog = null
         afterConnect = null
-    }
-
-    fun showBadgesExplanation() {
-        dialog = MainDialog.ExplainBadges
     }
 
     /** The FAB: uninstall ([AppsType.INSTALLED]) or reinstall the selected apps. */

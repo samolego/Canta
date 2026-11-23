@@ -216,7 +216,7 @@ class AppListViewModel(
     }
 
     private suspend fun applyBloatData(bloat: Map<String, BloatData>) {
-        val cantaBloat = BloatData(description = getString(Res.string.canta_description, UAD_CREDIT), badgeInfo = null)
+        val cantaBloat = BloatData(description = getString(Res.string.canta_description, UAD_CREDIT), removalLevel = null)
         for (index in _apps.indices) {
             val app = _apps[index]
             val bloatData = if (app.packageName == CANTA_PACKAGE_NAME) cantaBloat else bloat[app.packageName]

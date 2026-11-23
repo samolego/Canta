@@ -39,8 +39,8 @@ data class AppInfo(
     val apkSize: Long?
         get() = details.apkSize.takeIf { it > 0 }
 
-    val badgeInfo: AppBadgeInfo?
-        get() = bloatData?.badgeInfo
+    val removalLevel: RemovalLevel?
+        get() = bloatData?.removalLevel
     val description: String?
         get() = bloatData?.description
 

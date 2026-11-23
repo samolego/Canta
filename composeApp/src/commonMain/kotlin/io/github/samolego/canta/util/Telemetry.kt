@@ -1,6 +1,6 @@
 package io.github.samolego.canta.util
 
-import io.github.samolego.canta.data.app.AppBadgeInfo
+import io.github.samolego.canta.data.app.RemovalLevel
 import io.github.samolego.canta.data.app.AppInfo
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
@@ -134,19 +134,19 @@ val Verdict.isInformative: Boolean get() = this != Verdict.INSUFFICIENT && this 
  * The verdict to show next to the app's UAD [badge]. Never "safe" when UAD rates the package
  * Expert or Unsafe: a wrong "safe" can brick phones, so it shows as unclear instead.
  */
-fun displayVerdict(verdict: Verdict, badge: AppBadgeInfo?): Verdict =
-    if (verdict == Verdict.SAFE && (badge == AppBadgeInfo.EXPERT || badge == AppBadgeInfo.UNSAFE)) Verdict.UNCLEAR
+fun displayVerdict(verdict: Verdict, level: RemovalLevel?): Verdict =
+    if (verdict == Verdict.SAFE && (level == RemovalLevel.EXPERT || level == RemovalLevel.UNSAFE)) Verdict.UNCLEAR
     else verdict
 
 /** This score with [displayVerdict] applied. */
-fun PackageScore.displayed(badge: AppBadgeInfo?): PackageScore {
-    val shown = displayVerdict(verdict, badge)
+fun PackageScore.displayed(level: RemovalLevel?): PackageScore {
+    val shown = displayVerdict(verdict, level)
     return if (shown == verdict) this else copy(verdict = shown)
 }
 
 /** This score with [displayVerdict] applied to all rows. */
-fun CommunityScore.displayed(badge: AppBadgeInfo?): CommunityScore =
-    copy(overall = overall?.displayed(badge), family = family?.displayed(badge), device = device?.displayed(badge))
+fun CommunityScore.displayed(level: RemovalLevel?): CommunityScore =
+    copy(overall = overall?.displayed(level), family = family?.displayed(level), device = device?.displayed(level))
 
 data class PackageScore(
     val pkg: String,

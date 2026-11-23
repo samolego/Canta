@@ -18,7 +18,7 @@ import io.github.samolego.canta.ui.navigation.Screen
 @Composable
 fun MoreOptionsMenu(
         showMenu: Boolean,
-        showBadgeInfoDialog: () -> Unit,
+        showBadgeInfo: () -> Unit,
         navigateToPage: (route: String) -> Unit,
         onDismiss: () -> Unit,
 ) {
@@ -32,7 +32,7 @@ fun MoreOptionsMenu(
         DropdownMenuItem(
                 text = { Text(stringResource(Res.string.badge_info)) },
                 onClick = {
-                    showBadgeInfoDialog()
+                    showBadgeInfo()
                     onDismiss()
                 }
         )

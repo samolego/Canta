@@ -1,7 +1,7 @@
 package io.github.samolego.canta.ui.viewmodel
 
 import androidx.compose.ui.graphics.ImageBitmap
-import io.github.samolego.canta.data.app.AppBadgeInfo
+import io.github.samolego.canta.data.app.RemovalLevel
 import io.github.samolego.canta.generated.resources.Res
 import io.github.samolego.canta.generated.resources.canta_description
 import io.github.samolego.canta.testing.FakeHandler
@@ -70,8 +70,8 @@ class AppListViewModelTest {
         viewModel.loadApps().join()
 
         assertEquals(
-            mapOf("com.a" to AppBadgeInfo.RECOMMENDED, "com.b" to null, "com.c" to null),
-            viewModel.apps.associate { it.packageName to it.badgeInfo },
+            mapOf("com.a" to RemovalLevel.RECOMMENDED, "com.b" to null, "com.c" to null),
+            viewModel.apps.associate { it.packageName to it.removalLevel },
         )
         assertEquals("Ads", viewModel.apps.first { it.packageName == "com.a" }.description)
     }

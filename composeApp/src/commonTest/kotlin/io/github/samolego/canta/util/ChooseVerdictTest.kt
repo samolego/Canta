@@ -1,6 +1,6 @@
 package io.github.samolego.canta.util
 
-import io.github.samolego.canta.data.app.AppBadgeInfo
+import io.github.samolego.canta.data.app.RemovalLevel
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -82,7 +82,7 @@ class ChooseVerdictTest {
         assertEquals(ChosenVerdict(Verdict.BOOTLOOP, VerdictScope.OVERALL, false, "One UI"), s.chosen)
         // No badge, no warning.
         assertEquals(Verdict.UNKNOWN, s.verdict)
-        assertEquals(Verdict.UNKNOWN, s.displayed(AppBadgeInfo.UNSAFE).verdict)
+        assertEquals(Verdict.UNKNOWN, s.displayed(RemovalLevel.UNSAFE).verdict)
         assertTrue(s.hasInfo)
     }
 
@@ -101,7 +101,7 @@ class ChooseVerdictTest {
 
     @Test
     fun displayRuleStillApplies() {
-        val s = score(family = row(Verdict.SAFE)).displayed(AppBadgeInfo.EXPERT)
+        val s = score(family = row(Verdict.SAFE)).displayed(RemovalLevel.EXPERT)
         assertEquals(Verdict.UNCLEAR, s.chosen?.verdict)
     }
 }

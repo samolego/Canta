@@ -8,7 +8,7 @@ package io.github.samolego.canta.data.app
 class Filter(
     val name: String,
     val shouldShow: (AppInfo) -> Boolean,
-    val badgeInfo: AppBadgeInfo? = null
+    val removalLevel: RemovalLevel? = null
 ) {
     companion object {
         private fun capitalize(value: String): String =
@@ -28,12 +28,12 @@ class Filter(
 
         init {
             val removalFilters =
-                AppBadgeInfo.entries.filter { AppBadgeInfo.SYSTEM != it }
+                RemovalLevel.entries
                     .map { entry ->
                         Filter(
                             name = capitalize(entry.toString()),
-                            shouldShow = { app -> app.badgeInfo == entry },
-                            badgeInfo = entry
+                            shouldShow = { app -> app.removalLevel == entry },
+                            removalLevel = entry
                         )
                     }.toMutableList()
             removalFilters.add(0, any)
@@ -41,7 +41,7 @@ class Filter(
             removalFilters.add(1, user)
 
             val unclassified =
-                Filter(name = "Unclassified", shouldShow = { app -> app.badgeInfo == null })
+                Filter(name = "Unclassified", shouldShow = { app -> app.removalLevel == null })
             removalFilters.add(2, unclassified)
 
             val disabled = Filter(name = "Disabled", shouldShow = { app -> app.isDisabled })

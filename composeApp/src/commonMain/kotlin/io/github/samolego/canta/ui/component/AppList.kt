@@ -34,7 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import io.github.samolego.canta.data.app.AppBadgeInfo
+import io.github.samolego.canta.data.app.RemovalLevel
 import io.github.samolego.canta.data.app.AppInfo
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
@@ -100,8 +100,8 @@ fun AppList(
             }
             if (appType == AppsType.UNINSTALLED ||
                 enableSelectAll &&
-                appListModel.selectedFilter.badgeInfo ==
-                AppBadgeInfo.RECOMMENDED
+                appListModel.selectedFilter.removalLevel ==
+                RemovalLevel.RECOMMENDED
             ) {
                 // Derived from the selection, and scoped to the visible apps, so it
                 // stays in sync and never clears selections on the other tab.
@@ -190,7 +190,7 @@ fun AppList(
                             score = scores[appInfo.packageName],
                             isSelected =
                                 appListModel.selectedApps.contains(appInfo.packageName),
-                            enabled = appInfo.badgeInfo != AppBadgeInfo.UNSAFE || allowUnsafeUninstalls,
+                            enabled = appInfo.removalLevel != RemovalLevel.UNSAFE || allowUnsafeUninstalls,
                             onCheckChanged = { checked ->
                                 if (checked) {
                                     appListModel.selectedApps.add(appInfo.packageName)

@@ -42,8 +42,8 @@ import io.github.samolego.canta.ui.AppsType
 import io.github.samolego.canta.ui.component.AppList
 import io.github.samolego.canta.ui.component.CantaTopBar
 import io.github.samolego.canta.ui.component.fab.PresetEditFAB
+import io.github.samolego.canta.ui.navigation.Screen
 import io.github.samolego.canta.ui.dialog.DeviceChooserDialog
-import io.github.samolego.canta.ui.dialog.ExplainBadgesDialog
 import io.github.samolego.canta.ui.dialog.ShizukuRequirementDialog
 import io.github.samolego.canta.ui.dialog.SuccessDialog
 import io.github.samolego.canta.ui.dialog.UninstallAppsDialog
@@ -87,7 +87,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             CantaTopBar(
-                openBadgesInfoDialog = mainViewModel::showBadgesExplanation,
+                openBadgesInfo = { navigateToPage(Screen.Badges.route) },
                 navigateToPage = navigateToPage,
                 appListViewModel = appListViewModel,
             )
@@ -209,7 +209,6 @@ private fun MainDialogs(
             handler = handler,
             platform = platform,
         )
-        MainDialog.ExplainBadges -> ExplainBadgesDialog(onDismissRequest = mainViewModel::dismissDialog)
         is MainDialog.DeviceChooser -> DeviceChooserDialog(
             devices = dialog.devices,
             isLoading = dialog.isLoading,

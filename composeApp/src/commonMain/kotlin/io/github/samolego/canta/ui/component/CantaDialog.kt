@@ -1,6 +1,7 @@
 package io.github.samolego.canta.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -11,7 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.BasicAlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,6 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import io.github.samolego.canta.generated.resources.Res
+import io.github.samolego.canta.generated.resources.close
+import org.jetbrains.compose.resources.stringResource
 
 /** Width of dialogs with rich content (lists, requirement steps), as a fraction of the window. */
 const val WIDE_DIALOG_WIDTH = 0.9f
@@ -36,6 +44,12 @@ const val WIDE_DIALOG_WIDTH = 0.9f
  * @param scrollable makes [content] scroll when it's taller than the window.
  *   Leave false for content that scrolls on its own (lazy lists).
  */
+/**
+ * How far content at the top of a dialog with a close button ([CantaDialog]'s onClose) must stay
+ * from the sides to not run under it: the button reaches 28 dp into the content area.
+ */
+val CLOSE_BUTTON_CLEARANCE = 32.dp
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CantaDialog(
@@ -45,6 +59,8 @@ fun CantaDialog(
     dismissible: Boolean = true,
     scrollable: Boolean = false,
     buttons: (@Composable RowScope.() -> Unit)? = null,
+    /** When set, an X in the top right corner that calls it. */
+    onClose: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     BasicAlertDialog(
@@ -57,6 +73,7 @@ fun CantaDialog(
         ),
     ) {
         Surface(shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainer) {
+          Box {
             Column(
                 modifier = Modifier
                     .padding(24.dp)
@@ -80,6 +97,12 @@ fun CantaDialog(
                     )
                 }
             }
+            if (onClose != null) {
+                IconButton(onClick = onClose, modifier = Modifier.align(Alignment.TopEnd).padding(4.dp)) {
+                    Icon(Icons.Default.Close, contentDescription = stringResource(Res.string.close))
+                }
+            }
+          }
         }
     }
 }

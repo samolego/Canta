@@ -49,7 +49,7 @@ import io.github.samolego.canta.ui.viewmodel.AppListViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CantaTopBar(
-        openBadgesInfoDialog: () -> Unit,
+        openBadgesInfo: () -> Unit,
         navigateToPage: (route: String) -> Unit,
         appListViewModel: AppListViewModel,
 ) {
@@ -144,7 +144,7 @@ fun CantaTopBar(
 
                 MoreOptionsMenu(
                         showMenu = showMoreOptionsMenu,
-                        showBadgeInfoDialog = openBadgesInfoDialog,
+                        showBadgeInfo = openBadgesInfo,
                         navigateToPage = navigateToPage,
                         onDismiss = { showMoreOptionsMenu = false },
                 )

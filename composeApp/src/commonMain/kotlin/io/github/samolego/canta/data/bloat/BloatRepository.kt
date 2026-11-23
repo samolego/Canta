@@ -2,7 +2,7 @@ package io.github.samolego.canta.data.bloat
 
 import io.github.samolego.canta.data.AppBlobStorage
 import io.github.samolego.canta.data.CantaSettings
-import io.github.samolego.canta.data.app.AppBadgeInfo
+import io.github.samolego.canta.data.app.RemovalLevel
 import io.github.samolego.canta.util.LogUtils
 import io.github.samolego.canta.util.currentTimeMillis
 import io.ktor.client.HttpClient
@@ -23,7 +23,7 @@ const val DEFAULT_BLOAT_COMMITS_URL =
 /** An app's entry in the UAD bloat list. */
 data class BloatData(
     internal val description: String?,
-    internal val badgeInfo: AppBadgeInfo?,
+    internal val removalLevel: RemovalLevel?,
 )
 
 /**
@@ -101,7 +101,7 @@ private fun parseBloatList(json: String): Map<String, BloatData> =
 
 private fun JsonObject.toBloatData() = BloatData(
     description = this["description"]?.jsonPrimitive?.content,
-    badgeInfo = this["removal"]?.jsonPrimitive?.content?.let { AppBadgeInfo.byNameIgnoreCaseOrNull(it) },
+    removalLevel = this["removal"]?.jsonPrimitive?.content?.let { RemovalLevel.byNameIgnoreCaseOrNull(it) },
 )
 
 /**
